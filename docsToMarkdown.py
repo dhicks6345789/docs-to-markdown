@@ -38,6 +38,7 @@ import pandas
 import numpy
 
 # Parameter values to be set via the command line.
+configFile = "config.json"
 inputFolder = ""
 outputFolder = ""
 
@@ -217,12 +218,17 @@ while argNum < len(sys.argv):
     elif sys.argv[argNum] == "-o":
         argNum = argNum + 1
         outputFolder = sys.argv[argNum]
+    elif sys.argv[argNum] == "-c":
+        argNum = argNum + 1
+        configFile = sys.argv[argNum]
     argNum = argNum + 1
 if inputFolder == "" or outputFolder == "":
     print("docsToMarkdown. Usage:")
+    print("docsToMarkdown -c -o -i")
     sys.exit(0)
     
 # A quick output message for the user.
+print("Config file: " + configFile)
 print("Input folder: " + inputFolder)
 print("Output folder: " + outputFolder)
 
@@ -235,7 +241,7 @@ os.system("cp -r /root/docsToMarkdown/code/Jekyll/* " + outputFolder)
 filesToProcess = processInputFolder(inputFolder, "")
 
 # Load and step through the user-provided configuration, removing any files referenced by a function from the to-be-processed list.
-config = json.loads(getFile("/root/docsToMarkdown/code/config.json"))
+config = json.loads(getFile(configFile))
 for configItem in config:
     if "global" in configItem.keys():
         globalValues[configItem["global"]] = configItem["value"]
