@@ -41,6 +41,7 @@ import numpy
 configFile = "config.json"
 inputFolder = ""
 outputFolder = ""
+templateFolder = ""
 
 # When we examine a Word document, if it starts with what looks like YAML-style variables then we will treat that as Jeykll front matter values.
 # We only check for the variables as given below, otherwise every document that starts with a colon in the first line would get treated as front matter.
@@ -221,21 +222,26 @@ while argNum < len(sys.argv):
     elif sys.argv[argNum] == "-c":
         argNum = argNum + 1
         configFile = sys.argv[argNum]
+    elif sys.argv[argNum] == "-t":
+        argNum = argNum + 1
+        templateFolder = sys.argv[argNum]
     argNum = argNum + 1
 if inputFolder == "" or outputFolder == "":
     print("docsToMarkdown. Usage:")
-    print("docsToMarkdown -c -o -i")
+    print("docsToMarkdown -c -o -i -t")
     sys.exit(0)
     
 # A quick output message for the user.
 print("Config file: " + configFile)
 print("Input folder: " + inputFolder)
 print("Output folder: " + outputFolder)
+print("Template folder: " + templateFolder)
 
-# To do: Make this step optional, and move template files to a separate input folder.
-# Make sure the defined output folder exists and is set up with Jekyll's basic structure.
-os.makedirs(outputFolder)
-os.system("cp -r /root/docsToMarkdown/code/Jekyll/* " + outputFolder)
+# Make sure the defined output folder exists...
+os.makedirs(outputFolder, exist_ok=True)
+# ...then copy any template files to the output folder.
+if not templateFolder == "":
+    os.system("cp -r " + templateFolder + "/* " + outputFolder)
 
 # Get a list of all the input files to process.
 filesToProcess = processInputFolder(inputFolder, "")
