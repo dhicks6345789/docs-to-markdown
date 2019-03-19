@@ -1,0 +1,12 @@
+[
+    {"global":"baseURL", "value":"http://accessdisputesrail.org/"},
+    {"function":"filesToMarkdown", "inputFiles":["accessDisputesCommitteeIndex/index.docx"], "outputFile":"accessDisputesCommitteeIndex/index.md", "frontMatter":{"layout":"default", "title":"Access Disputes Committee Index", "breadcrumbs":"true"}},
+    
+    {"function":"filesToCSV", "inputFiles":["accessDisputesCommitteeIndex/TTPDeterminations/determinations.xlsx"], "outputFile":"_data/accessDisputesCommitteeIndex/TTPDeterminations/determinations.csv", "jekyllHeaders":"true"},
+    {"function":"filesToMarkdown", "inputFiles":["accessDisputesCommitteeIndex/TTPDeterminations/determinations.docx"], "outputFile":"accessDisputesCommitteeIndex/TTPDeterminations/index.md", "frontMatter":{"layout":"TTPDeterminations", "title":"List Of Determinations", "breadcrumbs":"true", "crumbOne":"Access Disputes Committee Index", "crumbOneURL":"/accessDisputesCommitteeIndex"}},
+    {"function":"copyFolder", "src":"accessDisputesCommitteeIndex/TTPDeterminations/PDFVersion", "dest":"accessDisputesCommitteeIndex/TTPDeterminations/PDFVersion"},
+    {"function":"copyFolder", "src":"accessDisputesCommitteeIndex/TTPDeterminations/SubmissionsFromTheParties", "dest":"accessDisputesCommitteeIndex/TTPDeterminations/SubmissionsFromTheParties"},
+    
+    {"function":"filesToCSV", "inputFiles":["accessDisputesCommitteeIndex/DeterminationsOfAccessDisputesPanels/determinations.xlsx"], "outputFile":"_data/accessDisputesCommitteeIndex/DeterminationsOfAccessDisputesPanels/determinations.csv", "jekyllHeaders":"true"},
+    {"function":"filesToMarkdown", "inputFiles":["accessDisputesCommitteeIndex/DeterminationsOfAccessDisputesPanels/determinations.docx"], "outputFile":"accessDisputesCommitteeIndex/DeterminationsOfAccessDisputesPanels/index.md", "frontMatter":{"layout":"AccessDisputesPanelsDeterminations", "title":"References For Hearing By An Access Dispute Panel (from April 2005)", "breadcrumbs":"true", "crumbOne":"Access Disputes Committee Index", "crumbOneURL":"/accessDisputesCommitteeIndex"}}
+]
