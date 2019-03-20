@@ -190,7 +190,7 @@ def applyDefaults(rootPath, subPath, filesToProcess):
 # Copy each file from srcFolder to destFolder, and recurse down sub-folders.
 # Removes each encountered file from the filesToProcess list as it goes.
 def copyFolder(srcFolder, destFolder):
-    os.makedirs(destFolder)
+    os.makedirs(destFolder, exist_ok=True)
     for item in os.listdir(srcFolder):
         if os.path.isdir(srcFolder + os.sep + item):
             copyFolder(srcFolder + os.sep + item, destFolder + os.sep + item)
