@@ -99,6 +99,7 @@ def documentToGovspeak(inputFile):
     # This proved to be a simple enough install, no problems.
     #pandocHandle = os.popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -")
     pandocResult = subprocess.run(["pandoc","--wrap=none -s " + inputFile + " -t gfm -o -", "/dev/null"], check=True, stdout=subprocess.PIPE, universal_newlines=True)
+    print("\n\n" + pandocResult.stdout.decode('utf-8') + "\n\n")
     for markdownLine in pandocResult.stdout.decode('utf-8').split("\n"):
         lineIsFrontMatter = False
         for validFrontMatterField in validFrontMatterFields:
