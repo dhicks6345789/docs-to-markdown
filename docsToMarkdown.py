@@ -98,7 +98,7 @@ def documentToGovspeak(inputFile):
     # Debian's Pandoc package is still on version 2.5, so Pandoc needs to be installed via the .deb file provided on their website.
     # This proved to be a simple enough install, no problems.
     #pandocHandle = os.popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -")
-    pandocResult = subprocess.run(["pandoc", "--wrap=none -s " + inputFile + " -t gfm -o -", "/dev/null"], capture_output=True, encoding="utf-8")
+    pandocResult = subprocess.run(["pandoc","--wrap=none -s " + inputFile + " -t gfm -o -", "/dev/null"], check=True, stdout=subprocess.PIPE, universal_newlines=True, encoding="utf-8")
     for markdownLine in pandocResult.stdout.split("\n"):
         lineIsFrontMatter = False
         for validFrontMatterField in validFrontMatterFields:
