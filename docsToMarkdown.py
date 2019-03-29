@@ -97,10 +97,11 @@ def documentToGovspeak(inputFile):
     # As of around Monday, 4th March 2019, Pandoc 2.7 now seems to work correctly for parsing DOCX files produced by Word Online.
     # Debian's Pandoc package is still on version 2.5, so Pandoc needs to be installed via the .deb file provided on their website.
     # This proved to be a simple enough install, no problems.
-    #pandocHandle = os.popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -")
-    pandocResult = subprocess.run(["/usr/bin/pandoc", "--wrap=none -s " + inputFile + " -t gfm -o -"], check=True, stdout=subprocess.PIPE, universal_newlines=True)
-    print("\n\n" + pandocResult.stdout.decode('utf-8') + "\n\n")
-    for markdownLine in pandocResult.stdout.decode('utf-8').split("\n"):
+    pandocHandle = os.popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -")
+    #pandocResult = subprocess.run(["/usr/bin/pandoc", "--wrap=none -s " + inputFile + " -t gfm -o -"], check=True, stdout=subprocess.PIPE, universal_newlines=True)
+    #print("\n\n" + pandocResult.stdout.decode('utf-8') + "\n\n")
+    #for markdownLine in pandocResult.stdout.decode('utf-8').split("\n"):
+    for markdownLine in pandocHandle.read.decode('utf-8').split("\n"):
         lineIsFrontMatter = False
         for validFrontMatterField in validFrontMatterFields:
             if markdownLine.lower().startswith(validFrontMatterField + ":"):
