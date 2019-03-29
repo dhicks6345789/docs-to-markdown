@@ -97,18 +97,15 @@ def documentToGovspeak(inputFile):
     # As of around Monday, 4th March 2019, Pandoc 2.7 now seems to work correctly for parsing DOCX files produced by Word Online.
     # Debian's Pandoc package is still on version 2.5, so Pandoc needs to be installed via the .deb file provided on their website.
     # This proved to be a simple enough install, no problems.
-    #pandocHandle = os.popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -")
-    pandocHandle = subprocess.Popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -", shell=True, stdout=subprocess.PIPE)
-    for markdownLine in pandocHandle.communicate()[0].decode("utf-8").split("\n"):
+    pandocProcess = subprocess.Popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -", shell=True, stdout=subprocess.PIPE)
+    for markdownLine in pandocProcess.communicate()[0].decode("utf-8").split("\n"):
         lineIsFrontMatter = False
         for validFrontMatterField in validFrontMatterFields:
             if markdownLine.lower().startswith(validFrontMatterField + ":"):
                 frontMatter[validFrontMatterField] = markdownLine.split(":")[1].strip()
                 lineIsFrontMatter = True
         if not lineIsFrontMatter:
-            markdown = markdown + markdownLine.replace(baseURL, "")
-    pandocHandle.close()
-    
+            markdown = markdown + markdownLine.replace(baseURL, "")    
     return(markdown, frontMatter)
     
     #docxDocument = docx.Document(inputFile)
