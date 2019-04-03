@@ -108,32 +108,6 @@ def documentToGovspeak(inputFile):
             markdown = markdown + markdownLine.replace(baseURL, "")    
     return(markdown, frontMatter)
     
-    #docxDocument = docx.Document(inputFile)
-    #for childElement in docxDocument._element.body:
-    #    if isinstance(childElement, docx.oxml.text.paragraph.CT_P):
-    #        childParagraph = docx.text.paragraph.Paragraph(childElement, docxDocument._element.body)
-    #        paragraphIsFrontMatter = False
-    #        for validFrontMatterField in validFrontMatterFields:
-    #            if childParagraph.text.lower().startswith(validFrontMatterField + ":"):
-    #                frontMatter[validFrontMatterField] = childParagraph.text.split(":")[1].strip()
-    #                paragraphIsFrontMatter = True
-    #        if not paragraphIsFrontMatter:
-    #            govspeak = govspeak + childParagraph.text + "\n\n"
-    #    elif isinstance(childElement, docx.oxml.table.CT_Tbl):
-    #        childTable = docx.table.Table(childElement, docxDocument._element.body)
-    #        for tableColumn in childTable.rows[0].cells:
-    #            govspeak = govspeak + "|     "
-    #        govspeak = govspeak + "|\n"
-    #        for tableColumn in childTable.rows[0].cells:
-    #            govspeak = govspeak + "| --- "
-    #        govspeak = govspeak + "|\n"
-    #        for tableRow in childTable.rows:
-    #            for tableColumn in tableRow.cells:
-    #                govspeak = govspeak + "| " + tableColumn.text + " "
-    #            govspeak = govspeak + "|\n"
-    #        print(govspeak)
-    #return(govspeak, frontMatter)
-    
 # Takes an input Excel / CSV file, loads that as a Pandas dataframe and returns a Markdown / Govspeak string.
 def spreadsheetToGovspeak(inputFile):
     inputDataFrame = pandas.read_excel(io=inputFile)
@@ -194,7 +168,8 @@ def copyFolder(srcFolder, destFolder):
         if os.path.isdir(srcFolder + os.sep + item):
             copyFolder(srcFolder + os.sep + item, destFolder + os.sep + item)
         else:
-            shutil.copyfile(srcFolder + os.sep + item, destFolder + os.sep + item)
+            # To-do: skip copying if the file already exists and is up-to-date, otherwise each run takes /ages/.
+            #shutil.copyfile(srcFolder + os.sep + item, destFolder + os.sep + item)
             removeFromFilesToProcess(srcFolder + os.sep + item)
             
 # Main script execution begins here. Start by processing the command-line arguments.
