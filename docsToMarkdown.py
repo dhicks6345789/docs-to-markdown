@@ -224,16 +224,18 @@ print("Input folder: " + inputFolder)
 print("Output folder: " + outputFolder)
 print("Template folder: " + templateFolder)
 
-sys.exit(0)
-
 # Make sure the defined output folder exists...
 os.makedirs(outputFolder, exist_ok=True)
 # ...then copy any template files to the output folder.
 if not templateFolder == "":
     os.system("cp -r " + templateFolder + "/* " + outputFolder)
+    
+print("Getting input file list...")
 
 # Get a list of all the input files to process.
 filesToProcess = processInputFolder(inputFolder, "")
+
+sys.exit(0)
 
 # Load and step through the user-provided configuration, removing any files referenced by a function from the to-be-processed list.
 config = json.loads(getFile(configFile))
