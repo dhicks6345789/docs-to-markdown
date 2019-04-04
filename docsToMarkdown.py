@@ -203,7 +203,6 @@ print("Config file: " + configFile)
 print("Input folder: " + inputFolder)
 print("Output folder: " + outputFolder)
 print("Template folder: " + templateFolder)
-
 sys.stdout.flush()
 
 # Make sure the defined output folder exists...
@@ -211,20 +210,13 @@ os.makedirs(outputFolder, exist_ok=True)
 # ...then copy any template files to the output folder.
 if not templateFolder == "":
     os.system("cp -r " + templateFolder + "/* " + outputFolder)
-    
-print("Getting input file list...")
-sys.stdout.flush()
 
 # Get a list of all the input files to process.
 filesToProcess = processInputFolder(inputFolder, "")
 
-sys.stdout.flush()
-
 # Load and step through the user-provided configuration, removing any files referenced by a function from the to-be-processed list.
 config = json.loads(getFile(configFile))
 for configItem in config:
-    print(configItem)
-    sys.stdout.flush()
     if "global" in configItem.keys():
         globalValues[configItem["global"]] = configItem["value"]
     if "function" in configItem.keys():
