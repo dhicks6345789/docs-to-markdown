@@ -179,7 +179,7 @@ def copyFolder(srcFolder, destFolder):
             removeFromFilesToProcess(srcFolder + os.sep + item)
             
 # Make sure any files or sub-folders not in srcFolder are removed from destFolder.
-def matchFolder(srcFolder, destFolder)
+def matchFolder(srcFolder, destFolder):
     for item in os.listdir(destFolder):
         if not os.path.exists(srcFolder + os.sep + item):
             if os.path.isdir(destFolder + os.sep + item):
