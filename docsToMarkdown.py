@@ -175,6 +175,7 @@ def copyFolder(srcFolder, destFolder):
                     copyFile = False
             if copyFile:
                 shutil.copyfile(srcFolder + os.sep + item, destFolder + os.sep + item)
+                shutil.copystat(srcFolder + os.sep + item, destFolder + os.sep + item)
             removeFromFilesToProcess(srcFolder + os.sep + item)
             
 # Main script execution begins here. Start by processing the command-line arguments.
