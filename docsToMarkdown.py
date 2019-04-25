@@ -178,6 +178,18 @@ def copyFolder(srcFolder, destFolder):
                 shutil.copystat(srcFolder + os.sep + item, destFolder + os.sep + item)
             removeFromFilesToProcess(srcFolder + os.sep + item)
             
+# Make sure any files or sub-folders not in srcFolder are removed from destFolder.
+def matchFolder(srcFolder, destFolder)
+    for item in os.listdir(destFolder):
+        if not os.path.exists(srcFolder + os.sep + item):
+            if os.path.isdir(destFolder + os.sep + item):
+                shutil.rmtree(destFolder + os.sep + item)
+            else:
+                os.remove(destFolder + os.sep + item)
+        else:
+            if os.path.isdir(destFolder + os.sep + item):
+                matchFolder(srcFolder + os.sep + item, destFolder + os.sep + item)
+                
 # Main script execution begins here. Start by processing the command-line arguments.
 argNum = 1
 while argNum < len(sys.argv):
@@ -224,6 +236,7 @@ for configItem in config:
         # Recursivly copy a folder's contents from src to dest.
         if configItem["function"] == "copyFolder":
             copyFolder(normalisePath(inputFolder + os.sep + configItem["src"]), normalisePath(outputFolder + os.sep + configItem["dest"]))
+            matchFolder(normalisePath(inputFolder + os.sep + configItem["src"]), normalisePath(outputFolder + os.sep + configItem["dest"]))
         # Reads a list of files, of any supported type, and outputs CSV to the given output, with files concatenated together in the given order.
         # If the "jekyllHeaders" option is set to "true", then this function assumes the first row of Excel files are column headings, and the CSV file
         # written will have any spaces in column headings removed to make a valid variable name in Jekyll.
