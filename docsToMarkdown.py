@@ -34,7 +34,7 @@ templateFolder = ""
 
 # When we examine a Word document, if it starts with what looks like YAML-style variables then we will treat that as Jeykll front matter values.
 # We only check for the variables as given below, otherwise every document that starts with a colon in the first line would get treated as front matter.
-validFrontMatterFields = ["title"]
+validFrontMatterFields = ["title","lastUpdated"]
 defaultFrontMatter = {"layout": "default"}
 
 globalValues = {}
