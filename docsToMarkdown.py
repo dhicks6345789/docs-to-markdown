@@ -101,7 +101,7 @@ def documentToGovspeak(inputFile):
     for markdownLine in pandocProcess.communicate()[0].decode("utf-8").split("\n"):
         lineIsFrontMatter = False
         for validFrontMatterField in validFrontMatterFields:
-            if markdownLine.lower().startswith(validFrontMatterField + ":"):
+            if markdownLine.lower().startswith(validFrontMatterField.lower() + ":"):
                 frontMatter[validFrontMatterField] = markdownLine.split(":")[1].strip()
                 lineIsFrontMatter = True
         if not lineIsFrontMatter:
