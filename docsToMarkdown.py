@@ -34,6 +34,7 @@ templateFolder = ""
 
 # When we examine a Word document, if it starts with what looks like YAML-style variables then we will treat that as Jeykll front matter values.
 # We only check for the variables as given below, otherwise every document that starts with a colon in the first line would get treated as front matter.
+# Can be added to in the user-defined config file by defining the "validFrontMatterFields" value.
 validFrontMatterFields = ["title","lastUpdated"]
 defaultFrontMatter = {"layout": "default"}
 
@@ -231,7 +232,11 @@ filesToProcess = processInputFolder(inputFolder, "")
 config = json.loads(getFile(configFile))
 for configItem in config:
     if "global" in configItem.keys():
-        globalValues[configItem["global"]] = configItem["value"]
+        if configItem["global"] == "validFrontMatterFields":
+            for validFrontMatterField in configItem["value"]:
+                validFrontMatterFields.append(validFrontMatterField)
+        else:
+            globalValues[configItem["global"]] = configItem["value"]
     if "function" in configItem.keys():
         # Recursivly copy a folder's contents from src to dest.
         if configItem["function"] == "copyFolder":
