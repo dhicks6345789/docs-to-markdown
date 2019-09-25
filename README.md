@@ -1,9 +1,10 @@
 # DocsToMarkdown
-Converts a folder tree of Word / Excel files (compatability with those produced by Mircosoft Office / Office 365, exported from Google Docs / Sheets or, hopefully, pretty much any other tool) to the Govspeak varient of Markdown as specified by GOV.UK. Can also convert some data to CSV format. The Markdown output is intended to be used as the input for static site generation tools such as Jeykll, Hugo or Hyde, and various options / assumtions exist to ensure the files produced are suitible for those tools.
+Converts a folder tree of Word / Excel files (compatability is with those produced by Mircosoft Office / Office 365, exported from Google Docs / Sheets or, hopefully, pretty much any other tool) to the Govspeak varient of Markdown as specified by GOV.UK, or to CSV if appropriate. The output is intended to be used as the input for static site generation tools such as Jeykll, Hugo or Hyde, and various options / assumtions exist to ensure the files produced are suitible for those tools.
 
+## Requirements
 This utility depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019. Earlier versions (as generally packaged in Debian's repositories, for instance) have a bug which stops them parsing DOCX files created with Office 365.
 
-Installation:
+## Installation
 Just run docsToMarkdown.py, giving input and output folder options, e.g.:
 
 docsToMarkdown.py -i inputDocs -o outputFolder
