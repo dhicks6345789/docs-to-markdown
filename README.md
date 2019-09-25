@@ -2,30 +2,41 @@
 Converts a folder tree of Word / Excel files (compatability is with those produced by Mircosoft Office / Office 365, exported from Google Docs / Sheets or, hopefully, pretty much any other tool) to the Govspeak varient of Markdown as specified by GOV.UK, or to CSV if appropriate. The output is intended to be used as the input for static site generation tools such as Jeykll, Hugo or Hyde, and various options / assumtions exist to ensure the files produced are suitible for those tools.
 
 ## Requirements
-This utility depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019. Earlier versions (as generally packaged in Debian's repositories, for instance) have a bug which stops them parsing DOCX files created with Office 365.
+This utility is written in Python 3. It depends on Pandas and Numpy Python modules, which should be installable via Pip.
+
+DocsToMarkdown depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019. Earlier versions (as packaged in Debian 9 "Stretch" repositories, for instance) have a bug which stops them parsing DOCX files created with Office 365.
 
 ## Installation
-Just run docsToMarkdown.py, giving input and output folder options, e.g.:
+Clone the Git repository or just download the docsToMarkdown.py file.
 
-docsToMarkdown.py -i inputDocs -o outputFolder
+## Usage
+Run the script, giving input and output folder options:
 
-The above basic usage will process all recognised documents in the "inputDocs" folder, applying the default behaviour to each one, and place the resulting Markdown file in a matching set of files in the "outputFolder" folder. So, if you had a basic folder structure, like so:
+docsToMarkdown.py -i inputFolder -o outputFolder
 
-inputDocs/index.docx
-inputDocs/about.docx
-inputDocs/contact.docx
-inputDocs/data.xlsx
+That will process all recognised documents in "inputFolder", applying the default behaviour to each one, and place the resulting Markdown file in a matching set of files in "outputFolder". Sub-folders will be recursed into, and the output folder will be created if it doesn't already exist.
 
-The above command would produce:
+The default behaviour for DOCS and XLSX files is to simply pass them to Pandoc for conversion into Markdown. Basic formatting from Word documents should be retained in output Markdown - titles, bold / italic text, bullet points, tables and similar features.
 
-outputFolder/index.html
-outputFolder/about.html
-outputFolder/contact.html
-outputFolder/data.html
+### Example 1
+So, if you had a single folder with some files in:
 
-Basic formatting from Word documents should be retained - titles, bold / italic text, bullet points, tables and similar features.
+inputFolder/index.docx
+inputFolder/about.docx
+inputFolder/contact.docx
+inputFolder/data.xlsx
 
-You can better define the conversion process with a JSON-formatted config file. Options are:
+Running "docsToMarkdown.py -i inputFolder -o outputFolder" would produce:
+
+outputFolder/index.md
+outputFolder/about.md
+outputFolder/contact.md
+outputFolder/data.md
+
+### Example 2
+You can better define the conversion process with a JSON-formatted config file:
+
+docsToMarkdown.py -i inputFolder -o outputFolder -c config.json
 
 global:baseURL
 Sets a global variable later passed to various functions to define the base URL of your site.
