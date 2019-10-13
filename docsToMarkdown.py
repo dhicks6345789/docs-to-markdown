@@ -191,6 +191,11 @@ def matchFolder(srcFolder, destFolder):
             if os.path.isdir(destFolder + os.sep + item):
                 matchFolder(srcFolder + os.sep + item, destFolder + os.sep + item)
                 
+# Takes a chunk of Govspeak Markdown text as input, returns that text with any ordered lists converted to legislative lists,
+# i.e. lists where numbering is explicitly specified, not restarted from scratch as is the Kramdown / Govspeak default.
+def makeLegislativeLists(theGovspeak):
+    return theGovspeak
+                
 # Main script execution begins here. Start by processing the command-line arguments.
 argNum = 1
 while argNum < len(sys.argv):
@@ -282,6 +287,9 @@ for configItem in config:
             if "frontMatter" in configItem.keys():
                 for frontMatterItem in configItem["frontMatter"].keys():
                     outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
+            if "produceLegislativeLists" in configItem.keys():
+                if configItems["produceLegislativeLists"] == "true":
+                    outputGovspeak = makeLegislativeLists(outputGovspeak)
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
             
 # After going through the user-defined config, apply default behaviours to any files still left to be processed.
