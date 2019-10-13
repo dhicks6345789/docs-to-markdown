@@ -194,7 +194,7 @@ def matchFolder(srcFolder, destFolder):
 # Takes a chunk of Govspeak Markdown text as input, returns that text with any ordered lists converted to legislative lists,
 # i.e. lists where numbering is explicitly specified, not restarted from scratch as is the Kramdown / Govspeak default.
 def makeLegislativeLists(theGovspeak):
-    return theGovspeak
+    return re.sub(r"^(\d.)\. >", r"\{:start=\"\1\"\}\1. >", theGovspeak, count=1)
                 
 # Main script execution begins here. Start by processing the command-line arguments.
 argNum = 1
