@@ -196,8 +196,6 @@ def matchFolder(srcFolder, destFolder):
 # i.e. lists where numbering is explicitly specified, not restarted from scratch as is the Kramdown / Govspeak default.
 def makeLegislativeLists(theGovspeak):
     print("Coverting legislative list...")
-    print(theGovspeak)
-    sys.stdout.flush()
     return re.sub("^\d*\. >", "Bananas", theGovspeak, count=1)
                 
 # Main script execution begins here. Start by processing the command-line arguments.
@@ -293,7 +291,11 @@ for configItem in config:
                     outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
             if "produceLegislativeLists" in configItem.keys():
                 if configItem["produceLegislativeLists"] == "true":
+                    print("Before:")
+                    print(outputGovspeak)
                     outputGovspeak = makeLegislativeLists(outputGovspeak)
+                    print("After:")
+                    print(outputGovspeak)
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
             
 # After going through the user-defined config, apply default behaviours to any files still left to be processed.
