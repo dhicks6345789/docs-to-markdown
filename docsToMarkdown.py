@@ -2,6 +2,7 @@
 
 # Standard libraries.
 import os
+import re
 import sys
 import shutil
 import subprocess
@@ -288,7 +289,7 @@ for configItem in config:
                 for frontMatterItem in configItem["frontMatter"].keys():
                     outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
             if "produceLegislativeLists" in configItem.keys():
-                if configItems["produceLegislativeLists"] == "true":
+                if configItem["produceLegislativeLists"] == "true":
                     outputGovspeak = makeLegislativeLists(outputGovspeak)
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
             
