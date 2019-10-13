@@ -296,6 +296,7 @@ for configItem in config:
                     outputGovspeak = makeLegislativeLists(outputGovspeak)
                     print("After:")
                     print(outputGovspeak)
+                    print(normalisePath(outputFolder + os.sep + configItem["outputFile"]))
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
             
 # After going through the user-defined config, apply default behaviours to any files still left to be processed.
