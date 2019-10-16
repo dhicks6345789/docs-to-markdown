@@ -197,7 +197,7 @@ def matchFolder(srcFolder, destFolder):
 def makeLegislativeLists(theGovspeak):
     print("Coverting legislative list...")
     print(theGovspeak)
-    result = re.sub("^\d*\. >", "Bananas", theGovspeak, count=1)
+    result = re.sub("\d*\. >", "Bananas", theGovspeak, count=1)
     print("Converted:")
     print(result)
     return(result)
