@@ -197,7 +197,10 @@ def matchFolder(srcFolder, destFolder):
 def makeLegislativeLists(theGovspeak):
     print("Coverting legislative list...")
     print(theGovspeak)
-    return re.sub("^\d*\. >", "Bananas", theGovspeak, count=1)
+    result = re.sub("^\d*\. >", "Bananas", theGovspeak, count=1)
+    print("Converted:")
+    print(result)
+    return(result)
                 
 # Main script execution begins here. Start by processing the command-line arguments.
 argNum = 1
