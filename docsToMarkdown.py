@@ -250,7 +250,7 @@ if not templateFolder == "":
 
 # Get a list of all the input files to process.
 filesToProcess = processInputFolder(inputFolder, "")
-print("Files to process:")
+print("Files to process - start:")
 print(filesToProcess)
 print("---")
 
@@ -319,6 +319,10 @@ for configItem in config:
                     outputGovspeak = makeLegislativeLists(outputGovspeak)
             outputGovspeak = normaliseGovspeak(outputGovspeak)
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
-            
+
+print("Files to process - end:")
+print(filesToProcess)
+print("---")
+
 # After going through the user-defined config, apply default behaviours to any files still left to be processed.
 applyDefaults(inputFolder, "", filesToProcess)
