@@ -264,10 +264,13 @@ for configItem in config:
         else:
             globalValues[configItem["global"]] = configItem["value"]
     if "function" in configItem.keys():
-        # Recursivly copy a folder's contents from src to dest.
+        # Recursivly copy a folder's contents from src to dest - any files in dest that don't exist in src will be left.
         if configItem["function"] == "copyFolder":
             copyFolder(normalisePath(inputFolder + os.sep + configItem["src"]), normalisePath(outputFolder + os.sep + configItem["dest"]))
-            #matchFolder(normalisePath(inputFolder + os.sep + configItem["src"]), normalisePath(outputFolder + os.sep + configItem["dest"]))
+        # Recursivly copy a folder's contents from src to dest - any files in dest that don't exist in src will be removed.
+        if configItem["function"] == "syncFolder":
+            copyFolder(normalisePath(inputFolder + os.sep + configItem["src"]), normalisePath(outputFolder + os.sep + configItem["dest"]))
+            matchFolder(normalisePath(inputFolder + os.sep + configItem["src"]), normalisePath(outputFolder + os.sep + configItem["dest"]))
         # Reads a list of files, of any supported type, and outputs CSV to the given output, with files concatenated together in the given order.
         # If the "jekyllHeaders" option is set to "true", then this function assumes the first row of Excel files are column headings, and the CSV file
         # written will have any spaces in column headings removed to make a valid variable name in Jekyll.
