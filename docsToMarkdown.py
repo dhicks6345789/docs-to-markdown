@@ -92,13 +92,13 @@ def documentToGovspeak(inputFile):
     baseURL = ""
     if "baseURL" in globalValues.keys():
         baseURL = globalValues["baseURL"]
-    #govspeak = ""
     markdown = ""
     frontMatter = {}
     
     # As of around Monday, 4th March 2019, Pandoc 2.7 now seems to work correctly for parsing DOCX files produced by Word Online.
     # Debian's Pandoc package is still on version 2.5, so Pandoc needs to be installed via the .deb file provided on their website.
     # This proved to be a simple enough install, no problems.
+    print("pandoc --wrap=none -s " + inputFile + " -t gfm -o -")
     pandocProcess = subprocess.Popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -", shell=True, stdout=subprocess.PIPE)
     for markdownLine in pandocProcess.communicate()[0].decode("utf-8").split("\n"):
         lineIsFrontMatter = False
@@ -298,7 +298,6 @@ for configItem in config:
                 for inputFile in filesToProcess:
                     if not re.search(inputFileMatch, inputFile) == None:
                         matchedFiles.append(inputFile)
-                #print(matchedFiles)
                 for inputFile in matchedFiles:
                     if inputFile.lower().endswith(".docx"):
                         (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
@@ -314,12 +313,7 @@ for configItem in config:
                     outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
             if "produceLegislativeLists" in configItem.keys():
                 if configItem["produceLegislativeLists"] == "true":
-                    #print("Before:")
-                    #print(outputGovspeak)
                     outputGovspeak = makeLegislativeLists(outputGovspeak)
-                    #print("After:")
-                    #print(outputGovspeak)
-                    #print(normalisePath(outputFolder + os.sep + configItem["outputFile"]))
             outputGovspeak = normaliseGovspeak(outputGovspeak)
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
             
