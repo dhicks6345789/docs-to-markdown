@@ -294,10 +294,10 @@ for configItem in config:
             if "produceLegislativeLists" in configItem.keys():
                 if configItem["produceLegislativeLists"] == "true":
                     print("Before:")
-                    print(outputGovspeak)
+                    #print(outputGovspeak)
                     outputGovspeak = makeLegislativeLists(outputGovspeak)
                     print("After:")
-                    print(outputGovspeak)
+                    #print(outputGovspeak)
                     print(normalisePath(outputFolder + os.sep + configItem["outputFile"]))
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
             
