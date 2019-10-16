@@ -197,7 +197,7 @@ def matchFolder(srcFolder, destFolder):
 def makeLegislativeLists(theGovspeak):
     result = ""
     for theGovspeakLine in theGovspeak.split("\n"):
-        result = result + re.sub("^(\d*)\. >", "\1\n\1\. >", theGovspeakLine, count=1) + "\n"
+        result = result + re.sub(r'^(\d*)\. >', r'\1\n\1. >', theGovspeakLine, count=1) + "\n"
     return(result)
 
 def normaliseGovspeak(theGovspeak):
