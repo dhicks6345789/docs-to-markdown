@@ -278,16 +278,21 @@ for configItem in config:
                 subRootPath = configItem["rootPath"]
             for inputFileMatch in configItem["inputFiles"]:
                 inputFileMatch = normalisePath(inputFolder + os.sep + subRootPath + os.sep + inputFileMatch)
+                matchedFiles = []
                 for inputFile in filesToProcess:
                     if not re.search(inputFileMatch, inputFile) == None:
-                        if inputFile.lower().endswith(".docx"):
-                            (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
-                            outputGovspeak = outputGovspeak + fileGovspeak + "\n\n"
-                            for frontMatterItem in fileFrontMatter.keys():
-                                outputFrontMatter[frontMatterItem] = fileFrontMatter[frontMatterItem]
-                        elif inputFile.lower().endswith(".xlsx"):
-                            outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
-                        removeFromFilesToProcess(inputFile)
+                        matchedFiles.append(inputFile)
+                print(matchedFiles)
+                for inputFile in matchedFiles:
+                    if inputFile.lower().endswith(".docx"):
+                        (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
+                        outputGovspeak = outputGovspeak + fileGovspeak + "\n\n"
+                        for frontMatterItem in fileFrontMatter.keys():
+                            outputFrontMatter[frontMatterItem] = fileFrontMatter[frontMatterItem]
+                    elif inputFile.lower().endswith(".xlsx"):
+                        outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
+                for inputFile in matchedFiles:
+                    removeFromFilesToProcess(inputFile)
             if "frontMatter" in configItem.keys():
                 for frontMatterItem in configItem["frontMatter"].keys():
                     outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
