@@ -282,7 +282,7 @@ for configItem in config:
                 for inputFile in filesToProcess:
                     if not re.search(inputFileMatch, inputFile) == None:
                         matchedFiles.append(inputFile)
-                print(matchedFiles)
+                #print(matchedFiles)
                 for inputFile in matchedFiles:
                     if inputFile.lower().endswith(".docx"):
                         (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
@@ -298,12 +298,12 @@ for configItem in config:
                     outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
             if "produceLegislativeLists" in configItem.keys():
                 if configItem["produceLegislativeLists"] == "true":
-                    print("Before:")
+                    #print("Before:")
                     #print(outputGovspeak)
                     outputGovspeak = makeLegislativeLists(outputGovspeak)
-                    print("After:")
+                    #print("After:")
                     #print(outputGovspeak)
-                    print(normalisePath(outputFolder + os.sep + configItem["outputFile"]))
+                    #print(normalisePath(outputFolder + os.sep + configItem["outputFile"]))
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
             
 # After going through the user-defined config, apply default behaviours to any files still left to be processed.
