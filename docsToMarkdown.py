@@ -276,16 +276,18 @@ for configItem in config:
             subRootPath = ""
             if "rootPath" in configItem.keys():
                 subRootPath = configItem["rootPath"]
-            for inputFile in configItem["inputFiles"]:
-                inputFile = normalisePath(inputFolder + os.sep + subRootPath + os.sep + inputFile)
-                if inputFile.lower().endswith(".docx"):
-                    (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
-                    outputGovspeak = outputGovspeak + fileGovspeak + "\n\n"
-                    for frontMatterItem in fileFrontMatter.keys():
-                        outputFrontMatter[frontMatterItem] = fileFrontMatter[frontMatterItem]
-                elif inputFile.lower().endswith(".xlsx"):
-                    outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
-                removeFromFilesToProcess(inputFile)
+            for inputFileMatch in configItem["inputFiles"]:
+                inputFileMatch = normalisePath(inputFolder + os.sep + subRootPath + os.sep + inputFileMatch)
+                for inputFile in filesToProcess:
+                    if not re.search(inputFileMatch, inputFile) == None:
+                        if inputFile.lower().endswith(".docx"):
+                            (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
+                            outputGovspeak = outputGovspeak + fileGovspeak + "\n\n"
+                            for frontMatterItem in fileFrontMatter.keys():
+                                outputFrontMatter[frontMatterItem] = fileFrontMatter[frontMatterItem]
+                        elif inputFile.lower().endswith(".xlsx"):
+                            outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
+                        removeFromFilesToProcess(inputFile)
             if "frontMatter" in configItem.keys():
                 for frontMatterItem in configItem["frontMatter"].keys():
                     outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
