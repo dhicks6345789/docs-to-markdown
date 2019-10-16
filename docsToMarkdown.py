@@ -250,6 +250,9 @@ if not templateFolder == "":
 
 # Get a list of all the input files to process.
 filesToProcess = processInputFolder(inputFolder, "")
+print("Files to process:")
+print(filesToProcess)
+print("---")
 
 # Load and step through the user-provided configuration, removing any files referenced by a function from the to-be-processed list.
 config = json.loads(getFile(configFile))
