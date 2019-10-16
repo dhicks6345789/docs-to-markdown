@@ -195,12 +195,24 @@ def matchFolder(srcFolder, destFolder):
 # Takes a chunk of Govspeak Markdown text as input, returns that text with any ordered lists converted to legislative lists,
 # i.e. lists where numbering is explicitly specified, not restarted from scratch as is the Kramdown / Govspeak default.
 def makeLegislativeLists(theGovspeak):
-    print("Coverting legislative list...")
-    print(theGovspeak)
-    result = re.sub("\d*\. >", "Bananas", theGovspeak, count=1)
-    print("Converted:")
-    print(result)
+    result = ""
+    for theGovspeakLine in theGovspeak.split("\n"):
+        result = result + re.sub("^\d*\. >", "Bananas", theGovspeakLine, count=1)
     return(result)
+
+def normaliseGovspeak(theGovspeak):
+    result = ""
+    previousLineWasBlank = True
+    for theGovspeakLine in theGovspeak.split("\n"):
+        theGovspeakLine = theGovspeakLine.rstrip()
+        if theGovspeakLine == "":
+            if not previousLineWasBlank:
+                result = result + "\n"
+            previousLineWasBlank = True
+        else:
+            result = result + theGovspeakLine + "\n"
+            previousLineWasBlank = False
+    return(result.rstrip())
                 
 # Main script execution begins here. Start by processing the command-line arguments.
 argNum = 1
@@ -308,6 +320,7 @@ for configItem in config:
                     #print("After:")
                     #print(outputGovspeak)
                     #print(normalisePath(outputFolder + os.sep + configItem["outputFile"]))
+            outputGovspeak = normaliseGovspeak(outputGovspeak)
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
             
 # After going through the user-defined config, apply default behaviours to any files still left to be processed.
