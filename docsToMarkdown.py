@@ -98,7 +98,6 @@ def documentToGovspeak(inputFile):
     # As of around Monday, 4th March 2019, Pandoc 2.7 now seems to work correctly for parsing DOCX files produced by Word Online.
     # Debian's Pandoc package is still on version 2.5, so Pandoc needs to be installed via the .deb file provided on their website.
     # This proved to be a simple enough install, no problems.
-    print("pandoc --wrap=none -s " + inputFile + " -t gfm -o -")
     pandocProcess = subprocess.Popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -", shell=True, stdout=subprocess.PIPE)
     for markdownLine in pandocProcess.communicate()[0].decode("utf-8").split("\n"):
         lineIsFrontMatter = False
@@ -197,7 +196,7 @@ def matchFolder(srcFolder, destFolder):
 def makeLegislativeLists(theGovspeak):
     result = ""
     for theGovspeakLine in theGovspeak.split("\n"):
-        result = result + re.sub(r'^(\d*)\. >', r'{:start="\1"}\n\1. >', theGovspeakLine, count=1) + "\n"
+        result = result + re.sub(r'^([\d \.]*)\. *>', r'{:start="\1"}\n\1. >', theGovspeakLine, count=1) + "\n"
     return(result)
 
 def normaliseGovspeak(theGovspeak):
@@ -250,9 +249,6 @@ if not templateFolder == "":
 
 # Get a list of all the input files to process.
 filesToProcess = processInputFolder(inputFolder, "")
-print("Files to process - start:")
-print(filesToProcess)
-print("---")
 
 # Load and step through the user-provided configuration, removing any files referenced by a function from the to-be-processed list.
 config = json.loads(getFile(configFile))
@@ -322,10 +318,6 @@ for configItem in config:
                     outputGovspeak = makeLegislativeLists(outputGovspeak)
             outputGovspeak = normaliseGovspeak(outputGovspeak)
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
-
-print("Files to process - end:")
-print(filesToProcess)
-print("---")
 
 # After going through the user-defined config, apply default behaviours to any files still left to be processed.
 applyDefaults(inputFolder, "", filesToProcess)
