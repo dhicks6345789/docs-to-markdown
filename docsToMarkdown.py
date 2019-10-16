@@ -199,7 +199,7 @@ def makeLegislativeLists(theGovspeak):
         searchResult = re.search(r'^(\d[\d \.]*)\. *>', theGovspeakLine)
         if not searchResult == None:
             result = result + "{:start=\"" + searchResult.group(1) + "\"}\n"        
-        result = result + theGovSpeakLine.rstrip() + "\n"
+        result = result + theGovspeakLine.rstrip() + "\n"
     return(result)
 
 def normaliseGovspeak(theGovspeak):
