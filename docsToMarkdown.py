@@ -198,7 +198,7 @@ def makeLegislativeLists(theGovspeak):
     for theGovspeakLine in theGovspeak.split("\n"):
         searchResult = re.search(r'^(\d[\d \.]*)\. *>', theGovspeakLine)
         if not searchResult == None:
-            result = result + "{:start=\"" + searchResult.group(1) + "\"}\n"        
+            result = result + "{:start=\"" + searchResult.group(1).replace(" ", "") + "\"}\n"
         result = result + theGovspeakLine.rstrip() + "\n"
     return(result)
 
