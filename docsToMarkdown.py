@@ -21,7 +21,9 @@ import json
 
 # To-do: check here for presence of Pandoc.
 
-# Use the Pandas library to read Excel data. Overkill for simply reading an Excel file, but Pandas is installed so we might as well use it.
+# We use the Pandas library, which in turn uses the XLRD library, to read Excel data. Using Pandas seems like overkill
+# for simply reading an Excel file, might want to remove this requirement at some point.
+import xlrd
 import pandas
 
 # Pandas requires Numpy, so that will be available.
