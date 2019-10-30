@@ -279,6 +279,7 @@ for configItem in config:
             if "rootPath" in configItem.keys():
                 subRootPath = configItem["rootPath"]
             for inputFile in configItem["inputFiles"]:
+                print("filesToCSV - processing: " + inputFile)
                 inputFile = normalisePath(inputFolder + os.sep + subRootPath + os.sep + inputFile)
                 inputData = pandas.read_excel(io=inputFile)
                 if "jekyllHeaders" in configItem.keys() and configItem["jekyllHeaders"].lower() == "true":
