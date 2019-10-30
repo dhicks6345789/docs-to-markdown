@@ -279,15 +279,17 @@ for configItem in config:
             if "rootPath" in configItem.keys():
                 subRootPath = configItem["rootPath"]
             for inputFile in configItem["inputFiles"]:
-                print("filesToCSV - processing: " + inputFile)
                 inputFile = normalisePath(inputFolder + os.sep + subRootPath + os.sep + inputFile)
-                inputData = pandas.read_excel(io=inputFile)
-                if "jekyllHeaders" in configItem.keys() and configItem["jekyllHeaders"].lower() == "true":
-                    newColumns = []
-                    for columnName in inputData.columns:
-                        newColumns.append(columnName.replace(" ", ""))
-                    inputData.columns = newColumns
-                outputCSVData = outputCSVData + inputData.to_csv() + "\n"
+                try:
+                    inputData = pandas.read_excel(io=inputFile)
+                    if "jekyllHeaders" in configItem.keys() and configItem["jekyllHeaders"].lower() == "true":
+                        newColumns = []
+                        for columnName in inputData.columns:
+                            newColumns.append(columnName.replace(" ", ""))
+                        inputData.columns = newColumns
+                    outputCSVData = outputCSVData + inputData.to_csv() + "\n"
+                except xlrd.biffh.XLRDError:
+                    print("Error reading Excel file: " + inputFile)
                 removeFromFilesToProcess(inputFile)
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), outputCSVData.rstrip())
         # Reads a list of files, of any supported type, and outputs (Govspeak) Markdown to the given output, with files concatenated together in the given order.
