@@ -50,7 +50,7 @@ def getFile(theFilename):
     infile.close()
     return(result)
     
-# A utility  function to write the contents of the given string to the given file.
+# A utility function to write the contents of the given string to the given file.
 def writeFile(theFilename, theContent):
     if os.sep in theFilename:
         parentFolderName = theFilename.rsplit(os.sep, 1)[0]
@@ -71,6 +71,10 @@ def floatToString(theFloat):
         if numpy.isnan(theFloat):
             return("")
     return(str(theFloat))
+
+def flushPrint(theString):
+    print(theString)
+    sys.stdout.flush()
 
 # Given a dict, returns a YAML string, e.g.:
 # ---
@@ -155,7 +159,7 @@ def applyDefaults(rootPath, subPath, filesToProcess):
         if not os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
             fileToProcess = normalisePath(rootPath + os.sep + subPath + os.sep + item)
             if fileToProcess in filesToProcess:
-                print("Applying default behaviour to: " + fileToProcess)
+                flushPrint("Applying default behaviour to: " + fileToProcess)
                 if fileToProcess.lower().endswith(".docx"):
                     (govspeak, frontMatter) = documentToGovspeak(fileToProcess)
                     writeFile(normalisePath(outputFolder + os.sep + subPath + os.sep + item[:-4] + "md"), frontMatterToString(frontMatter) + "\n" + govspeak)
@@ -235,15 +239,15 @@ while argNum < len(sys.argv):
         templateFolder = sys.argv[argNum]
     argNum = argNum + 1
 if inputFolder == "" or outputFolder == "":
-    print("docsToMarkdown. Usage:")
-    print("docsToMarkdown -c -o -i -t")
+    flushPrint("docsToMarkdown. Usage:")
+    flushPrint("docsToMarkdown -c -o -i -t")
     sys.exit(0)
     
 # A quick output message for the user.
-print("Config file: " + configFile)
-print("Input folder: " + inputFolder)
-print("Output folder: " + outputFolder)
-print("Template folder: " + templateFolder)
+flushPrint("Config file: " + configFile)
+flushPrint("Input folder: " + inputFolder)
+flushPrint("Output folder: " + outputFolder)
+flushPrint("Template folder: " + templateFolder)
 sys.stdout.flush()
 
 # Make sure the defined output folder exists...
@@ -291,7 +295,7 @@ for configItem in config:
                         inputData.columns = newColumns
                     outputCSVData = outputCSVData + inputData.to_csv() + "\n"
                 except xlrd.biffh.XLRDError:
-                    print("Error reading Excel file: " + inputFile)
+                    flushPrint("Error reading Excel file: " + inputFile)
                 removeFromFilesToProcess(inputFile)
             writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), outputCSVData.rstrip())
         # Reads a list of files, of any supported type, and outputs (Govspeak) Markdown to the given output, with files concatenated together in the given order.
