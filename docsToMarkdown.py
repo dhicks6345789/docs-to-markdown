@@ -29,6 +29,10 @@ import pandas
 # Pandas requires Numpy, so that will be available.
 import numpy
 
+# Pandoc escapes Markdown control characters embedded in Word documents, but we want to let people mebed chunks of Markdown in
+# a document if they want, so we un-escape the Markdown back again.
+markdownReplace = {"\\[":"[","\\]":"]","\\!":"!"}
+
 # Parameter values to be set via the command line.
 configFile = "config.json"
 inputFolder = ""
@@ -106,7 +110,8 @@ def documentToGovspeak(inputFile):
     # This proved to be a simple enough install, no problems.
     pandocProcess = subprocess.Popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -", shell=True, stdout=subprocess.PIPE)
     for markdownLine in pandocProcess.communicate()[0].decode("utf-8").split("\n"):
-        markdownLine = markdownLine.replace("\\[", "[").replace("\\]", "]")
+        for markdownReplaceKey in markdownReplace.keys():
+            markdownLine = markdownLine.replace(markdownReplaceKey, mardownReplace[markdownReplaceKey])
         lineIsFrontMatter = False
         for validFrontMatterField in validFrontMatterFields:
             if markdownLine.lower().startswith(validFrontMatterField.lower() + ":"):
