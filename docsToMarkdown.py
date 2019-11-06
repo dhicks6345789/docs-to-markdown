@@ -111,7 +111,7 @@ def documentToGovspeak(inputFile):
     pandocProcess = subprocess.Popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -", shell=True, stdout=subprocess.PIPE)
     for markdownLine in pandocProcess.communicate()[0].decode("utf-8").split("\n"):
         for markdownReplaceKey in markdownReplace.keys():
-            markdownLine = markdownLine.replace(markdownReplaceKey, mardownReplace[markdownReplaceKey])
+            markdownLine = markdownLine.replace(markdownReplaceKey, markdownReplace[markdownReplaceKey])
         lineIsFrontMatter = False
         for validFrontMatterField in validFrontMatterFields:
             if markdownLine.lower().startswith(validFrontMatterField.lower() + ":"):
