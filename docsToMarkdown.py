@@ -29,23 +29,25 @@ import pandas
 # Pandas requires Numpy, so that will be available.
 import numpy
 
-# Pandoc escapes Markdown control characters embedded in Word documents, but we want to let people mebed chunks of Markdown in
-# a document if they want, so we un-escape the Markdown back again.
-markdownReplace = {"\\[":"[","\\]":"]","\\!":"!"}
-
 # Parameter values to be set via the command line.
 configFile = "config.json"
 inputFolder = ""
 outputFolder = ""
 templateFolder = ""
 
-# When we examine a Word document, if it starts with what looks like YAML-style variables then we will treat that as Jeykll front matter values.
-# We only check for the variables as given below, otherwise every document that starts with a colon in the first line would get treated as front matter.
-# Can be added to in the user-defined config file by defining the "validFrontMatterFields" value.
+# When we examine a Word document, if it starts with what looks like YAML-style variables then we will treat that as Jeykll
+# front matter values. We only check for the variables as given below, otherwise every document that starts with a colon in the
+# first line would get treated as front matter. Can also be added to in the user-defined config file by defining
+# the "validFrontMatterFields" value.
 validFrontMatterFields = ["title","lastUpdated"]
 defaultFrontMatter = {"layout": "default"}
 
 globalValues = {}
+
+# Pandoc escapes Markdown control characters embedded in Word documents, but we want to let people embed chunks of Markdown in
+# a document if they want, so we un-escape the Markdown back again - we simply use Python's string.replace to replace characters
+# in strings.
+markdownReplace = {"\\[":"[","\\]":"]","\\!":"!"}
 
 # A utility function to return the contents of the given file.
 def getFile(theFilename):
@@ -55,7 +57,7 @@ def getFile(theFilename):
     return(result)
     
 # A utility function to write the contents of the given string to the given file.
-def writeFile(theFilename, theContent):
+def putFile(theFilename, theContent):
     if os.sep in theFilename:
         parentFolderName = theFilename.rsplit(os.sep, 1)[0]
         if not os.path.exists(parentFolderName):
@@ -168,7 +170,7 @@ def applyDefaults(rootPath, subPath, filesToProcess):
                 flushPrint("Applying default behaviour to: " + fileToProcess)
                 if fileToProcess.lower().endswith(".docx"):
                     (govspeak, frontMatter) = documentToGovspeak(fileToProcess)
-                    writeFile(normalisePath(outputFolder + os.sep + subPath + os.sep + item[:-4] + "md"), frontMatterToString(frontMatter) + "\n" + govspeak)
+                    putFile(normalisePath(outputFolder + os.sep + subPath + os.sep + item[:-4] + "md"), frontMatterToString(frontMatter) + "\n" + govspeak)
     for item in folderContents:
         if os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
             applyDefaults(rootPath, subPath + os.sep + item, filesToProcess)
@@ -303,7 +305,7 @@ for configItem in config:
                 except xlrd.biffh.XLRDError:
                     flushPrint("Error reading Excel file: " + inputFile)
                 removeFromFilesToProcess(inputFile)
-            writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), outputCSVData.rstrip())
+            putFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), outputCSVData.rstrip())
         # Reads a list of files, of any supported type, and outputs (Govspeak) Markdown to the given output, with files concatenated together in the given order.
         # Any front matter defined in any of the input files will be written to the output file, with any front matter defined in the function itself taking precedence.
         if configItem["function"] == "filesToMarkdown":
@@ -335,7 +337,7 @@ for configItem in config:
                 if configItem["produceLegislativeLists"] == "true":
                     outputGovspeak = makeLegislativeLists(outputGovspeak)
             outputGovspeak = normaliseGovspeak(outputGovspeak)
-            writeFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
+            putFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
 
 # After going through the user-defined config, apply default behaviours to any files still left to be processed.
 applyDefaults(inputFolder, "", filesToProcess)
