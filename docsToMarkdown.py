@@ -301,6 +301,7 @@ for configItem in config:
             if "rootPath" in configItem.keys():
                 subRootPath = configItem["rootPath"]
             for inputFile in configItem["inputFiles"]:
+                flushPrint("Converting " + inputFile + " to CSV.")
                 inputFile = normalisePath(inputFolder + os.sep + subRootPath + os.sep + inputFile)
                 try:
                     inputData = pandas.read_excel(io=inputFile)
