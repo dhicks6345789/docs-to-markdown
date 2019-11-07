@@ -251,7 +251,7 @@ while argNum < len(sys.argv):
         argNum = argNum + 1
         templateFolder = sys.argv[argNum]
     elif sys.argv[argNum] == "-produceFolderIndexes":
-        produceFolderIndex = True
+        produceFolderIndexes = True
     argNum = argNum + 1
 if inputFolder == "" or outputFolder == "":
     flushPrint("docsToMarkdown. Usage:")
@@ -263,7 +263,7 @@ flushPrint("Config file: " + configFile)
 flushPrint("Input folder: " + inputFolder)
 flushPrint("Output folder: " + outputFolder)
 flushPrint("Template folder: " + templateFolder)
-flushPrint("Produce Folder Index? " + produceFolderIndex)
+flushPrint("Produce Folder Index? " + produceFolderIndexes)
 sys.stdout.flush()
 
 # Make sure the defined output folder exists...
