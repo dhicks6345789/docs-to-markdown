@@ -312,7 +312,9 @@ for configItem in config:
                         inputData.columns = newColumns
                     outputCSVData = outputCSVData + inputData.to_csv() + "\n"
                 except xlrd.biffh.XLRDError:
-                    flushPrint("Error reading Excel file: " + inputFile)
+                    flushPrint("XLRDError - Error reading Excel file: " + inputFile)
+                except OSError:
+                    flushPrint("OSError - Error reading Excel file: " + inputFile)
                 removeFromFilesToProcess(inputFile)
             putFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), outputCSVData.rstrip())
         # Reads a list of files, of any supported type, and outputs (Govspeak) Markdown to the given output, with files concatenated together in the given order.
