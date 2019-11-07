@@ -148,6 +148,7 @@ def removeFromFilesToProcess(theFile):
 def processInputFolder(rootPath, subPath):
     result = []
     if produceFolderIndexes:
+        os.makedirs(normalisePath(outputFolder + os.sep + "_data" + os.sep + subPath), exist_ok=True)
         indexHandle = open(normalisePath(outputFolder + os.sep + "_data" + os.sep + subPath + os.sep + "index.csv"), "w")
     for item in os.listdir(rootPath + os.sep + subPath):
         if os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
