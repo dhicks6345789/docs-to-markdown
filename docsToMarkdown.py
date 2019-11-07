@@ -150,6 +150,7 @@ def processInputFolder(rootPath, subPath):
     if produceFolderIndexes:
         os.makedirs(normalisePath(outputFolder + os.sep + "_data" + os.sep + subPath), exist_ok=True)
         indexHandle = open(normalisePath(outputFolder + os.sep + "_data" + os.sep + subPath + os.sep + "index.csv"), "w")
+        indexHandle.write("Filename\n")
     for item in os.listdir(rootPath + os.sep + subPath):
         if os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
             result = result + processInputFolder(rootPath, subPath + os.sep + item)
