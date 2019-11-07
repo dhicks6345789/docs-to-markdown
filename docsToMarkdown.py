@@ -29,12 +29,6 @@ import pandas
 # Pandas requires Numpy, so that will be available.
 import numpy
 
-# Parameter values to be set via the command line.
-configFile = "config.json"
-inputFolder = ""
-outputFolder = ""
-templateFolder = ""
-
 # When we examine a Word document, if it starts with what looks like YAML-style variables then we will treat that as Jeykll
 # front matter values. We only check for the variables as given below, otherwise every document that starts with a colon in the
 # first line would get treated as front matter. Can also be added to in the user-defined config file by defining
@@ -216,6 +210,8 @@ def makeLegislativeLists(theGovspeak):
         result = result + theGovspeakLine.rstrip() + "\n"
     return(result)
 
+# Takes a chunk of Govspeak Markdown text as input, returns that text normalised - multiple blank lines removed, any extra
+# whitespace at the end of lines removed.
 def normaliseGovspeak(theGovspeak):
     result = ""
     previousLineWasBlank = True
@@ -229,22 +225,33 @@ def normaliseGovspeak(theGovspeak):
             result = result + theGovspeakLine + "\n"
             previousLineWasBlank = False
     return(result.rstrip())
-                
-# Main script execution begins here. Start by processing the command-line arguments.
+
+
+
+# Main script execution begins here. Start by setting default parameter values...
+configFile = "config.json"
+inputFolder = ""
+outputFolder = ""
+templateFolder = ""
+produceFolderIndexes = False
+
+# ...then process the command-line arguments.
 argNum = 1
 while argNum < len(sys.argv):
-    if sys.argv[argNum] == "-i":
+    if sys.argv[argNum] == "-i" or sys.argv[argNum] == "-input":
         argNum = argNum + 1
         inputFolder = sys.argv[argNum]
-    elif sys.argv[argNum] == "-o":
+    elif sys.argv[argNum] == "-o" or sys.argv[argNum] == "-output":
         argNum = argNum + 1
         outputFolder = sys.argv[argNum]
-    elif sys.argv[argNum] == "-c":
+    elif sys.argv[argNum] == "-c" or sys.argv[argNum] == "-config":
         argNum = argNum + 1
         configFile = sys.argv[argNum]
-    elif sys.argv[argNum] == "-t":
+    elif sys.argv[argNum] == "-t" or sys.argv[argNum] == "-template":
         argNum = argNum + 1
         templateFolder = sys.argv[argNum]
+    elif sys.argv[argNum] == "-produceFolderIndexes":
+        produceFolderIndex = True
     argNum = argNum + 1
 if inputFolder == "" or outputFolder == "":
     flushPrint("docsToMarkdown. Usage:")
@@ -256,6 +263,7 @@ flushPrint("Config file: " + configFile)
 flushPrint("Input folder: " + inputFolder)
 flushPrint("Output folder: " + outputFolder)
 flushPrint("Template folder: " + templateFolder)
+flushPrint("Produce Folder Index? " + produceFolderIndex)
 sys.stdout.flush()
 
 # Make sure the defined output folder exists...
