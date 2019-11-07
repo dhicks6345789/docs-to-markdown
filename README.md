@@ -12,7 +12,9 @@ Clone the Git repository or just download the docsToMarkdown.py file.
 ## Usage
 Run the script, giving input and output folder options:
 
+```
 docsToMarkdown.py -i inputFolder -o outputFolder
+```
 
 That will process all recognised documents in "inputFolder", applying the default behaviour to each one, and place the resulting Markdown file in a matching set of files in "outputFolder". Sub-folders will be recursed into, and the output folder will be created if it doesn't already exist.
 
@@ -23,29 +25,37 @@ The default behaviour for XLS/XLSX files is to do a simple conversion to CSV. Fo
 ### Example 1
 So, if you had a single folder with some files in:
 
+```
 inputFolder/index.docx
 inputFolder/about.docx
 inputFolder/contact.docx
 inputFolder/data.xlsx
+```
 
-Running "docsToMarkdown.py -i inputFolder -o outputFolder" would produce:
+Running ``docsToMarkdown.py -i inputFolder -o outputFolder`` would produce:
 
+```
 outputFolder/index.md
 outputFolder/about.md
 outputFolder/contact.md
 outputFolder/data.csv
+```
 
 ### Example 2
 You can better define the conversion process with a JSON-formatted config file:
 
+```
 docsToMarkdown.py -c config.json -i inputFolder -o outputFolder
+```
 
 The configuration file is written as a JSON-formatted ordered array of associative arrays:
 
+```
 [
     {"global/function":"name", data},
     {"global/function":"name", data}...
 ]
+```
 
 You can define global parameters, some of which can be used by DocsToMarkdown, or call functions. The configuration file will be processed in the order given for each file in the folder tree.
 
@@ -72,4 +82,6 @@ Simply copies a folder in the input folder to a folder in the output folder. Not
 ## Templates
 You can define a "templates" folder that will be copied over to the output folder along with the Markdown output, this is to accomodate applications such as Jekyll that expect a certain folder structure.
 
+```
 docsToMarkdown.py -c config.json -i inputDocs -o jekyll -t jekyllTemplates
+```
