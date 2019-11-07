@@ -263,7 +263,7 @@ flushPrint("Config file: " + configFile)
 flushPrint("Input folder: " + inputFolder)
 flushPrint("Output folder: " + outputFolder)
 flushPrint("Template folder: " + templateFolder)
-flushPrint("Produce Folder Index? " + produceFolderIndexes)
+flushPrint("Produce Folder Index? " + str(produceFolderIndexes))
 sys.stdout.flush()
 
 # Make sure the defined output folder exists...
