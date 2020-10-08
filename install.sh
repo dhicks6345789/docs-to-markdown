@@ -1,2 +1,2 @@
 echo Installing Docs To Markdown...
-pip install xlrd
+pip3 install xlrd
