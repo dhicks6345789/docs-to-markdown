@@ -26,7 +26,7 @@ import numpy
 
 
 # Compares two version-number style string, i.e. "numbers" with multiple decimal points (w.x.y.z), returns true if the left version is greater than or equal to
-# the right. Inputs are strings, version number parts can include letters.
+# the right. Inputs are strings, version number parts can't include letters.
 def verMoreThanOrEqual(verLeft, verRight):
     if verLeft == verRight:
         print(verLeft + "==" + verRight)
@@ -35,7 +35,7 @@ def verMoreThanOrEqual(verLeft, verRight):
     rightSplit = verRight.split(".")
     for leftItem in verLeft.split("."):
         print("Compare " + leftItem + " > " + rightSplit[splitIndex])
-        if leftItem > rightSplit[splitIndex]:
+        if int(leftItem) > int(rightSplit[splitIndex]):
             print(verLeft + ">" + verRight)
             return True
         splitIndex = splitIndex + 1
