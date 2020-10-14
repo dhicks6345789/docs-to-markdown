@@ -29,17 +29,13 @@ import numpy
 # the right. Inputs are strings, version number parts can't include letters.
 def verMoreThanOrEqual(verLeft, verRight):
     if verLeft == verRight:
-        print(verLeft + "==" + verRight)
         return True
     splitIndex = 0
     rightSplit = verRight.split(".")
     for leftItem in verLeft.split("."):
-        print("Compare " + leftItem + " > " + rightSplit[splitIndex])
         if int(leftItem) > int(rightSplit[splitIndex]):
-            print(verLeft + ">" + verRight)
             return True
         splitIndex = splitIndex + 1
-    print(verLeft + "<" + verRight)
     return False
 
 # This utility depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019.
