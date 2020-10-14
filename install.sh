@@ -1,2 +1,3 @@
 echo Installing Docs To Markdown...
 pip3 install xlrd
+pip3 install pandas
