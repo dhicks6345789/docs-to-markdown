@@ -260,42 +260,42 @@ def normaliseGovspeak(theGovspeak):
 
 
 # Main script execution begins here. Start by setting default parameter values...
-configFile = "config.json"
-inputFolder = ""
-outputFolder = ""
-templateFolder = ""
-produceFolderIndexes = False
+args = {}
+args["template"] = ""
+args["produceFolderIndexes"] = "false"
 
 # ...then process the command-line arguments.
-argNum = 1
-while argNum < len(sys.argv):
-    if sys.argv[argNum] == "-i" or sys.argv[argNum] == "-input":
-        argNum = argNum + 1
-        inputFolder = sys.argv[argNum]
-    elif sys.argv[argNum] == "-o" or sys.argv[argNum] == "-output":
-        argNum = argNum + 1
-        outputFolder = sys.argv[argNum]
-    elif sys.argv[argNum] == "-c" or sys.argv[argNum] == "-config":
-        argNum = argNum + 1
-        configFile = sys.argv[argNum]
-    elif sys.argv[argNum] == "-t" or sys.argv[argNum] == "-template":
-        argNum = argNum + 1
-        templateFolder = sys.argv[argNum]
-    elif sys.argv[argNum] == "-produceFolderIndexes":
-        produceFolderIndexes = True
-    argNum = argNum + 1
-if inputFolder == "" or outputFolder == "":
-    flushPrint("docsToMarkdown. Usage - to be amended:")
-    flushPrint("docsToMarkdown -c -o -i -t")
-    sys.exit(0)
+currentArgName = None
+for argItem in sys.argv[1:]:
+	if argItem.startswith("--"):
+		currentArgName = argItem[2:]
+	elif not currentArgName == None:
+		args[currentArgName] = argItem
+		currentArgName = None
+	else:
+		print("ERROR: unknown argument, " + argItem)
+		sys.exit(1)
+
+if "config" in args.keys():
+	if args["config"].endswith(".csv"):
+		argsData = pandas.read_csv(args["config"], header=0)
+	else:
+		argsData = pandas.read_excel(args["config"], header=0)
+	for argsDataIndex, argsDataValues in argsData.iterrows():
+		args[argsDataValues[0]] = cellToStr(argsDataValues[1])
+
+for requiredParameter in ["input","output"]:
+    if not requiredParameter in args.keys():
+        print("ERROR: Missing value for argument " + requiredParameter)
+        flushPrint("Usage: docsToMarkdown --config --input --output --template")
+        sys.exit(1)
     
 # A quick output message for the user.
-flushPrint("Config file: " + configFile)
-flushPrint("Input folder: " + inputFolder)
-flushPrint("Output folder: " + outputFolder)
-flushPrint("Template folder: " + templateFolder)
-flushPrint("Produce Folder Index? " + str(produceFolderIndexes))
-sys.stdout.flush()
+print("Config file: " + args["config"])
+print("Input folder: " + args["input"])
+print("Output folder: " + args["output"])
+print("Template folder: " + args["template"])
+print("Produce Folder Index? " + args["produceFolderIndexes"], flush=True)
 
 # Make sure the defined output folder exists...
 os.makedirs(outputFolder, exist_ok=True)
