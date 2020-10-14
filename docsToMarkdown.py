@@ -306,13 +306,16 @@ print("Template folder: " + args["template"])
 print("Produce Folder Index? " + args["produceFolderIndexes"], flush=True)
 
 # Make sure the defined output folder exists...
-os.makedirs(outputFolder, exist_ok=True)
+os.makedirs(args["output"], exist_ok=True)
 # ...then copy any template files to the output folder.
-if not templateFolder == "":
-    os.system("cp -r " + templateFolder + "/* " + outputFolder)
+if not args["template"] == "":
+    os.system("cp -r " + args["template"] + "/* " + args["output"])
 
 # Get a list of all the input files to process.
-filesToProcess = processInputFolder(inputFolder, "")
+filesToProcess = processInputFolder(args["input"], "")
+
+print(fileToProcess)
+sys.exit(0)
 
 # Load and step through the user-provided configuration, removing any files referenced by a function from the to-be-processed list.
 config = json.loads(getFile(configFile))
