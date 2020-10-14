@@ -262,7 +262,7 @@ while argNum < len(sys.argv):
         produceFolderIndexes = True
     argNum = argNum + 1
 if inputFolder == "" or outputFolder == "":
-    flushPrint("docsToMarkdown. Usage:")
+    flushPrint("docsToMarkdown. Usage - to be amended:")
     flushPrint("docsToMarkdown -c -o -i -t")
     sys.exit(0)
     
