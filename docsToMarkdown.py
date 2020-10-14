@@ -15,11 +15,6 @@ import json
 # convert some data to CSV format. The Markdown output is intended to be used as the input for static site generation tools such
 # as Jeykll, Hugo or Hyde, and various options / assumtions exist to ensure the files produced are suitible for those tools.
 
-# This utility depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019.
-# Earlier versions (as generally packaged in Debian's repositories, for instance) have a bug which stops them parsing DOCX files
-# created with Office 365.
-
-# To-do: check here for presence of Pandoc.
 
 # We use the Pandas library, which in turn uses the XLRD library, to read Excel data. Using Pandas seems like overkill
 # for simply reading an Excel file, might want to remove this requirement at some point.
@@ -28,6 +23,16 @@ import pandas
 
 # Pandas requires Numpy, so that will be available.
 import numpy
+
+# This utility depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019.
+# Earlier versions (as generally packaged in Debian's repositories, for instance) have a bug which stops them parsing DOCX files
+# created with Office 365.
+pandocHandle = os.popen("pandoc --version")
+pandocOutput = pandocHandle.read()
+pandocHandle.close()
+if not pandocOutput == "bananas":
+    print("ERROR: Pandoc v2.7 or higher not found.")
+    sys.exit(1)
 
 # When we examine a Word document, if it starts with what looks like YAML-style variables then we will treat that as Jeykll
 # front matter values. We only check for the variables as given below, otherwise every document that starts with a colon in the
