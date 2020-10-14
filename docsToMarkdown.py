@@ -187,9 +187,9 @@ def processInputFolder(rootPath, subPath):
             result = result + processInputFolder(rootPath, subPath + os.sep + item)
         else:
             result.append((normalisePath(rootPath + os.sep + subPath + os.sep + item)))
-            if produceFolderIndexes:
+            if args["produceFolderIndexes"] == "true":
                 indexHandle.write(item + "\n")
-    if produceFolderIndexes:
+    if args["produceFolderIndexes"] == "true":
         indexHandle.close()
     return(result)
 
