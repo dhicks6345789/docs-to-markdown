@@ -33,7 +33,7 @@ def verMoreThanOrEqual(verLeft, verRight):
     splitIndex = 0
     rightSplit = verRight.split(".")
     for leftItem in verLeft.split("."):
-        if leftItem > rightSplit[splitIndex]
+        if leftItem > rightSplit[splitIndex]:
             return True
         splitIndex = splitIndex + 1
     return False
