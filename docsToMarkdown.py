@@ -24,6 +24,20 @@ import pandas
 # Pandas requires Numpy, so that will be available.
 import numpy
 
+
+# Compares two version-number style string, i.e. "numbers" with multiple decimal points (w.x.y.z), returns true if the left version is greater than or equal to
+# the right. Inputs are strings, version number parts can include letters.
+def verMoreThanOrEqual(verLeft, verRight):
+    if verLeft == verRight:
+        return True
+    splitIndex = 0
+    rightSplit = verRight.split(".")
+    for leftItem in verLeft.split("."):
+        if leftItem > rightSplit[splitIndex]
+            return True
+        splitIndex = splitIndex + 1
+    return False
+
 # This utility depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019.
 # Earlier versions (as generally packaged in Debian's repositories, for instance) have a bug which stops them parsing DOCX files
 # created with Office 365.
@@ -34,7 +48,7 @@ pandocHandle.close()
 pandocMatchResult = re.match("pandoc (\d.*)", pandocOutput[0])
 if not pandocMatchResult == None:
     pandocVersion = pandocMatchResult.group(1)
-if pandocVersion == "" or not pandocVersion >= "2.7":
+if pandocVersion == "" or not verMoreThanOrEqual(pandocVersion, "2.7"):
     print("ERROR: Pandoc v2.7 or higher not found.")
     sys.exit(1)
 
