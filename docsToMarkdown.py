@@ -27,12 +27,14 @@ import numpy
 # This utility depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019.
 # Earlier versions (as generally packaged in Debian's repositories, for instance) have a bug which stops them parsing DOCX files
 # created with Office 365.
+pandocVersion = ""
 pandocHandle = os.popen("pandoc --version 2>&1")
 pandocOutput = pandocHandle.readlines()
 pandocHandle.close()
 pandocMatchResult = re.match("pandoc (\d.*)", pandocOutput[0])
 if not pandocMatchResult == None:
-    print("Pandoc version: " + pandocMatchResult.group(1))
+    pandocVersion = pandocMatchResult.group(1)
+if pandocVersion == "" or not pandocVersion >= "2.7":
     print("ERROR: Pandoc v2.7 or higher not found.")
     sys.exit(1)
 
