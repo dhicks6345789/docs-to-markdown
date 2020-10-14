@@ -34,6 +34,7 @@ def verMoreThanOrEqual(verLeft, verRight):
     splitIndex = 0
     rightSplit = verRight.split(".")
     for leftItem in verLeft.split("."):
+        print("Compare " + leftItem + " > " + rightSplit[splitIndex])
         if leftItem > rightSplit[splitIndex]:
             print(verLeft + ">" + verRight)
             return True
