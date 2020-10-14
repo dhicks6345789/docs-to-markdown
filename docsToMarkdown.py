@@ -30,7 +30,7 @@ import numpy
 pandocHandle = os.popen("pandoc --version 2>&1")
 pandocOutput = pandocHandle.readlines()
 pandocHandle.close()
-pandocMatchResult = re.match(pandocOutput[0], "pandoc (/d.*)")
+pandocMatchResult = re.match("pandoc (/d.*)", pandocOutput[0])
 if not pandocMatchResult == None:
     print("Pandoc version: " + pandocMatchResult.group(1))
     print("ERROR: Pandoc v2.7 or higher not found.")
