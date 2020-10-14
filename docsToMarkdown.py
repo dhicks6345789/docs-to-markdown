@@ -47,7 +47,7 @@ pandocOutput = pandocHandle.readlines()
 pandocHandle.close()
 pandocMatchResult = re.match("pandoc (\d.*)", pandocOutput[0])
 if not pandocMatchResult == None:
-    pandocVersion = pandocMatchResult.group(1)
+    pandocVersion = pandocMatchResult.group(1).strip()
 if pandocVersion == "" or not verMoreThanOrEqual(pandocVersion, "2.7"):
     print("ERROR: Pandoc v2.7 or higher not found.")
     sys.exit(1)
