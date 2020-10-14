@@ -178,7 +178,7 @@ def removeFromFilesToProcess(theFile):
 # Recursivly check each sub-folder in the given input folder, returning an array of input files with full paths.
 def processInputFolder(rootPath, subPath):
     result = []
-    if produceFolderIndexes:
+    if args["produceFolderIndexes"] == "true":
         os.makedirs(normalisePath(outputFolder + os.sep + "_data" + os.sep + subPath), exist_ok=True)
         indexHandle = open(normalisePath(outputFolder + os.sep + "_data" + os.sep + subPath + os.sep + "index.csv"), "w")
         indexHandle.write("Filename\n")
