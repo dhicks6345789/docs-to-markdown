@@ -28,9 +28,10 @@ import numpy
 # Earlier versions (as generally packaged in Debian's repositories, for instance) have a bug which stops them parsing DOCX files
 # created with Office 365.
 pandocHandle = os.popen("pandoc --version 2>&1")
-pandocOutput = pandocHandle.read()
+pandocOutput = pandocHandle.readlines()
 pandocHandle.close()
-if not pandocOutput == "bananas":
+print(pandocOutput[0])
+if not pandocOutput[0] == "bananas":
     print("ERROR: Pandoc v2.7 or higher not found.")
     sys.exit(1)
 
