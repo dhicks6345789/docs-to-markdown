@@ -95,6 +95,13 @@ def floatToString(theFloat):
             return("")
     return(str(theFloat))
 
+def cellToStr(theInput):
+	if isinstance(theInput, str):
+		return(theInput)
+	if isinstance(theInput, float) and math.isnan(theInput):
+		return("")
+	return(str(theInput))
+
 def flushPrint(theString):
     print(theString)
     sys.stdout.flush()
