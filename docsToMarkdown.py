@@ -314,7 +314,7 @@ if not args["template"] == "":
 # Get a list of all the input files to process.
 filesToProcess = processInputFolder(args["input"], "")
 
-print(fileToProcess)
+print(filesToProcess)
 sys.exit(0)
 
 # Load and step through the user-provided configuration, removing any files referenced by a function from the to-be-processed list.
