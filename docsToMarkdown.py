@@ -202,11 +202,12 @@ def applyDefaults(rootPath, subPath, filesToProcess):
         if os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
             applyDefaults(rootPath, subPath + os.sep + item, filesToProcess)
 
-def applyFunctions(rootPath, subPath, filesToProcess):
+def applyFunction(rootPath, subPath):
     folderContents = os.listdir(rootPath + os.sep + subPath)
     for item in folderContents:
         if os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
-            applyFunctions(rootPath, subPath + os.sep + item, filesToProcess)
+            for userFunction in userFunctions.keys()
+            applyFunctions(rootPath, subPath + os.sep + item)
     for item in folderContents:
         if not os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
             fileToProcess = normalisePath(rootPath + os.sep + subPath + os.sep + item)
@@ -342,8 +343,10 @@ print(args)
 print(userFunctions)
 print(filesToProcess)
 
-folderContents = os.listdir(args["input"] + os.sep + subPath)
-    for item in folderContents:
+for userFunction in userFunctions:
+    for fileToProcess in filesToProcess:
+        if userFunction["inputFiles"] == fileToProcess:
+            print("Process with function " + userFunctions["function"] + ": " + fileToProcess)
 
 sys.exit(0)
 
