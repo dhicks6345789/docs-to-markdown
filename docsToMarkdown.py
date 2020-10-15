@@ -357,7 +357,8 @@ for userFunction in userFunctions:
         #    if configItem["produceLegislativeLists"] == "true":
         #        outputGovspeak = makeLegislativeLists(outputGovspeak)
         outputGovspeak = normaliseGovspeak(outputGovspeak)
-        putFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
+        #putFile(normalisePath(outputFolder + os.sep + outputFile), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
+	putFile(normalisePath(outputFolder + os.sep + outputFile), outputGovspeak.rstrip())
         
 sys.exit(0)
 
