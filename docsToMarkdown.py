@@ -202,18 +202,6 @@ def applyDefaults(rootPath, subPath, filesToProcess):
         if os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
             applyDefaults(rootPath, subPath + os.sep + item, filesToProcess)
 
-def applyFunction(rootPath, subPath):
-    folderContents = os.listdir(rootPath + os.sep + subPath)
-    for item in folderContents:
-        if os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
-            for userFunction in userFunctions.keys()
-            applyFunctions(rootPath, subPath + os.sep + item)
-    for item in folderContents:
-        if not os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
-            fileToProcess = normalisePath(rootPath + os.sep + subPath + os.sep + item)
-            if fileToProcess in filesToProcess:
-                print("Applying function to: " + fileToProcess, flush=True)
-                    
 # Copy each file from srcFolder to destFolder, and recurse down sub-folders.
 # Removes each encountered file from the filesToProcess list as it goes.
 def copyFolder(srcFolder, destFolder):
