@@ -336,7 +336,7 @@ for userFunction in userFunctions:
         if not userFileMatchResult == None:
             functionName = userFunction["function"]
             inputFiles.append(fileToProcess)
-            outputFile = userFunction["outputFile"]
+            outputFile = re.sub(userFunction["inputFiles"], userFunction["outputFile"], fileToProcess)
     if functionName == "filesToMarkdown":
         outputGovspeak = ""
         outputFrontMatter = {}
