@@ -16,15 +16,9 @@ import json
 # convert some data to CSV format. The Markdown output is intended to be used as the input for static site generation tools such
 # as Jeykll, Hugo or Hyde, and various options / assumtions exist to ensure the files produced are suitible for those tools.
 
-
-# We use the Pandas library, which in turn uses the XLRD library, to read Excel data. Using Pandas seems like overkill
-# for simply reading an Excel file, might want to remove this requirement at some point.
+# We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
 import xlrd
 import pandas
-
-# Pandas requires Numpy, so that will be available.
-import numpy
-
 
 # Compares two version-number style string, i.e. "numbers" with multiple decimal points (w.x.y.z), returns true if the left version is greater than or equal to
 # the right. Inputs are strings, version number parts can't include letters.
@@ -58,7 +52,7 @@ if pandocVersion == "" or not verMoreThanOrEqual(pandocVersion, "2.7"):
 # first line would get treated as front matter. Can also be added to in the user-defined config file by defining
 # the "validFrontMatterFields" value.
 validFrontMatterFields = ["title","lastUpdated"]
-defaultFrontMatter = {"layout": "default"}
+defaultFrontMatter = {"layout":"default"}
 
 globalValues = {}
 
@@ -266,13 +260,18 @@ def normaliseGovspeak(theGovspeak):
     return(result.rstrip())
 
 
+requiredArgs = ["input","output"]
+optionalArgs = ["template","produceFolderIndexes","baseURL"]
+optionalLists = ["validFrontMatterFields"]
 
-# Main script execution begins here. Start by setting default parameter values...
+userFunctions = []
+functionArgs = {"filesToMarkdown":["inputFiles","outputFile","frontMatter"],"filesToCSV":["inputFiles","outputFile","jekyllHeaders"],"copyFolder":["source","destination"]}
+
 args = {}
 args["template"] = ""
 args["produceFolderIndexes"] = "false"
 
-# ...then process the command-line arguments.
+# Process the command-line arguments.
 currentArgName = None
 for argItem in sys.argv[1:]:
 	if argItem.startswith("--"):
@@ -290,12 +289,23 @@ if "config" in args.keys():
 	else:
 		argsData = pandas.read_excel(args["config"], header=0)
 	for argsDataIndex, argsDataValues in argsData.iterrows():
-		args[argsDataValues[0]] = cellToStr(argsDataValues[1])
-
-for requiredParameter in ["input","output"]:
-    if not requiredParameter in args.keys():
-        print("ERROR: Missing value for argument " + requiredParameter)
-        flushPrint("Usage: docsToMarkdown --config --input --output --template")
+		if argsDataValues[0] in requiredArgs + optionalArgs:
+			args[argsDataValues[0]] = cellToStr(argsDataValues[1])
+		elif argsDataValues[0] in optionalLists:
+			args[argsDataValues[0]] = argsDataValues[1:]
+		elif argsDataValues[0] in functionArgs.keys():
+			userFunction = {}
+			userFunction["function"] = argsDataValues[0]
+			functionArgIndex = 1
+			for functionArg in functionArgs[argsDataValues[0]]:
+				userFunction["functionArg"] = argsDataValues[functionArgIndex]
+				functionArgIndex = functionArgIndex + 1
+			userFunctions.append(userFunction)
+			
+for requiredArg in requiredArgs:
+    if not requiredArg in args.keys():
+        print("ERROR: Missing value for argument " + requiredArg)
+        print("Usage: docsToMarkdown --config --input --output --template")
         sys.exit(1)
     
 # A quick output message for the user.
@@ -314,11 +324,13 @@ if not args["template"] == "":
 # Get a list of all the input files to process.
 filesToProcess = processInputFolder(args["input"], "")
 
+print(args)
+print(userFunctions)
 print(filesToProcess)
 sys.exit(0)
 
 # Load and step through the user-provided configuration, removing any files referenced by a function from the to-be-processed list.
-config = json.loads(getFile(configFile))
+#config = json.loads(getFile(configFile))
 for configItem in config:
     if "global" in configItem.keys():
         if configItem["global"] == "validFrontMatterFields":
