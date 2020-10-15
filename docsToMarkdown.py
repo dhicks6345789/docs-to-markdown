@@ -363,7 +363,7 @@ for userFunction in userFunctions:
         outputPath = normalisePath(args["output"] + os.sep + outputFile)
         putFile(outputPath, outputGovspeak.rstrip())
         logMessage = logMessage + "output: " + outputPath
-        print(logMessgae, flush=True)
+        print(logMessage, flush=True)
         
 sys.exit(0)
 
