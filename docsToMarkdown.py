@@ -335,7 +335,7 @@ for userFunction in userFunctions:
     for fileToProcess in filesToProcess:
         userFileMatchResult = re.match(userFunction["inputFiles"], fileToProcess)
         if not userFileMatchResult == None:
-            print("Process with function " + userFunctions["function"] + ": " + fileToProcess)
+            print("Process with function " + userFunction["function"] + ": " + fileToProcess)
 
 sys.exit(0)
 
