@@ -358,7 +358,7 @@ for userFunction in userFunctions:
         #        outputGovspeak = makeLegislativeLists(outputGovspeak)
         outputGovspeak = normaliseGovspeak(outputGovspeak)
         #putFile(normalisePath(outputFolder + os.sep + outputFile), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
-	putFile(normalisePath(outputFolder + os.sep + outputFile), outputGovspeak.rstrip())
+        putFile(normalisePath(outputFolder + os.sep + outputFile), outputGovspeak.rstrip())
         
 sys.exit(0)
 
