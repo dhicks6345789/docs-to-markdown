@@ -337,6 +337,7 @@ for userFunction in userFunctions:
             functionName = userFunction["function"]
             inputFiles.append(fileToProcess)
             outputFile = re.sub(userFunction["inputFiles"], userFunction["outputFile"], fileToProcess[len(args["input"]):])
+    inputFiles = sorted(inputFiles)
     if functionName == "filesToMarkdown":
         logMessage = "fileToMarkdown - inputs: "
         outputGovspeak = ""
