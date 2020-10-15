@@ -327,10 +327,6 @@ if not args["template"] == "":
 # Get a list of all the input files to process.
 filesToProcess = processInputFolder(args["input"], "")
 
-print(args)
-print(userFunctions)
-print(filesToProcess)
-
 for userFunction in userFunctions:
     functionName = ""
     inputFiles = []
@@ -338,6 +334,7 @@ for userFunction in userFunctions:
     for fileToProcess in filesToProcess:
         userFileMatchResult = re.match(userFunction["inputFiles"], fileToProcess)
         if not userFileMatchResult == None:
+            functionName = userFunction["function"]
             inputFiles.append(fileToProcess)
             outputFile = userFunction["outputFile"]
     if functionName == "filesToMarkdown":
