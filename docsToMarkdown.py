@@ -338,9 +338,27 @@ for userFunction in userFunctions:
             inputFiles.append(fileToProcess)
             outputFile = userFunction["outputFile"]
     if functionName == "filesToMarkdown":
-        print("filesToMarkdown: ")
-        print(inputFiles)
-
+        outputGovspeak = ""
+        outputFrontMatter = {}
+        subRootPath = ""
+        for inputFile in inputFiles:
+            if inputFile.lower().endswith(".docx"):
+                (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
+                outputGovspeak = outputGovspeak + fileGovspeak + "\n\n"
+                for frontMatterItem in fileFrontMatter.keys():
+                    outputFrontMatter[frontMatterItem] = fileFrontMatter[frontMatterItem]
+            elif inputFile.lower().endswith(".xlsx"):
+                outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
+            removeFromFilesToProcess(inputFile)
+        #if "frontMatter" in configItem.keys():
+        #    for frontMatterItem in configItem["frontMatter"].keys():
+        #        outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
+        #if "produceLegislativeLists" in configItem.keys():
+        #    if configItem["produceLegislativeLists"] == "true":
+        #        outputGovspeak = makeLegislativeLists(outputGovspeak)
+        outputGovspeak = normaliseGovspeak(outputGovspeak)
+        putFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
+        
 sys.exit(0)
 
 # Load and step through the user-provided configuration, removing any files referenced by a function from the to-be-processed list.
