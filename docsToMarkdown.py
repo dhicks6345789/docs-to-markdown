@@ -332,10 +332,17 @@ print(userFunctions)
 print(filesToProcess)
 
 for userFunction in userFunctions:
+    functionName = ""
+    inputFiles = []
+    outputFile = ""
     for fileToProcess in filesToProcess:
         userFileMatchResult = re.match(userFunction["inputFiles"], fileToProcess)
         if not userFileMatchResult == None:
-            print("Process with function " + userFunction["function"] + ": " + fileToProcess)
+            inputFiles.append(fileToProcess)
+            outputFile = userFunction["outputFile"]
+    if functionName == "filesToMarkdown":
+        print("filesToMarkdown: ")
+        print(inputFiles)
 
 sys.exit(0)
 
