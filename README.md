@@ -4,7 +4,7 @@ Converts a folder tree of Word / Excel files (compatability is with those produc
 ## Requirements
 This utility is written in Python 3. It depends on Pandas and Numpy Python modules, which should be installable via Pip.
 
-DocsToMarkdown depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019. Earlier versions (as packaged in Debian 9 "Stretch" repositories, for instance) have a bug which stops them parsing DOCX files created with Office 365.
+DocsToMarkdown depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019. Earlier versions (as packaged in Debian 9 "Stretch" / Debian 10 "Buster" repositories, for instance) have a bug which stops them parsing DOCX files created with Office 365 - probably best to install the [latest version](https://pandoc.org/installing.html).
 
 ## Installation
 Clone the Git repository or just download the docsToMarkdown.py file.
