@@ -292,7 +292,7 @@ if "config" in args.keys():
 		if argsDataValues[0] in requiredArgs + optionalArgs:
 			args[argsDataValues[0]] = cellToStr(argsDataValues[1])
 		elif argsDataValues[0] in optionalLists:
-			args[argsDataValues[0]] = argsDataValues[1:].values()
+			args[argsDataValues[0]] = argsDataValues[1:].values
 		elif argsDataValues[0] in functionArgs.keys():
 			userFunction = {}
 			userFunction["function"] = argsDataValues[0]
