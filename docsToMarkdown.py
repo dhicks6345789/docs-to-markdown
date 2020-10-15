@@ -343,7 +343,7 @@ for userFunction in userFunctions:
         outputFrontMatter = {}
         subRootPath = ""
         for inputFile in inputFiles:
-            logMessage = logMessage + inputFile + ", "
+            logMessage = logMessage + inputFile[len(args["input"]):] + ", "
             if inputFile.lower().endswith(".docx"):
                 (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
                 outputGovspeak = outputGovspeak + fileGovspeak + "\n\n"
