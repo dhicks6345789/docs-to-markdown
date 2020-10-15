@@ -336,12 +336,14 @@ for userFunction in userFunctions:
         if not userFileMatchResult == None:
             functionName = userFunction["function"]
             inputFiles.append(fileToProcess)
-            outputFile = re.sub(userFunction["inputFiles"], userFunction["outputFile"], fileToProcess)
+            outputFile = re.sub(userFunction["inputFiles"], userFunction["outputFile"], fileToProcess[len(args["input"]):])
     if functionName == "filesToMarkdown":
+        logMessage = "fileToMarkdown - inputs: "
         outputGovspeak = ""
         outputFrontMatter = {}
         subRootPath = ""
         for inputFile in inputFiles:
+            logMessage = logMessage + inputFile + ", "
             if inputFile.lower().endswith(".docx"):
                 (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
                 outputGovspeak = outputGovspeak + fileGovspeak + "\n\n"
@@ -358,7 +360,10 @@ for userFunction in userFunctions:
         #        outputGovspeak = makeLegislativeLists(outputGovspeak)
         outputGovspeak = normaliseGovspeak(outputGovspeak)
         #putFile(normalisePath(outputFolder + os.sep + outputFile), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
-        putFile(normalisePath(args["output"] + os.sep + outputFile), outputGovspeak.rstrip())
+        outputPath = normalisePath(args["output"] + os.sep + outputFile)
+        putFile(outputPath, outputGovspeak.rstrip())
+        logMessage = logMessage + "output: " + outputPath
+        print(logMessgae, flush=True)
         
 sys.exit(0)
 
