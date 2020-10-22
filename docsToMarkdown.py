@@ -339,7 +339,9 @@ for userFunction in userFunctions:
             outputFile = re.sub(userFunction["inputFiles"], userFunction["outputFile"], fileToProcess[len(args["input"]):])
     inputFiles = sorted(inputFiles)
     if functionName == "convertToMarkdown":
+        print("Hit convertToMarkdown...", flush=True)
         for inputFile in inputFiles:
+            print("inputFile: " + inputFile.lower(), flush=True)
             if inputFile.lower().endswith(".docx"):
                 (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
                 outputGovspeak = normaliseGovspeak(fileGovspeak)
