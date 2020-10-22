@@ -265,7 +265,7 @@ optionalArgs = ["data","template","baseURL"]
 optionalLists = ["validFrontMatterFields"]
 
 userFunctions = []
-functionArgs = {"convertToMarkdown":["inputFiles","outputFiles","frontMatter"],"filesToMarkdown":["inputFiles","outputFile","frontMatter"],"filesToCSV":["inputFiles","outputFile","jekyllHeaders"],"listFilesToData":["inputFolder","outputFile"],"copyFolder":["source","destination"]}
+functionArgs = {"convertToMarkdown":["inputFiles","outputFiles","frontMatter"],"filesToMarkdown":["inputFiles","outputFile","frontMatter"],"folderToPlaceholderFile":["inputFolder","outputFile"],"filesToCSV":["inputFiles","outputFile","jekyllHeaders"],"listFilesToData":["inputFolder","outputFile"],"copyFolder":["source","destination"]}
 
 args = {}
 args["data"] = ""
@@ -386,7 +386,7 @@ for userFunction in userFunctions:
             if not userFolderMatchResult == None:
                 outputFile = re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess[len(args["input"]):])
                 outputPath = normalisePath(args["data"] + os.sep + outputFile)
-                print("List files in " + folderToProcess + " to " + outputPath, flush=True)
+                print("listFilesToData " + folderToProcess + " to " + outputPath, flush=True)
                 output = "["
                 for item in os.listdir(folderToProcess):
                     if os.path.isfile(folderToProcess + os.sep + item):
@@ -398,5 +398,5 @@ for userFunction in userFunctions:
             if not userFolderMatchResult == None:
                 outputFile = re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess[len(args["input"]):])
                 outputPath = normalisePath(args["data"] + os.sep + outputFile)
-                print("Create placeholder at " + outputPath, flush=True)
+                print("folderToPlaceholderFile " + outputPath, flush=True)
                 putFile(outputPath, "")
