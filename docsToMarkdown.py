@@ -328,22 +328,18 @@ if not args["template"] == "":
 filesToProcess = processInputFolder(args["input"], "")
 
 for userFunction in userFunctions:
-    functionName = ""
-    inputFiles = []
-    outputFile = ""
-    for fileToProcess in filesToProcess:
-        userFileMatchResult = re.match(userFunction["inputFiles"], fileToProcess)
-        if not userFileMatchResult == None:
-            functionName = userFunction["function"]
-            inputFiles.append(fileToProcess)
-            outputFile = re.sub(userFunction["inputFiles"], userFunction["outputFile"], fileToProcess[len(args["input"]):])
-    print("functionName: " + functionName, flush=True)
-    inputFiles = sorted(inputFiles)
-    print(inputFiles, flush=True)
-    if functionName == "convertToMarkdown":
+    if userFunction["function"] == "convertToMarkdown":
         print("Hit convertToMarkdown...", flush=True)
-        for inputFile in inputFiles:
-            print("inputFile: " + inputFile.lower(), flush=True)
+        
+	    inputOutputFiles = {}
+        for fileToProcess in filesToProcess:
+            userFileMatchResult = re.match(userFunction["inputFiles"], fileToProcess)
+            if not userFileMatchResult == None:
+                inputOutputFiles[fileToProcess] = re.sub(userFunction["inputFiles"], userFunction["outputFiles"], fileToProcess[len(args["input"]):])
+        for inputFile in sorted(inputOutputFiles.keys()):
+            print("inputFile: " + inputFile, flush=True)
+            outputFile = inputOutputFiles[inputFile]
+            print("outputFile: " + outputFile, flush=True)
             if inputFile.lower().endswith(".docx"):
                 (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
                 outputGovspeak = normaliseGovspeak(fileGovspeak)
@@ -353,7 +349,7 @@ for userFunction in userFunctions:
             print("convertToMarkdown - input" + inputFile + ", output " + outputPath, flush=True)
             putFile(outputPath, fileGovspeak.rstrip())
             removeFromFilesToProcess(inputFile)
-    elif functionName == "filesToMarkdown":
+    elif userFunction["function"] == "filesToMarkdown":
         logMessage = "fileToMarkdown - inputs: "
         outputGovspeak = ""
         outputFrontMatter = {}
