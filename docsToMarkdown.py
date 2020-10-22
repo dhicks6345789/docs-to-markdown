@@ -261,7 +261,7 @@ def normaliseGovspeak(theGovspeak):
 
 
 requiredArgs = ["input","output"]
-optionalArgs = ["data","template","produceFolderIndexes","baseURL"]
+optionalArgs = ["data","template","baseURL"]
 optionalLists = ["validFrontMatterFields"]
 
 userFunctions = []
@@ -270,7 +270,6 @@ functionArgs = {"convertToMarkdown":["inputFiles","outputFiles","frontMatter"],"
 args = {}
 args["data"] = ""
 args["template"] = ""
-args["produceFolderIndexes"] = "false"
 args["baseURL"] = "http://localhost"
 args["validFrontMatterFields"] = []
 
@@ -316,8 +315,10 @@ for requiredArg in requiredArgs:
 print("Config file: " + args["config"])
 print("Input folder: " + args["input"])
 print("Output folder: " + args["output"])
-print("Template folder: " + args["template"])
-print("Produce Folder Index? " + args["produceFolderIndexes"], flush=True)
+if not args["data"] == "":
+    print("Data folder: " + args["data"])
+if not args["template"] == "":
+    print("Template folder: " + args["template"])
 
 # Make sure the defined output folder exists...
 os.makedirs(args["output"], exist_ok=True)
