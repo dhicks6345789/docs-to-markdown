@@ -349,7 +349,7 @@ for userFunction in userFunctions:
             print("convertToMarkdown - input" + inputFile + ", output " + outputPath, flush=True)
             putFile(outputPath, fileGovspeak.rstrip())
             removeFromFilesToProcess(inputFile)
-    elif userFunction["function"] == "filesToMarkdown":
+    elif userFunction["function"] == "concatToMarkdown":
         logMessage = "fileToMarkdown - inputs: "
         outputGovspeak = ""
         outputFrontMatter = {}
