@@ -172,19 +172,11 @@ def removeFromFilesToProcess(theFile):
 # Recursivly check each sub-folder in the given input folder, returning an array of input files with full paths.
 def processInputFolder(rootPath, subPath):
     result = []
-    #if args["produceFolderIndexes"] == "true":
-    #    os.makedirs(normalisePath(outputFolder + os.sep + "_data" + os.sep + subPath), exist_ok=True)
-    #    indexHandle = open(normalisePath(outputFolder + os.sep + "_data" + os.sep + subPath + os.sep + "index.csv"), "w")
-    #    indexHandle.write("Filename\n")
     for item in os.listdir(rootPath + os.sep + subPath):
         if os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
             result = result + processInputFolder(rootPath, subPath + os.sep + item)
         else:
             result.append((normalisePath(rootPath + os.sep + subPath + os.sep + item)))
-            #if args["produceFolderIndexes"] == "true":
-            #    indexHandle.write(item + "\n")
-    #if args["produceFolderIndexes"] == "true":
-    #    indexHandle.close()
     return(result)
 
 # Recursivly check each sub-folder in the given input folder for files still to be processed (as defined by the filesToProcess array, initially constructed by the processInputFolder function above).
@@ -326,14 +318,15 @@ os.makedirs(args["output"], exist_ok=True)
 if not args["template"] == "":
     os.system("cp -r " + args["template"] + "/* " + args["output"])
 
-# Get a list of all the input files to process.
+# Get a list of all the input files to process...
 filesToProcess = processInputFolder(args["input"], "")
-
+# ...and produce a matching list of all folders.
 foldersToProcess = {}
 for fileToProcess in filesToProcess:
 	foldersToProcess[fileToProcess.rsplit("/",1)[0]] = ""
 foldersToProcess = foldersToProcess.keys()
 
+# Step through each user-defined function.
 for userFunction in userFunctions:
     if userFunction["function"] == "convertToMarkdown":
         inputOutputFiles = {}
@@ -344,7 +337,6 @@ for userFunction in userFunctions:
         for inputFile in sorted(inputOutputFiles.keys()):
             outputFile = inputOutputFiles[inputFile]
             outputPath = normalisePath(args["output"] + os.sep + outputFile)
-            #print("convertToMarkdown " + inputFile[len(args["input"]):] + " to " + outputFile, flush=True)
             print("convertToMarkdown " + inputFile + " to " + outputPath, flush=True)
             if inputFile.lower().endswith(".docx"):
                 (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
@@ -388,7 +380,7 @@ for userFunction in userFunctions:
                 outputPath = normalisePath(args["data"] + os.sep + outputFile)
                 print("listFilesToData " + folderToProcess + " to " + outputPath, flush=True)
                 output = "["
-                for item in os.listdir(folderToProcess):
+                for item in sorted(os.listdir(folderToProcess)):
                     if os.path.isfile(folderToProcess + os.sep + item):
                         output = output + "\"" + item + "\","
                 putFile(outputPath, output[:-1] + "]")
