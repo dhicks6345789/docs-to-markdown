@@ -265,7 +265,7 @@ optionalArgs = ["template","produceFolderIndexes","baseURL"]
 optionalLists = ["validFrontMatterFields"]
 
 userFunctions = []
-functionArgs = {"filesToMarkdown":["inputFiles","outputFile","frontMatter"],"filesToCSV":["inputFiles","outputFile","jekyllHeaders"],"copyFolder":["source","destination"]}
+functionArgs = {"convertToMarkdown":["inputFiles","outputFiles","frontMatter"],"filesToMarkdown":["inputFiles","outputFile","frontMatter"],"filesToCSV":["inputFiles","outputFile","jekyllHeaders"],"copyFolder":["source","destination"]}
 
 args = {}
 args["template"] = ""
