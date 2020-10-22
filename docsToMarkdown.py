@@ -261,13 +261,14 @@ def normaliseGovspeak(theGovspeak):
 
 
 requiredArgs = ["input","output"]
-optionalArgs = ["template","produceFolderIndexes","baseURL"]
+optionalArgs = ["data","template","produceFolderIndexes","baseURL"]
 optionalLists = ["validFrontMatterFields"]
 
 userFunctions = []
 functionArgs = {"convertToMarkdown":["inputFiles","outputFiles","frontMatter"],"filesToMarkdown":["inputFiles","outputFile","frontMatter"],"filesToCSV":["inputFiles","outputFile","jekyllHeaders"],"listFiles":["inputFolder","outputFile"],"copyFolder":["source","destination"]}
 
 args = {}
+args["data"] = ""
 args["template"] = ""
 args["produceFolderIndexes"] = "false"
 args["baseURL"] = "http://localhost"
