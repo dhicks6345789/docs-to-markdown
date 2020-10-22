@@ -397,6 +397,6 @@ for userFunction in userFunctions:
             userFolderMatchResult = re.match(userFunction["inputFolder"], folderToProcess)
             if not userFolderMatchResult == None:
                 outputFile = re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess[len(args["input"]):])
-                outputPath = normalisePath(args["data"] + os.sep + outputFile)
+                outputPath = normalisePath(args["output"] + os.sep + outputFile)
                 print("folderToPlaceholderFile " + outputPath, flush=True)
                 putFile(outputPath, "")
