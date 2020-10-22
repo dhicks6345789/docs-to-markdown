@@ -337,7 +337,9 @@ for userFunction in userFunctions:
             functionName = userFunction["function"]
             inputFiles.append(fileToProcess)
             outputFile = re.sub(userFunction["inputFiles"], userFunction["outputFile"], fileToProcess[len(args["input"]):])
+    print("functionName: " + functionName, flush=True)
     inputFiles = sorted(inputFiles)
+    print(inputFiles, flush=True)
     if functionName == "convertToMarkdown":
         print("Hit convertToMarkdown...", flush=True)
         for inputFile in inputFiles:
