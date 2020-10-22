@@ -265,7 +265,7 @@ optionalArgs = ["template","produceFolderIndexes","baseURL"]
 optionalLists = ["validFrontMatterFields"]
 
 userFunctions = []
-functionArgs = {"convertToMarkdown":["inputFiles","outputFiles","frontMatter"],"filesToMarkdown":["inputFiles","outputFile","frontMatter"],"filesToCSV":["inputFiles","outputFile","jekyllHeaders"],"copyFolder":["source","destination"]}
+functionArgs = {"convertToMarkdown":["inputFiles","outputFiles","frontMatter"],"filesToMarkdown":["inputFiles","outputFile","frontMatter"],"filesToCSV":["inputFiles","outputFile","jekyllHeaders"],"listFiles":["inputFolder","outputFile"],"copyFolder":["source","destination"]}
 
 args = {}
 args["template"] = ""
@@ -372,3 +372,5 @@ for userFunction in userFunctions:
         putFile(outputPath, outputGovspeak.rstrip())
         logMessage = logMessage + "output: " + outputPath[len(args["output"]):]
         print(logMessage, flush=True)
+    elif userFunction["function"] == "listFiles":
+        print("List files in " + userFunction["inputFolder"] + " to " + userFunction["outputFile"], flush=True)
