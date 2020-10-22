@@ -338,7 +338,18 @@ for userFunction in userFunctions:
             inputFiles.append(fileToProcess)
             outputFile = re.sub(userFunction["inputFiles"], userFunction["outputFile"], fileToProcess[len(args["input"]):])
     inputFiles = sorted(inputFiles)
-    if functionName == "filesToMarkdown":
+    if functionName == "convertToMarkdown":
+        for inputFile in inputFiles:
+            if inputFile.lower().endswith(".docx"):
+                (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
+                outputGovspeak = normaliseGovspeak(fileGovspeak)
+            elif inputFile.lower().endswith(".xlsx"):
+                outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
+            outputPath = normalisePath(args["output"] + os.sep + outputFile)
+            print("convertToMarkdown - input" + inputFile + ", output " + outputPath, flush=True)
+            putFile(outputPath, fileGovspeak.rstrip())
+            removeFromFilesToProcess(inputFile)
+    elif functionName == "filesToMarkdown":
         logMessage = "fileToMarkdown - inputs: "
         outputGovspeak = ""
         outputFrontMatter = {}
