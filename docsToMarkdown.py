@@ -327,6 +327,12 @@ if not args["template"] == "":
 # Get a list of all the input files to process.
 filesToProcess = processInputFolder(args["input"], "")
 
+foldersToProcess = {}
+for fileToProcess in filesToProcess:
+	foldersToProcess[fileToProcess.rsplit("/",1)[0]] = ""
+foldersToProcess = foldersToProcess.keys()
+print(foldersToProcess)
+
 for userFunction in userFunctions:
     if userFunction["function"] == "convertToMarkdown":
         inputOutputFiles = {}
