@@ -265,7 +265,7 @@ optionalArgs = ["data","template","baseURL"]
 optionalLists = ["validFrontMatterFields"]
 
 userFunctions = []
-functionArgs = {"convertToMarkdown":["inputFiles","outputFiles","frontMatter"],"filesToMarkdown":["inputFiles","outputFile","frontMatter"],"filesToCSV":["inputFiles","outputFile","jekyllHeaders"],"listFiles":["inputFolder","outputFile"],"copyFolder":["source","destination"]}
+functionArgs = {"convertToMarkdown":["inputFiles","outputFiles","frontMatter"],"filesToMarkdown":["inputFiles","outputFile","frontMatter"],"filesToCSV":["inputFiles","outputFile","jekyllHeaders"],"listFilesToData":["inputFolder","outputFile"],"copyFolder":["source","destination"]}
 
 args = {}
 args["data"] = ""
@@ -380,7 +380,7 @@ for userFunction in userFunctions:
         putFile(outputPath, outputGovspeak.rstrip())
         logMessage = logMessage + "output: " + outputPath[len(args["output"]):]
         print(logMessage, flush=True)
-    elif userFunction["function"] == "listFiles":
+    elif userFunction["function"] == "listFilesToData":
         for folderToProcess in foldersToProcess:
             userFolderMatchResult = re.match(userFunction["inputFolder"], folderToProcess)
             if not userFolderMatchResult == None:
@@ -392,3 +392,11 @@ for userFunction in userFunctions:
                     if os.path.isfile(folderToProcess + os.sep + item):
                         output = output + "\"" + item + "\","
                 putFile(outputPath, output[:-1] + "]")
+    elif userFunction["function"] == "folderToPlaceholderFile":
+        for folderToProcess in foldersToProcess:
+            userFolderMatchResult = re.match(userFunction["inputFolder"], folderToProcess)
+            if not userFolderMatchResult == None:
+                outputFile = re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess[len(args["input"]):])
+                outputPath = normalisePath(args["data"] + os.sep + outputFile)
+                print("Create placeholder at " + outputPath, flush=True)
+                putFile(outputPath, "")
