@@ -329,24 +329,20 @@ filesToProcess = processInputFolder(args["input"], "")
 
 for userFunction in userFunctions:
     if userFunction["function"] == "convertToMarkdown":
-        print("Hit convertToMarkdown...", flush=True)
-        
         inputOutputFiles = {}
         for fileToProcess in filesToProcess:
             userFileMatchResult = re.match(userFunction["inputFiles"], fileToProcess)
             if not userFileMatchResult == None:
                 inputOutputFiles[fileToProcess] = re.sub(userFunction["inputFiles"], userFunction["outputFiles"], fileToProcess[len(args["input"]):])
         for inputFile in sorted(inputOutputFiles.keys()):
-            print("inputFile: " + inputFile, flush=True)
             outputFile = inputOutputFiles[inputFile]
-            print("outputFile: " + outputFile, flush=True)
+            print("convertToMarkdown " + inputFile[len(args["input"]):] + " to " + outputFile, flush=True)
+            outputPath = normalisePath(args["output"] + os.sep + outputFile)
             if inputFile.lower().endswith(".docx"):
                 (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
                 outputGovspeak = normaliseGovspeak(fileGovspeak)
             elif inputFile.lower().endswith(".xlsx"):
                 outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
-            outputPath = normalisePath(args["output"] + os.sep + outputFile)
-            print("convertToMarkdown - input" + inputFile + ", output " + outputPath, flush=True)
             putFile(outputPath, fileGovspeak.rstrip())
             removeFromFilesToProcess(inputFile)
     elif userFunction["function"] == "concatToMarkdown":
