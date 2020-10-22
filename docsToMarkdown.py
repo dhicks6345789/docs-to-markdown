@@ -343,8 +343,9 @@ for userFunction in userFunctions:
                 inputOutputFiles[fileToProcess] = re.sub(userFunction["inputFiles"], userFunction["outputFiles"], fileToProcess[len(args["input"]):])
         for inputFile in sorted(inputOutputFiles.keys()):
             outputFile = inputOutputFiles[inputFile]
-            print("convertToMarkdown " + inputFile[len(args["input"]):] + " to " + outputFile, flush=True)
             outputPath = normalisePath(args["output"] + os.sep + outputFile)
+            #print("convertToMarkdown " + inputFile[len(args["input"]):] + " to " + outputFile, flush=True)
+            print("convertToMarkdown " + inputFile + " to " + outputPath, flush=True)
             if inputFile.lower().endswith(".docx"):
                 (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
                 outputGovspeak = normaliseGovspeak(fileGovspeak)
@@ -383,5 +384,6 @@ for userFunction in userFunctions:
         for folderToProcess in foldersToProcess:
             userFolderMatchResult = re.match(userFunction["inputFolder"], folderToProcess)
             if not userFolderMatchResult == None:
-                outputFile = args["data"] + re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess[len(args["input"]):])
-                print("List files in " + folderToProcess + " to " + outputFile, flush=True)
+                outputFile = re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess[len(args["input"]):]
+                outputPath = normalisePath(args["data"] + os.sep + outputFile)
+                print("List files in " + folderToProcess + " to " + outputPath, flush=True)
