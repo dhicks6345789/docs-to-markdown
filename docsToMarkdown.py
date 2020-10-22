@@ -331,7 +331,7 @@ for userFunction in userFunctions:
     if userFunction["function"] == "convertToMarkdown":
         print("Hit convertToMarkdown...", flush=True)
         
-	    inputOutputFiles = {}
+        inputOutputFiles = {}
         for fileToProcess in filesToProcess:
             userFileMatchResult = re.match(userFunction["inputFiles"], fileToProcess)
             if not userFileMatchResult == None:
@@ -376,83 +376,3 @@ for userFunction in userFunctions:
         putFile(outputPath, outputGovspeak.rstrip())
         logMessage = logMessage + "output: " + outputPath[len(args["output"]):]
         print(logMessage, flush=True)
-        
-sys.exit(0)
-
-# Load and step through the user-provided configuration, removing any files referenced by a function from the to-be-processed list.
-#config = json.loads(getFile(configFile))
-for configItem in config:
-    if "global" in configItem.keys():
-        if configItem["global"] == "validFrontMatterFields":
-            for validFrontMatterField in configItem["value"]:
-                validFrontMatterFields.append(validFrontMatterField)
-        else:
-            globalValues[configItem["global"]] = configItem["value"]
-    if "function" in configItem.keys():
-        # Recursivly copy a folder's contents from src to dest - any files in dest that don't exist in src will be left.
-        if configItem["function"] == "copyFolder":
-            copyFolder(normalisePath(inputFolder + os.sep + configItem["src"]), normalisePath(outputFolder + os.sep + configItem["dest"]))
-        # Recursivly copy a folder's contents from src to dest - any files in dest that don't exist in src will be removed.
-        if configItem["function"] == "syncFolder":
-            copyFolder(normalisePath(inputFolder + os.sep + configItem["src"]), normalisePath(outputFolder + os.sep + configItem["dest"]))
-            matchFolder(normalisePath(inputFolder + os.sep + configItem["src"]), normalisePath(outputFolder + os.sep + configItem["dest"]))
-        # Reads a list of files, of any supported type, and outputs CSV to the given output, with files concatenated together in the given order.
-        # If the "jekyllHeaders" option is set to "true", then this function assumes the first row of Excel files are column headings, and the CSV file
-        # written will have any spaces in column headings removed to make a valid variable name in Jekyll.
-        if configItem["function"] == "filesToCSV":
-            outputCSVData = ""
-            subRootPath = ""
-            if "rootPath" in configItem.keys():
-                subRootPath = configItem["rootPath"]
-            for inputFile in configItem["inputFiles"]:
-                flushPrint("Converting " + inputFile + " to CSV.")
-                inputFile = normalisePath(inputFolder + os.sep + subRootPath + os.sep + inputFile)
-                try:
-                    inputData = pandas.read_excel(io=inputFile)
-                    if "jekyllHeaders" in configItem.keys() and configItem["jekyllHeaders"].lower() == "true":
-                        newColumns = []
-                        for columnName in inputData.columns:
-                            newColumns.append(columnName.replace(" ", ""))
-                        inputData.columns = newColumns
-                    outputCSVData = outputCSVData + inputData.to_csv() + "\n"
-                except xlrd.biffh.XLRDError:
-                    flushPrint("XLRDError - Error reading Excel file: " + inputFile)
-                except OSError:
-                    flushPrint("OSError - Error reading Excel file: " + inputFile)
-                removeFromFilesToProcess(inputFile)
-            putFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), outputCSVData.rstrip())
-        # Reads a list of files, of any supported type, and outputs (Govspeak) Markdown to the given output, with files concatenated together in the given order.
-        # Any front matter defined in any of the input files will be written to the output file, with any front matter defined in the function itself taking precedence.
-        if configItem["function"] == "filesToMarkdown":
-            outputGovspeak = ""
-            outputFrontMatter = {}
-            subRootPath = ""
-            if "rootPath" in configItem.keys():
-                subRootPath = configItem["rootPath"]
-            for inputFileMatch in configItem["inputFiles"]:
-                inputFileMatch = normalisePath(inputFolder + os.sep + subRootPath + os.sep + inputFileMatch)
-                matchedFiles = []
-                for inputFile in filesToProcess:
-                    if not re.search(inputFileMatch, inputFile) == None:
-                        matchedFiles.append(inputFile)
-                for inputFile in matchedFiles:
-                    if inputFile.lower().endswith(".docx"):
-                        (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
-                        outputGovspeak = outputGovspeak + fileGovspeak + "\n\n"
-                        for frontMatterItem in fileFrontMatter.keys():
-                            outputFrontMatter[frontMatterItem] = fileFrontMatter[frontMatterItem]
-                    elif inputFile.lower().endswith(".xlsx"):
-                        outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
-                for inputFile in matchedFiles:
-                    removeFromFilesToProcess(inputFile)
-            if "frontMatter" in configItem.keys():
-                for frontMatterItem in configItem["frontMatter"].keys():
-                    outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
-            if "produceLegislativeLists" in configItem.keys():
-                if configItem["produceLegislativeLists"] == "true":
-                    outputGovspeak = makeLegislativeLists(outputGovspeak)
-            outputGovspeak = normaliseGovspeak(outputGovspeak)
-            putFile(normalisePath(outputFolder + os.sep + configItem["outputFile"]), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
-
-# After going through the user-defined config, apply default behaviours to any files still left to be processed.
-applyDefaults(inputFolder, "", filesToProcess)
