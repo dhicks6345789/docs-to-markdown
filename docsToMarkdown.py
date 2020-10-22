@@ -387,3 +387,8 @@ for userFunction in userFunctions:
                 outputFile = re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess[len(args["input"]):])
                 outputPath = normalisePath(args["data"] + os.sep + outputFile)
                 print("List files in " + folderToProcess + " to " + outputPath, flush=True)
+                output = "["
+                for item in os.listdir(folderToProcess):
+                    if os.path.isfile(folderToProcess + os.sep + item):
+                        output = output + "\"" + item + "\","
+                putFile(outputPath, output[:-1] + "]")
