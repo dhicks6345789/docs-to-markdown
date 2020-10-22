@@ -383,6 +383,5 @@ for userFunction in userFunctions:
             userFolderMatchResult = re.match(userFunction["inputFolder"], folderToProcess)
             if not userFolderMatchResult == None:
                 print("Folder to process: " + folderToProcess[len(args["input"]):])
-                outputFile = re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess[len(args["input"]):])
-                #outputFile = re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess)
+                outputFile = args["data"] + os.sep + re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess[len(args["input"]):])
                 print("List files in " + folderToProcess + " to " + outputFile, flush=True)
