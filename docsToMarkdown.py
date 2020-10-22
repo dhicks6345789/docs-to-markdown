@@ -376,5 +376,5 @@ for userFunction in userFunctions:
         for fileToProcess in filesToProcess:
             userFileMatchResult = re.match(userFunction["inputFolder"], fileToProcess)
             if not userFileMatchResult == None:
-                outputFile = re.sub(userFunction["inputFiles"], userFunction["outputFile"], fileToProcess[len(args["input"]):])
+                outputFile = re.sub(userFunction["inputFolder"], userFunction["outputFile"], fileToProcess[len(args["input"]):])
                 print("List files in " + fileToProcess + " to " + outputFile, flush=True)
