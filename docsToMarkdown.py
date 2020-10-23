@@ -104,7 +104,7 @@ def cellToStr(theInput):
 # variableName: value
 # ---
 def frontMatterToString(theFrontMatter):
-    if theFrontMatter == []:
+    if theFrontMatter == {}:
         return ""
     result = "---\n"
     for frontMatterField in theFrontMatter.keys():
