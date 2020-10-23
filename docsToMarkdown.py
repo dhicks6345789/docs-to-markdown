@@ -19,6 +19,7 @@ import json
 # We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
 import xlrd
 import pandas
+import numpy
 
 # Compares two version-number style string, i.e. "numbers" with multiple decimal points (w.x.y.z), returns true if the left version is greater than or equal to
 # the right. Inputs are strings, version number parts can't include letters.
@@ -287,7 +288,7 @@ if "config" in args.keys():
 			args[argsDataValues[0]] = cellToStr(argsDataValues[1])
 		elif argsDataValues[0] in optionalLists:
 			for argsDataValue in argsDataValues[1:].values:
-				if not argsDataValue == NaN:
+				if not argsDataValue == numpy.nan:
 					args[argsDataValues[0]].append(argsDataValue)
 		elif argsDataValues[0] in functionArgs.keys():
 			userFunction = {}
