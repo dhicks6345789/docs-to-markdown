@@ -81,7 +81,7 @@ def isnan(theVar):
             return True
         return False
     return math.isnan(theVar)
-	
+
 # A utility function to convert from a floating-point number to a string. Python (or Pandas, anyway) converts blank Excel cells into floats
 # with a value of NaN. Converting those to a string results in the string "nan". We just want a blank string.
 def floatToString(theFloat):
@@ -273,36 +273,36 @@ args["defaultFrontMatter"] = {"layout":"default"}
 # Process the command-line arguments.
 currentArgName = None
 for argItem in sys.argv[1:]:
-	if argItem.startswith("--"):
-		currentArgName = argItem[2:]
-	elif not currentArgName == None:
-		args[currentArgName] = argItem
-		currentArgName = None
-	else:
-		print("ERROR: unknown argument, " + argItem)
-		sys.exit(1)
+    if argItem.startswith("--"):
+        currentArgName = argItem[2:]
+    elif not currentArgName == None:
+        args[currentArgName] = argItem
+        currentArgName = None
+    else:
+        print("ERROR: unknown argument, " + argItem)
+        sys.exit(1)
 
 if "config" in args.keys():
-	if args["config"].endswith(".csv"):
-		argsData = pandas.read_csv(args["config"], header=0)
-	else:
-		argsData = pandas.read_excel(args["config"], header=0)
-	for argsDataIndex, argsDataValues in argsData.iterrows():
-		if argsDataValues[0] in requiredArgs + optionalArgs:
-			args[argsDataValues[0]] = cellToStr(argsDataValues[1])
-		elif argsDataValues[0] in optionalLists:
-			for argsDataValue in argsDataValues[1:].values:
-				if not isnan(argsDataValue):
-					args[argsDataValues[0]].append(argsDataValue)
-		elif argsDataValues[0] in functionArgs.keys():
-			userFunction = {}
-			userFunction["function"] = argsDataValues[0]
-			functionArgIndex = 1
-			for functionArg in functionArgs[argsDataValues[0]]:
-				userFunction[functionArg] = argsDataValues[functionArgIndex]
-				functionArgIndex = functionArgIndex + 1
-			userFunctions.append(userFunction)
-			
+    if args["config"].endswith(".csv"):
+        argsData = pandas.read_csv(args["config"], header=0)
+    else:
+        argsData = pandas.read_excel(args["config"], header=0)
+    for argsDataIndex, argsDataValues in argsData.iterrows():
+        if argsDataValues[0] in requiredArgs + optionalArgs:
+            args[argsDataValues[0]] = cellToStr(argsDataValues[1])
+        elif argsDataValues[0] in optionalLists:
+            for argsDataValue in argsDataValues[1:].values:
+                if not isnan(argsDataValue):
+                    args[argsDataValues[0]].append(argsDataValue)
+        elif argsDataValues[0] in functionArgs.keys():
+            userFunction = {}
+            userFunction["function"] = argsDataValues[0]
+            functionArgIndex = 1
+            for functionArg in functionArgs[argsDataValues[0]]:
+                userFunction[functionArg] = argsDataValues[functionArgIndex]
+                functionArgIndex = functionArgIndex + 1
+            userFunctions.append(userFunction)
+
 for requiredArg in requiredArgs:
     if not requiredArg in args.keys():
         print("ERROR: Missing value for argument " + requiredArg)
@@ -329,7 +329,7 @@ filesToProcess = processInputFolder(args["input"], "")
 # ...and produce a matching list of all folders.
 foldersToProcess = {}
 for fileToProcess in filesToProcess:
-	foldersToProcess[fileToProcess.rsplit("/",1)[0]] = ""
+    foldersToProcess[fileToProcess.rsplit("/",1)[0]] = ""
 foldersToProcess = foldersToProcess.keys()
 
 # Step through each user-defined function.
