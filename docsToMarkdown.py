@@ -111,7 +111,7 @@ def frontMatterToString(theFrontMatter):
         result = result + frontMatterField + ": " + theFrontMatter[frontMatterField] + "\n"
     return(result + "---\n")
 
-def frontMatterToJSON(theFrontMatter)
+def frontMatterToJSON(theFrontMatter):
     result = "{"
     for frontMatterField in theFrontMatter.keys():
         result = result + "\"" + frontMatterField + "\":\"" + theFrontMatter[frontMatterField] + "\","
