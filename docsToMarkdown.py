@@ -268,7 +268,7 @@ args["baseURL"] = "http://localhost"
 # front matter values. We only check for the variables as given below, otherwise every document that starts with a colon in the
 # first line would get treated as front matter.
 args["validFrontMatterFields"] = ["title","lastUpdated"]
-args["defaultFrontMatter"] = {"layout":"default"}
+#args["defaultFrontMatter"] = {"layout":"default"}
 
 # Process the command-line arguments.
 currentArgName = None
@@ -346,7 +346,7 @@ for userFunction in userFunctions:
             print("convertToMarkdown " + inputFile + " to " + outputPath, flush=True)
             if inputFile.lower().endswith(".docx"):
                 (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
-                outputGovspeak = normaliseGovspeak(fileGovspeak)
+                outputGovspeak = normaliseGovspeak(frontMatterToString(fileFrontMatter) + "\n\n" + fileGovspeak)
             elif inputFile.lower().endswith(".xlsx"):
                 outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
             putFile(outputPath, fileGovspeak.rstrip())
@@ -366,7 +366,6 @@ for userFunction in userFunctions:
             elif inputFile.lower().endswith(".xlsx"):
                 outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
             removeFromFilesToProcess(inputFile)
-        #if "frontMatter" in configItem.keys():
         #    for frontMatterItem in configItem["frontMatter"].keys():
         #        outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
         #if "produceLegislativeLists" in configItem.keys():
