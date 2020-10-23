@@ -19,7 +19,6 @@ import json
 # We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
 import xlrd
 import pandas
-import numpy
 
 # Compares two version-number style string, i.e. "numbers" with multiple decimal points (w.x.y.z), returns true if the left version is greater than or equal to
 # the right. Inputs are strings, version number parts can't include letters.
@@ -83,6 +82,13 @@ def putFile(theFilename, theContent):
 def normalisePath(thePath):
     return(thePath.replace("//","/"))
     
+def isnan(theVar):
+    if isinstance(theVar, str):
+        if theVar.lower() == "nan":
+            return True
+        return False
+    return math.isnan(theVar)
+	
 # A utility function to convert from a floating-point number to a string. Python (or Pandas, anyway) converts blank Excel cells into floats
 # with a value of NaN. Converting those to a string results in the string "nan". We just want a blank string.
 def floatToString(theFloat):
@@ -289,7 +295,7 @@ if "config" in args.keys():
 		elif argsDataValues[0] in optionalLists:
 			for argsDataValue in argsDataValues[1:].values:
 				print(argsDataValue)
-				if not argsDataValue == None and numpy.isnan(argsDataValue):
+				if not isnan(argsDataValue):
 					args[argsDataValues[0]].append(argsDataValue)
 		elif argsDataValues[0] in functionArgs.keys():
 			userFunction = {}
