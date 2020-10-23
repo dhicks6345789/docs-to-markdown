@@ -288,7 +288,8 @@ if "config" in args.keys():
 			args[argsDataValues[0]] = cellToStr(argsDataValues[1])
 		elif argsDataValues[0] in optionalLists:
 			for argsDataValue in argsDataValues[1:].values:
-				if not numpy.isnan(argsDataValue):
+				print(argsDataValue)
+				if not argsDataValue == None and numpy.isnan(argsDataValue):
 					args[argsDataValues[0]].append(argsDataValue)
 		elif argsDataValues[0] in functionArgs.keys():
 			userFunction = {}
