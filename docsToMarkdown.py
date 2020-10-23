@@ -111,12 +111,6 @@ def frontMatterToString(theFrontMatter):
         result = result + frontMatterField + ": " + theFrontMatter[frontMatterField] + "\n"
     return(result + "---\n")
 
-def frontMatterToJSON(theFrontMatter):
-    result = "{"
-    for frontMatterField in theFrontMatter.keys():
-        result = result + "\"" + frontMatterField + "\":\"" + theFrontMatter[frontMatterField] + "\","
-    return(result[:-1] + "}")
-
 # Takes a file path string pointing to a document file (.DOC, .DOCX, .TXT, etc) file, loads that file and coverts the contents to a Markdown / Govspeak string.
 # Returns a tuple of a string of the converted data and a dict of any front matter variables specified in the input file.
 # To do: handle more file types.
@@ -343,17 +337,14 @@ for userFunction in userFunctions:
                 inputOutputFiles[fileToProcess] = re.sub(userFunction["inputFiles"], userFunction["outputFiles"], fileToProcess[len(args["input"]):])
         for inputFile in sorted(inputOutputFiles.keys()):
             outputFile = inputOutputFiles[inputFile]
-            markdownOutputPath = normalisePath(args["output"] + os.sep + outputFile)
-            frontMatterOutputPath = normalisePath(args["data"] + os.sep + outputFile)
+            outputPath = normalisePath(args["output"] + os.sep + outputFile)
             print("convertToMarkdown " + inputFile + " to " + outputPath, flush=True)
             if inputFile.lower().endswith(".docx"):
                 (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
-                #outputGovspeak = normaliseGovspeak(frontMatterToString(fileFrontMatter) + "\n\n" + fileGovspeak)
-                outputGovspeak = normaliseGovspeak(fileGovspeak)
-                putFile(frontMatterOutputPath, frontMatterToJSON(fileFrontMatter))
+                outputGovspeak = normaliseGovspeak(frontMatterToString(fileFrontMatter) + "\n\n" + fileGovspeak)
             elif inputFile.lower().endswith(".xlsx"):
                 outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
-            putFile(markdownOutputPath, outputGovspeak.rstrip())
+            putFile(outputPath, outputGovspeak.rstrip())
             removeFromFilesToProcess(inputFile)
     elif userFunction["function"] == "concatToMarkdown":
         logMessage = "fileToMarkdown - inputs: "
