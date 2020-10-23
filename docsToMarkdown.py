@@ -349,7 +349,7 @@ for userFunction in userFunctions:
                 outputGovspeak = normaliseGovspeak(frontMatterToString(fileFrontMatter) + "\n\n" + fileGovspeak)
             elif inputFile.lower().endswith(".xlsx"):
                 outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
-            putFile(outputPath, fileGovspeak.rstrip())
+            putFile(outputPath, outputGovspeak.rstrip())
             removeFromFilesToProcess(inputFile)
     elif userFunction["function"] == "concatToMarkdown":
         logMessage = "fileToMarkdown - inputs: "
