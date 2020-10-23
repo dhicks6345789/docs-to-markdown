@@ -108,9 +108,9 @@ def cellToStr(theInput):
 # Includes any values not otherwise set from the defaultFrontMatter dict defined at the start of this script.
 def frontMatterToString(theFrontMatter):
     result = "---\n"
-    for defaultFrontMatterField in defaultFrontMatter:
-        if not defaultFrontMatterField in theFrontMatter.keys():
-            theFrontMatter[defaultFrontMatterField] = defaultFrontMatter[defaultFrontMatterField]
+    #for defaultFrontMatterField in defaultFrontMatter:
+        #if not defaultFrontMatterField in theFrontMatter.keys():
+            #theFrontMatter[defaultFrontMatterField] = defaultFrontMatter[defaultFrontMatterField]
     for frontMatterField in theFrontMatter.keys():
         result = result + frontMatterField + ": " + theFrontMatter[frontMatterField] + "\n"
     result = result + "---\n"
