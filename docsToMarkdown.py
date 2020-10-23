@@ -74,7 +74,9 @@ def putFile(theFilename, theContent):
 # A utility function to return a given path string in normalised format, i.e. without any double os.sep characters.
 def normalisePath(thePath):
     return(thePath.replace("//","/"))
-    
+
+# A utility function to determine whether a variable has a value of "NaN" or not.
+# Checks if a string has a value of "NaN" (any case) as well as float values.
 def isnan(theVar):
     if isinstance(theVar, str):
         if theVar.lower() == "nan":
@@ -97,24 +99,17 @@ def cellToStr(theInput):
         return("")
     return(str(theInput))
 
-#def flushPrint(theString):
-#    print(theString)
-#    sys.stdout.flush()
-
 # Given a dict, returns a YAML string, e.g.:
 # ---
 # variableName: value
 # ---
-# Includes any values not otherwise set from the defaultFrontMatter dict defined at the start of this script.
 def frontMatterToString(theFrontMatter):
+    if theFrontMatter == []:
+        return ""
     result = "---\n"
-    #for defaultFrontMatterField in defaultFrontMatter:
-        #if not defaultFrontMatterField in theFrontMatter.keys():
-            #theFrontMatter[defaultFrontMatterField] = defaultFrontMatter[defaultFrontMatterField]
     for frontMatterField in theFrontMatter.keys():
         result = result + frontMatterField + ": " + theFrontMatter[frontMatterField] + "\n"
-    result = result + "---\n"
-    return(result)
+    return(result + "---\n")
 
 # Takes a file path string pointing to a document file (.DOC, .DOCX, .TXT, etc) file, loads that file and coverts the contents to a Markdown / Govspeak string.
 # Returns a tuple of a string of the converted data and a dict of any front matter variables specified in the input file.
