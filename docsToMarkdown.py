@@ -311,6 +311,8 @@ if not args["data"] == "":
     print("Data folder: " + args["data"])
 if not args["template"] == "":
     print("Template folder: " + args["template"])
+print(validFrontMatterFields)
+print(args["validFrontMatterFields"])
 
 # Make sure the defined output folder exists...
 os.makedirs(args["output"], exist_ok=True)
