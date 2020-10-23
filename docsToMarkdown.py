@@ -111,6 +111,12 @@ def frontMatterToString(theFrontMatter):
         result = result + frontMatterField + ": " + theFrontMatter[frontMatterField] + "\n"
     return(result + "---\n")
 
+def frontMatterToJSON(theFrontMatter)
+    result = "{"
+    for frontMatterField in theFrontMatter.keys():
+        result = result + "\"" + frontMatterField + "\":\"" + theFrontMatter[frontMatterField] + "\","
+    return(result[:-1] + "}")
+
 # Takes a file path string pointing to a document file (.DOC, .DOCX, .TXT, etc) file, loads that file and coverts the contents to a Markdown / Govspeak string.
 # Returns a tuple of a string of the converted data and a dict of any front matter variables specified in the input file.
 # To do: handle more file types.
@@ -337,14 +343,17 @@ for userFunction in userFunctions:
                 inputOutputFiles[fileToProcess] = re.sub(userFunction["inputFiles"], userFunction["outputFiles"], fileToProcess[len(args["input"]):])
         for inputFile in sorted(inputOutputFiles.keys()):
             outputFile = inputOutputFiles[inputFile]
-            outputPath = normalisePath(args["output"] + os.sep + outputFile)
+            markdownOutputPath = normalisePath(args["output"] + os.sep + outputFile)
+            frontMatterOutputPath = normalisePath(args["data"] + os.sep + outputFile)
             print("convertToMarkdown " + inputFile + " to " + outputPath, flush=True)
             if inputFile.lower().endswith(".docx"):
                 (fileGovspeak, fileFrontMatter) = documentToGovspeak(inputFile)
-                outputGovspeak = normaliseGovspeak(frontMatterToString(fileFrontMatter) + "\n\n" + fileGovspeak)
+                #outputGovspeak = normaliseGovspeak(frontMatterToString(fileFrontMatter) + "\n\n" + fileGovspeak)
+                outputGovspeak = normaliseGovspeak(fileGovspeak)
+                putFile(frontMatterOutputPath, frontMatterToJSON(fileFrontMatter))
             elif inputFile.lower().endswith(".xlsx"):
                 outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
-            putFile(outputPath, outputGovspeak.rstrip())
+            putFile(markdownOutputPath, outputGovspeak.rstrip())
             removeFromFilesToProcess(inputFile)
     elif userFunction["function"] == "concatToMarkdown":
         logMessage = "fileToMarkdown - inputs: "
@@ -361,13 +370,10 @@ for userFunction in userFunctions:
             elif inputFile.lower().endswith(".xlsx"):
                 outputGovspeak = outputGovspeak + spreadsheetToGovspeak(inputFile) + "\n\n"
             removeFromFilesToProcess(inputFile)
-        #    for frontMatterItem in configItem["frontMatter"].keys():
-        #        outputFrontMatter[frontMatterItem] = configItem["frontMatter"][frontMatterItem]
         #if "produceLegislativeLists" in configItem.keys():
         #    if configItem["produceLegislativeLists"] == "true":
         #        outputGovspeak = makeLegislativeLists(outputGovspeak)
         outputGovspeak = normaliseGovspeak(outputGovspeak)
-        #putFile(normalisePath(outputFolder + os.sep + outputFile), frontMatterToString(outputFrontMatter) + "\n" + outputGovspeak.rstrip())
         outputPath = normalisePath(args["output"] + os.sep + outputFile)
         putFile(outputPath, outputGovspeak.rstrip())
         logMessage = logMessage + "output: " + outputPath[len(args["output"]):]
