@@ -47,13 +47,6 @@ if pandocVersion == "" or not verMoreThanOrEqual(pandocVersion, "2.7"):
     print("ERROR: Pandoc v2.7 or higher not found.")
     sys.exit(1)
 
-# When we examine a Word document, if it starts with what looks like YAML-style variables then we will treat that as Jeykll
-# front matter values. We only check for the variables as given below, otherwise every document that starts with a colon in the
-# first line would get treated as front matter. Can also be added to in the user-defined config file by defining
-# the "validFrontMatterFields" value.
-validFrontMatterFields = ["title","lastUpdated"]
-defaultFrontMatter = {"layout":"default"}
-
 globalValues = {}
 
 # Pandoc escapes Markdown control characters embedded in Word documents, but we want to let people embed chunks of Markdown in
@@ -97,16 +90,16 @@ def floatToString(theFloat):
             return("")
     return(str(theFloat))
 
-def cellToStr(theInput):
-	if isinstance(theInput, str):
-		return(theInput)
-	if isinstance(theInput, float) and math.isnan(theInput):
-		return("")
-	return(str(theInput))
+#def cellToStr(theInput):
+#	if isinstance(theInput, str):
+#		return(theInput)
+#	if isinstance(theInput, float) and math.isnan(theInput):
+#		return("")
+#	return(str(theInput))
 
-def flushPrint(theString):
-    print(theString)
-    sys.stdout.flush()
+#def flushPrint(theString):
+#    print(theString)
+#    sys.stdout.flush()
 
 # Given a dict, returns a YAML string, e.g.:
 # ---
@@ -141,7 +134,7 @@ def documentToGovspeak(inputFile):
         for markdownReplaceKey in markdownReplace.keys():
             markdownLine = markdownLine.replace(markdownReplaceKey, markdownReplace[markdownReplaceKey])
         lineIsFrontMatter = False
-        for validFrontMatterField in validFrontMatterFields:
+        for validFrontMatterField in args["validFrontMatterFields"]:
             if markdownLine.lower().startswith(validFrontMatterField.lower() + ":"):
                 frontMatter[validFrontMatterField] = markdownLine.split(":")[1].strip()
                 lineIsFrontMatter = True
@@ -193,7 +186,7 @@ def applyDefaults(rootPath, subPath, filesToProcess):
         if not os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
             fileToProcess = normalisePath(rootPath + os.sep + subPath + os.sep + item)
             if fileToProcess in filesToProcess:
-                flushPrint("Applying default behaviour to: " + fileToProcess)
+                print("Applying default behaviour to: " + fileToProcess, flush=True)
                 if fileToProcess.lower().endswith(".docx"):
                     (govspeak, frontMatter) = documentToGovspeak(fileToProcess)
                     putFile(normalisePath(outputFolder + os.sep + subPath + os.sep + item[:-4] + "md"), frontMatterToString(frontMatter) + "\n" + govspeak)
@@ -270,7 +263,12 @@ args = {}
 args["data"] = ""
 args["template"] = ""
 args["baseURL"] = "http://localhost"
-args["validFrontMatterFields"] = []
+
+# When we examine a Word document, if it starts with what looks like YAML-style variables then we will treat that as Hugo / Jeykll
+# front matter values. We only check for the variables as given below, otherwise every document that starts with a colon in the
+# first line would get treated as front matter.
+args["validFrontMatterFields"] = ["title","lastUpdated"]
+args["defaultFrontMatter"] = {"layout":"default"}
 
 # Process the command-line arguments.
 currentArgName = None
@@ -294,7 +292,6 @@ if "config" in args.keys():
 			args[argsDataValues[0]] = cellToStr(argsDataValues[1])
 		elif argsDataValues[0] in optionalLists:
 			for argsDataValue in argsDataValues[1:].values:
-				print(argsDataValue)
 				if not isnan(argsDataValue):
 					args[argsDataValues[0]].append(argsDataValue)
 		elif argsDataValues[0] in functionArgs.keys():
@@ -320,8 +317,6 @@ if not args["data"] == "":
     print("Data folder: " + args["data"])
 if not args["template"] == "":
     print("Template folder: " + args["template"])
-print(validFrontMatterFields)
-print(args["validFrontMatterFields"])
 
 # Make sure the defined output folder exists...
 os.makedirs(args["output"], exist_ok=True)
