@@ -73,6 +73,8 @@ def putFile(theFilename, theContent):
     
 # A utility function to return a given path string in normalised format, i.e. without any double os.sep characters.
 def normalisePath(thePath):
+    if thePath == "":
+        return "/"
     return(thePath.replace("//","/"))
 
 # A utility function to determine whether a variable has a value of "NaN" or not.
