@@ -370,8 +370,8 @@ for userFunction in userFunctions:
         logMessage = logMessage + "output: " + outputPath[len(args["output"]):]
         print(logMessage, flush=True)
     elif userFunction["function"] == "listFilesToData":
-        print("listFilesToData function found", flush=True)
         for folderToProcess in foldersToProcess:
+            print("listFilesToData check " + userFunction["inputFolder"] + " - " + folderToProcess, flush=True)
             userFolderMatchResult = re.match(userFunction["inputFolder"], folderToProcess)
             if not userFolderMatchResult == None:
                 outputFile = re.sub(userFunction["inputFolder"], userFunction["outputFile"], folderToProcess[len(args["input"]):])
