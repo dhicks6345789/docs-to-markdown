@@ -79,27 +79,25 @@ def normalisePath(thePath):
 
 # A utility function to determine whether a variable has a value of "NaN" or not.
 # Checks if a string has a value of "NaN" (any case) as well as float values.
-def isnan(theVar):
-    if isinstance(theVar, str):
-        if theVar.lower() == "nan":
+def isnan(theVal):
+    if isinstance(theVal, str):
+        if theVal.lower() == "nan":
             return True
         return False
-    return math.isnan(theVar)
+    return math.isnan(theVal)
 
 # A utility function to convert from a floating-point number to a string. Python (or Pandas, anyway) converts blank Excel cells into floats
 # with a value of NaN. Converting those to a string results in the string "nan". We just want a blank string.
-def floatToString(theFloat):
-    if isinstance(theFloat, float):
-        if numpy.isnan(theFloat):
-            return("")
-    return(str(theFloat))
-
-def cellToStr(theInput):
-    if isinstance(theInput, str):
-        return(theInput)
-    if isinstance(theInput, float) and math.isnan(theInput):
-        return("")
-    return(str(theInput))
+def valueToString(theVal):
+    if isinstance(theVal, str):
+        if theVal.lower() == "nan":
+            return ""
+        else:
+            return theVal
+    if isinstance(theVal, float):
+        if math.isnan(theFloat):
+            return ""
+    return(str(theVal))
 
 # Given a dict, returns a YAML string, e.g.:
 # ---
@@ -115,7 +113,6 @@ def frontMatterToString(theFrontMatter):
 
 # Takes a file path string pointing to a document file (.DOC, .DOCX, .TXT, etc) file, loads that file and coverts the contents to a Markdown / Govspeak string.
 # Returns a tuple of a string of the converted data and a dict of any front matter variables specified in the input file.
-# To do: handle more file types.
 def documentToGovspeak(inputFile):
     baseURL = ""
     if "baseURL" in globalValues.keys():
@@ -125,7 +122,6 @@ def documentToGovspeak(inputFile):
     
     # As of around Monday, 4th March 2019, Pandoc 2.7 now seems to work correctly for parsing DOCX files produced by Word Online.
     # Debian's Pandoc package is still on version 2.5, so Pandoc needs to be installed via the .deb file provided on their website.
-    # This proved to be a simple enough install, no problems.
     pandocProcess = subprocess.Popen("pandoc --wrap=none -s " + inputFile + " -t gfm -o -", shell=True, stdout=subprocess.PIPE)
     for markdownLine in pandocProcess.communicate()[0].decode("utf-8").split("\n"):
         for markdownReplaceKey in markdownReplace.keys():
@@ -176,21 +172,6 @@ def processInputFolder(rootPath, subPath):
             result.append((normalisePath(rootPath + os.sep + subPath + os.sep + item)))
     return(result)
 
-# Recursivly check each sub-folder in the given input folder for files still to be processed (as defined by the filesToProcess array, initially constructed by the processInputFolder function above).
-def applyDefaults(rootPath, subPath, filesToProcess):
-    folderContents = os.listdir(rootPath + os.sep + subPath)
-    for item in folderContents:
-        if not os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
-            fileToProcess = normalisePath(rootPath + os.sep + subPath + os.sep + item)
-            if fileToProcess in filesToProcess:
-                print("Applying default behaviour to: " + fileToProcess, flush=True)
-                if fileToProcess.lower().endswith(".docx"):
-                    (govspeak, frontMatter) = documentToGovspeak(fileToProcess)
-                    putFile(normalisePath(outputFolder + os.sep + subPath + os.sep + item[:-4] + "md"), frontMatterToString(frontMatter) + "\n" + govspeak)
-    for item in folderContents:
-        if os.path.isdir(rootPath + os.sep + subPath + os.sep + item):
-            applyDefaults(rootPath, subPath + os.sep + item, filesToProcess)
-
 # Copy each file from srcFolder to destFolder, and recurse down sub-folders.
 # Removes each encountered file from the filesToProcess list as it goes.
 def copyFolder(srcFolder, destFolder):
@@ -208,18 +189,6 @@ def copyFolder(srcFolder, destFolder):
                 shutil.copyfile(srcFolder + os.sep + item, destFolder + os.sep + item)
                 shutil.copystat(srcFolder + os.sep + item, destFolder + os.sep + item)
             removeFromFilesToProcess(srcFolder + os.sep + item)
-            
-# Make sure any files or sub-folders not in srcFolder are removed from destFolder.
-def matchFolder(srcFolder, destFolder):
-    for item in os.listdir(destFolder):
-        if not os.path.exists(srcFolder + os.sep + item):
-            if os.path.isdir(destFolder + os.sep + item):
-                shutil.rmtree(destFolder + os.sep + item)
-            else:
-                os.remove(destFolder + os.sep + item)
-        else:
-            if os.path.isdir(destFolder + os.sep + item):
-                matchFolder(srcFolder + os.sep + item, destFolder + os.sep + item)
                 
 # Takes a chunk of Govspeak Markdown text as input, returns that text with any ordered lists converted to legislative lists,
 # i.e. lists where numbering is explicitly specified, not restarted from scratch as is the Kramdown / Govspeak default.
@@ -247,6 +216,7 @@ def normaliseGovspeak(theGovspeak):
             result = result + theGovspeakLine + "\n"
             previousLineWasBlank = False
     return(result.rstrip())
+
 
 
 requiredArgs = ["input","output"]
@@ -286,7 +256,7 @@ if "config" in args.keys():
         argsData = pandas.read_excel(args["config"], header=0)
     for argsDataIndex, argsDataValues in argsData.iterrows():
         if argsDataValues[0] in requiredArgs + optionalArgs:
-            args[argsDataValues[0]] = cellToStr(argsDataValues[1])
+            args[argsDataValues[0]] = floatToStr(argsDataValues[1])
         elif argsDataValues[0] in optionalLists:
             for argsDataValue in argsDataValues[1:].values:
                 if not isnan(argsDataValue):
