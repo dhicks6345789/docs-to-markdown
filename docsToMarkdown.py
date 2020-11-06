@@ -152,7 +152,7 @@ def spreadsheetToGovspeak(inputFile):
     for index, row in inputDataframe.iterrows():
         rowString = ""
         for header in inputDataframe.headers:
-            rowString = rowString + "| " + floatToString(row[header]) + " "
+            rowString = rowString + "| " + valueToString(row[header]) + " "
         result = result + rowString + "|\n"
     return(result)
 
@@ -256,7 +256,7 @@ if "config" in args.keys():
         argsData = pandas.read_excel(args["config"], header=0)
     for argsDataIndex, argsDataValues in argsData.iterrows():
         if argsDataValues[0] in requiredArgs + optionalArgs:
-            args[argsDataValues[0]] = floatToStr(argsDataValues[1])
+            args[argsDataValues[0]] = valueToStr(argsDataValues[1])
         elif argsDataValues[0] in optionalLists:
             for argsDataValue in argsDataValues[1:].values:
                 if not isnan(argsDataValue):
