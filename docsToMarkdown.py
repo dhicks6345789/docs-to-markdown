@@ -256,7 +256,7 @@ if "config" in args.keys():
         argsData = pandas.read_excel(args["config"], header=0)
     for argsDataIndex, argsDataValues in argsData.iterrows():
         if argsDataValues[0] in requiredArgs + optionalArgs:
-            args[argsDataValues[0]] = valueToStr(argsDataValues[1])
+            args[argsDataValues[0]] = valueToString(argsDataValues[1])
         elif argsDataValues[0] in optionalLists:
             for argsDataValue in argsDataValues[1:].values:
                 if not isnan(argsDataValue):
