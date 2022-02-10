@@ -10,7 +10,8 @@ args = {}
 requiredArgs = ["input","output"]
 optionalArgs = ["scriptRoot"]
 args["input"] = os.getcwd()
-args["scriptRoot"] = os.getcwd()
+args["scriptRoot"] = sys.argv[0]
+print("previous scriptRoot: " + args["scriptRoot"])
 
 matches = []
 matches.append(["/faq/.*", "python3 processFAQ.py"])
