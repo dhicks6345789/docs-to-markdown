@@ -32,7 +32,7 @@ if "config" in args.keys():
             args[argsDataValues[0]] = valueToString(argsDataValues[1])
 
 # Print a config summary for the user.
-for arg in args():
+for arg in args:
     print(arg + ": " + args[arg])
             
 for requiredArg in requiredArgs:
