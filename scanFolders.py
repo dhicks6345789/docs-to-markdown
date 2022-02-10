@@ -17,7 +17,6 @@ for argItem in sys.argv[1:]:
         currentArgName = argItem[2:]
     elif not currentArgName == None:
         args[currentArgName] = argItem
-        print(currentArgName + ": " + argItem)
         currentArgName = None
     else:
         print("ERROR: unknown argument, " + argItem)
@@ -31,10 +30,13 @@ if "config" in args.keys():
     for argsDataIndex, argsDataValues in argsData.iterrows():
         if argsDataValues[0] in requiredArgs + optionalArgs:
             args[argsDataValues[0]] = valueToString(argsDataValues[1])
-            print(argsDataValues[0] + ": " + args[argsDataValues[0]])
-            
+
 for requiredArg in requiredArgs:
     if not requiredArg in args.keys():
         print("ERROR: Missing value for argument " + requiredArg)
         print("Usage: scanFolders --config --input --output")
         sys.exit(1)
+
+# Print a config summary for the user.
+for arg in args():
+    print(arg + ": " + args[arg])
