@@ -15,10 +15,16 @@ matches = []
 matches.append(["/faq/.*", "python3 processFAQ.py"])
 
 def normalisePath(thePath):
-    return thePath.replace(os.sep+os.sep, os.sep).rsplit(os.sep, 1)[0]
+    result = thePath.replace(os.sep+os.sep, os.sep)
+    if result[len(result)-1] == os.sep:
+        result = result[:-1]
+    return result
 
 def scanFolder(theInput, theOutput):
     inputFolder = normalisePath(baseInput + os.sep + theInput)
+    print(normalisePath("/var//babanas/api//"))
+    print(normalisePath("/var//babanas/apple/"))
+    print(normalisePath("/var//babanas/orange"))
     print("inputFolder:")
     print(inputFolder)
     for item in os.listdir(inputFolder):
