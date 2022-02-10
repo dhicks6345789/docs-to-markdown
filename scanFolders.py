@@ -22,10 +22,7 @@ def normalisePath(thePath):
 
 def scanFolder(theInput, theOutput):
     inputFolder = normalisePath(baseInput + os.sep + theInput)
-    print("inputFolder:")
-    print(inputFolder)
     for item in os.listdir(inputFolder):
-        print("Is folder?: " + inputFolder + os.sep + item)
         if os.path.isdir(inputFolder + os.sep + item):
             for match in matches:
                 print("Does " + match[0] + "/ match " + theInput + "/")
