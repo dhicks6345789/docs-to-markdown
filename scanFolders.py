@@ -14,18 +14,22 @@ args["input"] = os.getcwd()
 matches = []
 matches.append(["/faq/.*", "python3 processFAQ.py"])
 
+def normalisePath(thePath):
+    return thePath.replace(os.sep+os.sep, os.sep).rstrip(os.sep, 1)
+
 def scanFolder(theInput, theOutput):
-    for item in os.listdir(baseInput + os.sep + theInput):
-        print("Is folder?: " + baseInput + os.sep + theInput + os.sep + item)
-        if os.path.isdir(baseInput + os.sep + theInput + os.sep + item):
+    inputFolder = normalisePath(baseInput + os.sep + theInput)
+    for item in os.listdir(inputFolder):
+        print("Is folder?: " + inputFolder + os.sep + item)
+        if os.path.isdir(inputFolder + os.sep + item):
             for match in matches:
                 print("Does " + match[0] + " match " + theInput)
                 if not re.match(match[0], theInput) == None:
-                    print("Match - path: " + baseInput + os.sep + theInput + os.sep + item + " matches " + match[0])
-                    commandLine = match[1] + baseInput + os.sep + theInput + os.sep + item + " " + baseOutput + os.sep + theOutput + os.sep + item
+                    print("Match - path: " + inputFolder + os.sep + item + " matches " + match[0])
+                    commandLine = match[1] + inputFolder + os.sep + item + " " + normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
                     print("Running: " + commandLine)
-    for item in os.listdir(baseInput + os.sep + theInput):
-        if os.path.isdir(baseInput + os.sep + theInput + os.sep + item):
+    for item in os.listdir(inputFolder):
+        if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(theInput + os.sep + item, theOutput + os.sep + item)
 
 # Process the command-line arguments.
