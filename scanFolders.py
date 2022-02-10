@@ -16,6 +16,7 @@ matches.append(["/faq/.*", "python3 processFAQ.py"])
 
 def scanFolder(theInput, theOutput):
     for item in os.listdir(baseInput + os.sep + theInput):
+        print("Is folder?: " + baseInput + os.sep + theInput + os.sep + item)
         if os.path.isdir(baseInput + os.sep + theInput + os.sep + item):
             for match in matches:
                 print("Does " + match[0] + " match " + theInput)
