@@ -25,8 +25,8 @@ def scanFolder(theInput, theOutput):
     for item in os.listdir(inputFolder):
         if os.path.isdir(inputFolder + os.sep + item):
             for match in matches:
-                print("Does " + match[0] + "/ match " + theInput + "/")
-                if not re.match(match[0], theInput + "/") == None:
+                print("Does " + match[0] + "/ match " + theInput + os.sep + item)
+                if not re.match(match[0], theInput + os.sep + item) == None:
                     print("Match - path: " + inputFolder + os.sep + item + " matches " + match[0])
                     commandLine = match[1] + inputFolder + os.sep + item + " " + normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
                     print("Running: " + commandLine)
