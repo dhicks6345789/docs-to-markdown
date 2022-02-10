@@ -27,9 +27,9 @@ def scanFolder(theInput, theOutput):
         if os.path.isdir(inputFolder + os.sep + item):
             for match in matches:
                 if not re.match(match[0], theInput + os.sep + item + os.sep) == None:
-                    commandLine = normalisePath(args["scriptRoot"]) + os.sep + match[1] + " " + inputFolder + os.sep + item + " " + normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
+                    commandLine = match[1] + " " + inputFolder + os.sep + item + " " + normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
                     print("Running: " + commandLine)
-                    os.system(commandLine + " 2>&1")
+                    os.system("cd " + normalisePath(args["scriptRoot"]) + "; " + commandLine + " 2>&1")
     for item in os.listdir(inputFolder):
         if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
