@@ -8,8 +8,9 @@ import pandas
 
 args = {}
 requiredArgs = ["input","output"]
-optionalArgs = []
+optionalArgs = ["scriptRoot"]
 args["input"] = os.getcwd()
+args["scriptRoot"] = os.getcwd()
 
 matches = []
 matches.append(["/faq/.*", "python3 processFAQ.py"])
@@ -26,7 +27,7 @@ def scanFolder(theInput, theOutput):
         if os.path.isdir(inputFolder + os.sep + item):
             for match in matches:
                 if not re.match(match[0], theInput + os.sep + item + os.sep) == None:
-                    commandLine = match[1] + " " + inputFolder + os.sep + item + " " + normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
+                    commandLine = normalisePath(args["scriptRoot"]) + os.sep + match[1] + " " + inputFolder + os.sep + item + " " + normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
                     print("Running: " + commandLine)
                     os.system(commandLine + " 2>&1")
     for item in os.listdir(inputFolder):
