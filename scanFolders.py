@@ -35,7 +35,7 @@ def scanFolder(theInput, theOutput):
     for item in os.listdir(inputFolder):
         if not item in [".", ".."]:
             if os.path.isdir(inputFolder + os.sep + item):
-                print(normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
+                print("scanFolder: " + normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
                 #scanFolder(normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
 
 # Process the command-line arguments.
