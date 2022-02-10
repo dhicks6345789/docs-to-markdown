@@ -25,15 +25,11 @@ def scanFolder(theInput, theOutput):
     for item in os.listdir(inputFolder):
         if os.path.isdir(inputFolder + os.sep + item):
             for match in matches:
-                print("Does " + match[0] + " match " + theInput + os.sep + item + os.sep)
                 if not re.match(match[0], theInput + os.sep + item + os.sep) == None:
-                    print("Match - path: " + inputFolder + os.sep + item + " matches " + match[0])
-                    commandLine = match[1] + inputFolder + os.sep + item + " " + normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
+                    commandLine = match[1] + " " + inputFolder + os.sep + item + " " + normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
                     print("Running: " + commandLine)
     for item in os.listdir(inputFolder):
         if os.path.isdir(inputFolder + os.sep + item):
-            print("Item: " + item)
-            print("scanFolder: " + normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
             scanFolder(normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
 
 # Process the command-line arguments.
