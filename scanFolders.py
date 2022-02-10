@@ -15,7 +15,7 @@ matches = []
 matches.append(["/faq/.*", "python3 processFAQ.py"])
 
 def normalisePath(thePath):
-    return thePath.replace(os.sep+os.sep, os.sep).rsplit(os.sep, 1)
+    return thePath.replace(os.sep+os.sep, os.sep).rsplit(os.sep, 1)[0]
 
 def scanFolder(theInput, theOutput):
     inputFolder = normalisePath(baseInput + os.sep + theInput)
