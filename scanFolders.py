@@ -14,7 +14,7 @@ args["input"] = os.getcwd()
 matches = []
 matches[0] = ["/faq/.*", "python3 processFAQ.py"]
 
-scanFolder(theInput, theOutput):
+def scanFolder(theInput, theOutput):
     for item in os.listdir(baseInput + os.sep + theInput):
         if os.path.isdir(baseInput + os.sep + theInput + os.sep + item):
             for match in matches:
