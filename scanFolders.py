@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 
 # We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
@@ -9,6 +10,21 @@ args = {}
 requiredArgs = ["input","output"]
 optionalArgs = []
 args["input"] = os.getcwd()
+
+matches = []
+matches[0] = ["/faq/.*", "python3 processFAQ.py"]
+
+scanFolder(theInput, theOutput):
+    for item in os.listdir(baseInput + os.sep + theInput):
+        if os.path.isdir(baseInput + os.sep + theInput + os.sep + item):
+            for match in matches:
+                if not re.match(match[0], theInput) == None:
+                    print("Match - path: " + baseInput + os.sep + theInput + os.sep + item + " matches " + match[0])
+                    commandLine = match[1] + baseInput + os.sep + theInput + os.sep + item + " " + baseOutput + os.sep + theOutput + os.sep + item
+                    print("Running: " + commandLine)
+    for item in os.listdir(baseInput + os.sep + theInput):
+        if os.path.isdir(baseInput + os.sep + theInput + os.sep + item):
+            scanFolder(theInput + os.sep + item, theOutput + os.sep + item)
 
 # Process the command-line arguments.
 currentArgName = None
@@ -40,3 +56,7 @@ for requiredArg in requiredArgs:
         print("ERROR: Missing value for argument " + requiredArg)
         print("Usage: scanFolders --config --input --output")
         sys.exit(1)
+
+baseInput = args["input"]
+baseOutput = args["output"]
+scanFolder("", "")
