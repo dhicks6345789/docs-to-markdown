@@ -8,7 +8,7 @@ import pandas
 args = {}
 requiredArgs = ["input","output"]
 optionalArgs = []
-args["input"] = "."
+args["input"] = os.getcwd()
 
 # Process the command-line arguments.
 currentArgName = None
@@ -31,12 +31,12 @@ if "config" in args.keys():
         if argsDataValues[0] in requiredArgs + optionalArgs:
             args[argsDataValues[0]] = valueToString(argsDataValues[1])
 
+# Print a config summary for the user.
+for arg in args():
+    print(arg + ": " + args[arg])
+            
 for requiredArg in requiredArgs:
     if not requiredArg in args.keys():
         print("ERROR: Missing value for argument " + requiredArg)
         print("Usage: scanFolders --config --input --output")
         sys.exit(1)
-
-# Print a config summary for the user.
-for arg in args():
-    print(arg + ": " + args[arg])
