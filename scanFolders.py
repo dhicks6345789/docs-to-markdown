@@ -12,7 +12,7 @@ optionalArgs = []
 args["input"] = os.getcwd()
 
 matches = []
-matches[0] = ["/faq/.*", "python3 processFAQ.py"]
+matches.append(["/faq/.*", "python3 processFAQ.py"])
 
 def scanFolder(theInput, theOutput):
     for item in os.listdir(baseInput + os.sep + theInput):
