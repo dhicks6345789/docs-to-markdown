@@ -28,6 +28,7 @@ def scanFolder(theInput, theOutput):
                 if not re.match(match[0], theInput + os.sep + item + os.sep) == None:
                     commandLine = match[1] + " " + inputFolder + os.sep + item + " " + normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
                     print("Running: " + commandLine)
+                    os.system(commandLine)
     for item in os.listdir(inputFolder):
         if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
