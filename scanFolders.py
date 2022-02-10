@@ -22,9 +22,6 @@ def normalisePath(thePath):
 
 def scanFolder(theInput, theOutput):
     inputFolder = normalisePath(baseInput + os.sep + theInput)
-    print(normalisePath("/var//babanas/api//"))
-    print(normalisePath("/var//babanas/apple/"))
-    print(normalisePath("/var//babanas/orange"))
     print("inputFolder:")
     print(inputFolder)
     for item in os.listdir(inputFolder):
@@ -40,7 +37,7 @@ def scanFolder(theInput, theOutput):
         if os.path.isdir(inputFolder + os.sep + item):
             print("Item: " + item)
             print("scanFolder: " + normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
-            #scanFolder(normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
+            scanFolder(normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
 
 # Process the command-line arguments.
 currentArgName = None
