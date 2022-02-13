@@ -6,6 +6,9 @@ import sys
 import xlrd
 import pandas
 
+# Our own Docs To Markdown library.
+import docsToMarkdownLib
+
 args = {}
 requiredArgs = ["input","output"]
 optionalArgs = ["scriptRoot"]
@@ -15,24 +18,18 @@ args["scriptRoot"] = sys.argv[0].rsplit(os.sep, 1)[0]
 matches = []
 matches.append(["/faq/.*", "python3 processFAQ.py"])
 
-def normalisePath(thePath):
-    result = thePath.replace(os.sep+os.sep, os.sep)
-    if result[len(result)-1] == os.sep:
-        result = result[:-1]
-    return result
-
 def scanFolder(theInput, theOutput):
-    inputFolder = normalisePath(baseInput + os.sep + theInput)
+    inputFolder = docsToMarkdownLib.normalisePath(baseInput + os.sep + theInput)
     for item in os.listdir(inputFolder):
         if os.path.isdir(inputFolder + os.sep + item):
             for match in matches:
                 if not re.match(match[0], theInput + os.sep + item + os.sep) == None:
-                    commandLine = match[1] + " " + inputFolder + os.sep + item + " " + normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
+                    commandLine = match[1] + " " + inputFolder + os.sep + item + " " + docsToMarkdownLib.normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
                     print("Running: " + commandLine)
-                    os.system("cd " + normalisePath(args["scriptRoot"]) + "; " + commandLine + " 2>&1")
+                    os.system("cd " + docsToMarkdownLib.normalisePath(args["scriptRoot"]) + "; " + commandLine + " 2>&1")
     for item in os.listdir(inputFolder):
         if os.path.isdir(inputFolder + os.sep + item):
-            scanFolder(normalisePath(theInput + os.sep + item), normalisePath(theOutput + os.sep + item))
+            scanFolder(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
 
 # Process the command-line arguments.
 currentArgName = None
