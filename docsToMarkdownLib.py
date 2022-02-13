@@ -5,6 +5,18 @@ import subprocess
 # in strings.
 markdownReplace = {"\\[":"[","\\]":"]","\\!":"!"}
 
+def checkModDatesMatch(theInputItem, theOutputItem):
+    if os.path.isfile(theOutputItem):
+        inputItemDetails = os.stat(theInputItem)
+        outputItemDetails = os.stat(theOutputItem)
+        if inputItemDetails.st_mtime == outputItemDetails.st_mtime:
+            return True
+    return False
+
+def makeModDatesMatch(theInputItem, theOutputItem):
+    inputItemDetails = os.stat(theInputItem)
+    os.utime(theOutputItem, (inputItemDetails.st_atime, inputItemDetails.st_mtime))
+
 # Given a dict, returns a YAML string, e.g.:
 # ---
 # variableName: value
