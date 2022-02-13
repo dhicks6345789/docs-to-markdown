@@ -9,7 +9,7 @@ markdownReplace = {"\\[":"[","\\]":"]","\\!":"!"}
 # Returns a tuple of a string of the converted data and a dict of any front matter variables specified in the input file.
 # As of around Monday, 4th March 2019, Pandoc 2.7 now seems to work correctly for parsing DOCX files produced by Word Online. Debian's Pandoc package is still on
 # version 2.5, so Pandoc needs to be installed via the .deb file provided on their website.
-def documentToGovspeak(inputFile, baseURL="", markdownType="gfm", validFrontMatterFields=["title"]):
+def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFields=["title"]):
     markdown = ""
     frontMatter = {}
     
