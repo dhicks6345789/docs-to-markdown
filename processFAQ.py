@@ -7,7 +7,7 @@ outputFolder = sys.argv[2]
 print("processFAQ: " + inputFolder + " to " + outputFolder)
 for inputItem in os.listdir(inputFolder):
     if inputItem.rsplit(".", 1)[1].lower() in ["docx", "doc"]:
-        print("Convert to Markdown: " + inputFolder + os.sep + item)
+        print("Convert to Markdown: " + inputFolder + os.sep + inputItem)
     elif inputItem.rsplit(".", 1)[1].lower() in ["mp4"]:
         # Use FFmpeg to set the size and format of any FAQ videos.
         processVideo = False
