@@ -4,7 +4,7 @@ import sys
 inputFolder = sys.argv[1]
 outputFolder = sys.argv[2]
 
-checkModDatesMatch(theInputItem, theOutputItem):
+def checkModDatesMatch(theInputItem, theOutputItem):
     if os.path.isfile(theOutputItem):
         inputItemDetails = os.stat(theInputItem)
         outputItemDetails = os.stat(theOutputItem)
@@ -12,16 +12,16 @@ checkModDatesMatch(theInputItem, theOutputItem):
             return True
     return False
 
-makeModDatesMatch(theInputItem, theOutputItem):
+def makeModDatesMatch(theInputItem, theOutputItem):
     inputItemDetails = os.stat(theInputItem)
     os.utime(theOutputItem, (inputItemDetails.st_atime, inputItemDetails.st_mtime))
 
-print("processFAQ: " + inputFolder + " to " + outputFolder)
+print("STATUS: processFAQ: " + inputFolder + " to " + outputFolder)
 for inputItem in os.listdir(inputFolder):
     if inputItem.rsplit(".", 1)[1].lower() in ["docx", "doc"]:
         outputItem = inputItem.rsplit(".", 1)[0] + ".md"
         if not checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
-            print("Convert to Markdown: " + inputFolder + os.sep + inputItem)
+            print("STATUS: Processing FAQ content: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
     elif inputItem.rsplit(".", 1)[1].lower() in ["mp4"]:
         # Use FFmpeg to set the size and format of any FAQ videos.
         outputItem = inputItem.rsplit(".", 1)[0] + ".webm"
