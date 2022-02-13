@@ -5,6 +5,18 @@ import subprocess
 # in strings.
 markdownReplace = {"\\[":"[","\\]":"]","\\!":"!"}
 
+# Given a dict, returns a YAML string, e.g.:
+# ---
+# variableName: value
+# ---
+def frontMatterToString(theFrontMatter):
+    if theFrontMatter == {}:
+        return ""
+    result = "---\n"
+    for frontMatterField in theFrontMatter.keys():
+        result = result + frontMatterField + ": " + theFrontMatter[frontMatterField] + "\n"
+    return(result + "---\n")
+
 # Takes a file path string pointing to a document file (.DOC, .DOCX, .TXT, etc) file, loads that file and coverts the contents to a Markdown string using Pandoc.
 # Returns a tuple of a string of the converted data and a dict of any front matter variables specified in the input file.
 # As of around Monday, 4th March 2019, Pandoc 2.7 now seems to work correctly for parsing DOCX files produced by Word Online. Debian's Pandoc package is still on
