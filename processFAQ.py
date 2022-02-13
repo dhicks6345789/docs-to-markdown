@@ -20,7 +20,7 @@ for inputItem in os.listdir(inputFolder):
         else:
             processVideo = True
             
-        if processVideo and outputItem == "0010.webm":
+        if processVideo:
             print("STATUS: Processing FAQ video: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
             
             # Figure out the video's dimensions.
