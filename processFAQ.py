@@ -4,23 +4,28 @@ import sys
 inputFolder = sys.argv[1]
 outputFolder = sys.argv[2]
 
+checkModDatesMatch(theInputItem, theOutputItem):
+    if os.path.isfile(theOutputItem):
+        inputItemDetails = os.stat(theInputItem)
+        outputItemDetails = os.stat(theOutputItem)
+        if inputItemDetails.st_mtime == outputItemDetails.st_mtime:
+            return True
+    return False
+
+makeModDatesMatch(theInputItem, theOutputItem):
+    inputItemDetails = os.stat(theInputItem)
+    os.utime(theOutputItem, (inputItemDetails.st_atime, inputItemDetails.st_mtime))
+
 print("processFAQ: " + inputFolder + " to " + outputFolder)
 for inputItem in os.listdir(inputFolder):
     if inputItem.rsplit(".", 1)[1].lower() in ["docx", "doc"]:
-        print("Convert to Markdown: " + inputFolder + os.sep + inputItem)
+        outputItem = inputItem.rsplit(".", 1)[0] + ".md"
+        if not checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
+            print("Convert to Markdown: " + inputFolder + os.sep + inputItem)
     elif inputItem.rsplit(".", 1)[1].lower() in ["mp4"]:
         # Use FFmpeg to set the size and format of any FAQ videos.
-        processVideo = False
-        inputItemDetails = os.stat(inputFolder + os.sep + inputItem)
         outputItem = inputItem.rsplit(".", 1)[0] + ".webm"
-        if os.path.isfile(outputFolder + os.sep + outputItem):
-            outputItemDetails = os.stat(outputFolder + os.sep + outputItem)
-            if not inputItemDetails.st_mtime == outputItemDetails.st_mtime:
-                processVideo = True
-        else:
-            processVideo = True
-            
-        if processVideo:
+        if not checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
             print("STATUS: Processing FAQ video: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
             
             # Figure out the video's dimensions.
@@ -32,4 +37,5 @@ for inputItem in os.listdir(inputFolder):
             # Also, normalise the audio - see: http://johnriselvato.com/ffmpeg-how-to-normalize-audio/
             os.system("ffmpeg -i " + inputFolder + os.sep + inputItem + " -filter:v crop=" + str(videoHeight) + ":" + str(videoHeight) + ":" + str(int((videoWidth - videoHeight) / 2)) + ":0,scale=240:240,setsar=1 -filter:a loudnorm=I=-16:LRA=11:TP=-1.5 /tmp/faq.webm > /dev/null 2>&1")
             os.system("mv /tmp/faq.webm " + outputFolder + os.sep + outputItem)
-            os.utime(outputFolder + os.sep + outputItem, (inputItemDetails.st_atime, inputItemDetails.st_mtime))
+            
+            makeModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem)
