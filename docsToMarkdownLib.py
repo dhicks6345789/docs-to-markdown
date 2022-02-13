@@ -67,7 +67,9 @@ def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFie
     markdown = ""
     frontMatter = {}
     
-    pandocProcess = subprocess.Popen("pandoc --wrap=none -s " + inputFile + " -t " + markdownType + " -o -", shell=True, stdout=subprocess.PIPE)
+    pandocCommand = "pandoc --wrap=none -s \"" + inputFile + "\" -t " + markdownType + " -o -"
+    print(pandocCommand)
+    pandocProcess = subprocess.Popen(pandocCommand, shell=True, stdout=subprocess.PIPE)
     for markdownLine in pandocProcess.communicate()[0].decode("utf-8").split("\n"):
         for markdownReplaceKey in markdownReplace.keys():
             markdownLine = markdownLine.replace(markdownReplaceKey, markdownReplace[markdownReplaceKey])
