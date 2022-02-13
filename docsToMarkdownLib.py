@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 # Pandoc escapes Markdown control characters embedded in Word documents, but we want to let people embed chunks of Markdown in
@@ -31,8 +32,9 @@ def frontMatterToString(theFrontMatter):
 
 # Takes a file path string pointing to a document file (.DOC, .DOCX, .TXT, etc) file, loads that file and coverts the contents to a Markdown string using Pandoc.
 # Returns a tuple of a string of the converted data and a dict of any front matter variables specified in the input file.
-# As of around Monday, 4th March 2019, Pandoc 2.7 now seems to work correctly for parsing DOCX files produced by Word Online. Debian's Pandoc package is still on
-# version 2.5, so Pandoc needs to be installed via the .deb file provided on their website.
+# Note: previously, a bug prevented Pandoc correctly parsing DOCX files produced by Word Online. As of around Monday, 4th March 2019, Pandoc 2.7 now seems to work.
+# The Debian 11 (Bullseye) Pandoc package version is 2.9, previous versions are 2.5 or earlier, so you either need to make sure Debian is up-to-date or install
+# Pandoc via the .deb file provided on their website.
 def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFields=["title"]):
     markdown = ""
     frontMatter = {}
