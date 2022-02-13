@@ -22,8 +22,8 @@ for inputItem in os.listdir(inputFolder):
             
         if processVideo:
             print("STATUS: Processing FAQ video: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
-            print("inputItemDetails: " + inputItemDetails.st_mtime)
-            print("outputItemDetails: " + outputItemDetails.st_mtime)
+            print("inputItemDetails: " + str(inputItemDetails.st_mtime))
+            print("outputItemDetails: " + str(outputItemDetails.st_mtime))
             
             # Figure out the video's dimensions.
             videoDimensions = os.popen("ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x " + inputFolder + os.sep + inputItem).read().strip()
