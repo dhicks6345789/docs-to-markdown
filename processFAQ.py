@@ -1,31 +1,25 @@
 import os
 import sys
 
+# Our own Docs To Markdown library.
+import docsToMarkdownLib
+
 inputFolder = sys.argv[1]
 outputFolder = sys.argv[2]
-
-def checkModDatesMatch(theInputItem, theOutputItem):
-    if os.path.isfile(theOutputItem):
-        inputItemDetails = os.stat(theInputItem)
-        outputItemDetails = os.stat(theOutputItem)
-        if inputItemDetails.st_mtime == outputItemDetails.st_mtime:
-            return True
-    return False
-
-def makeModDatesMatch(theInputItem, theOutputItem):
-    inputItemDetails = os.stat(theInputItem)
-    os.utime(theOutputItem, (inputItemDetails.st_atime, inputItemDetails.st_mtime))
 
 print("STATUS: processFAQ: " + inputFolder + " to " + outputFolder)
 for inputItem in os.listdir(inputFolder):
     if inputItem.rsplit(".", 1)[1].lower() in ["docx", "doc"]:
         outputItem = inputItem.rsplit(".", 1)[0] + ".md"
-        if not checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
+        if not docsToMarkdownLib.checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
             print("STATUS: Processing FAQ content: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
+            outputMarkdown, outputFrontmatter = docsToMarkdownLib.docToMarkdown(inputFolder + os.sep + inputItem)
+            docsToMarkdownLib.putFile(outputFolder + os.sep + outputItem, frontMatterToString(outputMarkdown) + outputFrontMatter)
+            docsToMarkdownLib.makeModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem)
     elif inputItem.rsplit(".", 1)[1].lower() in ["mp4"]:
         # Use FFmpeg to set the size and format of any FAQ videos.
         outputItem = inputItem.rsplit(".", 1)[0] + ".webm"
-        if not checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
+        if not docsToMarkdownLib.checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
             print("STATUS: Processing FAQ video: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
             
             # Figure out the video's dimensions.
@@ -38,4 +32,4 @@ for inputItem in os.listdir(inputFolder):
             os.system("ffmpeg -i " + inputFolder + os.sep + inputItem + " -filter:v crop=" + str(videoHeight) + ":" + str(videoHeight) + ":" + str(int((videoWidth - videoHeight) / 2)) + ":0,scale=240:240,setsar=1 -filter:a loudnorm=I=-16:LRA=11:TP=-1.5 /tmp/faq.webm > /dev/null 2>&1")
             os.system("mv /tmp/faq.webm " + outputFolder + os.sep + outputItem)
             
-            makeModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem)
+            docsToMarkdownLib.makeModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem)
