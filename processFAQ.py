@@ -13,8 +13,7 @@ for inputItem in os.listdir(inputFolder):
         outputItem = inputItem.rsplit(".", 1)[0] + ".md"
         if not docsToMarkdownLib.checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
             print("STATUS: Processing FAQ content: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
-            outputMarkdown, outputFrontmatter = docsToMarkdownLib.docToMarkdown(inputFolder + os.sep + inputItem)
-            docsToMarkdownLib.putFile(outputFolder + os.sep + outputItem, frontMatterToString(outputMarkdown) + outputFrontMatter)
+            docsToMarkdownLib.docToMarkdownFile(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem)
             docsToMarkdownLib.makeModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem)
     elif inputItem.rsplit(".", 1)[1].lower() in ["mp4"]:
         # Use FFmpeg to set the size and format of any FAQ videos.
