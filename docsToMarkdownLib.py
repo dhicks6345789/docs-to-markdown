@@ -6,6 +6,34 @@ import subprocess
 # in strings.
 markdownReplace = {"\\[":"[","\\]":"]","\\!":"!"}
 
+# A utility function to return the contents of the given file.
+def getFile(theFilename):
+    infile = open(theFilename)
+    result = infile.read()
+    infile.close()
+    return(result)
+    
+# A utility function to write the contents of the given string to the given file.
+def putFile(theFilename, theContent):
+    if os.sep in theFilename:
+        parentFolderName = theFilename.rsplit(os.sep, 1)[0]
+        if not os.path.exists(parentFolderName):
+            os.makedirs(parentFolderName)
+    outfile = open(theFilename, "wt", encoding="utf-8")
+    outfile.write(theContent)
+    outfile.close()
+
+# A utility function to return a given path string in normalised format, i.e. without any double os.sep characters,
+# and with no os.sep character at the end of the string.
+def normalisePath(thePath):
+    thePath = thePath.strip()
+    if thePath == "":
+        return ""
+    result = thePath.replace(os.sep+os.sep, os.sep)
+    if result[len(result)-1] == os.sep:
+        result = result[:-1]
+    return result
+    
 def checkModDatesMatch(theInputItem, theOutputItem):
     if os.path.isfile(theOutputItem):
         inputItemDetails = os.stat(theInputItem)
