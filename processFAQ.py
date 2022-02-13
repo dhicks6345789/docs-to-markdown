@@ -13,7 +13,7 @@ for inputItem in os.listdir(inputFolder):
         processVideo = False
         inputItemDetails = os.stat(inputFolder + os.sep + inputItem)
         outputItem = inputItem.rsplit(".", 1)[0] + ".webm"
-        if os.path.isfile(outputFolder + os.sep + inputItem):
+        if os.path.isfile(outputFolder + os.sep + outputItem):
             outputItemDetails = os.stat(outputFolder + os.sep + outputItem)
             if not inputItemDetails.st_mtime == outputItemDetails.st_mtime:
                 processVideo = True
