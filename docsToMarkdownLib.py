@@ -82,5 +82,5 @@ def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFie
 
 # Takes an input file and coverts it to Markdown, writing that Markdown to the given output file.
 def docToMarkdownFile(inputFile, outputFile, baseURL="", markdownType="gfm", validFrontMatterFields=["title"]):
-    outputMarkdown, outputFrontmatter = docToMarkdown(inputFile)
-    putFile(outputFile, frontMatterToString(outputMarkdown) + outputFrontMatter)
+    outputMarkdown, outputFrontmatter = docToMarkdown(inputFile, baseURL=baseURL, markdownType=markdownType, validFrontMatterFields=validFrontMatterFields)
+    putFile(outputFile, frontMatterToString(outputFrontMatter) + outputMarkdown)
