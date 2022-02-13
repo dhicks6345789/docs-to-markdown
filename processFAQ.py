@@ -23,6 +23,7 @@ for inputItem in os.listdir(inputFolder):
         if processVideo:
             print("STATUS: Processing FAQ video: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
             print("inputItemDetails: " + str(inputItemDetails.st_mtime))
+            outputItemDetails = os.stat(outputFolder + os.sep + outputItem)
             print("outputItemDetails: " + str(outputItemDetails.st_mtime))
             
             # Figure out the video's dimensions.
