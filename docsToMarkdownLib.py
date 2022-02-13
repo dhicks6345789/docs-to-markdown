@@ -79,3 +79,8 @@ def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFie
         if not lineIsFrontMatter:
             markdown = markdown + markdownLine.replace(baseURL, "") + "\n"
     return(markdown, frontMatter)
+
+# Takes an input file and coverts it to Markdown, writing that Markdown to the given output file.
+def docToMarkdownFile(inputFile, outputFile, baseURL="", markdownType="gfm", validFrontMatterFields=["title"]):
+    outputMarkdown, outputFrontmatter = docToMarkdown(inputFile)
+    putFile(outputFile, frontMatterToString(outputMarkdown) + outputFrontMatter)
