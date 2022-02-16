@@ -1,30 +1,51 @@
 # DocsToMarkdown
-A collection of scripts to pre-process folders of content into a form ready for further processing with common static site generation tools (Hugo, Jekyll, etc).
+A collection of scripts to pre-process folders of content into a form ready for further processing with common static site generation tools ([Hugo](https://gohugo.io/) or [Jekyll](https://jekyllrb.com/), etc).
 
-Converts a folder tree of Word / Excel files (compatability is with those produced by Mircosoft Office / Office 365, exported from Google Docs / Sheets or, hopefully, pretty much any other tool) to the Govspeak varient of Markdown as specified by GOV.UK, or to CSV if appropriate. The output is intended to be used as the input for static site generation tools such as Jeykll, Hugo or Hyde, and various options / assumtions exist to ensure the files produced are suitible for those tools.
-
-## Requirements
-This utility is written in Python 3. It depends on the Pandas Python module, which should be installable via Pip.
-
-DocsToMarkdown depends on the Ruby-based utility Pandoc, version 2.7 or higher, released Monday, 4th March 2019. Earlier versions (as packaged in Debian 9 "Stretch" / Debian 10 "Buster" repositories, for instance) have a bug which stops them parsing DOCX files created with Office 365 - probably best to install the [latest version](https://pandoc.org/installing.html).
-
-DocsToMarkdown is intended to produce a set of Markdown documents suitible for use with various static site generation tools, in particular [Hugo](https://gohugo.io/) or [Jekyll](https://jekyllrb.com/).
+The scanFolders Python script acts as an overall starting point, triggering other scripts to run conversions on a folder tree containing various content. Each script should also be able to be used as a stand-alone application should you just want to use it like that. Some scripts are included in trhis project repository, some have their own projects.
 
 ## Installation
-Clone the Git repository or just download the docsToMarkdown.py file.
+Just download / clone the Git repository.
+
+## Requirements
+These scripts are written in Python 3. Each script might have its own set of particular requirements, see the relevant heading below for details.
 
 ## Usage
-Run the script, giving input and output folder options:
+To run scanFolders on a given folder tree, just give input and output folder options:
 
 ```
-docsToMarkdown.py -i inputFolder -o outputFolder
+scanFolders.py --input inputFolder --output outputFolder
 ```
 
-That will process all recognised documents in "inputFolder", applying the default behaviour to each one, and place the resulting Markdown file in a matching set of files in "outputFolder". Sub-folders will be recursed into, and the output folder will be created if it doesn't already exist.
+That will process all recognised documents in "inputFolder", applying the default behaviour to each one, and place the resulting processed files (.md Markdown files and any other resources generated) in a matching set of files in "outputFolder". Sub-folders will be recursed into, and the output folder will be created if it doesn't already exist.
 
-The default behaviour for DOC/DOCX files is to simply pass them to Pandoc for conversion into Markdown. Basic formatting from Word documents should be retained in output Markdown - titles, bold / italic text, bullet points, tables and similar features.
+## Extending
 
-The default behaviour for XLS/XLSX files is to do a simple conversion to CSV. Formulas, tables and so on will be lost, just values will be retained.
+If you want to extend the functionality of this project you just write a script that accepts the same (very simple) format of paramaeters at the command line. There is a docsToMarkdownLib Python library that contains handy functions if you happen to be writing your script in Python, but really you can write a command line application in any language you prefer.
+
+
+
+
+# The Scripts
+
+## DocsToMarkdown.py
+
+### Descrption
+Converts a folder of Word / Excel files (compatability is with those produced by Mircosoft Office / Office 365, exported from Google Docs / Sheets or, hopefully, pretty much any other tool) to the Github varient of Markdown (or to CSV in the case of spreadsheets files). The output is intended to be used as the input for static site generation tools such as Hugo, Jeykll, etc, and the script will handle appropriate metadata headers.
+
+### Requirements
+Needs the Pandas Python module, which should be installable via Pip.
+
+DocsToMarkdown.py depends on the Ruby-based utility [Pandoc](https://pandoc.org/), version 2.7 or higher (released March 2019). If you're in a Linux environment, this should be installable via your distribution's usual mechanism (apt-get, etc). Note that earlier versions (as packaged in Debian 9 "Stretch" / Debian 10 "Buster" repositories, for instance) have a bug which stops them parsing DOCX files created with Office 365 - for older Linux distributions and for Windows environments, check the [Pandoc installation instructions](https://pandoc.org/installing.html).
+
+### Usage
+
+```
+docsToMarkdown --input inputFolder --output outputFolder
+```
+
+Converts all DOC/DOCX files (using Pandoc) to Markdown. Basic formatting from Word documents should be retained in output Markdown - titles, bold / italic text, bullet points, tables and similar features.
+
+Converts all XLS/XLSX files to CSV. Formulas, tables and so on will be lost, just values will be retained.
 
 ### Example 1
 So, if you had a single folder with some files in:
