@@ -14,8 +14,7 @@ for inputItem in os.listdir(inputFolder):
         if not docsToMarkdownLib.checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
             print("STATUS: Processing FAQ content: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
             docMarkdown, docFrontmatter = docsToMarkdownLib.docToMarkdown(inputFolder + os.sep + inputItem)
-            print(docFrontmatter.keys())
-            for markdownLine in docMarkdown:
+            for markdownLine in docMarkdown.split("\n"):
                 print(markdownLine)
                 if markdownLine.startswith("# ") and not "title" in docFrontmatter.keys():
                     docFrontmatter["title"] = markdownLine[2:].lstrip()
