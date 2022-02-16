@@ -7,12 +7,15 @@ import docsToMarkdownLib
 inputFolder = sys.argv[1]
 outputFolder = sys.argv[2]
 
-print("STATUS: processFAQ: " + inputFolder + " to " + outputFolder)
-for inputItem in os.listdir(inputFolder):
+def processPage(thePageFolder):
+    for inputItem in os.listdir(thePageFolder):
+        print("STATUS: Processing Yearbook page: " + thePageFolder)
+    
+    sys.exit(0)
     if inputItem.rsplit(".", 1)[1].lower() in ["docx", "doc"]:
         outputItem = inputItem.rsplit(".", 1)[0] + ".md"
         if not docsToMarkdownLib.checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
-            print("STATUS: Processing FAQ content: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
+            print("STATUS: Processing Yearbook page: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
             docMarkdown, docFrontmatter = docsToMarkdownLib.docToMarkdown(inputFolder + os.sep + inputItem)
             trimmedMarkdown = ""
             for markdownLine in docMarkdown.split("\n"):
@@ -39,3 +42,9 @@ for inputItem in os.listdir(inputFolder):
             os.system("mv /tmp/faq.webm " + outputFolder + os.sep + outputItem)
             
             docsToMarkdownLib.makeModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem)
+
+
+print("STATUS: processYearbook: " + inputFolder + " to " + outputFolder)
+for page in os.listdir(inputFolder):
+    if os.path.isdir(inputFolder + os.sep + inputItem):
+        processPage(inputItem)
