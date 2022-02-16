@@ -11,7 +11,7 @@ These scripts are written in Python 3. Each script might have its own set of par
 
 The scripts are intended to be run over a simple folder tree. They should work with pretty much anything that looks to the operating system like a local tree of folders, so if you have a utility that maps a cloud-based file system of some kind to a local path (say you're using the Windows Google Drive / OneDrive / Dropbox client) you should be able to run the scripts on that path (either as input or output location) in the same way.
 
-If you're on a Linux or MacOS system, we can recommend [rclone](https://rclone.org/) as being an excellent way of mounting / cloning over 50 cloud provider's filesystems as a local filesystem.
+If you're on a Linux or MacOS system (or Windows), we can recommend [rclone](https://rclone.org/) as being an excellent way of mounting / cloning over 50 cloud provider's filesystems as a local filesystem.
 
 ## Usage
 To run scanFolders on a given folder tree, just give input and output folder options:
@@ -25,6 +25,8 @@ That will process all recognised documents in "inputFolder", applying the defaul
 ## Extending
 
 If you want to extend the functionality of this project, just write a script that accepts the same (very simple) format of paramaeters at the command line. There is a docsToMarkdownLib Python library that contains handy functions if you happen to be writing your script in Python, but really you can write a command line application in any language you prefer.
+
+The scripts should all work just fine from the command line, but as an added feature they might be used with the [Web Console](https://github.com/dhicks6345789/web-console) project to produce a very simple front end. Therefore, when writing additional scripts it would be best to include formatting in any output (progress / error messages, progress bars, etc) suitible for Web Console to use - see the project's page for more details.
 
 # The Scripts
 
