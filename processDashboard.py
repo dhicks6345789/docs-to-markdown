@@ -5,9 +5,11 @@ import sys
 import docsToMarkdownLib
 
 inputFolder = sys.argv[1]
-outputFolder = sys.argv[2]
+outputFile = sys.argv[2]
 
-print("STATUS: processDashboard: " + inputFolder + " to " + outputFolder)
+print("STATUS: processDashboard: " + inputFolder + " to " + outputFile)
+
+sys.exit(0)
 for inputItem in os.listdir(inputFolder):
     if inputItem.rsplit(".", 1)[1].lower() in ["docx", "doc"]:
         outputItem = inputItem.rsplit(".", 1)[0] + ".md"
