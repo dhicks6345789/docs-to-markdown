@@ -1,13 +1,17 @@
 # DocsToMarkdown
 A collection of scripts to pre-process folders of content into a form ready for further processing with common static site generation tools ([Hugo](https://gohugo.io/) or [Jekyll](https://jekyllrb.com/), etc).
 
-The scanFolders Python script acts as an overall starting point, triggering other scripts to run conversions on a folder tree containing various content. Each script should also be able to be used as a stand-alone application should you just want to use it like that. Some scripts are included in trhis project repository, some have their own projects.
+The scanFolders Python script acts as an overall starting point, triggering other scripts to run conversions on a folder tree containing various content. Each script should also be able to be used as a stand-alone application should you want. Some scripts are included in this project repository, some larger / more complex ones have their own projects.
 
 ## Installation
 Just download / clone the Git repository.
 
 ## Requirements
 These scripts are written in Python 3. Each script might have its own set of particular requirements, see the relevant heading below for details.
+
+The scripts are intended to be run over a simple folder tree. They should work with pretty much anything that looks to the operating system like a local tree of folders, so if you have a utility that maps a cloud-based file system of some kind to a local path (say you're using the Windows Google Drive / OneDrive / Dropbox client) you should be able to run the scripts on that path (either as input or output location) in the same way.
+
+If you're on a Linux or MacOS system, we can recommend [rclone](https://rclone.org/) as being an excellent way of mounting / cloning over 50 cloud provider's filesystems as a local filesystem.
 
 ## Usage
 To run scanFolders on a given folder tree, just give input and output folder options:
@@ -16,21 +20,18 @@ To run scanFolders on a given folder tree, just give input and output folder opt
 scanFolders.py --input inputFolder --output outputFolder
 ```
 
-That will process all recognised documents in "inputFolder", applying the default behaviour to each one, and place the resulting processed files (.md Markdown files and any other resources generated) in a matching set of files in "outputFolder". Sub-folders will be recursed into, and the output folder will be created if it doesn't already exist.
+That will process all recognised documents in "inputFolder", applying the default behaviour to each one, and place the resulting processed files (.md Markdown files and any other resources generated) in a matching set of folders in "outputFolder". Sub-folders will be recursed into, and the output folder will be created if it doesn't already exist.
 
 ## Extending
 
-If you want to extend the functionality of this project you just write a script that accepts the same (very simple) format of paramaeters at the command line. There is a docsToMarkdownLib Python library that contains handy functions if you happen to be writing your script in Python, but really you can write a command line application in any language you prefer.
-
-
-
+If you want to extend the functionality of this project, just write a script that accepts the same (very simple) format of paramaeters at the command line. There is a docsToMarkdownLib Python library that contains handy functions if you happen to be writing your script in Python, but really you can write a command line application in any language you prefer.
 
 # The Scripts
 
 ## DocsToMarkdown.py
 
 ### Descrption
-Converts a folder of Word / Excel files (compatability is with those produced by Mircosoft Office / Office 365, exported from Google Docs / Sheets or, hopefully, pretty much any other tool) to the Github varient of Markdown (or to CSV in the case of spreadsheets files). The output is intended to be used as the input for static site generation tools such as Hugo, Jeykll, etc, and the script will handle appropriate metadata headers.
+Converts a folder of Word / Excel files (compatability is with those produced by Microsoft Office / Office 365, exported from Google Workspace, LibreOffice, or, hopefully, pretty much any other tool) to the Github varient of Markdown (or to CSV in the case of spreadsheets files). The output is intended to be used as the input for static site generation tools such as Hugo, Jeykll, etc, and the script will handle appropriate metadata headers.
 
 ### Requirements
 Needs the Pandas Python module, which should be installable via Pip.
@@ -109,4 +110,22 @@ You can define a "templates" folder that will be copied over to the output folde
 
 ```
 docsToMarkdown.py -c config.json -i inputDocs -o jekyll -t jekyllTemplates
+```
+
+## processFAQ.py
+
+### Descrption
+Takes a folder containing text content (Word documents or Markdown), one FAQ question/answer per document, and produces Markdown files ready for processing with a static site generation tool (templates for Hugo are included). Audio and video content can be added for each section and will be suitibly processed and appear alongside the text content in a single HTML document with collapsable question/answer sections.
+
+### Requirements
+Needs the Pandas Python module, which should be installable via Pip.
+
+For processing Word documents, needs [Pandoc](https://pandoc.org/).
+
+For processing audio / video content, needs [ffmpeg](https://www.ffmpeg.org/).
+
+### Usage
+
+```
+processFAQ.py inputFolder outputFolder
 ```
