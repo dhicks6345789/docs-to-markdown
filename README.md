@@ -1,4 +1,6 @@
 # DocsToMarkdown
+A collection of scripts to pre-process folders of content into a form ready for further processing with common static site generation tools (Hugo, Jekyll, etc).
+
 Converts a folder tree of Word / Excel files (compatability is with those produced by Mircosoft Office / Office 365, exported from Google Docs / Sheets or, hopefully, pretty much any other tool) to the Govspeak varient of Markdown as specified by GOV.UK, or to CSV if appropriate. The output is intended to be used as the input for static site generation tools such as Jeykll, Hugo or Hyde, and various options / assumtions exist to ensure the files produced are suitible for those tools.
 
 ## Requirements
