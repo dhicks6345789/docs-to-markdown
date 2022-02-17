@@ -29,6 +29,7 @@ def listInputFiles(theInputFolder):
             fileNames[fileName].append(fileType)
             filePaths[fileName] = theInputFolder
 
+listInputFiles(inputFolder)
 print(fileNames)
 print(filePaths)
 sys.exit(0)
