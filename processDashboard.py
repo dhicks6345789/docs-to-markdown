@@ -10,7 +10,7 @@ outputFolder = sys.argv[2]
 print("STATUS: processDashboard: " + inputFolder + " to " + outputFolder)
 
 # Make sure the output folder exists.
-os.makedirs(outputFolder)
+os.makedirs(outputFolder, exist_ok=True)
 
 fileNames = {}
 for inputItem in os.listdir(inputFolder):
