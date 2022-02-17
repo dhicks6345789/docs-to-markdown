@@ -14,7 +14,7 @@ os.makedirs(outputFolder, exist_ok=True)
 
 fileNames = {}
 for inputItem in os.listdir(inputFolder):
-    if os.isdir(inputFolder + os.sep + inputItem):
+    if os.path.isdir(inputFolder + os.sep + inputItem):
         print("Folder: " + inputItem)
     else:
         fileType = ""
