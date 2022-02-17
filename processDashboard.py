@@ -19,13 +19,18 @@ def newRow():
     global rowX
     global rowHeight
     global HTMLString
+    
     # Start a new row.
     print("New row!")
+    
     rowX = 1
     rowHeight = 1
     HTMLString = HTMLString + "</div>\n<div>\n"
 
 def listInputFiles(theInputFolder):
+    global rowX
+    global rowHeight
+    
     fileNames = {}
     
     for inputItem in sorted(os.listdir(theInputFolder)):
