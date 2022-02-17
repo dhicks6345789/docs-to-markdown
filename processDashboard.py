@@ -12,11 +12,22 @@ print("STATUS: processDashboard: " + inputFolder + " to " + outputFolder)
 # Make sure the output folder exists.
 os.makedirs(outputFolder, exist_ok=True)
 
+rowX = 1
+rowHeight = 1
+HTMLString = "<div>\n"
+def newRow():
+    # Start a new row.
+    print("New row!")
+    rowX = 1
+    rowHeight = 1
+    HTMLString = HTMLString + "</div>\n<div>\n"
+
 def listInputFiles(theInputFolder):
     fileNames = {}
     
     for inputItem in sorted(os.listdir(theInputFolder)):
         if os.path.isdir(theInputFolder + os.sep + inputItem):
+            newRow()
             listInputFiles(theInputFolder + os.sep + inputItem)
         else:
             fileType = ""
@@ -34,10 +45,7 @@ def listInputFiles(theInputFolder):
                 fullName = fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Config: " + fullName)
-                    
-    rowX = 1
-    rowHeight = 1
-    HTMLString = "<div>\n"
+
     for fileName in sorted(fileNames.keys()):
         for fileType in fileNames[fileName]:
             fullName = fileName + "." + fileType
@@ -54,13 +62,10 @@ def listInputFiles(theInputFolder):
                 width = 1
                 height = 1
                 if rowX + width > 12:
-                    # Start a new row.
-                    print("New row!")
-                    HTMLString = HTMLString + "</div>\n"
-                    rowHeight = 1
-                    rowX = 1
+                    newRow()
                 rowX = rowX + width
                 if height > rowHeight:
                     rowHeight = height
 
 listInputFiles(inputFolder)
+print(HTMLString)
