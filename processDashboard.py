@@ -30,8 +30,8 @@ for fileName in sorted(fileNames.keys()):
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Config: " + fullName)
 
-gridX = 1
-gridY = 1
+rowX = 1
+rowHeight = 1
 for fileName in sorted(fileNames.keys()):
     for fileType in fileNames[fileName]:
         fullName = fileName + "." + fileType
@@ -42,10 +42,16 @@ for fileName in sorted(fileNames.keys()):
         fileType = fileType.lower()
         if os.path.isdir(inputFolder + os.sep + fullName):
             print("Folder: " + fullName)
-        else:
-            if fileType in ["url"]:
-                print("URL: " + fullName)
-                print("Config var: " + fileName)
-                width = 1
-                height = 1
-                gridX = gridX + width
+        elif fileType in ["url"]:
+            print("URL: " + fullName)
+            print("Config var: " + fileName)
+            width = 1
+            height = 1
+            if rowX + width > 12:
+                # Start a new row.
+                print("New row!")
+                rowHeight = 1
+                rowX = 1
+            rowX = rowX + width
+            if height > rowHeight:
+                rowHeight = height
