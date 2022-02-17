@@ -33,6 +33,8 @@ for fileName in sorted(fileNames.keys()):
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Config: " + fullName)
 
+gridX = 1
+gridY = 1
 for fileName in sorted(fileNames.keys()):
     for fileType in fileNames[fileName]:
         fullName = fileName + "." + fileType
@@ -44,3 +46,6 @@ for fileName in sorted(fileNames.keys()):
         if fileType in ["url"]:
             print("URL: " + fullName)
             print("Config var: " + fileName)
+            width = 1
+            height = 1
+            gridX = gridX + width
