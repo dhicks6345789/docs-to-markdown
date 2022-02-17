@@ -76,4 +76,4 @@ def listInputFiles(theInputFolder):
                     rowHeight = height
 
 listInputFiles(inputFolder)
-print(HTMLString)
+docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString)
