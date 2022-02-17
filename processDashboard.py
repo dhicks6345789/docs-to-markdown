@@ -36,5 +36,11 @@ for fileName in sorted(fileNames.keys()):
 for fileName in sorted(fileNames.keys()):
     for fileType in fileNames[fileName]:
         fullName = fileName + "." + fileType
-        if fileType.lower() in ["url"]:
+        fileName = fileName.lower()
+        fileNameSplit = fileName.lsplit(" ", 1)
+        if fileNameSplit[0].isnumeric() and len(fileNameSplit) == 2:
+            fileName = fileNameSplit[1]
+        fileType = fileType.lower()
+        if fileType in ["url"]:
             print("URL: " + fullName)
+            print("Config var: " + fileName)
