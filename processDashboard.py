@@ -16,10 +16,11 @@ rowX = 1
 rowHeight = 1
 HTMLString = "<div>\n"
 def newRow():
+    global rowHeight
     global HTMLString
     # Start a new row.
     print("New row!")
-    rowX = 1
+    global rowX = 1
     rowHeight = 1
     HTMLString = HTMLString + "</div>\n<div>\n"
 
