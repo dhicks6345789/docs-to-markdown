@@ -8,7 +8,6 @@ inputFolder = sys.argv[1]
 outputFolder = sys.argv[2]
 
 print("STATUS: processDashboard: " + inputFolder + " to " + outputFolder)
-print("Bananas!")
 
 # Make sure the output folder exists.
 os.makedirs(outputFolder)
