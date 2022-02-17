@@ -13,16 +13,26 @@ print("STATUS: processDashboard: " + inputFolder + " to " + outputFolder)
 os.makedirs(outputFolder, exist_ok=True)
 
 fileNames = {}
-for inputItem in os.listdir(inputFolder):
-    fileType = ""
-    fileSplit = inputItem.rsplit(".", 1)
-    fileName = fileSplit[0]
-    if len(fileSplit) == 2:
-        fileType = fileSplit[1]
-    if not fileName in fileNames.keys():
-        fileNames[fileName] = []
-    fileNames[fileName].append(fileType)
+filePaths = {}
+def listInputFiles(theInputFolder):
+    for inputItem in sorted(os.listdir(theInputFolder)):
+        if os.path.isdir(theInputFolder + os.sep + inputItem):
+            listInputFiles(theInputFolder + os.sep + inputItem)
+        else:
+            fileType = ""
+            fileSplit = inputItem.rsplit(".", 1)
+            fileName = fileSplit[0]
+            if len(fileSplit) == 2:
+                fileType = fileSplit[1]
+            if not fileName in fileNames.keys():
+                fileNames[fileName] = []
+            fileNames[fileName].append(fileType)
+            filePaths[fileName] = theInputFolder
 
+print(fileNames)
+print(filePaths)
+sys.exit(0)
+            
 for fileName in sorted(fileNames.keys()):
     if fileName.lower() == "config":
         for fileType in fileNames["config"]:
@@ -32,6 +42,7 @@ for fileName in sorted(fileNames.keys()):
 
 rowX = 1
 rowHeight = 1
+HTMLString = "<div>\n"
 for fileName in sorted(fileNames.keys()):
     for fileType in fileNames[fileName]:
         fullName = fileName + "." + fileType
@@ -50,6 +61,7 @@ for fileName in sorted(fileNames.keys()):
             if rowX + width > 12:
                 # Start a new row.
                 print("New row!")
+                HTMLString = HTMLString + "</div>\n"
                 rowHeight = 1
                 rowX = 1
             rowX = rowX + width
