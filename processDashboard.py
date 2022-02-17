@@ -37,7 +37,7 @@ for fileName in sorted(fileNames.keys()):
     for fileType in fileNames[fileName]:
         fullName = fileName + "." + fileType
         fileName = fileName.lower()
-        fileNameSplit = fileName.lsplit(" ", 1)
+        fileNameSplit = fileName.split(" ", 1)
         if fileNameSplit[0].isnumeric() and len(fileNameSplit) == 2:
             fileName = fileNameSplit[1]
         fileType = fileType.lower()
