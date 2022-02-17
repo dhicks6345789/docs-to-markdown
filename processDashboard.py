@@ -29,7 +29,7 @@ for inputItem in os.listdir(inputFolder):
 for fileName in sorted(fileNames.keys()):
     if fileName.lower() == "config":
         for fileType in fileNames["config"]:
-            fullName = fileName + "." + fileTyp
+            fullName = fileName + "." + fileType
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Config: " + fullName)
 
