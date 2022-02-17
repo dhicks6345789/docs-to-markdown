@@ -14,9 +14,7 @@ os.makedirs(outputFolder, exist_ok=True)
 
 fileNames = {}
 for inputItem in os.listdir(inputFolder):
-    if os.path.isdir(inputFolder + os.sep + inputItem):
-        print("Folder: " + inputItem)
-    else:
+    if not os.path.isdir(inputFolder + os.sep + inputItem):
         fileType = ""
         fileSplit = inputItem.rsplit(".", 1)
         fileName = fileSplit[0]
@@ -43,9 +41,12 @@ for fileName in sorted(fileNames.keys()):
         if fileNameSplit[0].isnumeric() and len(fileNameSplit) == 2:
             fileName = fileNameSplit[1]
         fileType = fileType.lower()
-        if fileType in ["url"]:
-            print("URL: " + fullName)
-            print("Config var: " + fileName)
-            width = 1
-            height = 1
-            gridX = gridX + width
+        if os.path.isdir(inputFolder + os.sep + fullName):
+            print("Folder: " + fullName)
+        else:
+            if fileType in ["url"]:
+                print("URL: " + fullName)
+                print("Config var: " + fileName)
+                width = 1
+                height = 1
+                gridX = gridX + width
