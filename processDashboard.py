@@ -14,15 +14,14 @@ os.makedirs(outputFolder, exist_ok=True)
 
 fileNames = {}
 for inputItem in os.listdir(inputFolder):
-    if not os.path.isdir(inputFolder + os.sep + inputItem):
-        fileType = ""
-        fileSplit = inputItem.rsplit(".", 1)
-        fileName = fileSplit[0]
-        if len(fileSplit) == 2:
-            fileType = fileSplit[1]
-        if not fileName in fileNames.keys():
-            fileNames[fileName] = []
-        fileNames[fileName].append(fileType)
+    fileType = ""
+    fileSplit = inputItem.rsplit(".", 1)
+    fileName = fileSplit[0]
+    if len(fileSplit) == 2:
+        fileType = fileSplit[1]
+    if not fileName in fileNames.keys():
+        fileNames[fileName] = []
+    fileNames[fileName].append(fileType)
 
 for fileName in sorted(fileNames.keys()):
     if fileName.lower() == "config":
