@@ -14,17 +14,21 @@ os.makedirs(outputFolder, exist_ok=True)
 
 rowX = 1
 rowHeight = 1
+rowItems = []
 HTMLString = "<div>\n"
 def newRow():
     global rowX
     global rowHeight
+    global rowItems
     global HTMLString
     
     # Start a new row.
+    print(rowItems)
     print("New row!")
     
     rowX = 1
     rowHeight = 1
+    rowItems = []
     HTMLString = HTMLString + "</div>\n<div>\n"
 
 def listInputFiles(theInputFolder):
@@ -74,6 +78,7 @@ def listInputFiles(theInputFolder):
                 rowX = rowX + width
                 if height > rowHeight:
                     rowHeight = height
+                rowItems.append(fileName)
 
 listInputFiles(inputFolder)
 docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString[:-7])
