@@ -16,6 +16,7 @@ rowX = 1
 rowHeight = 1
 HTMLString = "<div>\n"
 def newRow():
+    global HTMLString
     # Start a new row.
     print("New row!")
     rowX = 1
