@@ -26,6 +26,10 @@ for inputItem in os.listdir(inputFolder):
             fileNames[fileName] = []
         fileNames[fileName].append(fileType)
 
-print(fileNames)
-#if fileType.lower() in ["url"]:
-#    print("URL: " + inputItem)
+for fileName in sorted(fileNames.keys()):
+    for fileType in fileNames[fileName]:
+        fullName = fileName + "." + fileType
+        if fileName.lower() == "config" and fileType.lower() in ["xls", "xlsx"]:
+            print("Config: " + fullName)
+        elif fileType.lower() in ["url"]:
+            print("URL: " + fullName)
