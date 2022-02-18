@@ -41,9 +41,9 @@ for section in sections:
     for fileName in sorted(section[1].keys()):
         if fileName.lower() == "config":
             for fileType in section[1].pop("config"):
-                fullName = section[0] + fileName + "." + fileType
+                fullPath = section[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
-                    print("Config: " + fullName)
+                    print("Config: " + fullPath)
 
 rowX = 1
 rowHeight = 1
@@ -51,7 +51,7 @@ rowItems = []
 HTMLString = "<div>\n"
 for section in sections:
     if not section[1] == {}:
-        print(section[1])
+        print(section[0])
         print(section[1])
         print("\n")
         
