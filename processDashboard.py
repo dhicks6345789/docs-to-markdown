@@ -50,6 +50,7 @@ rowHeight = 1
 rowItems = []
 HTMLString = "<div>\n"
 for section in sections:
+    HTMLString = HTMLString + "\t<div>\n"
     if not section[1] == {}:
         print(section[0])
         for fileName in section[1].keys():
@@ -67,7 +68,7 @@ for section in sections:
                     height = 1
                     if rowX + width > 12:
                         for item in rowItems:
-                            HTMLString = HTMLString + item + "---"
+                            HTMLString = HTMLString + "\t\t" + item + "\n"
                         rowX = 1
                         rowHeight = 1
                         rowItems = []
@@ -75,5 +76,6 @@ for section in sections:
                     if height > rowHeight:
                         rowHeight = height
                     rowItems.append(fileName)
-                    
-docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString[:-7])
+    HTMLString = HTMLString + "\t</div>\n"
+HTMLString = HTMLString + "</div>\n"
+docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString)
