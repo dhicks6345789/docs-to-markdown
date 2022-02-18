@@ -45,13 +45,17 @@ for section in sections:
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Config: " + fullName)
 
-print(sections)
-sys.exit(0)
-
 rowX = 1
 rowHeight = 1
 rowItems = []
 HTMLString = "<div>\n"
+for section in sections:
+    if not section[1] == {}:
+        print(section[1])
+        print(section[1])
+        print("\n")
+        
+sys.exit(0)
 for fileName in sorted(fileNames.keys()):
     for fileType in fileNames[fileName]:
         fullName = fileName + "." + fileType
