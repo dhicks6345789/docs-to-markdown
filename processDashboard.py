@@ -67,7 +67,7 @@ for fileName in sorted(fileNames.keys()):
             if rowX + width > 12:
                 newRow()
             rowX = rowX + width
-        if height > rowHeight
+        if height > rowHeight:
             rowHeight = height
         rowItems.append(fileName)
 
