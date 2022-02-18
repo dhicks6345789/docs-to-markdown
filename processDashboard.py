@@ -36,23 +36,22 @@ def listFileNames(theInputFolder):
         sections.append((theInputFolder, fileNames))
 
 listFileNames(inputFolder)
-print(sections)
 
+for section in sections:
+    for fileName in sorted(section[1].keys()):
+        if fileName.lower() == "config":
+            for fileType in section[1].pop("config"):
+                fullName = section[0] + fileName + "." + fileType
+                if fileType.lower() in ["xls", "xlsx", "csv"]:
+                    print("Config: " + fullName)
+
+print(sections)
 sys.exit(0)
 
 rowX = 1
 rowHeight = 1
 rowItems = []
 HTMLString = "<div>\n"
-for fileName in sorted(fileNames.keys()):
-    if fileName.lower() == "config":
-        for fileType in fileNames["config"]:
-            fullName = fileName + "." + fileType
-            if fileType.lower() in ["xls", "xlsx", "csv"]:
-                print("Config: " + fullName)
-
-sys.exit(0)
-
 for fileName in sorted(fileNames.keys()):
     for fileType in fileNames[fileName]:
         fullName = fileName + "." + fileType
