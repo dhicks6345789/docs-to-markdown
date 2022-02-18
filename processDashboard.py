@@ -49,9 +49,23 @@ rowX = 1
 rowHeight = 1
 rowItems = []
 HTMLString = "<div>\n"
+def newRow():
+    global rowX
+    global rowHeight
+    global rowItems
+    global HTMLString
+    
+    if not rowItems == []:
+        for item in rowItems:
+            HTMLString = HTMLString + "\t\t" + item + "\n"
+    rowX = 1
+    rowHeight = 1
+    rowItems = []
+
 for section in sections:
     HTMLString = HTMLString + "\t<div>\n"
     if not section[1] == {}:
+        print(section[0])
         print(section[0])
         for fileName in section[1].keys():
             for fileType in section[1][fileName]:
@@ -62,20 +76,15 @@ for section in sections:
                     fileName = fileNameSplit[1]
                 fileType = fileType.lower()
                 if fileType in ["url"]:
-                    #print("URL: " + fullName)
-                    #print("Config var: " + fileName)
                     width = 1
                     height = 1
                     if rowX + width > 12:
-                        for item in rowItems:
-                            HTMLString = HTMLString + "\t\t" + item + "\n"
-                        rowX = 1
-                        rowHeight = 1
-                        rowItems = []
+                        newRow()
                     rowX = rowX + width
                     if height > rowHeight:
                         rowHeight = height
                     rowItems.append(fileName)
+        newRow()
     HTMLString = HTMLString + "\t</div>\n"
 HTMLString = HTMLString + "</div>\n"
 docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString)
