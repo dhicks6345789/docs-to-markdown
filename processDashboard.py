@@ -36,8 +36,6 @@ def listFileNames(theInputFolder):
 listFileNames(inputFolder)
 print(sections)
 
-sys.exit(0)
-
 rowX = 1
 rowHeight = 1
 rowItems = []
@@ -48,6 +46,8 @@ for fileName in sorted(fileNames.keys()):
             fullName = fileName + "." + fileType
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Config: " + fullName)
+
+sys.exit(0)
 
 for fileName in sorted(fileNames.keys()):
     for fileType in fileNames[fileName]:
@@ -67,7 +67,7 @@ for fileName in sorted(fileNames.keys()):
             if rowX + width > 12:
                 newRow()
             rowX = rowX + width
-            if height > rowHeight
+        if height > rowHeight
             rowHeight = height
         rowItems.append(fileName)
 
