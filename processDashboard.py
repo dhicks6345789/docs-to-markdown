@@ -38,6 +38,7 @@ def listInputFiles(theInputFolder):
     fileNames = {}
     
     for inputItem in sorted(os.listdir(theInputFolder)):
+        print(inputItem)
         if os.path.isdir(theInputFolder + os.sep + inputItem):
             newRow()
             listInputFiles(theInputFolder + os.sep + inputItem)
@@ -69,8 +70,8 @@ def listInputFiles(theInputFolder):
             if os.path.isdir(inputFolder + os.sep + fullName):
                 print("Folder: " + fullName)
             elif fileType in ["url"]:
-                print("URL: " + fullName)
-                print("Config var: " + fileName)
+                #print("URL: " + fullName)
+                #print("Config var: " + fileName)
                 width = 1
                 height = 1
                 if rowX + width > 12:
