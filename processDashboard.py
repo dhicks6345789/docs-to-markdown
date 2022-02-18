@@ -37,6 +37,13 @@ def listInputFiles(theInputFolder):
     
     fileNames = {}
     
+    for fileName in sorted(fileNames.keys()):
+        if fileName.lower() == "config":
+            for fileType in fileNames["config"]:
+                fullName = fileName + "." + fileType
+                if fileType.lower() in ["xls", "xlsx", "csv"]:
+                    print("Config: " + fullName)
+    
     for inputItem in sorted(os.listdir(theInputFolder)):
         print(inputItem)
         if os.path.isdir(theInputFolder + os.sep + inputItem):
@@ -51,13 +58,7 @@ def listInputFiles(theInputFolder):
             if not fileName in fileNames.keys():
                 fileNames[fileName] = []
             fileNames[fileName].append(fileType)
-            
-    for fileName in sorted(fileNames.keys()):
-        if fileName.lower() == "config":
-            for fileType in fileNames["config"]:
-                fullName = fileName + "." + fileType
-                if fileType.lower() in ["xls", "xlsx", "csv"]:
-                    print("Config: " + fullName)
+            rowItems.append(fileName)
 
     for fileName in sorted(fileNames.keys()):
         for fileType in fileNames[fileName]:
