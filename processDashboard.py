@@ -18,9 +18,9 @@ def listFileNames(theInputFolder):
     
     fileNames = {}
     for inputItem in sorted(os.listdir(theInputFolder)):
-        print(inputItem)
         if os.path.isdir(theInputFolder + os.sep + inputItem):
-            sections.append((theInputFolder, fileNames))
+            if not fileNames == {}:
+                sections.append((theInputFolder, fileNames))
             fileNames = {}
             listFileNames(theInputFolder + os.sep + inputItem)
         else:
@@ -32,9 +32,13 @@ def listFileNames(theInputFolder):
             if not fileName in fileNames.keys():
                 fileNames[fileName] = []
             fileNames[fileName].append(fileType)
+    if not fileNames == {}:
+        sections.append((theInputFolder, fileNames))
 
 listFileNames(inputFolder)
 print(sections)
+
+sys.exit(0)
 
 rowX = 1
 rowHeight = 1
