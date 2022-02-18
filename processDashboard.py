@@ -52,30 +52,28 @@ HTMLString = "<div>\n"
 for section in sections:
     if not section[1] == {}:
         print(section[0])
-        print(section[1])
-        print("\n")
-        
-sys.exit(0)
-for fileName in sorted(fileNames.keys()):
-    for fileType in fileNames[fileName]:
-        fullName = fileName + "." + fileType
-        fileName = fileName.lower()
-        fileNameSplit = fileName.split(" ", 1)
-        if fileNameSplit[0].isnumeric() and len(fileNameSplit) == 2:
-            fileName = fileNameSplit[1]
-        fileType = fileType.lower()
-        if os.path.isdir(inputFolder + os.sep + fullName):
-            print("Folder: " + fullName)
-        elif fileType in ["url"]:
-            #print("URL: " + fullName)
-            #print("Config var: " + fileName)
-            width = 1
-            height = 1
-            if rowX + width > 12:
-                newRow()
-            rowX = rowX + width
-        if height > rowHeight:
-            rowHeight = height
-        rowItems.append(fileName)
-
-#docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString[:-7])
+        for fileName in section[1].keys():
+            for fileType in section[1][fileName]:
+                fullPath = section[0] + os.sep + fileName + "." + fileType
+                fileName = fileName.lower()
+                fileNameSplit = fileName.split(" ", 1)
+                if fileNameSplit[0].isnumeric() and len(fileNameSplit) == 2:
+                    fileName = fileNameSplit[1]
+                fileType = fileType.lower()
+                if fileType in ["url"]:
+                    #print("URL: " + fullName)
+                    #print("Config var: " + fileName)
+                    width = 1
+                    height = 1
+                    if rowX + width > 12:
+                        for item in rowItems:
+                            HTMLString = HTMLString + item + "---"
+                        rowX = 1
+                        rowHeight = 1
+                        rowItems = []
+                    rowX = rowX + width
+                    if height > rowHeight:
+                        rowHeight = height
+                    rowItems.append(fileName)
+                    
+docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString[:-7])
