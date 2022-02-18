@@ -12,43 +12,17 @@ print("STATUS: processDashboard: " + inputFolder + " to " + outputFolder)
 # Make sure the output folder exists.
 os.makedirs(outputFolder, exist_ok=True)
 
-rowX = 1
-rowHeight = 1
-rowItems = []
-HTMLString = "<div>\n"
-def newRow():
-    global rowX
-    global rowHeight
-    global rowItems
-    global HTMLString
-    
-    # Start a new row.
-    print(rowItems)
-    print("New row!")
-    
-    rowX = 1
-    rowHeight = 1
-    rowItems = []
-    HTMLString = HTMLString + "</div>\n<div>\n"
-
-def listInputFiles(theInputFolder):
-    global rowX
-    global rowHeight
+sections = []
+def listFileNames(theInputFolder):
+    global sections
     
     fileNames = {}
-    
-    for fileName in sorted(fileNames.keys()):
-        if fileName.lower() == "config":
-            for fileType in fileNames["config"]:
-                fullName = fileName + "." + fileType
-                if fileType.lower() in ["xls", "xlsx", "csv"]:
-                    print("Config: " + fullName)
-    
     for inputItem in sorted(os.listdir(theInputFolder)):
         print(inputItem)
         if os.path.isdir(theInputFolder + os.sep + inputItem):
-            newRow()
-            listInputFiles(theInputFolder + os.sep + inputItem)
+            sections.append((theInputFolder, fileNames))
+            fileNames = {}
+            listFileNames(theInputFolder + os.sep + inputItem)
         else:
             fileType = ""
             fileSplit = inputItem.rsplit(".", 1)
@@ -58,8 +32,28 @@ def listInputFiles(theInputFolder):
             if not fileName in fileNames.keys():
                 fileNames[fileName] = []
             fileNames[fileName].append(fileType)
-            rowItems.append(fileName)
 
+listFileNames(inputFolder)
+print(sections)
+#docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString[:-7])
+
+sys.exit(0)
+
+rowX = 1
+rowHeight = 1
+rowItems = []
+HTMLString = "<div>\n"
+
+
+            
+        
+        for fileName in sorted(fileNames.keys()):
+        if fileName.lower() == "config":
+            for fileType in fileNames["config"]:
+                fullName = fileName + "." + fileType
+                if fileType.lower() in ["xls", "xlsx", "csv"]:
+                    print("Config: " + fullName)
+            
     for fileName in sorted(fileNames.keys()):
         for fileType in fileNames[fileName]:
             fullName = fileName + "." + fileType
@@ -81,6 +75,3 @@ def listInputFiles(theInputFolder):
                 if height > rowHeight:
                     rowHeight = height
                 rowItems.append(fileName)
-
-listInputFiles(inputFolder)
-docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString[:-7])
