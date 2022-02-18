@@ -35,7 +35,6 @@ def listFileNames(theInputFolder):
 
 listFileNames(inputFolder)
 print(sections)
-#docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString[:-7])
 
 sys.exit(0)
 
@@ -43,35 +42,33 @@ rowX = 1
 rowHeight = 1
 rowItems = []
 HTMLString = "<div>\n"
-
-
-            
-        
-        for fileName in sorted(fileNames.keys()):
-        if fileName.lower() == "config":
-            for fileType in fileNames["config"]:
-                fullName = fileName + "." + fileType
-                if fileType.lower() in ["xls", "xlsx", "csv"]:
-                    print("Config: " + fullName)
-            
-    for fileName in sorted(fileNames.keys()):
-        for fileType in fileNames[fileName]:
+for fileName in sorted(fileNames.keys()):
+    if fileName.lower() == "config":
+        for fileType in fileNames["config"]:
             fullName = fileName + "." + fileType
-            fileName = fileName.lower()
-            fileNameSplit = fileName.split(" ", 1)
-            if fileNameSplit[0].isnumeric() and len(fileNameSplit) == 2:
-                fileName = fileNameSplit[1]
-            fileType = fileType.lower()
-            if os.path.isdir(inputFolder + os.sep + fullName):
-                print("Folder: " + fullName)
-            elif fileType in ["url"]:
-                #print("URL: " + fullName)
-                #print("Config var: " + fileName)
-                width = 1
-                height = 1
-                if rowX + width > 12:
-                    newRow()
-                rowX = rowX + width
-                if height > rowHeight:
-                    rowHeight = height
-                rowItems.append(fileName)
+            if fileType.lower() in ["xls", "xlsx", "csv"]:
+                print("Config: " + fullName)
+
+for fileName in sorted(fileNames.keys()):
+    for fileType in fileNames[fileName]:
+        fullName = fileName + "." + fileType
+        fileName = fileName.lower()
+        fileNameSplit = fileName.split(" ", 1)
+        if fileNameSplit[0].isnumeric() and len(fileNameSplit) == 2:
+            fileName = fileNameSplit[1]
+        fileType = fileType.lower()
+        if os.path.isdir(inputFolder + os.sep + fullName):
+            print("Folder: " + fullName)
+        elif fileType in ["url"]:
+            #print("URL: " + fullName)
+            #print("Config var: " + fileName)
+            width = 1
+            height = 1
+            if rowX + width > 12:
+                newRow()
+            rowX = rowX + width
+            if height > rowHeight
+            rowHeight = height
+        rowItems.append(fileName)
+
+#docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString[:-7])
