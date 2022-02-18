@@ -63,10 +63,10 @@ def newRow():
     rowItems = []
 
 for section in sections:
-    HTMLString = HTMLString + "\t<div>\n"
     if not section[1] == {}:
+        HTMLString = HTMLString + "\t<div>\n"
         print(section[0])
-        print(section[0])
+        print(section[1])
         for fileName in section[1].keys():
             for fileType in section[1][fileName]:
                 fullPath = section[0] + os.sep + fileName + "." + fileType
@@ -85,6 +85,6 @@ for section in sections:
                         rowHeight = height
                     rowItems.append(fileName)
         newRow()
-    HTMLString = HTMLString + "\t</div>\n"
+        HTMLString = HTMLString + "\t</div>\n"
 HTMLString = HTMLString + "</div>\n"
 docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString)
