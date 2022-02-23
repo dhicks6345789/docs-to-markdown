@@ -4,7 +4,7 @@
     </head>
     <body>
         <div class="container">
-            {{ range sort (where .Site.Pages "Section" "dashboardRows") ".Path" }}
+            {{ range sort (where .Site.Pages "Section" "dashboardRows") ".LogicalName" }}
             <div>Row!</div>
             {{ end }}
         </div>
