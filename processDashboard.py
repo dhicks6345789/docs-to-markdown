@@ -48,6 +48,7 @@ for section in sections:
 rowX = 1
 rowCount = 1
 rowHeight = 1
+rowTitle = ""
 rowItems = []
 def newRow():
     global rowX
@@ -55,13 +56,13 @@ def newRow():
     global rowHeight
     global rowItems
     
-    rowString = "---\n"
-    rowString = rowString + "title:" + "something" + "\n"
-    rowString = rowString + "---\n"
-    if not rowItems == []:
-        for item in rowItems:
-            rowString = rowString + item + "\n"
-            
+    frontMatter = {}
+    if not rowTitle == "":
+        frontMatter["title"] = rowTitle
+    rowString = docsToMarkdownLib.frontMatterToString(theFrontMatter)
+    for item in rowItems:
+        rowString = rowString + item + "\n"
+        
     docsToMarkdownLib.putFile(outputFolder + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", rowString)
     
     rowX = 1
