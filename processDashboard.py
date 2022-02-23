@@ -49,26 +49,27 @@ rowX = 1
 rowCount = 1
 rowHeight = 1
 rowItems = []
-rowString = "---\n"
 def newRow():
     global rowX
     global rowCount
     global rowHeight
     global rowItems
-    global rowString
     
+    rowString = "---\n"
+    rowString = rowString + "title:" + "something" + "\n"
+    rowString = rowString + "---\n"
     if not rowItems == []:
         for item in rowItems:
-            rowString = rowString + "\t\t" + item + "\n"
+            rowString = rowString + item + "\n"
+            
+    docsToMarkdownLib.putFile(outputFolder + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", rowString)
+    
     rowX = 1
     rowHeight = 1
     rowItems = []
 
 for section in sections:
     if not section[1] == {}:
-        HTMLString = HTMLString + "\t<div>\n"
-        print(section[0])
-        print(section[1])
         for fileName in section[1].keys():
             for fileType in section[1][fileName]:
                 fullPath = section[0] + os.sep + fileName + "." + fileType
@@ -87,6 +88,3 @@ for section in sections:
                         rowHeight = height
                     rowItems.append(fileName)
         newRow()
-        HTMLString = HTMLString + "\t</div>\n"
-HTMLString = HTMLString + "</div>\n"
-docsToMarkdownLib.putFile(outputFolder + os.sep + "index.html", HTMLString)
