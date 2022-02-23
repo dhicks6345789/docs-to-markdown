@@ -1,1 +1,4 @@
-Hello, world!
+<div>
+    {{ range sort (where .Site.Pages "Section" "faq") ".Path" }}
+    {{ end }}
+</div>
