@@ -3,10 +3,6 @@
     <head>
     </head>
     <body>
-        <div class="container">
-            {{ range sort (where .Site.Pages "Section" "dashboardRows") ".File.LogicalName" }}
-            <div>Row!</div>
-            {{ end }}
-        </div>
+        {{ partial "dashboard.html" . }}
     </body>
 </html>
