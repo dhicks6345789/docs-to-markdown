@@ -5,9 +5,7 @@
     <body>
         <div class="container">
             {{ range sort (where .Site.Pages "Section" "dashboardRows") ".Path" }}
-            {{ if (hasPrefix .Path "dhasboradRows/") }}
             <div>Row!</div>
-            {{ end }}
             {{ end }}
         </div>
     </body>
