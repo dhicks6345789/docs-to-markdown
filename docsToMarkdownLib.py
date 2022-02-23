@@ -52,7 +52,7 @@ def padInt(theInt, theLength):
     result = str(theInt)
     while len(result) < theLength:
         result = "0" + result
-    retutn result
+    return result
     
 # Given a dict, returns a YAML string, e.g.:
 # ---
