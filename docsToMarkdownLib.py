@@ -53,6 +53,14 @@ def padInt(theInt, theLength):
     while len(result) < theLength:
         result = "0" + result
     return result
+
+# Given a string, if the first word (defined by space in the string) of the string is purely numeric, returns the string with that word removed.
+# Basically, given a string like "0001 One Two Three.doc", returns "One Two Three.doc". If no spaces are found, just returns the input.
+def removeNumericWord(theString):
+    stringSplit = theString.strip().split(" ", 1)
+    if stringSplit[0].isnumeric() and len(stringSplit) == 2:
+        return stringSplit[1]
+    return stringSplit[0]
     
 # Given a dict, returns a YAML string, e.g.:
 # ---
