@@ -59,7 +59,7 @@ def newRow():
     frontMatter = {}
     if not rowTitle == "":
         frontMatter["title"] = rowTitle
-    rowString = docsToMarkdownLib.frontMatterToString(theFrontMatter)
+    rowString = docsToMarkdownLib.frontMatterToString(frontMatter)
     for item in rowItems:
         rowString = rowString + item + "\n"
         
