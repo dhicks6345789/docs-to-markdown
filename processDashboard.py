@@ -65,6 +65,7 @@ def newRow():
     docsToMarkdownLib.putFile(outputFolder + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", rowString)
     
     rowX = 1
+    rowCount = rowCount + 1
     rowHeight = 1
     rowItems = []
 
