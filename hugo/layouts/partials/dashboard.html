@@ -1,5 +1,5 @@
-    <div class="container">
-        {{ range sort (where .Site.Pages "Section" "dashboardRows") ".File.LogicalName" }}
-        <div>A row!</div>
-        {{ end }}
-    </div>
+        <div class="container">
+            {{ range sort (where .Site.Pages "Section" "dashboardRows") ".File.LogicalName" }}
+            <div>A row!</div>
+            {{ end }}
+        </div>
