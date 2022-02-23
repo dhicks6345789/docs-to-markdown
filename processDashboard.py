@@ -70,6 +70,7 @@ def newRow():
     rowHeight = 1
     rowItems = []
 
+print(sections)
 for section in sections:
     if not section[1] == {}:
         for fileName in section[1].keys():
