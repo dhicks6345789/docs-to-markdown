@@ -1,5 +1,9 @@
         <div class="container">
             {{ range sort (where .Site.Pages "Section" "dashboardRows") ".File.LogicalName" }}
-            <div>A row!</div>
+            <div>
+                    {{ if not (eq .Title "") }}
+                    <h1>{{ .Title }}</h1>
+                    {{ end }}
+            </div>
             {{ end }}
         </div>
