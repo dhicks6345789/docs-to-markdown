@@ -46,18 +46,20 @@ for section in sections:
                     print("Config: " + fullPath)
 
 rowX = 1
+rowCount = 1
 rowHeight = 1
 rowItems = []
-HTMLString = "<div>\n"
+rowString = "---\n"
 def newRow():
     global rowX
+    global rowCount
     global rowHeight
     global rowItems
-    global HTMLString
+    global rowString
     
     if not rowItems == []:
         for item in rowItems:
-            HTMLString = HTMLString + "\t\t" + item + "\n"
+            rowString = rowString + "\t\t" + item + "\n"
     rowX = 1
     rowHeight = 1
     rowItems = []
