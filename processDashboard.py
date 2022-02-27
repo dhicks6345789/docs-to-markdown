@@ -4,8 +4,7 @@ import sys
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
-inputFolder = sys.argv[1]
-outputFolder = sys.argv[2]
+docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"], optionalArgs=[], optionalArgLists=[]):
 
 print("STATUS: processDashboard: " + inputFolder + " to " + outputFolder)
 
