@@ -5,7 +5,7 @@ import sys
 import docsToMarkdownLib
 
 # Get any arguments given via the command line.
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"], optionalArgs=[], optionalArgLists=[]):
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"])
 
 print("STATUS: processDashboard: " + args["input"] + " to " + args["output"])
 
