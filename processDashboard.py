@@ -4,12 +4,13 @@ import sys
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
-docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"], optionalArgs=[], optionalArgLists=[]):
+# Get any arguments given via the command line.
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"], optionalArgs=[], optionalArgLists=[]):
 
-print("STATUS: processDashboard: " + inputFolder + " to " + outputFolder)
+print("STATUS: processDashboard: " + args["input"] + " to " + args["output"])
 
 # Make sure the output folder exists.
-os.makedirs(outputFolder, exist_ok=True)
+os.makedirs(args["output"], exist_ok=True)
 
 sections = []
 def listFileNames(theInputFolder):
@@ -34,7 +35,7 @@ def listFileNames(theInputFolder):
     if not fileNames == {}:
         sections.append((theInputFolder, fileNames))
 
-listFileNames(inputFolder)
+listFileNames(args["input"])
 
 for section in sections:
     for fileName in sorted(section[1].keys()):
