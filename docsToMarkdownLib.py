@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 
 # Pandoc escapes Markdown control characters embedded in Word documents, but we want to let people embed chunks of Markdown in
@@ -100,3 +101,17 @@ def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFie
 def docToMarkdownFile(inputFile, outputFile, baseURL="", markdownType="gfm", validFrontMatterFields=["title"]):
     outputMarkdown, outputFrontmatter = docToMarkdown(inputFile, baseURL=baseURL, markdownType=markdownType, validFrontMatterFields=validFrontMatterFields)
     putFile(outputFile, frontMatterToString(outputFrontmatter) + outputMarkdown)
+
+def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
+    args = defaultArgs
+    currentArgName = None
+    for argItem in sys.argv[1:]:
+        if argItem.startswith("--"):
+            currentArgName = argItem[2:]
+        elif not currentArgName == None:
+            args[currentArgName] = argItem
+            currentArgName = None
+        else:
+            print("ERROR: unknown argument, " + argItem)
+            sys.exit(1)
+    return(args)
