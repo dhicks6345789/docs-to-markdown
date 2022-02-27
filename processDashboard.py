@@ -63,7 +63,7 @@ def newRow():
     for item in rowItems:
         rowString = rowString + item + "\n"
         
-    docsToMarkdownLib.putFile(outputFolder + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", rowString)
+    docsToMarkdownLib.putFile(args["output"] + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", rowString)
     
     rowX = 1
     rowCount = rowCount + 1
