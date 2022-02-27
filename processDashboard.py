@@ -72,7 +72,7 @@ def newRow():
 
 for section in sections:
     if not section[1] == {}:
-        if not section[0] == inputFolder:
+        if not section[0] == args["input"]:
             rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(inputFolder)+1:])
         for fileName in section[1].keys():
             for fileType in section[1][fileName]:
