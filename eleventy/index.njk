@@ -3,6 +3,8 @@
     <head>
     </head>
     <body>
-    {{ content }}
+        {%- for row in collections.row -%}
+        <p>{{ row.data.title }}</p>
+        {%- endfor -%}
     </body>
 </html>
