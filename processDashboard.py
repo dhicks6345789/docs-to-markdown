@@ -1,4 +1,5 @@
-# A script to help generate a "dashboard" style page.
+# A script to help generate a "dashboard" style web page. Doesn't produce an HTML file directly, but instead produces Markdown documents ready for use with
+# a static site generation tool (Hugo, Jekyll, Eleventy). Produces Hugo-ready fils by default.
 
 import os
 import sys
@@ -14,6 +15,8 @@ print("STATUS: processDashboard: " + args["input"] + " to " + args["output"])
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
 
+# Check through items in the given input folder, recursing into sub-folders.
+# Produces an array (in the global "sections" variable) of dicts containing tuples of file names and an array of extensions found.
 sections = []
 def listFileNames(theInputFolder):
     global sections
@@ -36,9 +39,9 @@ def listFileNames(theInputFolder):
             fileNames[fileName].append(fileType)
     if not fileNames == {}:
         sections.append((theInputFolder, fileNames))
-
 listFileNames(args["input"])
 
+# Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
 for section in sections:
     for fileName in sorted(section[1].keys()):
         if fileName.lower() == "config":
@@ -47,6 +50,7 @@ for section in sections:
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Config: " + fullPath)
 
+# The newRow function, used by the row-sorting code section below.
 rowX = 1
 rowCount = 1
 rowHeight = 1
@@ -72,6 +76,7 @@ def newRow():
     rowHeight = 1
     rowItems = []
 
+# Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
     if not section[1] == {}:
         if not section[0] == args["input"]:
