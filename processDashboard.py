@@ -1,3 +1,5 @@
+# A script to help generate a "dashboard" style page.
+
 import os
 import sys
 
