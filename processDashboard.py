@@ -70,9 +70,9 @@ def newRow():
         frontMatter["height"] = str(rowHeight)
     colNum = 1
     for item in rowItems:
-        frontMatter["col" + colNum + "Width"] = str(item[0])
-        frontMatter["col" + colNum + "Type"] = item[1]
-        frontMatter["col" + colNum + "URL"] = item[2]
+        frontMatter["col" + str(colNum) + "Width"] = str(item[0])
+        frontMatter["col" + str(colNum) + "Type"] = item[1]
+        frontMatter["col" + str(colNum) + "URL"] = item[2]
         colNum = colNum + item[0]
         
     docsToMarkdownLib.putFile(args["output"] + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", docsToMarkdownLib.frontMatterToString(frontMatter))
