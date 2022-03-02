@@ -12,8 +12,11 @@
             {%- for row in collections.row -%}
             <div class="row">
                 <!-- {{ row.data.title }} -->
-                <div class="col-sm">
+                {% for colNum in (1..12) %}
+                {% assign colClass = "col-sm-" | colNum %}
+                <div class="{{ colClass }}">
                 </div>
+                {%- endfor -%}
             </div>
             {%- endfor -%}
         </div>
