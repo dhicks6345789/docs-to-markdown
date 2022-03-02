@@ -67,11 +67,15 @@ def newRow():
         frontMatter["title"] = rowTitle
     if args["generator"] == "eleventy":
         frontMatter["tags"] = "row"
-    rowString = docsToMarkdownLib.frontMatterToString(frontMatter)
+        frontMatter["height"] = str(rowHeight)
+    colNum = 1
     for item in rowItems:
-        rowString = rowString + item + "\n"
+        frontMatter["col" + colNum + "Width"] = str(item[0])
+        frontMatter["col" + colNum + "Type"] = item[1]
+        frontMatter["col" + colNum + "URL"] = item[2]
+        colNum = colNum + item[0]
         
-    docsToMarkdownLib.putFile(args["output"] + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", rowString)
+    docsToMarkdownLib.putFile(args["output"] + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", docsToMarkdownLib.frontMatterToString(frontMatter))
     
     rowX = 1
     rowCount = rowCount + 1
@@ -96,5 +100,5 @@ for section in sections:
                     rowX = rowX + width
                     if height > rowHeight:
                         rowHeight = height
-                    rowItems.append(fileName)
+                    rowItems.append((width, "link", fileName))
         newRow()
