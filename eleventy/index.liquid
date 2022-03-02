@@ -13,7 +13,7 @@
             <div class="row">
                 <!-- {{ row.data.title }} -->
                 {% for colNum in (1..12) %}
-                {% assign colWidthVar = "col" | concat: colNum | concat "Width" %}
+                {% assign colWidthVar = "col" | concat: colNum | concat: "Width" %}
                 {% assign colClass = "col-sm-" | concat: row.data[colWidthVar] %}
                 <div class="{{ colClass }}">
                 </div>
