@@ -65,6 +65,8 @@ def newRow():
     frontMatter = {}
     if not rowTitle == "":
         frontMatter["title"] = rowTitle
+    if args["generator"] == "eleventy":
+        frontMatter["tags"] = "row"
     rowString = docsToMarkdownLib.frontMatterToString(frontMatter)
     for item in rowItems:
         rowString = rowString + item + "\n"
