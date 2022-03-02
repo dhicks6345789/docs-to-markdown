@@ -13,7 +13,7 @@
             <div class="row">
                 <!-- {{ row.data.title }} -->
                 {% for colNum in (1..12) %}
-                {% assign colClass = "col-sm-" | colNum %}
+                {% assign colClass = "col-sm-" | concat: colNum %}
                 <div class="{{ colClass }}">
                 </div>
                 {%- endfor -%}
