@@ -92,37 +92,40 @@ def newRow():
     rowHeight = 1
     rowItems = []
 
+# Takes a dict of filenames and array of types, plus an array of match strings.
+def getFilenameMatches(theFileNames, theMatches):
+    result = []
+    for fileName in theFileNames.keys():
+        for match in theFileNames[fileName]:
+            if match.lower() in theMatches:
+                result.append(fileName + "." + match)
+    return(result)
+
 # Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
-    print("Section:")
-    print(section)
-    print("---")
     if not section[1] == {}:
         if not section[0] == args["input"]:
             rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(args["input"])+1:])
-        for fileName in section[1].keys():
-            fileTypes = section[1][fileName]
-            for fileType in fileTypes:
-                fullPath = section[0] + os.sep + fileName + "." + fileType
-                fileName = docsToMarkdownLib.removeNumericWord(fileName.lower())
-                fileType = fileType.lower()
-                if fileType in ["url"]:
-                    width = 1
-                    height = 1
-                    if rowX + width > 12:
-                        newRow()
-                    rowX = rowX + width
-                    if height > rowHeight:
-                        rowHeight = height
-                    for imageType in ["png", "jpg"]:
-                        if imageType in fileTypes:
-                            print("Found icon: " + fileName)
-                            rowItems.append((width, "link", fileName))
-                            iconBitmap = PIL.Image.open(fileName + "." + imageType)
-                            iconBuffered = io.BytesIO()
-                            iconBitmap.thumbnail((100,100)).save(iconBuffered, format="PNG")
-                            iconString = base64.encode(iconBuffered.getvalue())
-                            print("Made icon: " + iconString)
-                    else:
-                        rowItems.append((width, "iframe", fileName))
+        for fileName in getFileNameMatches(section[1], ["url"]):
+            print("fileName: " + fileName)
+            width = 1
+            height = 1
+            if rowX + width > 12:
+                newRow()
+            rowX = rowX + width
+            if height > rowHeight:
+                rowHeight = height
+            iconFound = False
+            for iconFileName in getFileNameMatches(section[1], ["png", "jpg"]):
+                if fileName.rstrip(".", 1) == iconFileName.rstrip(".", 1):
+                    print("Found icon: " + iconFileName)
+                    iconFound = True
+                    rowItems.append((width, "link", fileName))
+                    iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
+                    iconBuffered = io.BytesIO()
+                    iconBitmap.thumbnail((100,100)).save(iconBuffered, format="PNG")
+                    iconString = base64.encode(iconBuffered.getvalue())
+                    print("Made icon: " + iconString)
+            if not iconFound:
+                rowItems.append((width, "iframe", fileName))
         newRow()
