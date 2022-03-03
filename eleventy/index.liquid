@@ -11,19 +11,13 @@
         <div class="container">
             {%- for row in collections.row -%}
             <div class="row">
-                {% if col7Width > 0 %}
+                <!-- {{ row.data.title }} -->
+                {% if row.data.col7Width > 0 %}
                 Col7IsMore
                 {% endif %}
-                {% if col1Width > 0 %}
+                {% if row.data.col1Width > 0 %}
                 Col1IsMore
                 {% endif %}
-                <!-- {{ row.data.title }} -->
-                {% for colNum in (1..12) %}
-                {% assign colWidthVar = "col" | concat: colNum | concat: "Width" %}
-                {% assign colClass = "col-sm-" | concat: row.data.colWidthVar %}
-                <div class="{{ colWidthVar }}{{ colClass }}">
-                </div>
-                {%- endfor -%}
             </div>
             {%- endfor -%}
         </div>
