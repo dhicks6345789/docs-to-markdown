@@ -12,15 +12,14 @@
             {%- for row in collections.row -%}
             <div class="row">
                 <!-- {{ row.data.title }} -->
-                {% for colNum in (1..12) %}
-                {% assign colWidthVar = "col" | concat: colNum | concat: "Width" %}
-                {% assign colClass = "col-sm-" | concat: row.data[colWidthVar] %}
-                <div>
-                    colNum: {{ colNum }}
-                    colWidthVar: {{ colWidthVar }}
-                    value: {{ row.data[colWidthVar] }}
+                (% if row.data.col1Width > 0 %)
+                <div class="col-sm-{{ row.data.col1Width }}">
+                    colNum: 1
+                    colWidth: {{ row.data.col1Width }}
+                    colType: {{ row.data.col1Type }}
+                    colURL: {{ row.data.col1URL }}
                 </div>
-                {%- endfor -%}
+                {% endif %}
             </div>
             {%- endfor -%}
         </div>
