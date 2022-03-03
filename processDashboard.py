@@ -1,5 +1,5 @@
 # A script to help generate a "dashboard" style web page. Doesn't produce an HTML file directly, but instead produces Markdown documents ready for use with
-# a static site generation tool (Hugo, Jekyll, Eleventy). Produces Hugo-ready fils by default.
+# a static site generation tool (Hugo, Jekyll, Eleventy). Produces Hugo-ready files by default.
 
 import os
 import sys
