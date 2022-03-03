@@ -47,6 +47,10 @@ def listFileNames(theInputFolder):
         sections.append((theInputFolder, fileNames))
 listFileNames(args["input"])
 
+def getURLDetails(theFilename):
+    URLFileContents = docsToMarkdownLib.getFile(theFilename)
+    print(URLFileContents)
+
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
 for section in sections:
     for fileName in sorted(section[1].keys()):
