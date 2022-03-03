@@ -24,7 +24,7 @@
                 {% capture colNumURL %}col{{ colNum }}URL{% endcapture %}
                 <div class="col-sm-{{ row.data[colNumWidth] }}">
                     {% if row.data[colNumType] == "link" %}
-                    <a href="{{ row.data[colNumURL] }}"><img src="{{ rowNum }}-1-icon.svg" width="100%"/></a>
+                    <a href="{{ row.data[colNumURL] }}"><img src="{{ rowNum }}-{{ colNum }}-icon.svg" width="100%"/></a>
                     {% endif %}
                 </div>
                 {% endif %}
