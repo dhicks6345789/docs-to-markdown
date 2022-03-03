@@ -9,10 +9,10 @@
     </head>
     <body>
         <div class="container">
-            {%- for row in collections.row -%}
+            {% for row in collections.row %}
             <div class="row">
                 <!-- {{ row.data.title }} -->
-                (% if row.data.col1Width > 0 %)
+                {% if row.data.col1Width > 0 %}
                 <div class="col-sm-{{ row.data.col1Width }}">
                     colNum: 1
                     colWidth: {{ row.data.col1Width }}
@@ -21,7 +21,7 @@
                 </div>
                 {% endif %}
             </div>
-            {%- endfor -%}
+            {% endfor %}
         </div>
     </body>
 </html>
