@@ -3,9 +3,9 @@
 
 # Standard libraries.
 import os
+import io
 import sys
 import base64
-import io.BytesIO
 
 # The Pillow image-handling library.
 import PIL.Image
