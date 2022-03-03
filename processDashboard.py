@@ -68,9 +68,6 @@ def newRow():
     global rowHeight
     global rowItems
     
-    print("New row! " + str(rowCount) + "-" + str(rowX))
-    print(rowItems)
-    
     frontMatter = {}
     if not rowTitle == "":
         frontMatter["title"] = rowTitle
@@ -105,18 +102,15 @@ def getFileNameMatches(theFileNames, theMatches):
                 result.append(fileName + "." + match)
     return(result)
 
-print(sections)
 # Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
     if not section[1] == {}:
         if not section[0] == args["input"]:
             rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(args["input"])+1:])
         for fileName in getFileNameMatches(section[1], ["url"]):
-            print(str(rowCount) + "-" + str(rowX) + "-" + fileName)
             width = 1
             height = 1
             if rowX + width > 13:
-                print("Line 119")
                 newRow()
             if height > rowHeight:
                 rowHeight = height
@@ -140,5 +134,4 @@ for section in sections:
                 if not iconFound:
                     rowItems.append((width, "iframe", fileName))
             rowX = rowX + width
-        print("Line 143")
         newRow()
