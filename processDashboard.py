@@ -1,8 +1,12 @@
 # A script to help generate a "dashboard" style web page. Doesn't produce an HTML file directly, but instead produces Markdown documents ready for use with
 # a static site generation tool (Hugo, Jekyll, Eleventy). Produces Hugo-ready files by default.
 
+# Standard libraries.
 import os
 import sys
+
+# The Pillow image-handling library.
+import PIL
 
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
@@ -92,7 +96,8 @@ for section in sections:
         if not section[0] == args["input"]:
             rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(args["input"])+1:])
         for fileName in section[1].keys():
-            for fileType in section[1][fileName]:
+            fileTypes = section[1][fileName]
+            for fileType in fileTypes:
                 fullPath = section[0] + os.sep + fileName + "." + fileType
                 fileName = docsToMarkdownLib.removeNumericWord(fileName.lower())
                 fileType = fileType.lower()
@@ -104,5 +109,11 @@ for section in sections:
                     rowX = rowX + width
                     if height > rowHeight:
                         rowHeight = height
-                    rowItems.append((width, "link", fileName))
+                    for imageType in ["png", "jpg"]:
+                        if imageType in fileTypes:
+                            rowItems.append((width, "link", fileName))
+                            iconBitmap = PIL.Image.open(fileName + ".png")
+                            iconBitmapThumbnail = iconBitmap.thumbnail((100,100))
+                    else:
+                        rowItems.append((width, "iframe", fileName))
         newRow()
