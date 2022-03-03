@@ -111,6 +111,7 @@ for section in sections:
                         rowHeight = height
                     for imageType in ["png", "jpg"]:
                         if imageType in fileTypes:
+                            print("Found icon: " + fileName)
                             rowItems.append((width, "link", fileName))
                             iconBitmap = PIL.Image.open(fileName + ".png")
                             iconBitmapThumbnail = iconBitmap.thumbnail((100,100))
