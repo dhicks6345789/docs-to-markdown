@@ -112,7 +112,6 @@ for section in sections:
             height = 1
             if rowX + width > 12:
                 newRow()
-            rowX = rowX + width
             if height > rowHeight:
                 rowHeight = height
             iconFound = False
@@ -129,7 +128,8 @@ for section in sections:
                     iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
                     iconString = iconString + "</svg>"
                     os.makedirs(args["output"] + os.sep + "static" + os.sep + "icons", exist_ok=True)
-                    docsToMarkdownLib.putFile(args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowX) + "-" + str(rowCount) + "-icon.svg", iconString)
+                    docsToMarkdownLib.putFile(args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg", iconString)
             if not iconFound:
                 rowItems.append((width, "iframe", fileName))
+            rowX = rowX + width
         newRow()
