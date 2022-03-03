@@ -17,6 +17,11 @@
                 </div>
             </div>
             <div class="row">
+                {% for colNum in (1..12) %}
+                {% capture colNumWidth %}col{{ colNum }}Width{% endcapture %}
+                {{ row.data[colNumWidth] }}
+                {% endfor %}
+                
                 {% if row.data.col1Width > 0 %}
                 <div class="col-sm-{{ row.data.col1Width }}">
                     {% if row.data.col1Type == "link" %}
