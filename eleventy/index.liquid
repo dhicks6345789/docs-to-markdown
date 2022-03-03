@@ -12,9 +12,14 @@
             {%- for row in collections.row -%}
             <div class="row">
                 <!-- {{ row.data.title }} -->
-                {% if row.data["col7Width"] > 0 %}
-                Col7IsMore
-                {% endif %}
+                {% for colNum in (1..12) %}
+                {% assign colWidthVar = "col" | concat: colNum | concat: "Width" %}
+                {% assign colClass = "col-sm-" | concat: row.data[colWidthVar] %}
+                <div>
+                    colNum: {{ colNum }}
+                    colWidth: {{ colWidthVar }}
+                </div>
+                {%- endfor -%}
             </div>
             {%- endfor -%}
         </div>
