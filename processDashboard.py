@@ -93,7 +93,7 @@ def newRow():
     rowItems = []
 
 # Takes a dict of filenames and array of types, plus an array of match strings.
-def getFilenameMatches(theFileNames, theMatches):
+def getFileNameMatches(theFileNames, theMatches):
     result = []
     for fileName in theFileNames.keys():
         for match in theFileNames[fileName]:
