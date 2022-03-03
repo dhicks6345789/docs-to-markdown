@@ -12,11 +12,8 @@
             {%- for row in collections.row -%}
             <div class="row">
                 <!-- {{ row.data.title }} -->
-                {% if row.data.col7Width > 0 %}
+                {% if row.data["col7Width"] > 0 %}
                 Col7IsMore
-                {% endif %}
-                {% if row.data.col1Width > 0 %}
-                Col1IsMore
                 {% endif %}
             </div>
             {%- endfor -%}
