@@ -114,6 +114,7 @@ for section in sections:
                 newRow()
             if height > rowHeight:
                 rowHeight = height
+            print("fileName:" + docsToMarkdownLib.removeNumericWord(fileName.lower()))
             if docsToMarkdownLib.removeNumericWord(fileName.lower()) == "blank":
                 rowItems.append((width, "blank"))
             else:
