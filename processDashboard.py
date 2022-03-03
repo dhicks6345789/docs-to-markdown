@@ -108,6 +108,7 @@ for section in sections:
         if not section[0] == args["input"]:
             rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(args["input"])+1:])
         for fileName in getFileNameMatches(section[1], ["url"]):
+            print(str(rowCount) + "-" + str(rowX) + "-" + fileName)
             width = 1
             height = 1
             if rowX + width > 12:
@@ -120,7 +121,6 @@ for section in sections:
                 iconFound = False
                 for iconFileName in getFileNameMatches(section[1], ["png", "jpg"]):
                     if fileName.rsplit(".", 1)[0].lower() == iconFileName.rsplit(".", 1)[0].lower():
-                        print("Found icon: " + iconFileName)
                         iconFound = True
                         rowItems.append((width, "link", fileName))
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
