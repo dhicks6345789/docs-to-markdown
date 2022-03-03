@@ -117,7 +117,7 @@ for section in sections:
                 rowHeight = height
             iconFound = False
             for iconFileName in getFileNameMatches(section[1], ["png", "jpg"]):
-                if fileName.rstrip(".", 1) == iconFileName.rstrip(".", 1):
+                if fileName.rsplit(".", 1).lower() == iconFileName.rsplit(".", 1).lower():
                     print("Found icon: " + iconFileName)
                     iconFound = True
                     rowItems.append((width, "link", fileName))
