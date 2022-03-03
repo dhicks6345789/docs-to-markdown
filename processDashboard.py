@@ -116,6 +116,7 @@ for section in sections:
             width = 1
             height = 1
             if rowX + width > 12:
+                print("Line 119")
                 newRow()
             if height > rowHeight:
                 rowHeight = height
@@ -139,4 +140,5 @@ for section in sections:
                 if not iconFound:
                     rowItems.append((width, "iframe", fileName))
             rowX = rowX + width
+        print("Line 143")
         newRow()
