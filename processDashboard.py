@@ -69,6 +69,7 @@ def newRow():
     global rowItems
     
     print("New row! " + str(rowCount) + "-" + str(rowX))
+    print(rowItems)
     
     frontMatter = {}
     if not rowTitle == "":
