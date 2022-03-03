@@ -20,8 +20,8 @@
                 {% for colNum in (1..12) %}
                 {% capture colNumWidth %}col{{ colNum }}Width{% endcapture %}
                 {% if row.data[colNumWidth] > 0 %}
-                {% capture colNumType %}col{{ colNum }}Width{% endcapture %}
-                {% capture colNumURL %}col{{ colNum }}Width{% endcapture %}
+                {% capture colNumType %}col{{ colNum }}Type{% endcapture %}
+                {% capture colNumURL %}col{{ colNum }}URL{% endcapture %}
                 <div class="col-sm-{{ row.data[colNumWidth] }}">
                     {% if row.data[colNumType] == "link" %}
                     <a href="{{ row.data[colNumURL] }}"><img src="{{ rowNum }}-1-icon.svg" width="100%"/></a>
