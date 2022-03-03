@@ -56,9 +56,12 @@ for section in sections:
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Config: " + fullPath)
 
+# Returns the URL value from a Windows-style .url file.
 def getURLDetails(theFilename):
-    URLFileContents = docsToMarkdownLib.getFile(theFilename)
-    return URLFileContents
+    for URLLine in docsToMarkdownLib.getFile(theFilename).split("\n"):
+        if URLLine.startswith("URL="):
+            return URLLine.strip()[4:]
+    return ""
 
 # The newRow function, used by the row-sorting code section below.
 rowX = 1
