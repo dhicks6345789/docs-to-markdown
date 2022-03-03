@@ -125,7 +125,7 @@ for section in sections:
                     iconBitmap.thumbnail((100,100))
                     iconBuffered = io.BytesIO()
                     iconBitmap.save(iconBuffered, format="PNG")
-                    iconString = base64.encode(iconBuffered.getvalue())
+                    iconString = base64.b64encode(iconBuffered.getvalue())
                     print("Made icon: " + iconString)
             if not iconFound:
                 rowItems.append((width, "iframe", fileName))
