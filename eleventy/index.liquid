@@ -19,16 +19,16 @@
             <div class="row">
                 {% for colNum in (1..12) %}
                 {% capture colNumWidth %}col{{ colNum }}Width{% endcapture %}
-                {{ row.data[colNumWidth] }}
-                {% endfor %}
-                
-                {% if row.data.col1Width > 0 %}
-                <div class="col-sm-{{ row.data.col1Width }}">
-                    {% if row.data.col1Type == "link" %}
-                    <a href="{{ row.data.col1URL }}"><img src="{{ rowNum }}-1-icon.svg" width="100%"/></a>
+                {% if row.data[colNumWidth] > 0 %}
+                {% capture colNumType %}col{{ colNum }}Width{% endcapture %}
+                {% capture colNumURL %}col{{ colNum }}Width{% endcapture %}
+                <div class="col-sm-{{ row.data[colNumWidth] }}">
+                    {% if row.data[colNumType] == "link" %}
+                    <a href="{{ row.data[colNumURL] }}"><img src="{{ rowNum }}-1-icon.svg" width="100%"/></a>
                     {% endif %}
                 </div>
                 {% endif %}
+                {% endfor %}
             </div>
             {% assign rowNum = rowNum | plus: 1 %}
             {% endfor %}
