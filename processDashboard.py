@@ -115,7 +115,7 @@ for section in sections:
             print(str(rowCount) + "-" + str(rowX) + "-" + fileName)
             width = 1
             height = 1
-            if rowX + width > 12:
+            if rowX + width > 13:
                 print("Line 119")
                 newRow()
             if height > rowHeight:
