@@ -9,18 +9,24 @@
     </head>
     <body>
         <div class="container">
+            {% increment rowNum %}
+            {% increment rowNum %}
             {% for row in collections.row %}
             <div class="row">
-                <!-- {{ row.data.title }} -->
+                <div class="col-sm-12">
+                    <h2>{{ row.data.title }}</h2>
+                </div>
+            </div>
+            <div class="row">
                 {% if row.data.col1Width > 0 %}
                 <div class="col-sm-{{ row.data.col1Width }}">
-                    colNum: 1
-                    colWidth: {{ row.data.col1Width }}
-                    colType: {{ row.data.col1Type }}
-                    colURL: {{ row.data.col1URL }}
+                    {% if row.data.col1Type == "link" %}
+                    <a href="{{ row.data.col1URL }}"><img src="{{ rowNum }}-1-icon.svg" width="100%"/></a>
+                    {% endif %}
                 </div>
                 {% endif %}
             </div>
+            {% increment rowNum %}
             {% endfor %}
         </div>
     </body>
