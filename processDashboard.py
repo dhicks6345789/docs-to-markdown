@@ -114,8 +114,7 @@ for section in sections:
                 newRow()
             if height > rowHeight:
                 rowHeight = height
-            print("fileName:" + docsToMarkdownLib.removeNumericWord(fileName.lower()))
-            if docsToMarkdownLib.removeNumericWord(fileName.lower()) == "blank":
+            if docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0].lower()) == "blank":
                 rowItems.append((width, "blank"))
             else:
                 iconFound = False
