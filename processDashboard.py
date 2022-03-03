@@ -47,10 +47,6 @@ def listFileNames(theInputFolder):
         sections.append((theInputFolder, fileNames))
 listFileNames(args["input"])
 
-def getURLDetails(theFilename):
-    URLFileContents = docsToMarkdownLib.getFile(theFilename)
-    print(URLFileContents)
-
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
 for section in sections:
     for fileName in sorted(section[1].keys()):
@@ -59,6 +55,10 @@ for section in sections:
                 fullPath = section[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Config: " + fullPath)
+
+def getURLDetails(theFilename):
+    URLFileContents = docsToMarkdownLib.getFile(theFilename)
+    return URLFileContents
 
 # The newRow function, used by the row-sorting code section below.
 rowX = 1
@@ -83,6 +83,9 @@ def newRow():
         frontMatter["col" + str(colNum) + "Width"] = str(item[0])
         frontMatter["col" + str(colNum) + "Type"] = item[1]
         if not item[1] == "blank":
+            URLText = getURLDetails(item[2])
+            print("URL:")
+            print(URLText)
             frontMatter["col" + str(colNum) + "URL"] = item[2]
         colNum = colNum + item[0]
     
