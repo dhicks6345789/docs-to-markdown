@@ -4,6 +4,8 @@
 # Standard libraries.
 import os
 import sys
+import base64
+import io.BytesIO
 
 # The Pillow image-handling library.
 import PIL.Image
@@ -114,7 +116,10 @@ for section in sections:
                             print("Found icon: " + fileName)
                             rowItems.append((width, "link", fileName))
                             iconBitmap = PIL.Image.open(fileName + "." + imageType)
-                            iconBitmapThumbnail = iconBitmap.thumbnail((100,100))
+                            iconBuffered = io.BytesIO()
+                            iconBitmap.thumbnail((100,100)).save(iconBuffered, format="PNG")
+                            iconString = base64.encode(iconBuffered.getvalue())
+                            print("Made icon: " + iconString)
                     else:
                         rowItems.append((width, "iframe", fileName))
         newRow()
