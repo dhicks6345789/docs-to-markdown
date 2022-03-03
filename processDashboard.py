@@ -78,7 +78,8 @@ def newRow():
     for item in rowItems:
         frontMatter["col" + str(colNum) + "Width"] = str(item[0])
         frontMatter["col" + str(colNum) + "Type"] = item[1]
-        frontMatter["col" + str(colNum) + "URL"] = item[2]
+        if not item[1] == "blank":
+            frontMatter["col" + str(colNum) + "URL"] = item[2]
         colNum = colNum + item[0]
     
     if colNum <= 12:
@@ -107,29 +108,31 @@ for section in sections:
         if not section[0] == args["input"]:
             rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(args["input"])+1:])
         for fileName in getFileNameMatches(section[1], ["url"]):
-            print("fileName: " + fileName)
             width = 1
             height = 1
             if rowX + width > 12:
                 newRow()
             if height > rowHeight:
                 rowHeight = height
-            iconFound = False
-            for iconFileName in getFileNameMatches(section[1], ["png", "jpg"]):
-                if fileName.rsplit(".", 1)[0].lower() == iconFileName.rsplit(".", 1)[0].lower():
-                    print("Found icon: " + iconFileName)
-                    iconFound = True
-                    rowItems.append((width, "link", fileName))
-                    iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
-                    iconBitmap.thumbnail((100,100))
-                    iconBuffered = io.BytesIO()
-                    iconBitmap.save(iconBuffered, format="PNG")
-                    iconString = "<svg width=\"100\" height=\"100\" version=\"1.1\" viewBox=\"0 0 26.458 26.458\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
-                    iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
-                    iconString = iconString + "</svg>"
-                    os.makedirs(args["output"] + os.sep + "static" + os.sep + "icons", exist_ok=True)
-                    docsToMarkdownLib.putFile(args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg", iconString)
-            if not iconFound:
-                rowItems.append((width, "iframe", fileName))
+            if docsToMarkdownLib.removeNumericWord(filename.lower()) == "blank":
+                rowItems.append((width, "blank"))
+            else:
+                iconFound = False
+                for iconFileName in getFileNameMatches(section[1], ["png", "jpg"]):
+                    if fileName.rsplit(".", 1)[0].lower() == iconFileName.rsplit(".", 1)[0].lower():
+                        print("Found icon: " + iconFileName)
+                        iconFound = True
+                        rowItems.append((width, "link", fileName))
+                        iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
+                        iconBitmap.thumbnail((100,100))
+                        iconBuffered = io.BytesIO()
+                        iconBitmap.save(iconBuffered, format="PNG")
+                        iconString = "<svg width=\"100\" height=\"100\" version=\"1.1\" viewBox=\"0 0 26.458 26.458\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+                        iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
+                        iconString = iconString + "</svg>"
+                        os.makedirs(args["output"] + os.sep + "static" + os.sep + "icons", exist_ok=True)
+                        docsToMarkdownLib.putFile(args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg", iconString)
+                if not iconFound:
+                    rowItems.append((width, "iframe", fileName))
             rowX = rowX + width
         newRow()
