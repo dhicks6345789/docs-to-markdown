@@ -122,8 +122,9 @@ for section in sections:
                     iconFound = True
                     rowItems.append((width, "link", fileName))
                     iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
+                    iconBitmap.thumbnail((100,100))
                     iconBuffered = io.BytesIO()
-                    iconBitmap.thumbnail((100,100)).save(iconBuffered, format="PNG")
+                    iconBitmap.save(iconBuffered, format="PNG")
                     iconString = base64.encode(iconBuffered.getvalue())
                     print("Made icon: " + iconString)
             if not iconFound:
