@@ -94,6 +94,7 @@ def newRow():
 
 # Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
+    print(section)
     if not section[1] == {}:
         if not section[0] == args["input"]:
             rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(args["input"])+1:])
