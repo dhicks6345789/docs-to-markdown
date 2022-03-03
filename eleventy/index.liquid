@@ -17,7 +17,8 @@
                 {% assign colClass = "col-sm-" | concat: row.data[colWidthVar] %}
                 <div>
                     colNum: {{ colNum }}
-                    colWidth: {{ colWidthVar }}
+                    colWidthVar: {{ colWidthVar }}
+                    colClass: {{ colClass }}
                 </div>
                 {%- endfor -%}
             </div>
