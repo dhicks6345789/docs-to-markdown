@@ -9,8 +9,7 @@
     </head>
     <body>
         <div class="container">
-            {% increment rowNum %}
-            {% increment rowNum %}
+            {% assign rowNum = 1 %}
             {% for row in collections.row %}
             <div class="row">
                 <div class="col-sm-12">
@@ -26,7 +25,7 @@
                 </div>
                 {% endif %}
             </div>
-            {% increment rowNum %}
+            {% assign rowNum = rowNum | plus: 1 %}
             {% endfor %}
         </div>
     </body>
