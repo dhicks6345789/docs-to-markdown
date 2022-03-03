@@ -11,6 +11,9 @@
         <div class="container">
             {%- for row in collections.row -%}
             <div class="row">
+                {% if col7Width > 0 %}
+                Col7IsMore
+                {% endif %}
                 <!-- {{ row.data.title }} -->
                 {% for colNum in (1..12) %}
                 {% assign colWidthVar = "col" | concat: colNum | concat: "Width" %}
