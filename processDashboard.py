@@ -125,8 +125,10 @@ for section in sections:
                     iconBitmap.thumbnail((100,100))
                     iconBuffered = io.BytesIO()
                     iconBitmap.save(iconBuffered, format="PNG")
-                    iconString = base64.b64encode(iconBuffered.getvalue())
-                    print("Made icon: " + iconString.decode("utf-8"))
+                    iconString = "<svg width=\"100\" height=\"100\" version=\"1.1\" viewBox=\"0 0 26.458 26.458\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+                    iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "= \"/>\n"
+                    iconString = iconString + "</svg>"
+                    docsToMarkdownLib.putFile(args["output"] + os.sep + rowX + "-" + rowCount + "-icon.svg", iconString)
             if not iconFound:
                 rowItems.append((width, "iframe", fileName))
         newRow()
