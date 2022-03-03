@@ -74,7 +74,11 @@ def newRow():
         frontMatter["col" + str(colNum) + "Type"] = item[1]
         frontMatter["col" + str(colNum) + "URL"] = item[2]
         colNum = colNum + item[0]
-        
+    
+    if colNum <= 12:
+        frontMatter["col" + str(colNum) + "Width"] = str(13-colNum)
+        frontMatter["col" + str(colNum) + "Type"] = "blank"
+    
     docsToMarkdownLib.putFile(args["output"] + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", docsToMarkdownLib.frontMatterToString(frontMatter))
     
     rowX = 1
