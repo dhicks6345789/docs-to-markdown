@@ -86,10 +86,7 @@ def newRow():
         frontMatter["col" + str(colNum) + "Width"] = str(item[0])
         frontMatter["col" + str(colNum) + "Type"] = item[1]
         if not item[1] == "blank":
-            URLText = getURLDetails(args["input"] + os.sep + item[2])
-            print("URL:")
-            print(URLText)
-            frontMatter["col" + str(colNum) + "URL"] = item[2]
+            frontMatter["col" + str(colNum) + "URL"] = getURLDetails(args["input"] + os.sep + item[2])
         colNum = colNum + item[0]
     
     if colNum <= 12:
