@@ -176,7 +176,7 @@ for section in sections:
                                 icon = icons[0]
                                 imageType = icon.format
                                 response = requests.get(icon.url)
-                                iconBitmap = PIL.Image.open(BytesIO(response.content))
+                                iconBitmap = PIL.Image.open(io.BytesIO(response.content))
                                 iconBitmap.thumbnail((100,100))
                                 iconBitmap.save(iconBuffered, format="PNG")
                     elif imageType in bitmapTypes:
