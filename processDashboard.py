@@ -13,8 +13,11 @@ import PIL.Image
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
-# An array of image types.
-imageTypes = ["jpg", "png"]
+# An array of "image file" types.
+imageTypes = ["jpg", "jpeg", "png", "svg"]
+
+# An array of "url file" types.
+urlTypes = ["url", "txt"]
 
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"])
@@ -61,10 +64,11 @@ for section in sections:
 
 # Returns the URL value from a Windows-style .url file.
 def getURLDetails(theFilename):
-    for URLLine in docsToMarkdownLib.getFile(theFilename).split("\n"):
+    URLLines = docsToMarkdownLib.getFile(theFilename).split("\n")
+    for URLLine in URLLines:
         if URLLine.startswith("URL="):
             return URLLine.strip()[4:]
-    return ""
+    return URLLines[0].strip()
 
 # The newRow function, used by the row-sorting code section below.
 rowX = 1
@@ -131,18 +135,20 @@ for section in sections:
         if not section[0] == args["input"]:
             rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(args["input"])+1:])
         for fileName in section[1].keys():
+            # Figure out what type of item we have. If we just have a .url file then we have an "iframe", if we have a .url and a matching image we have a "link",
+            # if we just have an image then we have an "image".
             itemType = "blank"
             if not docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0].lower()) == "blank":
-                fileType = arrayIsIn("url", section[1][fileName])
+                fileType = arrayIsIn(section[1][fileName], urlTypes)
                 if not fileType == "":
                     section[1][fileName].remove(fileType)
-                    imageType = arrayIsIn(imageTypes, fileTypes)
+                    imageType = arrayIsIn(section[1][fileName], imageTypes)
                     if imageType == "":
                         itemType = "iframe"
                     else:
                         itemType = "link"
                 else:
-                    imageType = arrayIsIn(imageTypes, fileTypes)
+                    imageType = arrayIsIn(section[1][fileName], imageTypes)
                     if not imageType == "":
                         itemType = "image"
             
