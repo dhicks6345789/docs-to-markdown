@@ -168,16 +168,17 @@ for section in sections:
                             iconInputFileName = "assets/default.svg"
                         else:
                             for icon in icons:
-                                if icon[3] == "svg":
+                                if icon.format == "svg":
                                     iconResponse = requests.get(icon.url, stream=True)
                                     for iconChunk in iconResponse.iter_content(1024):
                                         iconString = iconString + iconChunk
                             if iconString == "":
                                 icon = icons[0]
-                                imageType = icon[3]
-                                response = requests.get(icon.url, stream=True)
-                                for iconChunk in response.iter_content(1024):
-                                    iconBuffered.write(iconChunk)
+                                imageType = icon.format
+                                response = requests.get(icon.url)
+                                iconBitmap = PIL.Image.open(BytesIO(response.content))
+                                iconBitmap.thumbnail((100,100))
+                                iconBitmap.save(iconBuffered, format="PNG")
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
                         iconBitmap.thumbnail((100,100))
