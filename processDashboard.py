@@ -138,17 +138,16 @@ for section in sections:
             # Figure out what type of item we have. If we just have a .url file then we have an "iframe", if we have a .url and a matching image we have a "link",
             # if we just have an image then we have an "image".
             itemType = "blank"
+            imageType = arrayIsIn(section[1][fileName], imageTypes)
             if not docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0].lower()) == "blank":
                 fileType = arrayIsIn(section[1][fileName], urlTypes)
                 if not fileType == "":
                     section[1][fileName].remove(fileType)
-                    imageType = arrayIsIn(section[1][fileName], imageTypes)
                     if imageType == "":
                         itemType = "iframe"
                     else:
                         itemType = "link"
                 else:
-                    imageType = arrayIsIn(section[1][fileName], imageTypes)
                     if not imageType == "":
                         itemType = "image"
             
@@ -164,7 +163,7 @@ for section in sections:
             else:
                 rowItems.append((width, itemType, fileName))
                 if itemType == "link":
-                    iconFileName = fileName + "." + fileTypes[0]
+                    iconFileName = fileName + "." + imageType
                     iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
                     iconBitmap.thumbnail((100,100))
                     iconBuffered = io.BytesIO()
