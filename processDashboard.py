@@ -30,7 +30,7 @@ urlTypes = ["url", "txt"]
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"])
 
-print("STATUS: processDashboard: " + args["input"] + " to " + args["output"])
+print("STATUS: processDashboard: " + args["input"] + " to " + args["output"], flush=True)
 
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
@@ -68,7 +68,7 @@ for section in sections:
             for fileType in section[1].pop("config"):
                 fullPath = section[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
-                    print("Config: " + fullPath)
+                    print("Config: " + fullPath, flush=True)
 
 # Returns the URL value from a Windows-style .url file.
 def getURLDetails(theFilename):
@@ -161,6 +161,7 @@ for section in sections:
                     iconInputFileName = fileName + "." + imageType
                     iconOutputPath = args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg"
                     if imageType == "" and not os.path.exists(iconOutputPath):
+                        print("STATUS: Downloading Favicon for: " + URL, flush=True)
                         icons = favicon.get(URL)
                         if len(icons) == 0:
                             imageType = "svg"
