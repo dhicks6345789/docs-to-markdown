@@ -133,7 +133,7 @@ for section in sections:
         for fileName in section[1].keys():
             itemType = "blank"
             if not docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0].lower()) == "blank":
-                fileType = arrayIsIn["url", section[1][fileName]]
+                fileType = arrayIsIn("url", section[1][fileName])
                 if not fileType == "":
                     section[1][fileName].remove(fileType)
                     imageType = arrayIsIn(imageTypes, fileTypes)
