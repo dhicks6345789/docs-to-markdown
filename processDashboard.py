@@ -116,7 +116,6 @@ def arrayIsIn(leftArray, rightArray):
                 return leftItem
     return ""
 
-print(sections)
 # Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
     if not section[1] == {}:
