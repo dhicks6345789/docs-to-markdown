@@ -108,21 +108,8 @@ def newRow():
     rowHeight = 1
     rowItems = []
 
-## Takes a dict of filenames and array of types, plus an array of match strings.
-#def getFileNameMatches(theFileNames, theMatches):
-#    result = []
-#    for fileName in theFileNames.keys():
-#        for match in theFileNames[fileName]:
-#            if match.lower() in theMatches:
-#                result.append(fileName + "." + match)
- #   return(result)
-
-#def stringsToLower(theStrings):
-#    result = []
-#    for upperString in theStrings:
-#        result.append(upperString.lower())
-#    return result
-
+# Compares two arrays of strings, matches are case-insensitive. If any match is found the original item from the first
+# array is returned, so a return value might be mixed case.
 def arrayIsIn(leftArray, rightArray):
     for leftItem in leftArray:
         for rightItem in rightArray:
@@ -130,6 +117,7 @@ def arrayIsIn(leftArray, rightArray):
                 return leftItem
     return ""
 
+print(sections)
 # Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
     if not section[1] == {}:
