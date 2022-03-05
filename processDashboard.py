@@ -94,7 +94,7 @@ def newRow():
         frontMatter["col" + str(colNum) + "Width"] = str(item[0])
         frontMatter["col" + str(colNum) + "Type"] = item[1]
         if not item[1] == "blank":
-            frontMatter["col" + str(colNum) + "URL"] = getURLDetails(args["input"] + os.sep + item[2])
+            frontMatter["col" + str(colNum) + "URL"] = item[2]
         colNum = colNum + item[0]
     
     if colNum <= 12:
@@ -139,9 +139,9 @@ for section in sections:
             # Figure out what type of item we have. If we just have a .url file then we have an "iframe", if we have a .url and a matching image we have a "link",
             # if we just have an image then we have an "image".
             itemType = "blank"
+            fileType = arrayIsIn(section[1][fileName], urlTypes)
             imageType = arrayIsIn(section[1][fileName], imageTypes)
             if not docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0].lower()) == "blank":
-                fileType = arrayIsIn(section[1][fileName], urlTypes)
                 if not fileType == "":
                     section[1][fileName].remove(fileType)
                     if imageType == "":
@@ -162,7 +162,7 @@ for section in sections:
             if itemType == "blank":
                 rowItems.append((width, "blank"))
             else:
-                rowItems.append((width, itemType, fileName))
+                rowItems.append((width, itemType, getURLDetails(args["input"] + os.sep + fileName + "." + fileType)))
                 if itemType == "link":
                     iconFileName = fileName + "." + imageType
                     iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
