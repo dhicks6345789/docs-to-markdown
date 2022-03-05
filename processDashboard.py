@@ -6,15 +6,23 @@ import os
 import io
 import sys
 import base64
+import shutil
 
 # The Pillow image-handling library.
 import PIL.Image
+
+# The Requests library, for handling HTTP(S) requests.
+import requests
+
+# A library for downloading (not generating) favicons from a site.
+import favicon
 
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
 # An array of "image file" types.
-imageTypes = ["jpg", "jpeg", "png", "svg"]
+bitmapTypes = ["jpg", "jpeg", "png",]
+imageTypes =  bitmapTypes + ["svg"]
 
 # An array of "url file" types.
 urlTypes = ["url", "txt"]
@@ -152,17 +160,37 @@ for section in sections:
             if itemType == "blank":
                 rowItems.append((width, "blank"))
             else:
-                rowItems.append((width, itemType, getURLDetails(section[0] + os.sep + fileName + "." + fileType)))
+                URL = getURLDetails(section[0] + os.sep + fileName + "." + fileType)
+                rowItems.append((width, itemType, URL))
                 if itemType == "link":
-                    iconFileName = fileName + "." + imageType
-                    iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
-                    iconBitmap.thumbnail((100,100))
-                    iconBuffered = io.BytesIO()
-                    iconBitmap.save(iconBuffered, format="PNG")
-                    iconString = "<svg width=\"100\" height=\"100\" version=\"1.1\" viewBox=\"0 0 26.458 26.458\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
-                    iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
-                    iconString = iconString + "</svg>"
+                    iconString = ""
+                    iconInputFileName = fileName + "." + imageType
+                    iconOutputPath = args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg"
+                    if imageType == "" and not os.path.exists(iconOutputPath):
+                        icons = favicon.get(URL)
+                        for icon in icons:
+                            if icon["format"] == "svg":
+                                iconResponse = requests.get(icon.url, stream=True)
+                                for iconChunk in iconResponse.iter_content(1024):
+                                    iconString = iconString + iconChunk
+                        if iconString == "":
+                            icon = icons[0]
+                            imageType = icon["format"]
+                            response = requests.get(icon.url, stream=True)
+                            iconBuffered = io.BytesIO()
+                            for iconChunk in response.iter_content(1024):
+                                iconBuffered.write(iconChunk)
+                    if imageType.lower() == "svg":
+                        shutil.copyfile(section[0] + os.sep + iconInputFileName, iconOutputPath)
+                    if imageType in bitmapTypes:
+                        iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
+                        iconBitmap.thumbnail((100,100))
+                        iconBuffered = io.BytesIO()
+                        iconBitmap.save(iconBuffered, format="PNG")
+                        iconString = "<svg width=\"100\" height=\"100\" version=\"1.1\" viewBox=\"0 0 26.458 26.458\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+                        iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
+                        iconString = iconString + "</svg>"
                     os.makedirs(args["output"] + os.sep + "static" + os.sep + "icons", exist_ok=True)
-                    docsToMarkdownLib.putFile(args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg", iconString)
+                    docsToMarkdownLib.putFile(iconOutputPath, iconString)
             rowX = rowX + width
         newRow()
