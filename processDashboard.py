@@ -161,7 +161,7 @@ for section in sections:
                     iconInputFileName = fileName + "." + imageType
                     iconOutputPath = args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg"
                     if imageType == "" and not os.path.exists(iconOutputPath):
-                        print("STATUS: Downloading Favicon for: " + URL, flush=True)
+                        print("STATUS: No icon found for link: " + fileName + " - downloading favicon for: " + URL, flush=True)
                         icons = favicon.get(URL)
                         if len(icons) == 0:
                             imageType = "svg"
