@@ -82,7 +82,6 @@ def newRow():
     global rowHeight
     global rowItems
     
-    print(rowItems)
     frontMatter = {}
     if not rowTitle == "":
         frontMatter["title"] = rowTitle
@@ -150,7 +149,7 @@ for section in sections:
             if itemType == "blank":
                 rowItems.append((width, "blank"))
             else:
-                rowItems.append((width, itemType, getURLDetails(args["input"] + os.sep + fileName + "." + fileType)))
+                rowItems.append((width, itemType, getURLDetails(section[0] + os.sep + fileName + "." + fileType)))
                 if itemType == "link":
                     iconFileName = fileName + "." + imageType
                     iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
