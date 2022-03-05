@@ -164,7 +164,7 @@ for section in sections:
                         icons = favicon.get(URL)
                         if len(icons) == 0:
                             imageType = "svg"
-                            iconInputFileName = "default.svg"
+                            iconInputFileName = "assets/default.svg"
                         else:
                             for icon in icons:
                                 if icon[3] == "svg":
