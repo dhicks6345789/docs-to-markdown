@@ -188,7 +188,8 @@ for section in sections:
                         iconString = "<svg width=\"100\" height=\"100\" version=\"1.1\" viewBox=\"0 0 26.458 26.458\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
                         iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
                         iconString = iconString + "</svg>"
-                    os.makedirs(args["output"] + os.sep + "static" + os.sep + "icons", exist_ok=True)
-                    docsToMarkdownLib.putFile(iconOutputPath, iconString)
+                    if not imageType == "":
+                        os.makedirs(args["output"] + os.sep + "static" + os.sep + "icons", exist_ok=True)
+                        docsToMarkdownLib.putFile(iconOutputPath, iconString)
             rowX = rowX + width
         newRow()
