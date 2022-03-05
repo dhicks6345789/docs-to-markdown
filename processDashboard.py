@@ -162,17 +162,21 @@ for section in sections:
                     iconOutputPath = args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg"
                     if imageType == "" and not os.path.exists(iconOutputPath):
                         icons = favicon.get(URL)
-                        for icon in icons:
-                            if icon[3] == "svg":
-                                iconResponse = requests.get(icon.url, stream=True)
-                                for iconChunk in iconResponse.iter_content(1024):
-                                    iconString = iconString + iconChunk
-                        if iconString == "":
-                            icon = icons[0]
-                            imageType = icon[3]
-                            response = requests.get(icon.url, stream=True)
-                            for iconChunk in response.iter_content(1024):
-                                iconBuffered.write(iconChunk)
+                        if len(icons) == 0:
+                            imageType = "svg"
+                            iconInputFileName = "default.svg"
+                        else:
+                            for icon in icons:
+                                if icon[3] == "svg":
+                                    iconResponse = requests.get(icon.url, stream=True)
+                                    for iconChunk in iconResponse.iter_content(1024):
+                                        iconString = iconString + iconChunk
+                            if iconString == "":
+                                icon = icons[0]
+                                imageType = icon[3]
+                                response = requests.get(icon.url, stream=True)
+                                for iconChunk in response.iter_content(1024):
+                                    iconBuffered.write(iconChunk)
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
                         iconBitmap.thumbnail((100,100))
