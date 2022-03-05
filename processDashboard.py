@@ -130,13 +130,14 @@ for section in sections:
             if not docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0].lower()) == "blank":
                 if not fileType == "":
                     section[1][fileName].remove(fileType)
-                    if imageType == "":
-                        itemType = "iframe"
-                    else:
-                        itemType = "link"
-                else:
-                    if not imageType == "":
-                        itemType = "image"
+                    itemType = "link"
+                    #if imageType == "":
+                        #itemType = "iframe"
+                    #else:
+                        #itemType = "link"
+                #else:
+                    #if not imageType == "":
+                        #itemType = "image"
             
             width = 1
             height = 1
