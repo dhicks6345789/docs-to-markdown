@@ -181,7 +181,7 @@ for section in sections:
                                 iconTempFile = open("tempIcon." + icon.format, "wb")
                                 for iconChunk in response.iter_content(1024):
                                     iconTempFile.write(iconChunk)
-                                iconTempFle.close()
+                                iconTempFile.close()
                                 iconBitmap = PIL.Image.open("tempIcon." + icon.format)
                                 iconBitmap.thumbnail((100,100))
                                 iconBitmap.save(iconBuffered, format="PNG")
