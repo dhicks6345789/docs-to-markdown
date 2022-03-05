@@ -139,13 +139,6 @@ for section in sections:
                 if not fileType == "":
                     section[1][fileName].remove(fileType)
                     itemType = "link"
-                    #if imageType == "":
-                        #itemType = "iframe"
-                    #else:
-                        #itemType = "link"
-                #else:
-                    #if not imageType == "":
-                        #itemType = "image"
             
             width = 1
             height = 1
@@ -164,6 +157,7 @@ for section in sections:
                 rowItems.append((width, itemType, URL))
                 if itemType == "link":
                     iconString = ""
+                    iconBuffered = io.BytesIO()
                     iconInputFileName = fileName + "." + imageType
                     iconOutputPath = args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg"
                     if imageType == "" and not os.path.exists(iconOutputPath):
@@ -177,16 +171,15 @@ for section in sections:
                             icon = icons[0]
                             imageType = icon[3]
                             response = requests.get(icon.url, stream=True)
-                            iconBuffered = io.BytesIO()
                             for iconChunk in response.iter_content(1024):
                                 iconBuffered.write(iconChunk)
-                    if imageType.lower() == "svg":
-                        shutil.copyfile(section[0] + os.sep + iconInputFileName, iconOutputPath)
-                    if imageType in bitmapTypes:
+                    elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
                         iconBitmap.thumbnail((100,100))
-                        iconBuffered = io.BytesIO()
                         iconBitmap.save(iconBuffered, format="PNG")
+                    if imageType == "svg":
+                        shutil.copyfile(section[0] + os.sep + iconInputFileName, iconOutputPath)
+                    else:
                         iconString = "<svg width=\"100\" height=\"100\" version=\"1.1\" viewBox=\"0 0 26.458 26.458\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
                         iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
                         iconString = iconString + "</svg>"
