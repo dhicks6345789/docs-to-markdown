@@ -169,6 +169,7 @@ for section in sections:
                     if imageType == "" and not os.path.exists(iconOutputPath):
                         icons = favicon.get(URL)
                         for icon in icons:
+                            print(icon)
                             if icon["format"] == "svg":
                                 iconResponse = requests.get(icon.url, stream=True)
                                 for iconChunk in iconResponse.iter_content(1024):
