@@ -140,6 +140,9 @@ for section in sections:
             
             width = 1
             height = 1
+            if itemType == "iframe":
+                width = 4
+                height = 4
             if rowX + width > 13:
                 newRow()
             if height > rowHeight:
