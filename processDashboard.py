@@ -21,7 +21,7 @@ import favicon
 import docsToMarkdownLib
 
 # An array of "image file" types.
-bitmapTypes = ["jpg", "jpeg", "png",]
+bitmapTypes = ["jpg", "jpeg", "png", "ico"]
 imageTypes =  bitmapTypes + ["svg"]
 
 # An array of "url file" types.
@@ -175,7 +175,7 @@ for section in sections:
                                     iconString = iconString + iconChunk
                         if iconString == "":
                             icon = icons[0]
-                            imageType = icon["format"]
+                            imageType = icon[3]
                             response = requests.get(icon.url, stream=True)
                             iconBuffered = io.BytesIO()
                             for iconChunk in response.iter_content(1024):
