@@ -13,6 +13,9 @@ import PIL.Image
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
+# An array of image types.
+imageTypes = ["jpg", "png"]
+
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"])
 
@@ -100,14 +103,26 @@ def newRow():
     rowHeight = 1
     rowItems = []
 
-# Takes a dict of filenames and array of types, plus an array of match strings.
-def getFileNameMatches(theFileNames, theMatches):
+## Takes a dict of filenames and array of types, plus an array of match strings.
+#def getFileNameMatches(theFileNames, theMatches):
+#    result = []
+#    for fileName in theFileNames.keys():
+#        for match in theFileNames[fileName]:
+#            if match.lower() in theMatches:
+#                result.append(fileName + "." + match)
+ #   return(result)
+
+def stringsToLower(theStrings):
     result = []
-    for fileName in theFileNames.keys():
-        for match in theFileNames[fileName]:
-            if match.lower() in theMatches:
-                result.append(fileName + "." + match)
-    return(result)
+    for upperString in theStrings:
+        result.append(upperString.lower())
+    return result
+
+def arrayIsIn(leftArray, rightArray):
+    for item in leftArray:
+        if item in rightArray:
+            return True
+    return False
 
 print(sections)
 # Sort the items found into rows, producing one Markdown file per row.
@@ -115,31 +130,41 @@ for section in sections:
     if not section[1] == {}:
         if not section[0] == args["input"]:
             rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(args["input"])+1:])
-        for fileName in getFileNameMatches(section[1], ["url"]):
+        #for fileName in getFileNameMatches(section[1], ["url"]):
+        for fileName in section[1].keys():
+            fileTypes = stringsToLower(section[1][fileName])
+            itemType = "blank"
+            if not docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0].lower()) == "blank":
+                if "url" in fileTypes:
+                    fileTypes.remove("url")
+                    if arrayIsIn(imageTypes, fileTypes):
+                        itemType = "link"
+                    else:
+                        itemType = "iframe"
+                else:
+                    if arrayIsIn(imageTypes, fileTypes):
+                        itemType = "image"
+            
             width = 1
             height = 1
             if rowX + width > 13:
                 newRow()
             if height > rowHeight:
                 rowHeight = height
-            if docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0].lower()) == "blank":
+                
+            if itemTypes == "blank":
                 rowItems.append((width, "blank"))
-            else:
-                iconFound = False
-                for iconFileName in getFileNameMatches(section[1], ["png", "jpg"]):
-                    if fileName.rsplit(".", 1)[0].lower() == iconFileName.rsplit(".", 1)[0].lower():
-                        iconFound = True
-                        rowItems.append((width, "link", fileName))
-                        iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
-                        iconBitmap.thumbnail((100,100))
-                        iconBuffered = io.BytesIO()
-                        iconBitmap.save(iconBuffered, format="PNG")
-                        iconString = "<svg width=\"100\" height=\"100\" version=\"1.1\" viewBox=\"0 0 26.458 26.458\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
-                        iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
-                        iconString = iconString + "</svg>"
-                        os.makedirs(args["output"] + os.sep + "static" + os.sep + "icons", exist_ok=True)
-                        docsToMarkdownLib.putFile(args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg", iconString)
-                if not iconFound:
-                    rowItems.append((width, "iframe", fileName))
+            elif itemTypes == "link":
+                rowItems.append((width, "link", fileName))
+                iconFileName = fileName + "." + fileTypes[0]
+                iconBitmap = PIL.Image.open(section[0] + os.sep + iconFileName)
+                iconBitmap.thumbnail((100,100))
+                iconBuffered = io.BytesIO()
+                iconBitmap.save(iconBuffered, format="PNG")
+                iconString = "<svg width=\"100\" height=\"100\" version=\"1.1\" viewBox=\"0 0 26.458 26.458\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+                iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
+                iconString = iconString + "</svg>"
+                os.makedirs(args["output"] + os.sep + "static" + os.sep + "icons", exist_ok=True)
+                docsToMarkdownLib.putFile(args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg", iconString)
             rowX = rowX + width
         newRow()
