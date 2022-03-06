@@ -55,7 +55,7 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     blockRatio = float(blockWidth) / float(blockHeight)
     
     padWidthRatio = blockRatio - imageRatio
-    padWidth = imageWidth * padWidthRatio
+    padWidth = int(imageWidth * padWidthRatio)
     
     resultWidth = imageWidth + padWidth
     resultHeight = imageHeight
