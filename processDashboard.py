@@ -102,6 +102,7 @@ def newRow():
         frontMatter["col" + str(colNum) + "Type"] = item[1]
         if not item[1] == "blank":
             frontMatter["col" + str(colNum) + "URL"] = item[2]
+            frontMatter["col" + str(colNum) + "Label"] = item[3]
         colNum = colNum + item[0]
     
     if colNum <= 12:
@@ -135,7 +136,8 @@ for section in sections:
             itemType = "blank"
             fileType = arrayIsIn(section[1][fileName], urlTypes)
             imageType = arrayIsIn(section[1][fileName], imageTypes)
-            if not docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0].lower()) == "blank":
+            itemLabel = docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0])
+            if not itemLabel.lower() == "blank":
                 if not fileType == "":
                     section[1][fileName].remove(fileType)
                     itemType = "link"
@@ -154,7 +156,7 @@ for section in sections:
                 rowItems.append((width, "blank"))
             else:
                 URL = getURLDetails(section[0] + os.sep + fileName + "." + fileType)
-                rowItems.append((width, itemType, URL))
+                rowItems.append((width, itemType, URL, itemLabel))
                 if itemType == "link":
                     iconString = ""
                     iconBuffered = io.BytesIO()
