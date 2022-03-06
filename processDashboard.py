@@ -41,8 +41,6 @@ def reduceInts(theRange, leftInt, rightInt):
     for pl in range(theRange, 2, -1):
         leftDivide = float(leftInt) / float(pl)
         rightDivide = float(rightInt) / float(pl)
-        #print("leftDivide: " + str(leftDivide))
-        #print("rightDivide: " + str(rightDivide))
         if leftDivide == float(int(leftDivide)) and rightDivide == float(int(rightDivide)):
             return (int(leftDivide), int(rightDivide))
     return (leftInt, rightInt)
@@ -56,8 +54,8 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     blockWidth, blockHeight = reduceInts(12, theBlockWidth, theBlockHeight)
     blockRatio = float(blockWidth) / float(blockHeight)
     
-    print("blockWidth: " + str(blockWidth))
-    print("blockHeight: " + str(blockHeight))
+    padWidthRatio = blockRatio - imageRatio
+    print("padWidthRatio: " + str(padWidthRatio))
     
     resultWidth = blockWidth * imageWidth
     resultHeight = blockHeight * imageHeight
@@ -178,8 +176,8 @@ for section in sections:
             width = 1
             height = 1
             if itemType == "image":
-                width = 4
-                height = 4
+                width = 2
+                height = 1
             if rowX + width > 13:
                 newRow()
             if height > rowHeight:
