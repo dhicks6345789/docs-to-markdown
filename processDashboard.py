@@ -177,9 +177,9 @@ for section in sections:
                                 icon = icons[0]
                                 imageType = icon.format
                                 response = requests.get(icon.url)
-                                iconBitmap = PIL.Image.open(io.BytesIO(response.content))
-                                iconBitmap.thumbnail((100,100))
                                 try:
+                                    iconBitmap = PIL.Image.open(io.BytesIO(response.content))
+                                    iconBitmap.thumbnail((100,100))
                                     iconBitmap.save(iconBuffered, format="PNG")
                                 except PIL.UnidentifiedImageError:
                                     print("Favicon not valid: " + URL, flush=True)
