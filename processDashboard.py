@@ -55,6 +55,7 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     blockRatio = float(blockWidth) / float(blockHeight)
     
     result = theImage.copy()
+    result.thumbnail((100, 100))
     return result
 
 # Check through items in the given input folder, recursing into sub-folders.
