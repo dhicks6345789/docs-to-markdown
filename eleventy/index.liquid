@@ -26,7 +26,7 @@
                 <div class="col-sm-{{ row.data[colNumWidth] }}">
                     {% if row.data[colNumType] == "link" %}
                     <a href="{{ row.data[colNumURL] }}" target="_blank"><img src="icons/{{ rowNum }}-{{ colNum }}-icon.svg" width="100%"/></a>
-                    <div class="p-0 mt-2 mb-2 bg-info text-white text-center"><a href="{{ row.data[colNumURL] }}" target="_blank">{{ row.data[colNumLabel] }}</a></div>
+                    <a href="{{ row.data[colNumURL] }}" target="_blank"><div class="p-0 mt-2 mb-2 text-white text-center text-decoration-none" style="background-color:CornflowerBlue">{{ row.data[colNumLabel] }}</div></a>
                     {% elsif row.data[colNumType] == "iframe" %}
                     <iframe src="{{ row.data[colNumURL] }}"></iframe>
                     {% endif %}
