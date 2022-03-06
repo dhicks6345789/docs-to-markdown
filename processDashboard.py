@@ -101,9 +101,9 @@ def newRow():
         frontMatter["col" + str(colNum) + "Width"] = str(item[0])
         frontMatter["col" + str(colNum) + "Type"] = item[1]
         if not item[1] == "blank":
-            frontMatter["col" + str(colNum) + "Label"] = item[3]
+            frontMatter["col" + str(colNum) + "Label"] = item[2]
             if item[1] == "link":
-                frontMatter["col" + str(colNum) + "URL"] = item[2]
+                frontMatter["col" + str(colNum) + "URL"] = item[3]
         colNum = colNum + item[0]
     
     if colNum <= 12:
@@ -162,7 +162,7 @@ for section in sections:
                     rowItems.append((width, "image", itemLabel))
                 elif itemType == "link":
                     URL = getURLDetails(section[0] + os.sep + fileName + "." + fileType)
-                    rowItems.append((width, "link", URL, itemLabel))
+                    rowItems.append((width, "link", itemLabel, URL))
                     iconString = ""
                     iconBuffered = io.BytesIO()
                     iconInputFileName = fileName + "." + imageType
