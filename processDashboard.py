@@ -54,6 +54,9 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     blockWidth, blockHeight = reduceInts(12, theBlockWidth, theBlockHeight)
     blockRatio = float(blockWidth) / float(blockHeight)
     
+    print("blockWidth: " + str(blockWidth))
+    print("blockHeight: " + str(blockHeight))
+    
     resultWidth = blockWidth * imageWidth
     resultHeight = blockHeight * imageHeight
     result = PIL.Image.new(mode="RGB", size=(resultWidth, resultHeight), color="pink")
@@ -220,6 +223,7 @@ for section in sections:
                                     iconInputFileName = "default"
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
+                        print("Thumbnailing image: " + fileName)
                         thumbnailedImage = thumbnailImage(iconBitmap, width, height)
                         thumbnailedImage.save(iconBuffered, format="PNG")
                     if imageType == "svg":
