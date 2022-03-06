@@ -35,6 +35,28 @@ print("STATUS: processDashboard: " + args["input"] + " to " + args["output"], fl
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
 
+# Given two ints, returns those two ints divided by their highest common divisor, or simply
+# returns the two same ints if there is no common divisor. Checks from the given range downwards.
+def reduceInts(theRange, leftInt, rightInt):
+    for pl in range(theRange, 2):
+        leftDivide = float(leftInt) / float(pl)
+        rightDivide = float(rightInt) / float(pl)
+        if leftDivide == float(int(leftDivide)) and rightDivide == float(int(rightDivide)):
+            return (int(leftDivide), int(rightDivide))
+    return (leftInt, rightInt)
+
+# Produce a thmbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
+# the given width and height.
+def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
+    imageWidth, imageHeight = theImage.size
+    imageRatio = float(imageWidth) / float(imageHeight)
+    
+    blockWidth, blockHeight = reduceInts(12, theBlockWidth, theBlockHeight)
+    blockRatio = float(blockWidth) / float(blockHeight)
+    
+    result = theImage.copy()
+    return result
+
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "sections" variable) of dicts containing tuples of file names and an array of extensions found.
 sections = []
@@ -187,23 +209,15 @@ for section in sections:
                                 response = requests.get(icon.url)
                                 try:
                                     iconBitmap = PIL.Image.open(io.BytesIO(response.content))
-                                    iconBitmap.thumbnail((100,100))
-                                    iconBitmap.save(iconBuffered, format="PNG")
+                                    thumbnailedImage = thumbnailImage(iconBitmap, width, height)
+                                    thumbnailedImage.save(iconBuffered, format="PNG")
                                 except PIL.UnidentifiedImageError:
                                     print("Favicon not valid: " + URL, flush=True)
                                     imageType = "svg"
                                     iconInputFileName = "default"
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
-                        if itemType == "link":
-                            iconBitmap.thumbnail((100,100))
-                        elif itemType == "image":
-                            iconWidth, iconHeight = iconBitmap.size
-                            if iconWidth > iconHeight:
-                                iconBitmap.thumbnail((iconWidth,iconWidth))
-                            else:
-                                iconBitmap.thumbnail((iconHeight,iconHeight))
-                        iconBitmap.save(iconBuffered, format="PNG")
+                        
                     if imageType == "svg":
                         if iconInputFileName == "default":
                             shutil.copyfile("assets" + os.sep + "default.svg", iconOutputPath)
