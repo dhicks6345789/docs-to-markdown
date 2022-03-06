@@ -218,7 +218,8 @@ for section in sections:
                                     iconInputFileName = "default"
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
-                        
+                        thumbnailedImage = thumbnailImage(iconBitmap, width, height)
+                        thumbnailedImage.save(iconBuffered, format="PNG")
                     if imageType == "svg":
                         if iconInputFileName == "default":
                             shutil.copyfile("assets" + os.sep + "default.svg", iconOutputPath)
