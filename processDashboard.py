@@ -177,15 +177,14 @@ for section in sections:
                                 icon = icons[0]
                                 imageType = icon.format
                                 response = requests.get(icon.url)
-                                #iconBitmap = PIL.Image.open(io.BytesIO(response.content))
-                                iconTempFile = open("tempIcon." + icon.format, "wb")
-                                for iconChunk in response.iter_content(1024):
-                                    iconTempFile.write(iconChunk)
-                                iconTempFile.close()
-                                iconBitmap = PIL.Image.open("tempIcon." + icon.format)
+                                iconBitmap = PIL.Image.open(io.BytesIO(response.content))
                                 iconBitmap.thumbnail((100,100))
-                                iconBitmap.save(iconBuffered, format="PNG")
-                                os.remove("tempIcon." + icon.format)
+                                try:
+                                    iconBitmap.save(iconBuffered, format="PNG")
+                                except PIL.UnidentifiedImageError:
+                                    print("Favicon not valid: " + URL, flush=True)
+                                    imageType = "svg"
+                                    iconInputFileName = "assets/default.svg"
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
                         iconBitmap.thumbnail((100,100))
