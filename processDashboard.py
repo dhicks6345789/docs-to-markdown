@@ -163,6 +163,7 @@ for section in sections:
                 elif itemType == "link":
                     URL = getURLDetails(section[0] + os.sep + fileName + "." + fileType)
                     rowItems.append((width, "link", itemLabel, URL))
+                if itemType == "image" or itemType == "link":
                     iconString = ""
                     iconBuffered = io.BytesIO()
                     iconInputFileName = fileName + "." + imageType
@@ -194,7 +195,8 @@ for section in sections:
                                     iconInputFileName = "default"
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
-                        iconBitmap.thumbnail((100,100))
+                        if itemType == "link":
+                            iconBitmap.thumbnail((100,100))
                         iconBitmap.save(iconBuffered, format="PNG")
                     if imageType == "svg":
                         if iconInputFileName == "default":
