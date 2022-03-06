@@ -101,8 +101,9 @@ def newRow():
         frontMatter["col" + str(colNum) + "Width"] = str(item[0])
         frontMatter["col" + str(colNum) + "Type"] = item[1]
         if not item[1] == "blank":
-            frontMatter["col" + str(colNum) + "URL"] = item[2]
             frontMatter["col" + str(colNum) + "Label"] = item[3]
+            if item[1] == "link":
+                frontMatter["col" + str(colNum) + "URL"] = item[2]
         colNum = colNum + item[0]
     
     if colNum <= 12:
@@ -141,6 +142,8 @@ for section in sections:
                 if not fileType == "":
                     section[1][fileName].remove(fileType)
                     itemType = "link"
+                elif not imageType == "":
+                    itemType = "image"
             
             width = 1
             height = 1
@@ -155,9 +158,11 @@ for section in sections:
             if itemType == "blank":
                 rowItems.append((width, "blank"))
             else:
-                URL = getURLDetails(section[0] + os.sep + fileName + "." + fileType)
-                rowItems.append((width, itemType, URL, itemLabel))
-                if itemType == "link":
+                if itemType == "image":
+                    rowItems.append((width, "image", itemLabel))
+                elif itemType == "link":
+                    URL = getURLDetails(section[0] + os.sep + fileName + "." + fileType)
+                    rowItems.append((width, "link", URL, itemLabel))
                     iconString = ""
                     iconBuffered = io.BytesIO()
                     iconInputFileName = fileName + "." + imageType
@@ -203,5 +208,6 @@ for section in sections:
                     if not imageType in ["", "svg"]:
                         os.makedirs(args["output"] + os.sep + "static" + os.sep + "icons", exist_ok=True)
                         docsToMarkdownLib.putFile(iconOutputPath, iconString)
+                        
             rowX = rowX + width
         newRow()
