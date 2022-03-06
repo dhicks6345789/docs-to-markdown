@@ -38,11 +38,11 @@ os.makedirs(args["output"], exist_ok=True)
 # Given two ints, returns those two ints divided by their highest common divisor, or simply
 # returns the two same ints if there is no common divisor. Checks from the given range downwards.
 def reduceInts(theRange, leftInt, rightInt):
-    for pl in range(theRange, 2):
+    for pl in range(theRange, 2, -1):
         leftDivide = float(leftInt) / float(pl)
         rightDivide = float(rightInt) / float(pl)
-        print("leftDivide: " + str(leftDivide))
-        print("rightDivide: " + str(rightDivide))
+        #print("leftDivide: " + str(leftDivide))
+        #print("rightDivide: " + str(rightDivide))
         if leftDivide == float(int(leftDivide)) and rightDivide == float(int(rightDivide)):
             return (int(leftDivide), int(rightDivide))
     return (leftInt, rightInt)
