@@ -41,6 +41,8 @@ def reduceInts(theRange, leftInt, rightInt):
     for pl in range(theRange, 2):
         leftDivide = float(leftInt) / float(pl)
         rightDivide = float(rightInt) / float(pl)
+        print("leftDivide: " + str(leftDivide))
+        print("rightDivide: " + str(rightDivide))
         if leftDivide == float(int(leftDivide)) and rightDivide == float(int(rightDivide)):
             return (int(leftDivide), int(rightDivide))
     return (leftInt, rightInt)
