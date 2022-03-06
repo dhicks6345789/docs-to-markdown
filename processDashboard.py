@@ -60,7 +60,7 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     resultWidth = imageWidth + padWidth
     resultHeight = imageHeight
     result = PIL.Image.new(mode="RGB", size=(resultWidth, resultHeight), color="pink")
-    result.paste(theImage, int(padWidth/2), 0)
+    result.paste(theImage, (int(padWidth/2), 0))
     print("padWidthRatio: " + str(padWidthRatio))
     print("resultWidth: " + str(resultWidth))
     print("resultHeight: " + str(resultHeight))
