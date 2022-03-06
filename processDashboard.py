@@ -197,6 +197,12 @@ for section in sections:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
                         if itemType == "link":
                             iconBitmap.thumbnail((100,100))
+                        elif itemType == "image":
+                            iconWidth, iconHeight = iconBitmap.size
+                            if iconWidth > iconHeight:
+                                iconBitmap.thumbnail((iconWidth,iconWidth))
+                            else:
+                                iconBitmap.thumbnail((iconHeight,iconHeight))
                         iconBitmap.save(iconBuffered, format="PNG")
                     if imageType == "svg":
                         if iconInputFileName == "default":
