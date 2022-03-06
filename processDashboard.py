@@ -54,8 +54,10 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     blockWidth, blockHeight = reduceInts(12, theBlockWidth, theBlockHeight)
     blockRatio = float(blockWidth) / float(blockHeight)
     
-    result = theImage.copy()
-    #result.thumbnail((100, 100))
+    resultWidth = blockWidth * imageWidth
+    resultHeight = blockHeight * imageHeight
+    result = PIL.Image.new(mode="RGB", size=(resultWidth, resultHeight), color="pink")
+    result.paste(theImage, (int((resultWidth-imageWidth)/2), int((resultHeight-imageHeight)/2)))
     return result
 
 # Check through items in the given input folder, recursing into sub-folders.
