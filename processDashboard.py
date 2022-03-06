@@ -191,7 +191,7 @@ for section in sections:
                         iconBitmap.save(iconBuffered, format="PNG")
                     if imageType == "svg":
                         if iconInputFileName == "default":
-                            shutil.copyfile(args["input"] + os.sep + "assets" + os.sep + "default.svg", iconOutputPath)
+                            shutil.copyfile("assets" + os.sep + "default.svg", iconOutputPath)
                         else:
                             shutil.copyfile(section[0] + os.sep + iconInputFileName, iconOutputPath)
                     else:
