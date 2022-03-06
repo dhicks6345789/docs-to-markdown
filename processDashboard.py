@@ -166,7 +166,7 @@ for section in sections:
                         print(icons)
                         if len(icons) == 0:
                             imageType = "svg"
-                            iconInputFileName = "assets/default.svg"
+                            iconInputFileName = "default"
                         else:
                             for icon in icons:
                                 if icon.format == "svg":
@@ -184,13 +184,16 @@ for section in sections:
                                 except PIL.UnidentifiedImageError:
                                     print("Favicon not valid: " + URL, flush=True)
                                     imageType = "svg"
-                                    iconInputFileName = "assets/default.svg"
+                                    iconInputFileName = "default"
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
                         iconBitmap.thumbnail((100,100))
                         iconBitmap.save(iconBuffered, format="PNG")
                     if imageType == "svg":
-                        shutil.copyfile(section[0] + os.sep + iconInputFileName, iconOutputPath)
+                        if iconInputFileName == "default":
+                            shutil.copyfile(args["input"] + os.sep + "assets" + os.sep + "default.svg", iconOutputPath)
+                        else:
+                            shutil.copyfile(section[0] + os.sep + iconInputFileName, iconOutputPath)
                     else:
                         iconString = "<svg width=\"100\" height=\"100\" version=\"1.1\" viewBox=\"0 0 26.458 26.458\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
                         iconString = iconString + "    <image width=\"26.458\" height=\"26.458\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
