@@ -47,6 +47,8 @@
                     <a href="{{ row.data[colNumURL] }}" target="_blank"><div class="p-0 mt-2 mb-2 text-white text-center" style="background-color:CornflowerBlue">{{ row.data[colNumLabel] }}</div></a>
                     {% elsif row.data[colNumType] == "iframe" %}
                     <iframe src="{{ row.data[colNumURL] }}"></iframe>
+                    {% elsif row.data[colNumType] == "image" %}
+                    <img src="icons/{{ rowNum }}-{{ colNum }}-icon.svg" width="100%"/>
                     {% endif %}
                 </div>
                 {% endif %}
