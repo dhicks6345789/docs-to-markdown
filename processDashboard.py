@@ -157,7 +157,7 @@ def arrayIsIn(leftArray, rightArray):
                 return leftItem
     return ""
 
-def sortIconObjects(theIcon):
+def sortIconObject(theIcon):
     return (theIcon.size[0] * theIcon.size[1])
 
 # Sort the items found into rows, producing one Markdown file per row.
