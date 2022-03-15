@@ -225,9 +225,11 @@ for section in sections:
                                     imageType = "svg"
                                     iconInputFileName = "default"
                     elif imageType in bitmapTypes:
-                        iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName)
+                        iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName).convert("RGBA")
+                        whiteIconBitmap = PIL.Image.new("RGBA", iconBitmap.size, "WHITE")
+                        whiteIconBitmap.paste(iconBitmap, mask=iconBitmap)
                         print("Thumbnailing image: " + fileName)
-                        thumbnailedImage = thumbnailImage(iconBitmap, width, height)
+                        thumbnailedImage = thumbnailImage(whiteIconBitmap, width, height)
                         thumbnailedImage.save(iconBuffered, format="PNG")
                     if imageType == "svg":
                         if iconInputFileName == "default":
