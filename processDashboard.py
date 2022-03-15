@@ -157,7 +157,7 @@ def arrayIsIn(leftArray, rightArray):
                 return leftItem
     return ""
 
-def sortIcon(theIcon):
+def sortIconObjects(theIcon):
     return (theIcon.size[0] * theIcon.size[1])
 
 # Sort the items found into rows, producing one Markdown file per row.
@@ -210,7 +210,6 @@ for section in sections:
                             imageType = "svg"
                             iconInputFileName = "default"
                         else:
-                            icons.sort(key=sortIcon)
                             for icon in icons:
                                 if icon.format == "svg":
                                     iconResponse = requests.get(icon.url, stream=True)
@@ -231,6 +230,7 @@ for section in sections:
                                     iconBitmap = iconObjects[0]
                                     thumbnailedImage = thumbnailImage(iconBitmap, width, height)
                                     thumbnailedImage.save(iconBuffered, format="PNG")
+                                iconObjects.sort(key=sortIconObject)
                                 print("iconObjects:")
                                 for iconObject in iconObjects:
                                     print(iconObject.size)
