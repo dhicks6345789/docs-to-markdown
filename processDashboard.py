@@ -223,7 +223,7 @@ for section in sections:
                                 if iconObjects == []:
                                     imageType = "svg"
                                     iconInputFileName = "default"
-                                 else:
+                                else:
                                     iconBitmap = iconObjects[0]
                                     thumbnailedImage = thumbnailImage(iconBitmap, width, height)
                                     thumbnailedImage.save(iconBuffered, format="PNG")
