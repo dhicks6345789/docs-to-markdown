@@ -213,17 +213,20 @@ for section in sections:
                                     for iconChunk in iconResponse.iter_content(1024):
                                         iconString = iconString + iconChunk
                             if iconString == "":
-                                icon = icons[0]
-                                imageType = icon.format
-                                response = requests.get(icon.url)
-                                try:
-                                    iconBitmap = PIL.Image.open(io.BytesIO(response.content))
-                                    thumbnailedImage = thumbnailImage(iconBitmap, width, height)
-                                    thumbnailedImage.save(iconBuffered, format="PNG")
-                                except PIL.UnidentifiedImageError:
-                                    print("Favicon not valid: " + URL, flush=True)
+                                iconObjects = []
+                                for icon in icons:
+                                    response = requests.get(icon.url)
+                                    try:
+                                        iconObjects.append(PIL.Image.open(io.BytesIO(response.content)))
+                                    except PIL.UnidentifiedImageError:
+                                        print("Error retrieving Favicon: " + icon.url)
+                                if iconObjects == []:
                                     imageType = "svg"
                                     iconInputFileName = "default"
+                                 else:
+                                    iconBitmap = iconObjects[0]
+                                    thumbnailedImage = thumbnailImage(iconBitmap, width, height)
+                                    thumbnailedImage.save(iconBuffered, format="PNG")
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName).convert("RGBA")
                         whiteIconBitmap = PIL.Image.new("RGBA", iconBitmap.size, "WHITE")
