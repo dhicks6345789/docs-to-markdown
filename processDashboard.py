@@ -230,7 +230,7 @@ for section in sections:
                                     iconBitmap = iconObjects[0]
                                     thumbnailedImage = thumbnailImage(iconBitmap, width, height)
                                     thumbnailedImage.save(iconBuffered, format="PNG")
-                                iconObjects.sort(key=sortIconObject)
+                                iconObjects.sort(key=sortIconObject, reverse=True)
                                 print("iconObjects:")
                                 for iconObject in iconObjects:
                                     print(iconObject.size)
