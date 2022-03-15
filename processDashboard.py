@@ -157,6 +157,9 @@ def arrayIsIn(leftArray, rightArray):
                 return leftItem
     return ""
 
+def sortIcon(theIcon):
+    return (theIcon.size[0] * theIcon.size[1])
+
 # Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
     if not section[1] == {}:
@@ -207,6 +210,7 @@ for section in sections:
                             imageType = "svg"
                             iconInputFileName = "default"
                         else:
+                            icons.sort(key=sortIcon)
                             for icon in icons:
                                 if icon.format == "svg":
                                     iconResponse = requests.get(icon.url, stream=True)
