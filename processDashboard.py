@@ -266,7 +266,8 @@ for section in sections:
                         else:
                             shutil.copyfile(section[0] + os.sep + iconInputFileName, iconOutputPath)
                     else:
-                        iconString = "<svg width=\"" + str(width*100) + "\" height=\"" + str(height*100) + "\" version=\"1.1\" viewBox=\"0 0 " + str(float(width)*26.458) + " " + str(float(height)*26.458) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+                        #iconString = "<svg width=\"" + str(width*100) + "\" height=\"" + str(height*100) + "\" version=\"1.1\" viewBox=\"0 0 " + str(float(width)*26.458) + " " + str(float(height)*26.458) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+                        iconString = "<svg width=\"" + str(thumbnailedImage.width) + "\" height=\"" + str(thumbnailedImage.height) + "\" version=\"1.1\" viewBox=\"0 0 " + str(float(width)*26.458) + " " + str(float(height)*26.458) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
                         iconString = iconString + "    <image width=\"" + str(float(width)*26.458) + "\" height=\"" + str(float(height)*26.458) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
                         iconString = iconString + "</svg>"
                     if not imageType in ["", "svg"]:
