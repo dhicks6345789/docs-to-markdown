@@ -145,6 +145,7 @@ def newRow():
     global rowCount
     global rowHeight
     global rowItems
+    global rowTitle
     
     frontMatter = {}
     if not rowTitle == "":
