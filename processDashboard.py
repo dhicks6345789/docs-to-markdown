@@ -207,7 +207,7 @@ for section in sections:
             width = 1
             height = 1
             if itemType == "image":
-                width = 1
+                width = 2
                 height = 2
             if rowX + width > 13:
                 newRow()
