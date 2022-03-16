@@ -50,9 +50,13 @@ def reduceInts(theRange, leftInt, rightInt):
 def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     imageWidth, imageHeight = theImage.size
     imageRatio = float(imageWidth) / float(imageHeight)
+    print("Image size:")
+    print((imageWidth, imageHeight))
     
     blockWidth, blockHeight = reduceInts(12, theBlockWidth, theBlockHeight)
     blockRatio = float(blockWidth) / float(blockHeight)
+    print("Block size:")
+    print((blockWidth, blockHeight))
     
     padWidth = imageWidth
     padHeight = imageHeight
