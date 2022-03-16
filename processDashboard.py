@@ -63,7 +63,7 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     elif imageRatio > blockRatio:
         padHeightRatio = imageRatio - blockRatio
         padHeight = int(imageHeight * padHeightRatio)
-        print("padHeightRatio: " + str(padWidthRatio))
+        print("padHeightRatio: " + str(padHeightRatio))
     else:
         print("No pad needed.")
         
