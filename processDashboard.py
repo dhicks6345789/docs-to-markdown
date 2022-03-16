@@ -58,23 +58,21 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     print("Block size:")
     print((blockWidth, blockHeight))
     
-    padWidth = imageWidth
-    padHeight = imageHeight
+    resultWidth = imageWidth
+    resultHeight = imageHeight
     if imageRatio < blockRatio:
-        padWidthRatio = blockRatio - imageRatio
-        padWidth = int(imageWidth * padWidthRatio)
+        padWidthRatio = 1 + (blockRatio - imageRatio)
+        resultWidth = int(imageWidth * padWidthRatio)
         print("padWidthRatio: " + str(padWidthRatio))
     elif imageRatio > blockRatio:
-        padHeightRatio = imageRatio - blockRatio
-        padHeight = int(imageHeight * padHeightRatio)
+        padHeightRatio = 1 + (imageRatio - blockRatio)
+        resultHeight = int(imageHeight * padHeightRatio)
         print("padHeightRatio: " + str(padHeightRatio))
     else:
         print("No pad needed.")
         
-    resultWidth = imageWidth + padWidth
-    resultHeight = imageHeight + padHeight
     result = PIL.Image.new(mode="RGB", size=(resultWidth, resultHeight), color="pink")
-    result.paste(theImage, (int(padWidth/2), int(padHeight/2)))
+    result.paste(theImage, (int(resultWidth/2), int(resultHeight/2)))
     
     print("resultWidth: " + str(resultWidth))
     print("resultHeight: " + str(resultHeight))
