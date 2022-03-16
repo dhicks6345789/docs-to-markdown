@@ -234,7 +234,7 @@ for section in sections:
                                 iconBitmap = iconObjects[0]
                                 thumbnailedImage = thumbnailImage(iconBitmap, width, height)
                                 thumbnailedImage.save(iconBuffered, format="PNG")
-                                
+                                imageType = "png"
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName).convert("RGBA")
                         whiteIconBitmap = PIL.Image.new("RGBA", iconBitmap.size, "WHITE")
