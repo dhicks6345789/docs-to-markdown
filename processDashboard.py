@@ -78,7 +78,7 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     pasteY = 0
     if not resultHeight == imageHeight:
         pasteY = int((resultHeight-imageHeight)/2)
-    result.paste(theImage, (pasteX, pastY))
+    result.paste(theImage, (pasteX, pasteY))
     
     print("resultWidth: " + str(resultWidth))
     print("resultHeight: " + str(resultHeight))
