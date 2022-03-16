@@ -88,7 +88,8 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
 def setImageTransparencyToSolid(theImage, theColour):
     RGBABitmap = theImage.convert("RGBA")
     plainColouredBitmap = PIL.Image.new("RGBA", theImage.size, theColour)
-    return(plainColouredBitmap.paste(RGBABitmap, mask=RGBABitmap))
+    plainColouredBitmap.paste(RGBABitmap, mask=RGBABitmap)
+    return plainColouredBitmap
 
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "sections" variable) of dicts containing tuples of file names and an array of extensions found.
