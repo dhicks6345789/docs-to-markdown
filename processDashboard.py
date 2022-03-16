@@ -72,7 +72,13 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
         print("No pad needed.")
         
     result = PIL.Image.new(mode="RGB", size=(resultWidth, resultHeight), color="pink")
-    result.paste(theImage, (int(resultWidth/2), int(resultHeight/2)))
+    pasteX = 0
+    if not resultWidth == imageWidth:
+        pasteX = int((resultWidth-imageWidth)/2)
+    pasteY = 0
+    if not resultHeight == imageHeight:
+        pasteY = int((resultHeight-imageHeight)/2)
+    result.paste(theImage, (pasteX, pastY))
     
     print("resultWidth: " + str(resultWidth))
     print("resultHeight: " + str(resultHeight))
