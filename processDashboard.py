@@ -227,13 +227,14 @@ for section in sections:
                                     imageType = "svg"
                                     iconInputFileName = "default"
                                 else:
-                                    iconBitmap = iconObjects[0]
-                                    thumbnailedImage = thumbnailImage(iconBitmap, width, height)
-                                    thumbnailedImage.save(iconBuffered, format="PNG")
-                                iconObjects.sort(key=sortIconObject, reverse=True)
+                                    iconObjects.sort(key=sortIconObject, reverse=True)
                                 print("iconObjects:")
                                 for iconObject in iconObjects:
                                     print(iconObject.size)
+                                iconBitmap = iconObjects[0]
+                                thumbnailedImage = thumbnailImage(iconBitmap, width, height)
+                                thumbnailedImage.save(iconBuffered, format="PNG")
+                                
                     elif imageType in bitmapTypes:
                         iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName).convert("RGBA")
                         whiteIconBitmap = PIL.Image.new("RGBA", iconBitmap.size, "WHITE")
