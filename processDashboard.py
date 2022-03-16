@@ -84,6 +84,11 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     print("resultHeight: " + str(resultHeight))
     return result
 
+def setImageTransparencyToSolid(theImage, theColour):
+    RGBABitmap = theImage.convert("RGBA")
+    plainClouredBitmap = PIL.Image.new("RGBA", theImage.size, theColour)
+    return(plainColouredBitmap.paste(RGBABitmap, mask=RGBABitmap))
+
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "sections" variable) of dicts containing tuples of file names and an array of extensions found.
 sections = []
@@ -249,16 +254,12 @@ for section in sections:
                                     print("iconObjects:")
                                     for iconObject in iconObjects:
                                         print(iconObject.size)
-                                    iconBitmap = iconObjects[0]
-                                    thumbnailedImage = thumbnailImage(iconBitmap, width, height)
+                                    thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(iconObjects[0], "WHITE"), width, height)
                                     thumbnailedImage.save(iconBuffered, format="PNG")
                                     imageType = "png"
                     elif imageType in bitmapTypes:
-                        iconBitmap = PIL.Image.open(section[0] + os.sep + iconInputFileName).convert("RGBA")
-                        whiteIconBitmap = PIL.Image.new("RGBA", iconBitmap.size, "WHITE")
-                        whiteIconBitmap.paste(iconBitmap, mask=iconBitmap)
                         print("Thumbnailing image: " + fileName)
-                        thumbnailedImage = thumbnailImage(whiteIconBitmap, width, height)
+                        thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(PIL.Image.open(section[0] + os.sep + iconInputFileName), "WHITE"), width, height)
                         thumbnailedImage.save(iconBuffered, format="PNG")
                     if imageType == "svg":
                         if iconInputFileName == "default":
@@ -266,7 +267,6 @@ for section in sections:
                         else:
                             shutil.copyfile(section[0] + os.sep + iconInputFileName, iconOutputPath)
                     else:
-                        #iconString = "<svg width=\"" + str(width*100) + "\" height=\"" + str(height*100) + "\" version=\"1.1\" viewBox=\"0 0 " + str(float(width)*26.458) + " " + str(float(height)*26.458) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
                         iconString = "<svg width=\"" + str(thumbnailedImage.width) + "\" height=\"" + str(thumbnailedImage.height) + "\" version=\"1.1\" viewBox=\"0 0 " + str(float(width)*26.458) + " " + str(float(height)*26.458) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
                         iconString = iconString + "    <image width=\"" + str(float(width)*26.458) + "\" height=\"" + str(float(height)*26.458) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(iconBuffered.getvalue()).decode("utf-8") + "\"/>\n"
                         iconString = iconString + "</svg>"
