@@ -84,9 +84,10 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     print("resultHeight: " + str(resultHeight))
     return result
 
+# Returns the given image with any background transparency set to the given colour.
 def setImageTransparencyToSolid(theImage, theColour):
     RGBABitmap = theImage.convert("RGBA")
-    plainClouredBitmap = PIL.Image.new("RGBA", theImage.size, theColour)
+    plainColouredBitmap = PIL.Image.new("RGBA", theImage.size, theColour)
     return(plainColouredBitmap.paste(RGBABitmap, mask=RGBABitmap))
 
 # Check through items in the given input folder, recursing into sub-folders.
