@@ -172,6 +172,7 @@ def newRow():
     rowCount = rowCount + 1
     rowHeight = 1
     rowItems = []
+    rowTitle = ""
 
 # Compares two arrays of strings, matches are case-insensitive. If any match is found the original item from the first
 # array is returned, so a return value might be mixed case.
