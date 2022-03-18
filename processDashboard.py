@@ -110,7 +110,7 @@ def listFileNames(theInputFolder):
         sections.append((theInputFolder, fileNames))
 listFileNames(args["input"])
 
-config = {}
+config = []
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
 for section in sections:
     for fileName in sorted(section[1].keys()):
@@ -124,11 +124,10 @@ for section in sections:
                     else:
                         configSheet = pandas.read_csv(fullPath)
                     # Convert the Pandas dataframe to a dict, lowercasing all the keys.
-                    config = {k.lower(): v for k, v in configSheet.to_dict(orient="records").items()}
+                    for configItem in configSheet.to_dict(orient="records")
+                        config.append({k.lower(): v for k, v in configItem.items()})
                     print(config)
-                    #for configIndex, configValue in configSheet.iterrows():
-                        #firstChildName = configSheet.at[configIndex, "Item"].lower().strip()
-
+                        
 # Returns the URL value from a Windows-style .url file.
 def getURLDetails(theFilename):
     URLLines = docsToMarkdownLib.getFile(theFilename).split("\n")
