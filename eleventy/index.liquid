@@ -46,7 +46,7 @@
                     <a href="{{ row.data[colNumURL] }}" target="_blank"><img src="icons/{{ rowNum }}-{{ colNum }}-icon.svg" width="100%"/></a>
                     <a href="{{ row.data[colNumURL] }}" target="_blank"><div class="p-0 mt-2 mb-2 text-white text-center" style="background-color:CornflowerBlue">{{ row.data[colNumLabel] }}</div></a>
                     {% elsif row.data[colNumType] == "iframe" %}
-                    <iframe src="{{ row.data[colNumURL] }}"></iframe>
+                    <iframe src="{{ row.data[colNumURL] }}" style="margin:0; padding:0; width:100%; height:100%;"></iframe>
                     {% elsif row.data[colNumType] == "image" %}
                     <img src="icons/{{ rowNum }}-{{ colNum }}-icon.svg" width="100%"/>
                     {% endif %}
