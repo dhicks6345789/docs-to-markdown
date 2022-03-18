@@ -110,6 +110,7 @@ def listFileNames(theInputFolder):
         sections.append((theInputFolder, fileNames))
 listFileNames(args["input"])
 
+config = {}
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
 for section in sections:
     for fileName in sorted(section[1].keys()):
@@ -119,10 +120,11 @@ for section in sections:
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Config found: " + fullPath, flush=True)
                     if fileType.lower() in ["xls", "xlsx"]:
-                        configSheet = pandas.read_excel(fullPath).to_dict()
+                        configSheet = pandas.read_excel(fullPath)
                     else:
-                        configSheet = pandas.read_csv(fullPath).to_dict()
-                    print(configSheet)
+                        configSheet = pandas.read_csv(fullPath)
+                    config = configSheet.to_dict(orient="list")
+                    print(config)
                     #for configIndex, configValue in configSheet.iterrows():
                         #firstChildName = configSheet.at[configIndex, "Item"].lower().strip()
 
