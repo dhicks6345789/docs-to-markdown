@@ -176,8 +176,8 @@ def newRow():
         frontMatter["col" + str(colNum) + "Width"] = str(item[0])
         frontMatter["col" + str(colNum) + "Type"] = item[1]
         if not item[1] == "blank":
-            frontMatter["col" + str(colNum) + "Label"] = item[2]
-            if item[1] == "link":
+            if item[1] == "link" or item[1] == "iframe":
+                frontMatter["col" + str(colNum) + "Label"] = item[2]
                 frontMatter["col" + str(colNum) + "URL"] = item[3]
         colNum = colNum + item[0]
     
@@ -219,7 +219,10 @@ for section in sections:
             if not itemLabel.lower() == "blank":
                 if not fileType == "":
                     section[1][fileName].remove(fileType)
-                    itemType = "link"
+                    if fileType == "iframe":
+                        itemType = "iframe"
+                    else:
+                        itemType = "link"
                 elif not imageType == "":
                     itemType = "image"
             
@@ -237,9 +240,6 @@ for section in sections:
                     print("Matched config: " + fileName)
                     width = int(float(noBlank(configItem["width"], width)))
                     height = int(float(noBlank(configItem["height"], height)))
-                    
-            print("Width, Height:")
-            print((width, height))
                 
             if rowX + width > 13:
                 newRow()
@@ -251,7 +251,7 @@ for section in sections:
             else:
                 if itemType == "image":
                     rowItems.append((width, "image", itemLabel))
-                elif itemType == "link":
+                elif itemType == "link" or itemType == "iframe":
                     URL = getURLDetails(section[0] + os.sep + fileName + "." + fileType)
                     rowItems.append((width, "link", itemLabel, URL))
                 if itemType == "image" or itemType == "link":
