@@ -118,6 +118,11 @@ for section in sections:
                 fullPath = section[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Config found: " + fullPath, flush=True)
+                    if fileType.lower() in ["xls", "xlsx"]:
+                        configSheet = pandas.read_excel(fullPath)
+                    else:
+                        configSheet = pandas.read_csv(fullPath)
+                    print(configSheet)
 
 # Returns the URL value from a Windows-style .url file.
 def getURLDetails(theFilename):
