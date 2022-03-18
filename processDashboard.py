@@ -235,8 +235,8 @@ for section in sections:
             for configItem in config:
                 if configItem["item"] == fileName:
                     print("Matched config: " + fileName)
-                    width = int(noBlank(configItem["width"], width))
-                    height = int(noBlank(configItem["height"], height))
+                    width = int(float(noBlank(configItem["width"], width)))
+                    height = int(float(noBlank(configItem["height"], height)))
                     
             print("Width, Height:")
             print((width, height))
