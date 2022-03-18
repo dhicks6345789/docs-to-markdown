@@ -238,6 +238,8 @@ for section in sections:
             URL = ""
             for configItem in config:
                 if configItem["item"] == fileName:
+                    print("configItem:")
+                    print(configItem)
                     itemType = noBlank(configItem["type"].lower(), itemType)
                     if itemType in ["link", "iframe"]:
                         URL = configItem["url"]
