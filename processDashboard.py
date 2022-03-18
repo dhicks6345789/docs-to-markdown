@@ -119,10 +119,12 @@ for section in sections:
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Config found: " + fullPath, flush=True)
                     if fileType.lower() in ["xls", "xlsx"]:
-                        configSheet = pandas.read_excel(fullPath)
+                        configSheet = pandas.read_excel(fullPath).to_dict()
                     else:
-                        configSheet = pandas.read_csv(fullPath)
+                        configSheet = pandas.read_csv(fullPath).to_dict()
                     print(configSheet)
+                    #for configIndex, configValue in configSheet.iterrows():
+                        #firstChildName = configSheet.at[configIndex, "Item"].lower().strip()
 
 # Returns the URL value from a Windows-style .url file.
 def getURLDetails(theFilename):
