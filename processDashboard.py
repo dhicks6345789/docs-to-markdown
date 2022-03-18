@@ -135,10 +135,9 @@ for section in sections:
                         configSheet = pandas.read_csv(fullPath)
                     # Convert the Pandas dataframe to an array of dicts, lowercasing all the keys and replacing all "NaN" values with empty string.
                     for configIndex, configRow in configSheet.iterrows():
-                        print(configRow)
                         newConfigItem = {}
                         for colName in configRow.keys():
-                            if configRow[colName].isnull():
+                            if pandas.isna(configRow[colName]):
                                 newConfigItem[colName.lower()] = ""
                             else:
                                 newConfigItem[colName.lower()] = configRow[colName]
