@@ -123,7 +123,8 @@ for section in sections:
                         configSheet = pandas.read_excel(fullPath)
                     else:
                         configSheet = pandas.read_csv(fullPath)
-                    config = configSheet.to_dict(orient="records")
+                    # Convert the Pandas dataframe to a dict, lowercasing all the keys.
+                    config = {k.lower(): v for k, v in configSheet.to_dict(orient="records").items()}
                     print(config)
                     #for configIndex, configValue in configSheet.iterrows():
                         #firstChildName = configSheet.at[configIndex, "Item"].lower().strip()
