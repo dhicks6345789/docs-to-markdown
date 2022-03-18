@@ -34,7 +34,7 @@
                     <h2 class="p-3 mt-2 mb-2 bg-secondary text-white text-center">{{ row.data.title }}</h2>
                 </div>
             </div>
-            <div class="p-3 row">
+            <div class="p-3 row" style="8vw">
                 {% for colNum in (1..12) %}
                 {% capture colNumWidth %}col{{ colNum }}Width{% endcapture %}
                 {% if row.data[colNumWidth] > 0 %}
