@@ -259,39 +259,42 @@ for section in sections:
                 elif itemType in ["link", "iframe"]:
                     URL = noBlank(URL, getURLDetails(section[0] + os.sep + fileName + "." + fileType))
                     rowItems.append((width, itemType, itemLabel, URL))
-                if itemType == "link":
+                elif itemType in ["link", "image"]:
                     iconString = ""
                     iconBuffered = io.BytesIO()
                     iconInputFileName = fileName + "." + imageType
                     iconOutputPath = args["output"] + os.sep + "static" + os.sep + "icons" + os.sep + str(rowCount) + "-" + str(rowX) + "-icon.svg"
                     if imageType == "" and not os.path.exists(iconOutputPath):
-                        print("STATUS: No icon found for link: " + fileName + " - downloading favicon for: " + URL, flush=True)
-                        icons = favicon.get(URL)
-                        if len(icons) == 0:
-                            imageType = "svg"
-                            iconInputFileName = "default"
+                        if itemType == "image":
+                            print("ERROR: No image found for image item: " + fileName)
                         else:
-                            for icon in icons:
-                                if icon.format == "svg":
-                                    iconResponse = requests.get(icon.url, stream=True)
-                                    for iconChunk in iconResponse.iter_content(1024):
-                                        iconString = iconString + iconChunk
-                            if iconString == "":
-                                iconObjects = []
+                            print("STATUS: No icon found for link: " + fileName + " - downloading favicon for: " + URL, flush=True)
+                            icons = favicon.get(URL)
+                            if len(icons) == 0:
+                                imageType = "svg"
+                                iconInputFileName = "default"
+                            else:
                                 for icon in icons:
-                                    response = requests.get(icon.url)
-                                    try:
-                                        iconObjects.append(PIL.Image.open(io.BytesIO(response.content)))
-                                    except PIL.UnidentifiedImageError:
-                                        print("Error retrieving Favicon: " + icon.url)
-                                if iconObjects == []:
-                                    imageType = "svg"
-                                    iconInputFileName = "default"
-                                else:
-                                    iconObjects.sort(key=sortIconObject, reverse=True)
-                                    thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(iconObjects[0], "WHITE"), width, height)
-                                    thumbnailedImage.save(iconBuffered, format="PNG")
-                                    imageType = "png"
+                                    if icon.format == "svg":
+                                        iconResponse = requests.get(icon.url, stream=True)
+                                        for iconChunk in iconResponse.iter_content(1024):
+                                            iconString = iconString + iconChunk
+                                if iconString == "":
+                                    iconObjects = []
+                                    for icon in icons:
+                                        response = requests.get(icon.url)
+                                        try:
+                                            iconObjects.append(PIL.Image.open(io.BytesIO(response.content)))
+                                        except PIL.UnidentifiedImageError:
+                                            print("Error retrieving Favicon: " + icon.url)
+                                    if iconObjects == []:
+                                        imageType = "svg"
+                                        iconInputFileName = "default"
+                                    else:
+                                        iconObjects.sort(key=sortIconObject, reverse=True)
+                                        thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(iconObjects[0], "WHITE"), width, height)
+                                        thumbnailedImage.save(iconBuffered, format="PNG")
+                                        imageType = "png"
                     elif imageType in bitmapTypes:
                         print("Image found: " + fileName)
                         thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(PIL.Image.open(section[0] + os.sep + iconInputFileName), "WHITE"), width, height)
