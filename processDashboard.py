@@ -228,12 +228,15 @@ for section in sections:
             if itemType == "image":
                 width = 4
                 height = 4
+            elif itemType == "iframe":
+                width = 6
+                height = 6
                 
             for configItem in config:
                 if configItem["item"] == fileName:
                     print("Matched config: " + fileName)
-                    width = noBlank(configItem["width"], width)
-                    height = noBlank(configItem["height"], height)
+                    width = int(noBlank(configItem["width"], width))
+                    height = int(noBlank(configItem["height"], height))
                     
             print("Width, Height:")
             print((width, height))
