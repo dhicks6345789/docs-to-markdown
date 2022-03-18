@@ -123,7 +123,7 @@ for section in sections:
                         configSheet = pandas.read_excel(fullPath)
                     else:
                         configSheet = pandas.read_csv(fullPath)
-                    config = configSheet.to_dict(orient="list")
+                    config = configSheet.to_dict(orient="records")
                     print(config)
                     #for configIndex, configValue in configSheet.iterrows():
                         #firstChildName = configSheet.at[configIndex, "Item"].lower().strip()
