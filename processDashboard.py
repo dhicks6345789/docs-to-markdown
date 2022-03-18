@@ -222,8 +222,8 @@ for section in sections:
             for configItem in config:
                 if configItem["item"] == fileName:
                     print("Matched config: " + fileName)
-                    width = noNaN(configItem("width"), width)
-                    height = noNaN(configItem("height"), height)
+                    width = noNaN(configItem["width"], width)
+                    height = noNaN(configItem["height"], height)
                 
             if rowX + width > 13:
                 newRow()
