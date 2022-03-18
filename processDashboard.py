@@ -62,11 +62,6 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     blockWidth, blockHeight = reduceInts(12, theBlockWidth, theBlockHeight)
     blockRatio = float(blockWidth) / float(blockHeight)
     
-    #print("Original block height, width: ")
-    #print((theBlockWidth, theBlockHeight))
-    #print("Reduced block height, width: ")
-    #print((blockWidth, blockHeight))
-    
     resultWidth = imageWidth
     resultHeight = imageHeight
     if imageRatio < blockRatio:
@@ -142,7 +137,6 @@ for section in sections:
                             else:
                                 newConfigItem[colName.lower()] = configRow[colName]
                         config.append(newConfigItem)
-                    print(config)
                         
 # Returns the URL value from a .url file - can either be a Windows-style .url file or simply a text file with a .url extension.
 def getURLDetails(theFilename):
@@ -229,6 +223,7 @@ for section in sections:
             width = 1
             height = 1
             if itemType == "image":
+                print("Is an image!")
                 width = 4
                 height = 4
             elif itemType == "iframe":
@@ -238,8 +233,6 @@ for section in sections:
             URL = ""
             for configItem in config:
                 if configItem["item"] == fileName:
-                    print("configItem:")
-                    print(configItem)
                     itemType = noBlank(configItem["type"].lower(), itemType)
                     if itemType in ["link", "iframe"]:
                         URL = configItem["url"]
@@ -259,7 +252,7 @@ for section in sections:
                 elif itemType in ["link", "iframe"]:
                     URL = noBlank(URL, getURLDetails(section[0] + os.sep + fileName + "." + fileType))
                     rowItems.append((width, itemType, itemLabel, URL))
-                elif itemType in ["link", "image"]:
+                if itemType in ["link", "image"]:
                     iconString = ""
                     iconBuffered = io.BytesIO()
                     iconInputFileName = fileName + "." + imageType
