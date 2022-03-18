@@ -62,10 +62,10 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     blockWidth, blockHeight = reduceInts(12, theBlockWidth, theBlockHeight)
     blockRatio = float(blockWidth) / float(blockHeight)
     
-    print("Original block height, width: ")
-    print((theBlockWidth, theBlockHeight))
-    print("Reduced block height, width: ")
-    print((blockWidth, blockHeight))
+    #print("Original block height, width: ")
+    #print((theBlockWidth, theBlockHeight))
+    #print("Reduced block height, width: ")
+    #print((blockWidth, blockHeight))
     
     resultWidth = imageWidth
     resultHeight = imageHeight
