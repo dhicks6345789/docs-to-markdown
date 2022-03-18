@@ -124,7 +124,7 @@ for section in sections:
                     else:
                         configSheet = pandas.read_csv(fullPath)
                     # Convert the Pandas dataframe to a dict, lowercasing all the keys.
-                    for configItem in configSheet.to_dict(orient="records")
+                    for configItem in configSheet.to_dict(orient="records"):
                         config.append({k.lower(): v for k, v in configItem.items()})
                     print(config)
                         
