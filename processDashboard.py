@@ -137,7 +137,7 @@ for section in sections:
                     for configIndex, configRow in configSheet.iterrows():
                         print(configRow)
                         newConfigItem = {}
-                        for colName in configRow.columns:
+                        for colName in configRow.keys():
                             if configRow[colName].isnull():
                                 newConfigItem[colName.lower()] = ""
                             else:
