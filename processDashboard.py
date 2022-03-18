@@ -63,6 +63,11 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     blockWidth, blockHeight = reduceInts(12, theBlockWidth, theBlockHeight)
     blockRatio = float(blockWidth) / float(blockHeight)
     
+    print("Original block height, width: ")
+    print((theBlockWidth, theBlockHeight))
+    print("Reduced block height, width: ")
+    print((blockWidth, blockHeight))
+    
     resultWidth = imageWidth
     resultHeight = imageHeight
     if imageRatio < blockRatio:
@@ -272,7 +277,7 @@ for section in sections:
                                     thumbnailedImage.save(iconBuffered, format="PNG")
                                     imageType = "png"
                     elif imageType in bitmapTypes:
-                        print("Thumbnailing image: " + fileName)
+                        print("Icon image found: " + fileName)
                         thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(PIL.Image.open(section[0] + os.sep + iconInputFileName), "WHITE"), width, height)
                         thumbnailedImage.save(iconBuffered, format="PNG")
                     if imageType == "svg":
