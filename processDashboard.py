@@ -20,6 +20,9 @@ import favicon
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
+# We use the Pandas library to load in Excel / CSV files for the configuration settings.
+import pandas
+
 # An array of "image file" types.
 bitmapTypes = ["jpg", "jpeg", "png", "ico"]
 imageTypes =  bitmapTypes + ["svg"]
@@ -46,30 +49,22 @@ def reduceInts(theRange, leftInt, rightInt):
     return (leftInt, rightInt)
 
 # Produce a thmbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
-# the given width and height.
+# the given block width and height.
 def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     imageWidth, imageHeight = theImage.size
     imageRatio = float(imageWidth) / float(imageHeight)
-    print("Image size:")
-    print((imageWidth, imageHeight))
     
     blockWidth, blockHeight = reduceInts(12, theBlockWidth, theBlockHeight)
     blockRatio = float(blockWidth) / float(blockHeight)
-    print("Block size:")
-    print((blockWidth, blockHeight))
     
     resultWidth = imageWidth
     resultHeight = imageHeight
     if imageRatio < blockRatio:
         padWidthRatio = 1 + (blockRatio - imageRatio)
         resultWidth = int(imageWidth * padWidthRatio)
-        print("padWidthRatio: " + str(padWidthRatio))
     elif imageRatio > blockRatio:
         padHeightRatio = 1 + (imageRatio - blockRatio)
         resultHeight = int(imageHeight * padHeightRatio)
-        print("padHeightRatio: " + str(padHeightRatio))
-    else:
-        print("No pad needed.")
         
     result = PIL.Image.new(mode="RGB", size=(resultWidth, resultHeight), color="WHITE")
     pasteX = 0
@@ -80,8 +75,6 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
         pasteY = int((resultHeight-imageHeight)/2)
     result.paste(theImage, (pasteX, pasteY))
     
-    print("resultWidth: " + str(resultWidth))
-    print("resultHeight: " + str(resultHeight))
     return result
 
 # Returns the given image with any background transparency set to the given colour.
@@ -124,7 +117,7 @@ for section in sections:
             for fileType in section[1].pop("config"):
                 fullPath = section[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
-                    print("Config: " + fullPath, flush=True)
+                    print("Config found: " + fullPath, flush=True)
 
 # Returns the URL value from a Windows-style .url file.
 def getURLDetails(theFilename):
@@ -232,7 +225,6 @@ for section in sections:
                     if imageType == "" and not os.path.exists(iconOutputPath):
                         print("STATUS: No icon found for link: " + fileName + " - downloading favicon for: " + URL, flush=True)
                         icons = favicon.get(URL)
-                        print(icons)
                         if len(icons) == 0:
                             imageType = "svg"
                             iconInputFileName = "default"
@@ -255,9 +247,6 @@ for section in sections:
                                     iconInputFileName = "default"
                                 else:
                                     iconObjects.sort(key=sortIconObject, reverse=True)
-                                    print("iconObjects:")
-                                    for iconObject in iconObjects:
-                                        print(iconObject.size)
                                     thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(iconObjects[0], "WHITE"), width, height)
                                     thumbnailedImage.save(iconBuffered, format="PNG")
                                     imageType = "png"
