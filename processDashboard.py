@@ -235,9 +235,12 @@ for section in sections:
                 width = 6
                 height = 6
                 
+            URL = ""
             for configItem in config:
                 if configItem["item"] == fileName:
-                    print("Matched config: " + fileName)
+                    itemType = noBlank(configItem["type"].lower(), itemType)
+                    if itemType in ["link", "iframe"]:
+                        URL = configItem["url"]
                     width = int(float(noBlank(configItem["width"], width)))
                     height = int(float(noBlank(configItem["height"], height)))
                 
@@ -252,9 +255,9 @@ for section in sections:
                 if itemType == "image":
                     rowItems.append((width, "image", itemLabel))
                 elif itemType == "link" or itemType == "iframe":
-                    URL = getURLDetails(section[0] + os.sep + fileName + "." + fileType)
+                    URL = noBlank(URL, getURLDetails(section[0] + os.sep + fileName + "." + fileType))
                     rowItems.append((width, "link", itemLabel, URL))
-                if itemType == "image" or itemType == "link":
+                if itemType in ["link", "iframe"]:
                     iconString = ""
                     iconBuffered = io.BytesIO()
                     iconInputFileName = fileName + "." + imageType
