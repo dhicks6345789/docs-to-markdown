@@ -21,6 +21,7 @@ import favicon
 import docsToMarkdownLib
 
 # We use the Pandas library to load in Excel / CSV files for the configuration settings.
+import numpy
 import pandas
 
 # An array of "image file" types.
