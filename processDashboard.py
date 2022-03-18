@@ -128,7 +128,7 @@ for section in sections:
                         config.append({k.lower(): v for k, v in configItem.items()})
                     print(config)
                         
-# Returns the URL value from a Windows-style .url file.
+# Returns the URL value from a .url file - can either be a Windows-style .url file or simply a text file with a .url extension.
 def getURLDetails(theFilename):
     URLLines = docsToMarkdownLib.getFile(theFilename).split("\n")
     for URLLine in URLLines:
@@ -195,8 +195,7 @@ for section in sections:
         if not section[0] == args["input"]:
             rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(args["input"])+1:])
         for fileName in section[1].keys():
-            # Figure out what type of item we have. If we just have a .url file then we have an "iframe", if we have a .url and a matching image we have a "link",
-            # if we just have an image then we have an "image".
+            # Figure out what type of item we have.
             itemType = "blank"
             fileType = arrayIsIn(section[1][fileName], urlTypes)
             imageType = arrayIsIn(section[1][fileName], imageTypes)
@@ -213,6 +212,11 @@ for section in sections:
             if itemType == "image":
                 width = 4
                 height = 4
+                
+            for configItem in config:
+                if configItem["item"] == fileName:
+                    print("Matched config: " + fileName)
+                
             if rowX + width > 13:
                 newRow()
             if height > rowHeight:
