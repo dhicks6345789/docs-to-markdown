@@ -21,7 +21,6 @@ import favicon
 import docsToMarkdownLib
 
 # We use the Pandas library to load in Excel / CSV files for the configuration settings.
-import numpy
 import pandas
 
 # An array of "image file" types.
@@ -39,10 +38,10 @@ print("STATUS: processDashboard: " + args["input"] + " to " + args["output"], fl
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
 
-def noNaN(theValue, theDefault):
-    if numpy.isnan(theValue):
+def noBlank(theValue, theDefault):
+    if str(theValue).strip() == "":
         return theDefault
-    return theValue
+    return str(theValue).strip()
 
 # Given two ints, returns those two ints divided by their highest common divisor, or simply
 # returns the two same ints if there is no common divisor. Checks from the given range downwards.
@@ -134,9 +133,15 @@ for section in sections:
                         configSheet = pandas.read_excel(fullPath)
                     else:
                         configSheet = pandas.read_csv(fullPath)
-                    # Convert the Pandas dataframe to a dict, lowercasing all the keys.
+                    # Convert the Pandas dataframe to an array of dicts, lowercasing all the keys and replacing all "NaN" values with empty string.
                     for configItem in configSheet.to_dict(orient="records"):
-                        config.append({k.lower(): v for k, v in configItem.items()})
+                        newConfigItem = {}
+                        for configKey in configItem.keys():
+                            if configItem[configKey].isnull():
+                                newConfigItem[configKey.lower()] = ""
+                            else:
+                                newConfigItem[configKey.lower()] = configItem[configKey]
+                        config.append(newConfigItem)
                     print(config)
                         
 # Returns the URL value from a .url file - can either be a Windows-style .url file or simply a text file with a .url extension.
@@ -227,8 +232,8 @@ for section in sections:
             for configItem in config:
                 if configItem["item"] == fileName:
                     print("Matched config: " + fileName)
-                    width = noNaN(configItem["width"], width)
-                    height = noNaN(configItem["height"], height)
+                    width = noBlank(configItem["width"], width)
+                    height = noBlank(configItem["height"], height)
                     
             print("Width, Height:")
             print((width, height))
