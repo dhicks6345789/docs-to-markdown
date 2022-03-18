@@ -214,7 +214,7 @@ for section in sections:
                 height = 4
                 
             for configItem in config:
-                print(configItem + " == " + fileName)
+                print(configItem["item"] + " == " + fileName)
                 if configItem["item"] == fileName:
                     print("Matched config: " + fileName)
                 
