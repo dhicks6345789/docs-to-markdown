@@ -134,13 +134,13 @@ for section in sections:
                     else:
                         configSheet = pandas.read_csv(fullPath)
                     # Convert the Pandas dataframe to an array of dicts, lowercasing all the keys and replacing all "NaN" values with empty string.
-                    for configItem in configSheet.to_dict(orient="records"):
+                    for configIndex, configRow in configSheet.iterrows():
                         newConfigItem = {}
-                        for configKey in configItem.keys():
-                            if configItem[configKey].isnull():
-                                newConfigItem[configKey.lower()] = ""
+                        for colName in configRow.columns:
+                            if configRow[colName].isnull():
+                                newConfigItem[colName.lower()] = ""
                             else:
-                                newConfigItem[configKey.lower()] = configItem[configKey]
+                                newConfigItem[colName.lower()] = configRow[colName]
                         config.append(newConfigItem)
                     print(config)
                         
