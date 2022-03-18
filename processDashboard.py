@@ -255,11 +255,11 @@ for section in sections:
                 rowItems.append((width, "blank"))
             else:
                 if itemType == "image":
-                    rowItems.append((width, "image", itemLabel))
-                elif itemType == "link" or itemType == "iframe":
+                    rowItems.append((width, itemType, itemLabel))
+                elif itemType in ["link", "iframe"]:
                     URL = noBlank(URL, getURLDetails(section[0] + os.sep + fileName + "." + fileType))
-                    rowItems.append((width, "link", itemLabel, URL))
-                if itemType in ["link", "iframe"]:
+                    rowItems.append((width, itemType, itemLabel, URL))
+                if itemType == "link":
                     iconString = ""
                     iconBuffered = io.BytesIO()
                     iconInputFileName = fileName + "." + imageType
@@ -293,7 +293,7 @@ for section in sections:
                                     thumbnailedImage.save(iconBuffered, format="PNG")
                                     imageType = "png"
                     elif imageType in bitmapTypes:
-                        print("Icon image found: " + fileName)
+                        print("Image found: " + fileName)
                         thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(PIL.Image.open(section[0] + os.sep + iconInputFileName), "WHITE"), width, height)
                         thumbnailedImage.save(iconBuffered, format="PNG")
                     if imageType == "svg":
