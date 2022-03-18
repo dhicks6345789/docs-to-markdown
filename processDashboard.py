@@ -38,6 +38,11 @@ print("STATUS: processDashboard: " + args["input"] + " to " + args["output"], fl
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
 
+def noNaN(theValue, theDefault):
+    if numpy.isnan(theValue):
+        return theDefault
+    return theValue
+
 # Given two ints, returns those two ints divided by their highest common divisor, or simply
 # returns the two same ints if there is no common divisor. Checks from the given range downwards.
 def reduceInts(theRange, leftInt, rightInt):
@@ -214,9 +219,10 @@ for section in sections:
                 height = 4
                 
             for configItem in config:
-                print(configItem["item"] + " == " + fileName)
                 if configItem["item"] == fileName:
                     print("Matched config: " + fileName)
+                    width = noNaN(configItem("width"), width)
+                    height = noNaN(configItem("height"), height)
                 
             if rowX + width > 13:
                 newRow()
