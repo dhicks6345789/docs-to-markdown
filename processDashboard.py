@@ -233,7 +233,6 @@ for section in sections:
             width = 1
             height = 1
             if itemType == "image":
-                print("Is an image!")
                 width = 4
                 height = 4
             elif itemType == "iframe":
