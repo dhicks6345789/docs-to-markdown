@@ -115,6 +115,16 @@ def listFileNames(theInputFolder):
         sections.append((theInputFolder, fileNames))
 listFileNames(args["input"])
 
+config = []
+# Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
+for section in sections:
+    for fileName in sorted(section[1].keys()):
+        if fileName.lower() == "config":
+            for fileType in section[1].pop("items"):
+                fullPath = section[0] + os.sep + fileName + "." + fileType
+                if fileType.lower() in ["xls", "xlsx", "csv"]:
+                    print("Config found: " + fullPath, flush=True)
+
 itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
 for section in sections:
@@ -137,7 +147,7 @@ for section in sections:
                             else:
                                 newItem[colName.lower()] = itemsRow[colName]
                         itemsList.append(newItem)
-                        
+
 # Returns the URL value from a .url file - can either be a Windows-style .url file or simply a text file with a .url extension.
 def getURLDetails(theFilename):
     URLLines = docsToMarkdownLib.getFile(theFilename).split("\n")
