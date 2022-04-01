@@ -115,28 +115,28 @@ def listFileNames(theInputFolder):
         sections.append((theInputFolder, fileNames))
 listFileNames(args["input"])
 
-config = []
-# Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
+itemsList = []
+# Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
 for section in sections:
     for fileName in sorted(section[1].keys()):
-        if fileName.lower() == "config":
-            for fileType in section[1].pop("config"):
+        if fileName.lower() == "items":
+            for fileType in section[1].pop("items"):
                 fullPath = section[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
-                    print("Config found: " + fullPath, flush=True)
+                    print("Items found: " + fullPath, flush=True)
                     if fileType.lower() in ["xls", "xlsx"]:
-                        configSheet = pandas.read_excel(fullPath)
+                        itemsSheet = pandas.read_excel(fullPath)
                     else:
-                        configSheet = pandas.read_csv(fullPath)
+                        itemsSheet = pandas.read_csv(fullPath)
                     # Convert the Pandas dataframe to an array of dicts, lowercasing all the keys and replacing all "NaN" values with empty string.
-                    for configIndex, configRow in configSheet.iterrows():
-                        newConfigItem = {}
-                        for colName in configRow.keys():
-                            if pandas.isna(configRow[colName]):
-                                newConfigItem[colName.lower()] = ""
+                    for itemsIndex, itemsRow in itemsSheet.iterrows():
+                        newItem = {}
+                        for colName in itemsRow.keys():
+                            if pandas.isna(itemsRow[colName]):
+                                newItem[colName.lower()] = ""
                             else:
-                                newConfigItem[colName.lower()] = configRow[colName]
-                        config.append(newConfigItem)
+                                newItem[colName.lower()] = itemsRow[colName]
+                        itemsList.append(newItem)
                         
 # Returns the URL value from a .url file - can either be a Windows-style .url file or simply a text file with a .url extension.
 def getURLDetails(theFilename):
@@ -231,13 +231,13 @@ for section in sections:
                 height = 6
                 
             URL = ""
-            for configItem in config:
-                if configItem["item"] == fileName:
-                    itemType = noBlank(configItem["type"].lower(), itemType)
+            for item in itemsList:
+                if item["item"] == fileName:
+                    itemType = noBlank(item["type"].lower(), itemType)
                     if itemType in ["link", "iframe"]:
-                        URL = configItem["url"]
-                    width = int(float(noBlank(configItem["width"], width)))
-                    height = int(float(noBlank(configItem["height"], height)))
+                        URL = item["url"]
+                    width = int(float(noBlank(item["width"], width)))
+                    height = int(float(noBlank(item["height"], height)))
                 
             if rowX + width > 13:
                 newRow()
