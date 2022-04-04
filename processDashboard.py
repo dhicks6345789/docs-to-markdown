@@ -171,7 +171,7 @@ def newRow():
     
     frontMatter = {}
     if not rowTitle == "":
-        frontMatter["title"] = rowTitle
+        frontMatter["title"] = "\"" + rowTitle + "\""
     if args["generator"] == "eleventy":
         frontMatter["tags"] = "row"
         frontMatter["height"] = str(rowHeight)
