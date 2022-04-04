@@ -133,7 +133,7 @@ for section in sections:
             for fileType in section[1].pop("items"):
                 fullPath = section[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
-                    print("Items found: " + fullPath, flush=True)
+                    print("Items file found: " + fullPath, flush=True)
                     if fileType.lower() in ["xls", "xlsx"]:
                         itemsSheet = pandas.read_excel(fullPath)
                     else:
