@@ -29,7 +29,7 @@
         <div class="container-fluid">
             {% assign rowNum = 1 %}
             {% for row in collections.row %}
-            {% if row.data.title != "" %}
+            {% if row.data.title != blank %}
             <div class="p-3 row">
                 <div class="col-sm-12">
                     <h2 class="p-3 mt-2 mb-2 bg-secondary text-white text-center">{{ row.data.title }}</h2>
