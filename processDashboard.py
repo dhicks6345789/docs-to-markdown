@@ -213,7 +213,11 @@ def sortIconObject(theIcon):
 for section in sections:
     if not section[1] == {}:
         if not section[0] == args["input"]:
-            rowTitle = docsToMarkdownLib.removeNumericWord(section[0][len(args["input"])+1:])
+            rowTitle = section[0][len(args["input"])+1:]
+            for item in itemsList:
+                if item["item"] == rowTitle:
+                    rowTitle = noBlank(item["title"], rowTitle)
+            rowTitle = docsToMarkdownLib.removeNumericWord(rowTitle)
         for fileName in section[1].keys():
             # Figure out what type of item we have.
             itemType = "blank"
