@@ -29,11 +29,13 @@
         <div class="container-fluid">
             {% assign rowNum = 1 %}
             {% for row in collections.row %}
+            {% if row.data.title != "" %}
             <div class="p-3 row">
                 <div class="col-sm-12">
                     <h2 class="p-3 mt-2 mb-2 bg-secondary text-white text-center">{{ row.data.title }}</h2>
                 </div>
             </div>
+            {% endif %}
             <div class="p-3 row" style="height:{{ row.data.height | times: 9 }}vw">
                 {% for colNum in (1..12) %}
                 {% capture colNumWidth %}col{{ colNum }}Width{% endcapture %}
