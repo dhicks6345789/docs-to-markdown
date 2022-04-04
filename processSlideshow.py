@@ -19,7 +19,7 @@ os.makedirs(args["output"], exist_ok=True)
 
 
 # Check through items in the given input folder, recursing into sub-folders.
-# Produces an array (in the global "sections" variable) of dicts containing tuples of file names and an array of extensions found.
+# Produces an array (in the global "slides" variable) of dicts containing tuples of file names and an array of extensions found.
 slides = []
 def listFileNames(theInputFolder):
     global slides
@@ -44,23 +44,25 @@ def listFileNames(theInputFolder):
         slides.append((theInputFolder, fileNames))
 listFileNames(args["input"])
 
+print(slides)
+
 config = []
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
-for section in sections:
-    for fileName in sorted(section[1].keys()):
+for slide in slides:
+    for fileName in sorted(slide[1].keys()):
         if fileName.lower() == "config":
-            for fileType in section[1].pop("items"):
-                fullPath = section[0] + os.sep + fileName + "." + fileType
+            for fileType in slide[1].pop("items"):
+                fullPath = slide[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Config file found: " + fullPath, flush=True)
 
 itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
-for section in sections:
-    for fileName in sorted(section[1].keys()):
+for slide in slides:
+    for fileName in sorted(slide[1].keys()):
         if fileName.lower() == "items":
-            for fileType in section[1].pop("items"):
-                fullPath = section[0] + os.sep + fileName + "." + fileType
+            for fileType in slide[1].pop("items"):
+                fullPath = slide[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Items file found: " + fullPath, flush=True)
                     if fileType.lower() in ["xls", "xlsx"]:
@@ -76,5 +78,3 @@ for section in sections:
                             else:
                                 newItem[colName.lower()] = itemsRow[colName]
                         itemsList.append(newItem)
-                        
-print(slides)
