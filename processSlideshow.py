@@ -1,4 +1,4 @@
-# A script to generate a slideshow (video file) from a folder of source files (images, videos, audio).
+# A script to generate a slideshow (a folder containing index.html and a set of normalised assets) from a folder of assets (images, videos, audio).
 
 # Standard libraries.
 import os
@@ -7,13 +7,6 @@ import sys
 
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
-
-# We use the Pandas library to load in Excel / CSV files for the configuration settings.
-import pandas
-
-# An array of "image file" types.
-bitmapTypes = ["jpg", "jpeg", "png", "ico"]
-imageTypes =  bitmapTypes + ["svg"]
 
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={}, requiredArgs=["input","output"])
@@ -27,15 +20,15 @@ os.makedirs(args["output"], exist_ok=True)
 
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "sections" variable) of dicts containing tuples of file names and an array of extensions found.
-sections = []
+slides = []
 def listFileNames(theInputFolder):
-    global sections
+    global slides
     
     fileNames = {}
     for inputItem in sorted(os.listdir(theInputFolder)):
         if os.path.isdir(theInputFolder + os.sep + inputItem):
             if not fileNames == {}:
-                sections.append((theInputFolder, fileNames))
+                slides.append((theInputFolder, fileNames))
             fileNames = {}
             listFileNames(theInputFolder + os.sep + inputItem)
         else:
@@ -48,7 +41,7 @@ def listFileNames(theInputFolder):
                 fileNames[fileName] = []
             fileNames[fileName].append(fileType)
     if not fileNames == {}:
-        sections.append((theInputFolder, fileNames))
+        slides.append((theInputFolder, fileNames))
 listFileNames(args["input"])
 
 config = []
@@ -59,7 +52,7 @@ for section in sections:
             for fileType in section[1].pop("items"):
                 fullPath = section[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
-                    print("Config found: " + fullPath, flush=True)
+                    print("Config file found: " + fullPath, flush=True)
 
 itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
@@ -83,3 +76,5 @@ for section in sections:
                             else:
                                 newItem[colName.lower()] = itemsRow[colName]
                         itemsList.append(newItem)
+                        
+print(slides)
