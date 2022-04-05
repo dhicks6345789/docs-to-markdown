@@ -95,6 +95,10 @@ def listItems(theInputFolder):
             fileTypeSplit = item.rsplit(".", 1)
             if len(fileTypeSplit) == 2:
                 fileType = fileTypeSplit[1].lower()
-            shutil.copyfile(theInputFolder + os.sep + item, args["output"] + os.sep + str(itemCount) + "." + fileType)
+            if fileType in docsToMarkdownLib.bitmapTypes:
+                SVGContent = docsToMarkdownLib.embedBitmapInSVG(theInputFolder + os.sep + item)
+                docsToMarkdownLib.putFile(args["output"] + os.sep + str(itemCount) + ".svg", SVGContent)
+            else:
+                shutil.copyfile(theInputFolder + os.sep + item, args["output"] + os.sep + str(itemCount) + "." + fileType)
             itemCount = itemCount + 1
 listItems(args["input"])
