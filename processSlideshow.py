@@ -41,7 +41,7 @@ def listFileNames(theSubFolder):
             fileType = ""
             fileSplit = inputItem.rsplit(".", 1)
             fileName = fileSplit[0]
-            if not theSubFolder = "":
+            if not theSubFolder == "":
                 fileName = theSubFolder + os.sep + fileName
             if len(fileSplit) == 2:
                 fileType = fileSplit[1]
