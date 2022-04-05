@@ -89,20 +89,13 @@ for slide in slides:
 
 
 shutil.copyfile("slideshowIndex.html", args["output"] + os.sep + "index.html")
-itemCount = 1
+slideCount = 1
 for slide in slides:
-    for fileName in sorted(slide[1].keys()):
-        for fileType in slide[1].pop(fileName):
-        # Figure out the file type (extension).
-        fileType = ""
-        fileTypeSplit = fileName.rsplit(".", 1)
-        if len(fileTypeSplit) == 2:
-            fileType = fileTypeSplit[1].lower()
-            
+    for fileType in slides[slide]:
         if fileType in docsToMarkdownLib.bitmapTypes:
-            SVGContent = docsToMarkdownLib.embedBitmapInSVG(theInputFolder + os.sep + item)
-            docsToMarkdownLib.putFile(args["output"] + os.sep + str(itemCount) + ".svg", SVGContent)
+            SVGContent = docsToMarkdownLib.embedBitmapInSVG(theInputFolder + os.sep + slide)
+            docsToMarkdownLib.putFile(args["output"] + os.sep + str(slideCount) + ".svg", SVGContent)
         else:
-            shutil.copyfile(theInputFolder + os.sep + item, args["output"] + os.sep + str(itemCount) + "." + fileType)
-        itemCount = itemCount + 1
+            shutil.copyfile(theInputFolder + os.sep + slide, args["output"] + os.sep + str(slideCount) + "." + fileType)
+        slideCount = slideCount + 1
 listItems(args["input"])
