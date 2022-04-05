@@ -91,4 +91,4 @@ def listItems(theInputFolder):
         if len(fileTypeSplit) == 2:
             fileType = fileTypeSplit[1].lower()
         shutil.copyfile(theInputFolder + os.sep + item, args["output"] + os.sep + str(itemCount) + "." + fileType)
-listItem(args["input"])
+listItems(args["input"])
