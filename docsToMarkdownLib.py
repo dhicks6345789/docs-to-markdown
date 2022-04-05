@@ -2,6 +2,7 @@
 import os
 import io
 import sys
+import base64
 import subprocess
 
 # The Pillow image-handling library.
