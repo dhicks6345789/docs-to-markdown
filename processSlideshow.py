@@ -85,11 +85,16 @@ for slide in slides:
 shutil.copyfile("slideshowIndex.html", args["output"] + os.sep + "index.html")
 itemCount = 1
 def listItems(theInputFolder):
+    global itemCount
+    
     for item in os.listdir(theInputFolder):
-        fileType = ""
-        fileTypeSplit = item.rsplit(".", 1)
-        if len(fileTypeSplit) == 2:
-            fileType = fileTypeSplit[1].lower()
-        shutil.copyfile(theInputFolder + os.sep + item, args["output"] + os.sep + str(itemCount) + "." + fileType)
-        itemCount = itemCount + 1
+        if os.isdir(theInputFolder + os.sep + item):
+            listItems(theInputFolder + os.sep + item)
+        else:
+            fileType = ""
+            fileTypeSplit = item.rsplit(".", 1)
+            if len(fileTypeSplit) == 2:
+                fileType = fileTypeSplit[1].lower()
+            shutil.copyfile(theInputFolder + os.sep + item, args["output"] + os.sep + str(itemCount) + "." + fileType)
+            itemCount = itemCount + 1
 listItems(args["input"])
