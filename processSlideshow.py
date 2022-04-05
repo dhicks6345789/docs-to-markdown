@@ -84,7 +84,7 @@ for slide in slides:
 
 shutil.copyfile("slideshowIndex.html", args["output"] + os.sep + "index.html")
 itemCount = 1
-def listItems(theInputFolder)
+def listItems(theInputFolder):
     for item in os.listdir(theInputFolder):
         fileType = ""
         fileTypeSplit = item.rsplit(".", 1)
