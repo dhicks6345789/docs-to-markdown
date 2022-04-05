@@ -4,6 +4,7 @@
 import os
 import io
 import sys
+import shutil
 
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
@@ -81,5 +82,4 @@ for slide in slides:
 
 
 
-print("copy slideshowIndex.html" + args["output"] + os.sep + "index.html")
-print(os.listdir())
+shutil.copyfile("slideshowIndex.html", args["output"] + os.sep + "index.html")
