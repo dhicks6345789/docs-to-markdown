@@ -27,7 +27,7 @@ def normalisePath(thePath):
 
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "slides" variable) containing tuples of file names and an array of extensions found.
-slides = []
+slides = {}
 inputFolder = normalisePath(args["input"])
 def listFileNames(theSubFolder):
     global inputFolder
