@@ -88,7 +88,7 @@ def listItems(theInputFolder):
     global itemCount
     
     for item in os.listdir(theInputFolder):
-        if os.isdir(theInputFolder + os.sep + item):
+        if os.path.isdir(theInputFolder + os.sep + item):
             listItems(theInputFolder + os.sep + item)
         else:
             fileType = ""
