@@ -78,3 +78,8 @@ for slide in slides:
                             else:
                                 newItem[colName.lower()] = itemsRow[colName]
                         itemsList.append(newItem)
+
+
+
+print("copy slideshowIndex.html" + args["output"] + os.sep + "index.html")
+print(os.listdir())
