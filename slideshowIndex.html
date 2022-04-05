@@ -2,14 +2,25 @@
 <html lang="en">
     <head>
         <script>
-            resources = <<RESOURCESGOHERE>>
+            currentSlide = 0;
+            resources = <<RESOURCESGOHERE>>;
             
-            function showSlides() {
-                document.getElementById("slide").innerHTML = "Hello, world!";
+            function showSlide() {
+                if (resources[currentSlide].endsWith(".svg")) {
+                    document.getElementById("slide").innerHTML = "<img>";
+                }
+                currentSlide = currentSlide + 1;
+                if (currentSlide == len(resources)) {
+                    currentSlide = 0;
+                }
+            }
+            
+            function startSlides() {
+                setInterval(showSlide, 10000);
             }
         </script>
     </head>
-    <body onload="showSlides()">
+    <body onload="startSlides()">
         <div id="slide">
         </div>
     </body>
