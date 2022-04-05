@@ -82,13 +82,19 @@ for slide in slides:
                             newItem[colName.lower()] = itemsRow[colName]
                     itemsList.append(newItem)
 
-shutil.copyfile("slideshowIndex.html", args["output"] + os.sep + "index.html")
 slideCount = 1
+slideList = []
 for slide in slides:
     for fileType in slides[slide]:
         if fileType in docsToMarkdownLib.bitmapTypes:
             SVGContent = docsToMarkdownLib.embedBitmapInSVG(inputFolder + os.sep + slide + "." + fileType)
             docsToMarkdownLib.putFile(args["output"] + os.sep + str(slideCount) + ".svg", SVGContent)
+            slideList.append(str(slideCount) + ".svg")
         else:
             shutil.copyfile(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + str(slideCount) + "." + fileType.lower())
+            slideList.append(str(slideCount) + "." + fileType.lower())
         slideCount = slideCount + 1
+
+indexFileContent = docsToMarkdownLib.getFile("slideshowIndex.html")
+indexFileContent.replace("<<RESOURCESGOHERE>>", str(slideList))
+docsToMarkdownLib.writeFile(args["output"] + os.sep + "index.html", indexFileContent)
