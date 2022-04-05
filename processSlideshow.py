@@ -35,7 +35,7 @@ def listFileNames(theSubFolder):
     
     inputPath = inputFolder + os.sep + theSubFolder
     for inputItem in sorted(os.listdir(inputPath)):
-        if os.path.isdir(normalisePath(theInputPath + os.sep + inputItem)):
+        if os.path.isdir(normalisePath(inputPath + os.sep + inputItem)):
             listFileNames(normalisePath(theSubFolder + os.sep + inputItem))
         else:
             fileType = ""
