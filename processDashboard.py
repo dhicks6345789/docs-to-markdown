@@ -23,13 +23,6 @@ import docsToMarkdownLib
 # We use the Pandas library to load in Excel / CSV files for the configuration settings.
 import pandas
 
-# An array of "image file" types.
-bitmapTypes = ["jpg", "jpeg", "png", "ico"]
-imageTypes =  bitmapTypes + ["svg"]
-
-# An array of "url file" types.
-urlTypes = ["url", "txt"]
-
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"])
 
