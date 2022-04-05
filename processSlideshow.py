@@ -92,4 +92,3 @@ for slide in slides:
         else:
             shutil.copyfile(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + str(slideCount) + "." + fileType.lower())
         slideCount = slideCount + 1
-listItems(args["input"])
