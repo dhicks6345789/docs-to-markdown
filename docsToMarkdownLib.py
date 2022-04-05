@@ -130,9 +130,11 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
     return(args)
 
 def embedBitmapInSVG(theBitmap):
-    bitmapImage = io.BytesIO()
-    PIL.Image.open(theBitmap).save(bitmapImage, format="PNG")
+    bitmapObject = PIL.Image.open(theBitmap)
+    bitmapData = io.BytesIO()
+    bitmapObject.save(bitmapData, format="PNG")
     result = "<svg width=\"" + str(thumbnailedImage.width) + "\" height=\"" + str(thumbnailedImage.height) + "\" version=\"1.1\" viewBox=\"0 0 " + str(float(width)*26.458) + " " + str(float(height)*26.458) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
-    result = result + "    <image width=\"" + str(float(width)*26.458) + "\" height=\"" + str(float(height)*26.458) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(bitmapImage.getvalue()).decode("utf-8") + "\"/>\n"
+    #result = result + "    <image width=\"" + str(float(width)*26.458) + "\" height=\"" + str(float(height)*26.458) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(bitmapData.getvalue()).decode("utf-8") + "\"/>\n"
+    result = result + "    <image width=\"" + str(26.458) + "\" height=\"" + str(26.458) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(bitmapData.getvalue()).decode("utf-8") + "\"/>\n"
     result = result + "</svg>"
     return result
