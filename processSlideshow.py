@@ -97,4 +97,4 @@ for slide in slides:
 
 indexFileContent = docsToMarkdownLib.getFile("slideshowIndex.html")
 indexFileContent.replace("<<RESOURCESGOHERE>>", str(slideList))
-docsToMarkdownLib.writeFile(args["output"] + os.sep + "index.html", indexFileContent)
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexFileContent)
