@@ -87,7 +87,7 @@ slideCount = 1
 for slide in slides:
     for fileType in slides[slide]:
         if fileType in docsToMarkdownLib.bitmapTypes:
-            SVGContent = docsToMarkdownLib.embedBitmapInSVG(theInputFolder + os.sep + slide)
+            SVGContent = docsToMarkdownLib.embedBitmapInSVG(inputFolder + os.sep + slide)
             docsToMarkdownLib.putFile(args["output"] + os.sep + str(slideCount) + ".svg", SVGContent)
         else:
             shutil.copyfile(theInputFolder + os.sep + slide, args["output"] + os.sep + str(slideCount) + "." + fileType)
