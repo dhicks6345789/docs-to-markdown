@@ -19,40 +19,46 @@ os.makedirs(args["output"], exist_ok=True)
 
 
 
+def normalisePath(thePath):
+    result = thePath.replace(os.sep + os.sep, os.sep)
+    if result.endswith(os.sep):
+        result = result[:-1]
+    return result
+
 # Check through items in the given input folder, recursing into sub-folders.
-# Produces an array (in the global "slides" variable) of dicts containing tuples of file names and an array of extensions found.
+# Produces an array (in the global "slides" variable) containing tuples of file names and an array of extensions found.
 slides = []
-def listFileNames(theInputFolder):
+inputFolder = normalisePath(args["input"])
+def listFileNames(theSubFolder):
+    global inputFolder
     global slides
     
-    fileNames = {}
-    for inputItem in sorted(os.listdir(theInputFolder)):
-        if os.path.isdir(theInputFolder + os.sep + inputItem):
-            if not fileNames == {}:
-                slides.append((theInputFolder, fileNames))
-            fileNames = {}
-            listFileNames(theInputFolder + os.sep + inputItem)
+    inputPath = inputFolder + os.sep + theSubFolder
+    for inputItem in sorted(os.listdir(inputPath)):
+        if os.path.isdir(normalisePath(theInputPath + os.sep + inputItem)):
+            listFileNames(normalisePath(theSubFolder + os.sep + inputItem))
         else:
             fileType = ""
             fileSplit = inputItem.rsplit(".", 1)
             fileName = fileSplit[0]
+            if not theSubFolder = "":
+                fileName = theSubFolder + os.sep + fileName
             if len(fileSplit) == 2:
                 fileType = fileSplit[1]
-            if not fileName in fileNames.keys():
-                fileNames[fileName] = []
-            fileNames[fileName].append(fileType)
-    if not fileNames == {}:
-        slides.append((theInputFolder, fileNames))
-listFileNames(args["input"])
-
+            if not fileName in slides.keys():
+                slides[fileName] = []
+            slides[fileName].append(fileType)
+listFileNames("")
 print(slides)
+
+exit(0)
 
 config = []
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
 for slide in slides:
     for fileName in sorted(slide[1].keys()):
         if fileName.lower() == "config":
-            for fileType in slide[1].pop("items"):
+            for fileType in slide[1].pop("config"):
                 fullPath = slide[0] + os.sep + fileName + "." + fileType
                 if fileType.lower() in ["xls", "xlsx", "csv"]:
                     print("Config file found: " + fullPath, flush=True)
@@ -84,21 +90,19 @@ for slide in slides:
 
 shutil.copyfile("slideshowIndex.html", args["output"] + os.sep + "index.html")
 itemCount = 1
-def listItems(theInputFolder):
-    global itemCount
-    
-    for item in os.listdir(theInputFolder):
-        if os.path.isdir(theInputFolder + os.sep + item):
-            listItems(theInputFolder + os.sep + item)
+for slide in slides:
+    for fileName in sorted(slide[1].keys()):
+        for fileType in slide[1].pop(fileName):
+        # Figure out the file type (extension).
+        fileType = ""
+        fileTypeSplit = fileName.rsplit(".", 1)
+        if len(fileTypeSplit) == 2:
+            fileType = fileTypeSplit[1].lower()
+            
+        if fileType in docsToMarkdownLib.bitmapTypes:
+            SVGContent = docsToMarkdownLib.embedBitmapInSVG(theInputFolder + os.sep + item)
+            docsToMarkdownLib.putFile(args["output"] + os.sep + str(itemCount) + ".svg", SVGContent)
         else:
-            fileType = ""
-            fileTypeSplit = item.rsplit(".", 1)
-            if len(fileTypeSplit) == 2:
-                fileType = fileTypeSplit[1].lower()
-            if fileType in docsToMarkdownLib.bitmapTypes:
-                SVGContent = docsToMarkdownLib.embedBitmapInSVG(theInputFolder + os.sep + item)
-                docsToMarkdownLib.putFile(args["output"] + os.sep + str(itemCount) + ".svg", SVGContent)
-            else:
-                shutil.copyfile(theInputFolder + os.sep + item, args["output"] + os.sep + str(itemCount) + "." + fileType)
-            itemCount = itemCount + 1
+            shutil.copyfile(theInputFolder + os.sep + item, args["output"] + os.sep + str(itemCount) + "." + fileType)
+        itemCount = itemCount + 1
 listItems(args["input"])
