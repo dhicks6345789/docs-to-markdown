@@ -7,6 +7,13 @@ import subprocess
 # in strings.
 markdownReplace = {"\\[":"[","\\]":"]","\\!":"!"}
 
+# An array of "image file" types.
+bitmapTypes = ["jpg", "jpeg", "png", "ico"]
+imageTypes =  bitmapTypes + ["svg"]
+
+# An array of "url file" types.
+urlTypes = ["url", "txt"]
+
 # A utility function to return the contents of the given file.
 def getFile(theFilename):
     infile = open(theFilename)
