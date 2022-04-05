@@ -1,6 +1,12 @@
+# Standard libraries.
 import os
 import sys
 import subprocess
+
+# The Pillow image-handling library.
+import PIL.Image
+
+
 
 # Pandoc escapes Markdown control characters embedded in Word documents, but we want to let people embed chunks of Markdown in
 # a document if they want, so we un-escape the Markdown back again - we simply use Python's string.replace to replace characters
@@ -122,3 +128,11 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
             print("ERROR: unknown argument, " + argItem)
             sys.exit(1)
     return(args)
+
+def embedBitmapInSVG(theBitmap):
+    bitmapImage = io.BytesIO()
+    PIL.Image.open(theBitmap).save(bitmapImage, format="PNG")
+    result = "<svg width=\"" + str(thumbnailedImage.width) + "\" height=\"" + str(thumbnailedImage.height) + "\" version=\"1.1\" viewBox=\"0 0 " + str(float(width)*26.458) + " " + str(float(height)*26.458) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+    result = result + "    <image width=\"" + str(float(width)*26.458) + "\" height=\"" + str(float(height)*26.458) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(bitmapImage.getvalue()).decode("utf-8") + "\"/>\n"
+    result = result + "</svg>"
+    return result
