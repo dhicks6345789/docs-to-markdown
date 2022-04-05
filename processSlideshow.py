@@ -95,6 +95,4 @@ for slide in slides:
             slideList.append(str(slideCount) + "." + fileType.lower())
         slideCount = slideCount + 1
 
-indexFileContent = docsToMarkdownLib.getFile("slideshowIndex.html")
-indexFileContent.replace("<<RESOURCESGOHERE>>", "\"BANANAS\"")
-docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexFileContent)
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("slideshowIndex.html").replace("<<RESOURCESGOHERE>>", str(slideList)))
