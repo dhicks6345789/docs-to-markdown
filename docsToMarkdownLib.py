@@ -171,6 +171,7 @@ def reduceInts(theRange, leftInt, rightInt):
     return (leftInt, rightInt)
 
 def embedBitmapInSVG(theBitmap, theWidth, theHeight):
+    print("Emedding bitmap: " + theBitmap)
     bitmapObject = PIL.Image.open(theBitmap)
     bitmapData = io.BytesIO()
     bitmapObject.save(bitmapData, format="PNG")
@@ -180,9 +181,9 @@ def embedBitmapInSVG(theBitmap, theWidth, theHeight):
         height = int((float(theWidth) / float(bitmapObject.width)) * float(theHeight))
     else:
         width = int(bitmapObject.width)
-        height = int((float(theWidth) / float(bitmapObject.width)) * float(bitmapObject.height))
+        height = int((float(bitmapObject.width) / float(theWidth)) * float(bitmapObject.height))
     
-    print("Width: " + str(width) + "Height: " + str(height))
+    print("Width: " + str(width) + " Height: " + str(height))
     
     #result = "<svg width=\"" + str(thumbnailedImage.width) + "\" height=\"" + str(thumbnailedImage.height) + "\" version=\"1.1\" viewBox=\"0 0 " + str(float(width)*26.458) + " " + str(float(height)*26.458) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
     result = "<svg version=\"1.1\" viewBox=\"0 0 " + str(width) + " " + str(height) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
