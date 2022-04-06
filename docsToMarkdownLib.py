@@ -175,7 +175,7 @@ def embedBitmapInSVG(theBitmap, theWidth, theHeight):
     bitmapData = io.BytesIO()
     bitmapObject.save(bitmapData, format="PNG")
     
-    if theWidth > bitmapObject.width:
+    if int(theWidth) > bitmapObject.width:
         width = int(theWidth)
         height = int((float(theWidth) / float(bitmapObject.width)) * float(theHeight))
     else:
