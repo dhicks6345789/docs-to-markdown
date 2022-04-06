@@ -10,7 +10,7 @@ import shutil
 import docsToMarkdownLib
 
 # Get any arguments given via the command line.
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={}, requiredArgs=["input","output"])
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"16", "height":"9"}, requiredArgs=["input","output"])
 
 print("STATUS: processSlideshow: " + args["input"] + " to " + args["output"], flush=True)
 
@@ -82,7 +82,7 @@ slideList = []
 for slide in slides:
     for fileType in slides[slide]:
         if fileType in docsToMarkdownLib.bitmapTypes:
-            SVGContent = docsToMarkdownLib.embedBitmapInSVG(inputFolder + os.sep + slide + "." + fileType)
+            SVGContent = docsToMarkdownLib.embedBitmapInSVG(inputFolder + os.sep + slide + "." + fileType, args["width"], args["height"])
             docsToMarkdownLib.putFile(args["output"] + os.sep + str(slideCount) + ".svg", SVGContent)
             slideList.append(str(slideCount) + ".svg")
         else:
