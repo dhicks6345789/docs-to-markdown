@@ -22,15 +22,15 @@ os.makedirs(args["output"], exist_ok=True)
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "slides" variable) containing tuples of file names and an array of extensions found.
 slides = {}
-inputFolder = normalisePath(args["input"])
+inputFolder = docsToMarkdownLib.normalisePath(args["input"])
 def listFileNames(theSubFolder):
     global inputFolder
     global slides
     
     inputPath = inputFolder + os.sep + theSubFolder
     for inputItem in sorted(os.listdir(inputPath)):
-        if os.path.isdir(normalisePath(inputPath + os.sep + inputItem)):
-            listFileNames(normalisePath(theSubFolder + os.sep + inputItem))
+        if os.path.isdir(docsToMarkdownLib.normalisePath(inputPath + os.sep + inputItem)):
+            listFileNames(docsToMarkdownLib.normalisePath(theSubFolder + os.sep + inputItem))
         else:
             fileType = ""
             fileSplit = inputItem.rsplit(".", 1)
