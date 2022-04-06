@@ -8,6 +8,10 @@ import subprocess
 # The Pillow image-handling library.
 import PIL.Image
 
+# We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
+import xlrd
+import pandas
+
 
 
 # Pandoc escapes Markdown control characters embedded in Word documents, but we want to let people embed chunks of Markdown in
@@ -49,7 +53,16 @@ def normalisePath(thePath):
     if result[len(result)-1] == os.sep:
         result = result[:-1]
     return result
-    
+
+# A utility function to determine whether a variable has a value of "NaN" or not.
+# Checks if a string has a value of "NaN" (any case) as well as float values.
+def isnan(theVal):
+    if isinstance(theVal, str):
+        if theVal.lower() == "nan":
+            return True
+        return False
+    return math.isnan(theVal)
+
 def checkModDatesMatch(theInputItem, theOutputItem):
     if os.path.isfile(theOutputItem):
         inputItemDetails = os.stat(theInputItem)
@@ -130,6 +143,22 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
             print("ERROR: unknown argument, " + argItem)
             sys.exit(1)
     return(args)
+
+def processArgsFile(theFilename, theRequiredArgs, theOptionalArgs, theOptionalLists):
+    args = {}
+    
+    if theFilename.endswith(".csv"):
+        argsData = pandas.read_csv(theFilename, header=0)
+    else:
+        argsData = pandas.read_excel(theFilename, header=0)
+    for argsDataIndex, argsDataValues in argsData.iterrows():
+        if argsDataValues[0] in theRequiredArgs + theOptionalArgs:
+            args[argsDataValues[0]] = valueToString(argsDataValues[1])
+        elif argsDataValues[0] in theOptionalLists:
+            for argsDataValue in argsDataValues[1:].values:
+                if not isnan(argsDataValue):
+                    args[argsDataValues[0]].append(argsDataValue)
+    return args
 
 def embedBitmapInSVG(theBitmap):
     bitmapObject = PIL.Image.open(theBitmap)
