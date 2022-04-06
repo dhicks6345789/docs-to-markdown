@@ -178,10 +178,10 @@ def embedBitmapInSVG(theBitmap, theWidth, theHeight):
     
     if int(theWidth) > bitmapObject.width:
         width = int(theWidth)
-        height = int((float(theWidth) / float(bitmapObject.width)) * float(theHeight))
+        height = int((float(theWidth) / float(bitmapObject.width)) * float(bitmapObject.height))
     else:
         width = int(bitmapObject.width)
-        height = int((float(bitmapObject.width) / float(theWidth)) * float(bitmapObject.height))
+        height = int((float(bitmapObject.width) / float(theWidth)) * float(theHeight))
     
     print("Width: " + str(width) + " Height: " + str(height))
     
