@@ -12,7 +12,7 @@
                     document.getElementById("slide").innerHTML = "<video autoplay><source src=\"" + resources[currentSlide] + "\" type=\"video/mp4\"></video>";
                 }
                 currentSlide = currentSlide + 1;
-                if (currentSlide == len(resources)) {
+                if (currentSlide == resources.length) {
                     currentSlide = 0;
                 }
             }
