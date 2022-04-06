@@ -9,7 +9,6 @@ import subprocess
 import PIL.Image
 
 # We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
-import xlrd
 import pandas
 
 
