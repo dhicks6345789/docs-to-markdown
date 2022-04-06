@@ -8,6 +8,8 @@
             function showSlide() {
                 if (resources[currentSlide].endsWith(".svg")) {
                     document.getElementById("slide").innerHTML = "<img src=\"" + resources[currentSlide] + "\" width=\"100%\"/>";
+                } else if (resources[currentSlide].endsWith(".mp4")) {
+                    document.getElementById("slide").innerHTML = "<video autoplay><source src=\"" + resources[currentSlide] + "\" type=\"video/mp4\"></video>";
                 }
                 currentSlide = currentSlide + 1;
                 if (currentSlide == len(resources)) {
