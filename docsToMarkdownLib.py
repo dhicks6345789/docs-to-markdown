@@ -142,19 +142,20 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
         else:
             print("ERROR: unknown argument, " + argItem)
             sys.exit(1)
-    return(args)
+    return args
 
-def processArgsFile(theFilename, theRequiredArgs, theOptionalArgs, theOptionalLists):
-    args = {}
+def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
+    args = defaultArgs
     
     if theFilename.endswith(".csv"):
         argsData = pandas.read_csv(theFilename, header=0)
     else:
         argsData = pandas.read_excel(theFilename, header=0)
     for argsDataIndex, argsDataValues in argsData.iterrows():
-        if argsDataValues[0] in theRequiredArgs + theOptionalArgs:
-            args[argsDataValues[0]] = valueToString(argsDataValues[1])
-        elif argsDataValues[0] in theOptionalLists:
+        if argsDataValues[0] in requiredArgs + optionalArgs:
+            if not argsDataValues[0] in args:
+                args[argsDataValues[0]] = valueToString(argsDataValues[1])
+        elif argsDataValues[0] in optionalArgLists:
             for argsDataValue in argsDataValues[1:].values:
                 if not isnan(argsDataValue):
                     args[argsDataValues[0]].append(argsDataValue)
