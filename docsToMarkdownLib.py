@@ -170,11 +170,38 @@ def reduceInts(theRange, leftInt, rightInt):
             return (int(leftDivide), int(rightDivide))
     return (leftInt, rightInt)
 
+# Produce a thumbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
+# the given block width and height.
+def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
+    imageWidth, imageHeight = theImage.size
+    imageRatio = float(imageWidth) / float(imageHeight)
+    
+    blockWidth, blockHeight = reduceInts(12, theBlockWidth, theBlockHeight)
+    blockRatio = float(blockWidth) / float(blockHeight)
+    
+    resultWidth = imageWidth
+    resultHeight = imageHeight
+    if imageRatio < blockRatio:
+        padWidthRatio = 1 + (blockRatio - imageRatio)
+        resultWidth = int(imageWidth * padWidthRatio)
+    elif imageRatio > blockRatio:
+        padHeightRatio = 1 + (imageRatio - blockRatio)
+        resultHeight = int(imageHeight * padHeightRatio)
+        
+    result = PIL.Image.new(mode="RGB", size=(resultWidth, resultHeight), color="WHITE")
+    pasteX = 0
+    if not resultWidth == imageWidth:
+        pasteX = int((resultWidth-imageWidth)/2)
+    pasteY = 0
+    if not resultHeight == imageHeight:
+        pasteY = int((resultHeight-imageHeight)/2)
+    result.paste(theImage, (pasteX, pasteY))
+    
+    return result
+
 def embedBitmapInSVG(theBitmap, theWidth, theHeight):
     print("Emedding bitmap: " + theBitmap)
     bitmapObject = PIL.Image.open(theBitmap)
-    bitmapData = io.BytesIO()
-    bitmapObject.save(bitmapData, format="PNG")
     
     if int(theWidth) > bitmapObject.width:
         width = int(theWidth)
@@ -182,6 +209,10 @@ def embedBitmapInSVG(theBitmap, theWidth, theHeight):
     else:
         width = int(bitmapObject.width)
         height = int((float(bitmapObject.width) / float(theWidth)) * float(theHeight))
+    
+    bitmapObject = thumbnailImage(bitmapObject, width, height)
+    bitmapData = io.BytesIO()
+    bitmapObject.save(bitmapData, format="PNG")
     
     print("Width: " + str(width) + " Height: " + str(height))
     result = "<svg version=\"1.1\" viewBox=\"0 0 " + str(width) + " " + str(height) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
