@@ -46,7 +46,7 @@ def reduceInts(theRange, leftInt, rightInt):
             return (int(leftDivide), int(rightDivide))
     return (leftInt, rightInt)
 
-# Produce a thmbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
+# Produce a thumbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
 # the given block width and height.
 def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     imageWidth, imageHeight = theImage.size
