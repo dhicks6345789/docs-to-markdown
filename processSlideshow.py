@@ -19,12 +19,6 @@ os.makedirs(args["output"], exist_ok=True)
 
 
 
-def normalisePath(thePath):
-    result = thePath.replace(os.sep + os.sep, os.sep)
-    if result.endswith(os.sep):
-        result = result[:-1]
-    return result
-
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "slides" variable) containing tuples of file names and an array of extensions found.
 slides = {}
@@ -59,6 +53,7 @@ for slide in slides:
             fullPath = slide + "." + fileType
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Config file found: " + fullPath, flush=True)
+                docsToMarkdownLib.processArgsFile(fullPath, defaultArgs=args)
 
 itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
