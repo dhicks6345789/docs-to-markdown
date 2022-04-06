@@ -160,13 +160,33 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
                     args[argsDataValues[0]].append(argsDataValue)
     return args
 
-def embedBitmapInSVG(theBitmap):
+# Given two ints, returns those two ints divided by their highest common divisor, or simply
+# returns the two same ints if there is no common divisor. Checks from the given range downwards.
+def reduceInts(theRange, leftInt, rightInt):
+    for pl in range(theRange, 2, -1):
+        leftDivide = float(leftInt) / float(pl)
+        rightDivide = float(rightInt) / float(pl)
+        if leftDivide == float(int(leftDivide)) and rightDivide == float(int(rightDivide)):
+            return (int(leftDivide), int(rightDivide))
+    return (leftInt, rightInt)
+
+def embedBitmapInSVG(theBitmap, theWidth, theHeight):
     bitmapObject = PIL.Image.open(theBitmap)
     bitmapData = io.BytesIO()
     bitmapObject.save(bitmapData, format="PNG")
+    
+    if theWidth > bitmapObject.width:
+        width = int(theWidth)
+        height = int((float(theWidth) / float(bitmapObject.width)) * float(theHeight))
+    else:
+        width = int(bitmapObject.width)
+        height = int((float(theWidth) / float(bitmapObject.width)) * float(bitmapObject.height))
+    
+    print("Width: " + str(width) + "Height: " + str(height))
+    
     #result = "<svg width=\"" + str(thumbnailedImage.width) + "\" height=\"" + str(thumbnailedImage.height) + "\" version=\"1.1\" viewBox=\"0 0 " + str(float(width)*26.458) + " " + str(float(height)*26.458) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
-    result = "<svg width=\"" + str(bitmapObject.width) + "\" height=\"" + str(bitmapObject.height) + "\" version=\"1.1\" viewBox=\"0 0 " + str(26.458) + " " + str(26.458) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
+    result = "<svg version=\"1.1\" viewBox=\"0 0 " + str(width) + " " + str(height) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
     #result = result + "    <image width=\"" + str(float(width)*26.458) + "\" height=\"" + str(float(height)*26.458) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(bitmapData.getvalue()).decode("utf-8") + "\"/>\n"
-    result = result + "    <image width=\"" + str(26.458) + "\" height=\"" + str(26.458) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(bitmapData.getvalue()).decode("utf-8") + "\"/>\n"
+    result = result + "    <image width=\"" + str(width) + "\" height=\"" + str(height) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(bitmapData.getvalue()).decode("utf-8") + "\"/>\n"
     result = result + "</svg>"
     return result
