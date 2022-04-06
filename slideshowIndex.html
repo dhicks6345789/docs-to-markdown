@@ -7,7 +7,7 @@
             
             function showSlide() {
                 if (resources[currentSlide].endsWith(".svg")) {
-                    document.getElementById("slide").innerHTML = "<img>";
+                    document.getElementById("slide").innerHTML = "<img src=\"" + resources[currentSlide] + "\" width=\"100%\"/>";
                 }
                 currentSlide = currentSlide + 1;
                 if (currentSlide == len(resources)) {
