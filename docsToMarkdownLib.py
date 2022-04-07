@@ -192,15 +192,22 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     resultHeight = videoHeight
     pasteX = 0
     pasteY = 0
+    #if pictureRatio < outputRatio:
+        #padWidthRatio = 1 + (outputRatio - pictureRatio)
+        #resultWidth = int(videoWidth * padWidthRatio)
+        #pasteX = int((resultWidth-videoWidth)/2)
+    #elif pictureRatio > outputRatio:
+        #padHeightRatio = 1 + (pictureRatio - outputRatio)
+        #resultHeight = int(videoHeight * padHeightRatio)
+        #pasteY = int((resultHeight-videoHeight)/2)
     if pictureRatio < outputRatio:
-        padWidthRatio = 1 + (outputRatio - pictureRatio)
-        print("padWidthRatio: " + str(padWidthRatio))
-        resultWidth = int(videoWidth * padWidthRatio)
-        pasteX = int((resultWidth-videoWidth)/2)
-    elif pictureRatio > outputRatio:
         padHeightRatio = 1 + (pictureRatio - outputRatio)
-        resultHeight = int(videoHeight * padHeightRatio)
+        resultHeight = int(videoHeight / padHeightRatio)
         pasteY = int((resultHeight-videoHeight)/2)
+    elif pictureRatio > outputRatio:
+        padWidthRatio = 1 + (outputRatio - pictureRatio)
+        resultWidth = int(videoWidth / padWidthRatio)
+        pasteX = int((resultWidth-videoWidth)/2)
     
     ffmpegLine = "ffmpeg -i \"" + theInputVideo + "\" -vf \"pad=" + str(resultWidth) + ":" + str(resultHeight) + ":" + str(pasteX) + ":" + str(pasteY) + "\" \"" + theOutputVideo + "\" 2>&1"
     print(ffmpegLine)
