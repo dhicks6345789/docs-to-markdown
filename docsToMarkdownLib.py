@@ -189,14 +189,18 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     
     resultWidth = videoWidth
     resultHeight = videoHeight
+    pasteX = 0
+    pasteY = 0
     if pictureRatio < outputRatio:
         padWidthRatio = 1 + (outputRatio - pictureRatio)
         resultWidth = int(videoWidth * padWidthRatio)
+        pasteX = int((resultWidth-videoWidth)/2)
     elif pictureRatio > outputRatio:
         padHeightRatio = 1 + (pictureRatio - outputRatio)
         resultHeight = int(videoHeight * padHeightRatio)
+        pasteY = int((resultHeight-videoHeight)/2)
     
-    ffmpegLine = "ffmpeg -i \"" + theInputVideo + "\" -vf \"scale=w=1280:h=720:force_original_aspect_ratio=1,pad=1280:720:(ow-iw)/2:(oh-ih)/2\" \"" + theOutputVideo + "\" 2>&1"
+    ffmpegLine = "ffmpeg -i \"" + theInputVideo + "\" -vf \"pad=" + resultWidth + ":" + resultHeight + ":" + pasteX + ":" + pasteY + "\" \"" + theOutputVideo + "\" 2>&1"
     print(ffmpegLine)
     
 # Produce a thumbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
