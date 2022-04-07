@@ -190,10 +190,10 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     resultWidth = videoWidth
     resultHeight = videoHeight
     if pictureRatio < outputRatio:
-        padWidthRatio = 1 + (outputRatio - videoRatio)
+        padWidthRatio = 1 + (outputRatio - pictureRatio)
         resultWidth = int(pictureWidth * padWidthRatio)
     elif pictureRatio > outputRatio:
-        padHeightRatio = 1 + (videoRatio - outputRatio)
+        padHeightRatio = 1 + (pictureRatio - outputRatio)
         resultHeight = int(videoHeight * padHeightRatio)
     
     ffmpegLine = "ffmpeg -i \"" + theInputVideo + "\" -vf \"scale=w=1280:h=720:force_original_aspect_ratio=1,pad=1280:720:(ow-iw)/2:(oh-ih)/2\" \"" + theOutputVideo + "\" 2>&1"
