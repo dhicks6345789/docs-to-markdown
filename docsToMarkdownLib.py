@@ -201,11 +201,11 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
         #resultHeight = int(videoHeight * padHeightRatio)
         #pasteY = int((resultHeight-videoHeight)/2)
     if pictureRatio < outputRatio:
-        padHeightRatio = 1 + (pictureRatio - outputRatio)
+        padWidthRatio = 1 + (outputRatio - pictureRatio)
         resultHeight = int(videoHeight / padHeightRatio)
         pasteY = int((resultHeight-videoHeight)/2)
     elif pictureRatio > outputRatio:
-        padWidthRatio = 1 + (outputRatio - pictureRatio)
+        padHeightRatio = 1 + (pictureRatio - outputRatio)
         resultWidth = int(videoWidth / padWidthRatio)
         pasteX = int((resultWidth-videoWidth)/2)
     
