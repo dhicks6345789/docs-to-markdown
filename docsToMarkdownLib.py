@@ -22,6 +22,9 @@ markdownReplace = {"\\[":"[","\\]":"]","\\!":"!"}
 bitmapTypes = ["jpg", "jpeg", "png", "ico"]
 imageTypes =  bitmapTypes + ["svg"]
 
+# An array of "video file" types.
+videoTypes = ["mp4"]
+
 # An array of "url file" types.
 urlTypes = ["url", "txt"]
 
