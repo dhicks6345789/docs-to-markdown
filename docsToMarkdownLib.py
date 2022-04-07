@@ -178,7 +178,7 @@ def thumbnailImage(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     videoDimensions = os.popen("ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x " + theVideo).read().strip()
     videoWidth = int(videoDimensions.split("x")[0])
     videoHeight = int(videoDimensions.split("x")[1])
-    print(Video width: " + videoWidth + " height: " + videoHeight)
+    print("Video width: " + videoWidth + " height: " + videoHeight)
 
 # Produce a thumbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
 # the given block width and height.
