@@ -173,7 +173,7 @@ def reduceInts(theRange, leftInt, rightInt):
             return (int(leftDivide), int(rightDivide))
     return (leftInt, rightInt)
 
-def thumbnailImage(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight):
+def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight):
     # Figure out the video's dimensions.
     videoDimensions = os.popen("ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x " + theVideo).read().strip()
     videoWidth = int(videoDimensions.split("x")[0])
