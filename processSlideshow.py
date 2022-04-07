@@ -86,7 +86,7 @@ for slide in slides:
             docsToMarkdownLib.putFile(args["output"] + os.sep + str(slideCount) + ".svg", SVGContent)
             slideList.append(str(slideCount) + ".svg")
         elif fileType in docsToMarkdownLib.videoTypes:
-            thumbnailImage(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + str(slideCount) + ".mp4", args["width"], args["height"])
+            docsToMarkdownLib.thumbnailVideo(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + str(slideCount) + ".mp4", args["width"], args["height"])
         else:
             shutil.copyfile(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + str(slideCount) + "." + fileType.lower())
             slideList.append(str(slideCount) + "." + fileType.lower())
