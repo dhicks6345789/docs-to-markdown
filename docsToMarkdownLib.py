@@ -175,7 +175,7 @@ def reduceInts(theRange, leftInt, rightInt):
 
 def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight):
     # Figure out the video's dimensions.
-    ffprobeLine = "ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x " + theInputVideo
+    ffprobeLine = "ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x \"" + theInputVideo + "\""
     print(ffprobeLine)
     videoDimensions = os.popen(ffprobeLine).read().strip()
     print("videoDimensions: " + videoDimensions)
