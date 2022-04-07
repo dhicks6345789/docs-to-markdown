@@ -175,13 +175,12 @@ def reduceInts(theRange, leftInt, rightInt):
 
 def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight):
     # Figure out the video's dimensions.
-    ffprobeLine = "ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x \"" + theInputVideo + "\""
-    print(ffprobeLine)
-    videoDimensions = os.popen(ffprobeLine).read().strip()
-    print("videoDimensions: " + videoDimensions)
+    videoDimensions = os.popen("ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x \"" + theInputVideo + "\" 2>&1").read().strip()
     videoWidth = int(videoDimensions.split("x")[0])
     videoHeight = int(videoDimensions.split("x")[1])
-    print("Video width: " + str(videoWidth) + " height: " + str(videoHeight))
+    print("Original video width: " + str(videoWidth) + " height: " + str(videoHeight))
+    width, height = getRatioedDimensions(videoWidth, videoHeight, theBlockWidth, theBlockHeight)
+    print("Output video width: " + str(width) + " height: " + str(height))
 
 # Produce a thumbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
 # the given block width and height.
@@ -212,16 +211,20 @@ def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
     
     return result
 
+def getRatioedDimensions(objectWidth, objectHeight, ratioWidth, ratioHeight):
+    if int(ratioWidth) > objectWidth:
+        width = int(ratioWidth)
+        height = int((float(ratioWidth) / float(objectWidth)) * float(objectHeight))
+    else:
+        width = int(objectWidth)
+        height = int((float(objectWidth) / float(ratioWidth)) * float(ratioHeight))
+    return width, height
+
 def embedBitmapInSVG(theBitmap, theWidth, theHeight):
     print("Emedding bitmap: " + theBitmap)
     bitmapObject = PIL.Image.open(theBitmap)
     
-    if int(theWidth) > bitmapObject.width:
-        width = int(theWidth)
-        height = int((float(theWidth) / float(bitmapObject.width)) * float(bitmapObject.height))
-    else:
-        width = int(bitmapObject.width)
-        height = int((float(bitmapObject.width) / float(theWidth)) * float(theHeight))
+    width, height = getRatioedDimensions(bitmapObject.width, bitmapObject.height, theWidth, theHeight)
     
     bitmapObject = thumbnailImage(bitmapObject, width, height)
     bitmapData = io.BytesIO()
