@@ -196,13 +196,13 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
         padHeightRatio = 1 + (outputRatio - pictureRatio)
         resultHeight = int(videoHeight / padHeightRatio)
         scaledWidth = int(videoWidth / padHeightRatio)
-        scaledHeight = -1
+        scaledHeight = resultHeight
         pasteX = int((resultWidth - scaledWidth) / 2)
     elif pictureRatio > outputRatio:
         padWidthRatio = 1 + (pictureRatio - outputRatio)
         resultWidth = int(videoWidth / padWidthRatio)
         scaledHeight = int(videoHeight / padWidthRatio)
-        scaledWidth = -1
+        scaledWidth = resultWidth
         pasteX = int((resultHeight - scaledHeight) / 2)
     
     ffmpegLine = "ffmpeg -i \"" + theInputVideo + "\" -vf \"scale=" + str(scaledWidth) + ":" + str(scaledHeight) + ",pad=" + str(resultWidth) + ":" + str(resultHeight) + ":" + str(pasteX) + ":" + str(pasteY) + "\" \"" + theOutputVideo + "\" 2>&1"
