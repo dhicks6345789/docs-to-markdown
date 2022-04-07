@@ -191,7 +191,7 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     resultHeight = videoHeight
     if pictureRatio < outputRatio:
         padWidthRatio = 1 + (outputRatio - pictureRatio)
-        resultWidth = int(pictureWidth * padWidthRatio)
+        resultWidth = int(videoWidth * padWidthRatio)
     elif pictureRatio > outputRatio:
         padHeightRatio = 1 + (pictureRatio - outputRatio)
         resultHeight = int(videoHeight * padHeightRatio)
