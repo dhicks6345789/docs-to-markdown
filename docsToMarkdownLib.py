@@ -205,9 +205,14 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
         scaledWidth = resultWidth
         pasteX = int((resultHeight - scaledHeight) / 2)
     
-    #ffmpegLine = "ffmpeg -i \"" + theInputVideo + "\" -vf \"scale=" + str(scaledWidth) + ":" + str(scaledHeight) + ",pad=" + str(resultWidth) + ":" + str(resultHeight) + ":" + str(pasteX) + ":" + str(pasteY) + "\" \"" + theOutputVideo + "\" 2>&1"
-    ffmpegLine = "ffmpeg -i \"" + theInputVideo + "\" -vf \"scale=" + str(scaledWidth) + ":" + str(scaledHeight) + "\" \"" + theOutputVideo + "\" 2>&1"
+    if (scaledWidth % 2) == 1:
+        scaledWidth = scaledWidth - 1
+    if (scaledHeight % 2) == 1:
+        scaledHeight = scaledHeight - 1
+    
+    ffmpegLine = "ffmpeg -y -i \"" + theInputVideo + "\" -vf \"scale=" + str(scaledWidth) + ":" + str(scaledHeight) + ",pad=" + str(resultWidth) + ":" + str(resultHeight) + ":" + str(pasteX) + ":" + str(pasteY) + "\" \"" + theOutputVideo + "\" 2>&1"
     print(ffmpegLine)
+    os.system(ffmpegLine)
     
 # Produce a thumbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
 # the given block width and height.
