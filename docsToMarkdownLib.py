@@ -178,10 +178,27 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     videoDimensions = os.popen("ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x \"" + theInputVideo + "\" 2>&1").read().strip()
     videoWidth = int(videoDimensions.split("x")[0])
     videoHeight = int(videoDimensions.split("x")[1])
-    print("Original video width: " + str(videoWidth) + " height: " + str(videoHeight))
+    
+    # Scale the dimensions given as the output to match the input video.
     width, height = getRatioedDimensions(videoWidth, videoHeight, theBlockWidth, theBlockHeight)
-    print("Output video width: " + str(width) + " height: " + str(height))
-
+    
+    # Figure out the ratio of width to height of the input video clip...
+    pictureRatio = float(videoWidth) / float(videoHeight)
+    # ...and of the output video.
+    outputRatio = float(width) / float(height)
+    
+    resultWidth = videoWidth
+    resultHeight = videoHeight
+    if pictureRatio < outputRatio:
+        padWidthRatio = 1 + (outputRatio - videoRatio)
+        resultWidth = int(pictureWidth * padWidthRatio)
+    elif pictureRatio > outputRatio:
+        padHeightRatio = 1 + (videoRatio - outputRatio)
+        resultHeight = int(videoHeight * padHeightRatio)
+    
+    ffmpegLine = "ffmpeg -i \"" + theInputVideo + "\" -vf \"scale=w=1280:h=720:force_original_aspect_ratio=1,pad=1280:720:(ow-iw)/2:(oh-ih)/2\" \"" + theOutputVideo + "\" 2>&1"
+    print(ffmpegLine)
+    
 # Produce a thumbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
 # the given block width and height.
 def thumbnailImage(theImage, theBlockWidth, theBlockHeight):
