@@ -195,13 +195,17 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     if pictureRatio < outputRatio:
         padHeightRatio = 1 + (outputRatio - pictureRatio)
         resultHeight = int(videoHeight / padHeightRatio)
-        pasteX = int((resultWidth - int(videoWidth / padHeightRatio)) / 2)
+        scaledWidth = int(videoWidth / padHeightRatio)
+        scaledHeight = -1
+        pasteX = int((resultWidth - scaledWidth) / 2)
     elif pictureRatio > outputRatio:
         padWidthRatio = 1 + (pictureRatio - outputRatio)
         resultWidth = int(videoWidth / padWidthRatio)
-        pasteX = int((resultHeight - int(videoHeight / padWidthRatio)) / 2)
+        scaledHeight = int(videoHeight / padWidthRatio)
+        scaledWidth = -1
+        pasteX = int((resultHeight - scaledHeight) / 2)
     
-    ffmpegLine = "ffmpeg -i \"" + theInputVideo + "\" -vf \"pad=" + str(resultWidth) + ":" + str(resultHeight) + ":" + str(pasteX) + ":" + str(pasteY) + "\" \"" + theOutputVideo + "\" 2>&1"
+    ffmpegLine = "ffmpeg -i \"" + theInputVideo + "\" -vf \"scale=" + str(scaledWidth) + ":" + str(scaledHeight) + ",pad=" + str(resultWidth) + ":" + str(resultHeight) + ":" + str(pasteX) + ":" + str(pasteY) + "\" \"" + theOutputVideo + "\" 2>&1"
     print(ffmpegLine)
     
 # Produce a thumbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
