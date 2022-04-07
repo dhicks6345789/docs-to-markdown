@@ -9,7 +9,7 @@
                 if (resources[currentSlide].endsWith(".svg")) {
                     document.getElementById("slide").innerHTML = "<img src=\"" + resources[currentSlide] + "\" width=\"100%\"/>";
                 } else if (resources[currentSlide].endsWith(".mp4")) {
-                    document.getElementById("slide").innerHTML = "<video autoplay loop><source src=\"" + resources[currentSlide] + "\" type=\"video/mp4\"></video>";
+                    document.getElementById("slide").innerHTML = "<video width=\"100%\" autoplay loop><source src=\"" + resources[currentSlide] + "\" type=\"video/mp4\"></video>";
                 }
                 currentSlide = currentSlide + 1;
                 if (currentSlide == resources.length) {
