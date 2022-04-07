@@ -174,6 +174,7 @@ def reduceInts(theRange, leftInt, rightInt):
     return (leftInt, rightInt)
 
 def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight):
+    print("Video: " + theInputVideo)
     # Figure out the video's dimensions.
     videoDimensions = os.popen("ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x \"" + theInputVideo + "\" 2>&1").read().strip()
     videoWidth = int(videoDimensions.split("x")[0])
@@ -193,6 +194,7 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     pasteY = 0
     if pictureRatio < outputRatio:
         padWidthRatio = 1 + (outputRatio - pictureRatio)
+        print("padWidthRatio: " + str(padWidthRatio))
         resultWidth = int(videoWidth * padWidthRatio)
         pasteX = int((resultWidth-videoWidth)/2)
     elif pictureRatio > outputRatio:
