@@ -181,7 +181,7 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     print("videoDimensions: " + videoDimensions)
     videoWidth = int(videoDimensions.split("x")[0])
     videoHeight = int(videoDimensions.split("x")[1])
-    print("Video width: " + videoWidth + " height: " + videoHeight)
+    print("Video width: " + str(videoWidth) + " height: " + str(videoHeight))
 
 # Produce a thumbnail of an image. Differs from PIL.thumbnail() in that thumbnails are returned in a new image padded to match the aspect ratio of
 # the given block width and height.
