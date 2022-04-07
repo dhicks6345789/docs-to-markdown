@@ -210,7 +210,7 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     if (scaledHeight % 2) == 1:
         scaledHeight = scaledHeight - 1
     
-    ffmpegLine = "ffmpeg -y -i \"" + theInputVideo + "\" -vf \"scale=" + str(scaledWidth) + ":" + str(scaledHeight) + ",pad=" + str(resultWidth) + ":" + str(resultHeight) + ":" + str(pasteX) + ":" + str(pasteY) + "\" \"" + theOutputVideo + "\" 2>&1"
+    ffmpegLine = "ffmpeg -y -i \"" + theInputVideo + "\" -vf \"scale=" + str(scaledWidth) + ":" + str(scaledHeight) + ",pad=" + str(resultWidth) + ":" + str(resultHeight) + ":" + str(pasteX) + ":" + str(pasteY) + ":#FFFFFF@1,format=rgb24\" \"" + theOutputVideo + "\" 2>&1"
     print(ffmpegLine)
     os.system(ffmpegLine)
     
