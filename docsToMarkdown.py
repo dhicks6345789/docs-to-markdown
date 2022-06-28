@@ -312,14 +312,12 @@ for configItem in config:
                 flushPrint("Converting " + inputFile + " to CSV.")
                 inputFile = normalisePath(inputFolder + os.sep + subRootPath + os.sep + inputFile)
                 try:
-                    flushPrint("Read Excel...")
                     inputData = pandas.read_excel(io=inputFile)
                     if "jekyllHeaders" in configItem.keys() and configItem["jekyllHeaders"].lower() == "true":
                         newColumns = []
                         for columnName in inputData.columns:
                             newColumns.append(columnName.replace(" ", ""))
                         inputData.columns = newColumns
-                    flushPrint("toCSV...")
                     outputCSVData = outputCSVData + inputData.to_csv() + "\n"
                 except xlrd.biffh.XLRDError:
                     flushPrint("XLRDError - Error reading Excel file: " + inputFile)
