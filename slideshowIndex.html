@@ -24,11 +24,11 @@
             }
             
             function startSlides() {
-                slideDiv = document.getElementById("slide");
-                slidesDiv = document.getElementById("slides");
+                var slideDiv = document.getElementById("slide");
+                var slidesDiv = document.getElementById("slides");
                 
                 for (var slideNum=0; slideNum < resources.length; slideNum = slideNum + 1) {
-                    newSlideDiv = slideDiv.clone;
+                    var newSlideDiv = slideDiv.clone;
                     newSlideDiv.id = "slide-" + slideNum;
                     newSlideDiv.style.display = "none";
                     if (resources[slideNum].endsWith(".svg")) {
