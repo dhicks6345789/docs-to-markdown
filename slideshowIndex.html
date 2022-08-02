@@ -17,8 +17,8 @@
                 }
                 
                 // To do: fancier fade effect goes here.
-                document.getElementById("slide-"+str(currentSlide)).style.display = "none";
-                document.getElementById("slide-"+str(nextSlide)).style.display = "block";
+                document.getElementById("slide-" + currentSlide).style.display = "none";
+                document.getElementById("slide-" + nextSlide).style.display = "block";
                 
                 currentSlide = nextSlide;
             }
@@ -29,7 +29,7 @@
                 
                 for (var slideNum=0; slideNum < resources.length; slideNum = slideNum + 1) {
                     newSlideDiv = slideDiv.clone;
-                    newSlideDiv.id = "slide-" + str(slideNum);
+                    newSlideDiv.id = "slide-" + slideNum;
                     newSlideDiv.style.display = "none";
                     if (resources[slideNum].endsWith(".svg")) {
                         slideDiv.innerHTML = "<img src=\"" + resources[slideNum] + "\" width=\"100%\"/>";
