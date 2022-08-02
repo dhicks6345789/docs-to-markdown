@@ -28,7 +28,7 @@
                 slidesDiv = document.getElementById("slides");
                 
                 for (slideNum=0; slideNum < resources.length; slideNum = slideNum + 1) {
-                    newSlideDiv = slideDiv.clone();
+                    newSlideDiv = slideDiv.cloneNode();
                     newSlideDiv.id = "slide-" + slideNum;
                     newSlideDiv.style.display = "none";
                     if (resources[slideNum].endsWith(".svg")) {
