@@ -12,7 +12,7 @@
             function fadeSlides() {
                 fadeStartSlide.style.opacity = opacity;
                 fadeEndSlide.style.opacity = 1 - opacity;
-                opacity = opacity - 0.1;
+                opacity = opacity - 0.05;
                 if (opacity == 0) {
                     clearInterval(fadeInterval);
                     fadeStartSlidestyle.display = "none";
@@ -31,7 +31,7 @@
                 fadeEndSlide = document.getElementById("slide-" + nextSlide);
                 fadeEndSlide.style.opacity = 0;
                 fadeEndSlide.style.display = "block";
-                fadeInterval = setInterval(fadeSlides, 200);
+                fadeInterval = setInterval(fadeSlides, 100);
                 
                 currentSlide = nextSlide;
                 console.log(currentSlide);
