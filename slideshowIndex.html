@@ -2,9 +2,13 @@
 <html lang="en">
     <head>
         <script>
-            currentSlide = 0;
-            resources = <<RESOURCESGOHERE>>;
+            var currentSlide = 0;
+            var slideTransitionTime = 20000;
+            var slideFadeStep = 0.05;
+            var slideFadeInterval = 200;
+            const resources = <<RESOURCESGOHERE>>;
             
+            // An interval function, along with some global variables, to fade between slides.
             var opacity = 1;
             var fadeStartSlide = 1;
             var fadeEndSlide = 1;
@@ -12,13 +16,14 @@
             function fadeSlides() {
                 fadeStartSlide.style.opacity = opacity;
                 fadeEndSlide.style.opacity = 1 - opacity;
-                opacity = opacity - 0.05;
+                opacity = opacity - slideFadeStep;
                 if (opacity == 0) {
                     clearInterval(fadeInterval);
                     fadeStartSlidestyle.display = "none";
                 }
             }
             
+            // Display the next slide.
             function showNextSlide() {
                 nextSlide = currentSlide + 1;
                 if (nextSlide == resources.length) {
@@ -31,7 +36,6 @@
                 fadeEndSlide = document.getElementById("slide-" + nextSlide);
                 fadeEndSlide.style.opacity = 0;
                 fadeEndSlide.style.display = "block";
-                // TO DO: Make the fade speed a defineable value.
                 fadeInterval = setInterval(fadeSlides, 200);
                 
                 currentSlide = nextSlide;
@@ -41,9 +45,18 @@
             function startSlides() {
                 // Extract any optional parameters from the URL.
                 const searchParams = new URLSearchParams(window.location.search);
-                for (const p of searchParams) {
-                    console.log(p);
+                for (const searchParam of searchParams) {
+                    if (searchParam[0].toLowerCase() == "transition") {
+                        slideTransitionTime = int(searchParam[1]) * 1000;
+                    } else if (searchParam.toLowerCase() == "fadesteps") {
+                        slideFadeStep = 1 / int(searchParam[1]);
+                    } else if (searchParam.toLowerCase() == "fadeinterval") {
+                        slideFadeInterval = int(float(searchParam[1]) * 1000);
+                    }
                 }
+                console.log(slideTransitionTime);
+                console.log(slideFadeStep);
+                console.log(slideFadeInterval);
                 
                 // Clone a "slide" DIV for each slide and set the content, this should get the content pre-loaded so there's no wait for
                 // content to load when switching from one slide to another.
@@ -63,8 +76,7 @@
                 // Make sure the intial slide is visible.
                 document.getElementById("slide-0").style.display = "block";
                 // Set up the slide transition.
-                // TO DO: Make this a defineable value.
-                setInterval(showNextSlide, 20000);
+                setInterval(showNextSlide, SlideTransitionTime);
             }
         </script>
     </head>
