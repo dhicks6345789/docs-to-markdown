@@ -47,11 +47,11 @@
                 const searchParams = new URLSearchParams(window.location.search);
                 for (const searchParam of searchParams) {
                     if (searchParam[0].toLowerCase() == "transition") {
-                        slideTransitionTime = int(searchParam[1]) * 1000;
+                        slideTransitionTime = parseInt(searchParam[1]) * 1000;
                     } else if (searchParam.toLowerCase() == "fadesteps") {
-                        slideFadeStep = 1 / int(searchParam[1]);
+                        slideFadeStep = 1 / parseInt(searchParam[1]);
                     } else if (searchParam.toLowerCase() == "fadeinterval") {
-                        slideFadeInterval = int(float(searchParam[1]) * 1000);
+                        slideFadeInterval = Number(searchParam[1]) * 1000;
                     }
                 }
                 console.log(slideTransitionTime);
