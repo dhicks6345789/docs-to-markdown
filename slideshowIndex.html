@@ -25,23 +25,25 @@
                     nextSlide = 0;
                 }
                 
-                // To do: fancier fade effect goes here.
+                // Set up the fade effect between the current slide and the next.
                 opacity = 1;
                 fadeStartSlide = document.getElementById("slide-" + currentSlide);
                 fadeEndSlide = document.getElementById("slide-" + nextSlide);
                 fadeEndSlide.style.opacity = 0;
                 fadeEndSlide.style.display = "block";
+                // TO DO: Make the fade speed a defineable value.
                 fadeInterval = setInterval(fadeSlides, 200);
                 
                 currentSlide = nextSlide;
-                console.log(currentSlide);
             }
             
+            // The page load function - execution starts here.
             function startSlides() {
+                // Clone a "slide" DIV for each slide and set the content, this should get the content pre-loaded so there's no wait for
+                // content to load when switching from one slide to another.
                 slideDiv = document.getElementById("slide");
                 slidesDiv = document.getElementById("slides");
-                
-                for (slideNum=0; slideNum < resources.length; slideNum = slideNum + 1) {
+                for (slideNum = 0; slideNum < resources.length; slideNum = slideNum + 1) {
                     newSlideDiv = slideDiv.cloneNode();
                     newSlideDiv.id = "slide-" + slideNum;
                     newSlideDiv.style.display = "none";
@@ -52,7 +54,10 @@
                     }
                     slidesDiv.appendChild(newSlideDiv);
                 }
+                // Make sure the intial slide is visible.
                 document.getElementById("slide-0").style.display = "block";
+                // Set up the slide transition.
+                // TO DO: Make this a defineable value.
                 setInterval(showNextSlide, 20000);
             }
         </script>
