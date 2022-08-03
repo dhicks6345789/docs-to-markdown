@@ -31,7 +31,7 @@
                 fadeEndSlide = document.getElementById("slide-" + nextSlide);
                 fadeEndSlide.style.opacity = 0;
                 fadeEndSlide.style.display = "block";
-                fadeInterval = setInterval(fadeSlides, 1000);
+                fadeInterval = setInterval(fadeSlides, 100);
                 
                 currentSlide = nextSlide;
                 console.log(currentSlide);
@@ -53,13 +53,13 @@
                     slidesDiv.appendChild(newSlideDiv);
                 }
                 document.getElementById("slide-0").style.display = "block";
-                setInterval(showNextSlide, 15000);
+                setInterval(showNextSlide, 10000);
             }
         </script>
     </head>
     <body onload="startSlides()">
         <div id="slides">
-            <div id="slide">
+            <div id="slide" style="position:absolute; top:0; left:0;">
             </div>
         </div>
     </body>
