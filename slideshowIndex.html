@@ -31,7 +31,7 @@
                 fadeEndSlide = document.getElementById("slide-" + nextSlide);
                 fadeEndSlide.style.opacity = 0;
                 fadeEndSlide.style.display = "block";
-                fadeInterval = setInterval(fadeSlides, 100);
+                fadeInterval = setInterval(fadeSlides, 200);
                 
                 currentSlide = nextSlide;
                 console.log(currentSlide);
@@ -53,7 +53,7 @@
                     slidesDiv.appendChild(newSlideDiv);
                 }
                 document.getElementById("slide-0").style.display = "block";
-                setInterval(showNextSlide, 10000);
+                setInterval(showNextSlide, 20000);
             }
         </script>
     </head>
