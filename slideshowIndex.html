@@ -5,10 +5,10 @@
             currentSlide = 0;
             resources = <<RESOURCESGOHERE>>;
             
-            var fadeInterval;
-            var opacity;
-            var fadeStartSlide;
-            var fadeEndSlide;
+            var opacity = 1;
+            var fadeStartSlide = 1;
+            var fadeEndSlide = 1;
+            var fadeInterval = 1;
             function fadeSlides() {
                 fadeStartSlide.style.opacity = opacity;
                 fadeEndSlide.style.opacity = 1 - opacity;
@@ -53,7 +53,7 @@
                     slidesDiv.appendChild(newSlideDiv);
                 }
                 document.getElementById("slide-0").style.display = "block";
-                setInterval(showNextSlide, 20000);
+                setInterval(showNextSlide, 15000);
             }
         </script>
     </head>
