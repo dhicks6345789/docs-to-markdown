@@ -27,10 +27,10 @@
                 
                 // To do: fancier fade effect goes here.
                 opacity = 1;
-                fadeEndSlide.style.opacity = 0;
-                fadeEndSlidestyle.display = "block";
                 fadeStartSlide = document.getElementById("slide-" + currentSlide);
                 fadeEndSlide = document.getElementById("slide-" + nextSlide);
+                fadeEndSlide.style.opacity = 0;
+                fadeEndSlidestyle.display = "block";
                 fadeInterval = setInterval(fadeSlides, 1000);
                 
                 currentSlide = nextSlide;
