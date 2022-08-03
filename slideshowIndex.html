@@ -48,9 +48,9 @@
                 for (const searchParam of searchParams) {
                     if (searchParam[0].toLowerCase() == "transition") {
                         slideTransitionTime = parseInt(searchParam[1]) * 1000;
-                    } else if (searchParam.toLowerCase() == "fadesteps") {
+                    } else if (searchParam[0].toLowerCase() == "fadesteps") {
                         slideFadeStep = 1 / parseInt(searchParam[1]);
-                    } else if (searchParam.toLowerCase() == "fadeinterval") {
+                    } else if (searchParam[0].toLowerCase() == "fadeinterval") {
                         slideFadeInterval = Number(searchParam[1]) * 1000;
                     }
                 }
