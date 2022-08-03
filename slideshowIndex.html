@@ -15,6 +15,7 @@
                 opacity = opacity - 0.1;
                 if (opacity == 0) {
                     clearInterval(fadeInterval);
+                    fadeStartSlidestyle.display = "none";
                 }
             }
             
@@ -26,11 +27,11 @@
                 
                 // To do: fancier fade effect goes here.
                 opacity = 1;
-                fadeStartSlide = document.getElementById("slide-" + currentSlide)
-                fadeEndSlide = document.getElementById("slide-" + nextSlide)
+                fadeEndSlide.style.opacity = 0;
+                fadeEndSlidestyle.display = "block";
+                fadeStartSlide = document.getElementById("slide-" + currentSlide);
+                fadeEndSlide = document.getElementById("slide-" + nextSlide);
                 fadeInterval = setInterval(fadeSlides, 1000);
-                //document.getElementById("slide-" + currentSlide).style.display = "none";
-                //document.getElementById("slide-" + nextSlide).style.display = "block";
                 
                 currentSlide = nextSlide;
                 console.log(currentSlide);
