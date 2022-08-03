@@ -5,6 +5,19 @@
             currentSlide = 0;
             resources = <<RESOURCESGOHERE>>;
             
+            var fadeInterval;
+            var opacity;
+            var fadeStartSlide;
+            var fadeEndSlide;
+            fadeSlides() {
+                fadeStartSlide.style.opacity = opacity;
+                fadeEndSlide.style.opacity = 1 - opacity;
+                opacity = opacity - 0.1;
+                if (opacity == 0) {
+                    clearInterval(fadeInterval);
+                }
+            }
+            
             function showNextSlide() {
                 nextSlide = currentSlide + 1;
                 if (nextSlide == resources.length) {
@@ -12,8 +25,12 @@
                 }
                 
                 // To do: fancier fade effect goes here.
-                document.getElementById("slide-" + currentSlide).style.display = "none";
-                document.getElementById("slide-" + nextSlide).style.display = "block";
+                opacity = 1;
+                fadeStartSlide = document.getElementById("slide-" + currentSlide)
+                fadeEndSlide = document.getElementById("slide-" + nextSlide)
+                fadeInterval = setInterval(fadeSlides, 1000);
+                //document.getElementById("slide-" + currentSlide).style.display = "none";
+                //document.getElementById("slide-" + nextSlide).style.display = "block";
                 
                 currentSlide = nextSlide;
                 console.log(currentSlide);
@@ -35,7 +52,7 @@
                     slidesDiv.appendChild(newSlideDiv);
                 }
                 document.getElementById("slide-0").style.display = "block";
-                setInterval(showNextSlide, 10000);
+                setInterval(showNextSlide, 20000);
             }
         </script>
     </head>
