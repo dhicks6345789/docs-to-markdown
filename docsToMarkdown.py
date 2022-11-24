@@ -52,7 +52,7 @@ globalValues = {}
 # Pandoc escapes Markdown control characters embedded in Word documents, but we want to let people embed chunks of Markdown in
 # a document if they want, so we un-escape the Markdown back again - we simply use Python's string.replace to replace characters
 # in strings.
-markdownReplace = {"\\[":"[","\\]":"]","\\!":"!"}
+markdownReplace = {"\\[":"[","\\]":"]","\\!":"!","\\`\\`\\`":"```"}
 
 # A utility function to return the contents of the given file.
 def getFile(theFilename):
