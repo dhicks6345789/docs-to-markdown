@@ -23,17 +23,14 @@ import docsToMarkdownLib
 # We use the Pandas library to load in Excel / CSV files for the configuration settings.
 import pandas
 
-# A global debug flag - debugging information is printed to the console if the "--debug" commandline option is passed.
-debug = False
-
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"], optionalArgs=["debug"])
 
-print(args)
-if "debug" in args.keys():
-    debug = True
-if debug:
-    print("Debug set.")
+# If the "debug" option is set, print the given message to the console.
+def debug(theMessage):
+    if "debug" in args.keys():
+        print(theMessage)
+debug("Debug set.")
     
 print("STATUS: processDashboard: " + args["input"] + " to " + args["output"], flush=True)
 
@@ -211,6 +208,11 @@ def arrayIsIn(leftArray, rightArray):
 def sortIconObject(theIcon):
     return (theIcon.size[0] * theIcon.size[1])
 
+if "debug" in args.keys():
+    print(sections)
+    print(sections)
+debug(str(sections))
+    
 # Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
     if not section[1] == {}:
