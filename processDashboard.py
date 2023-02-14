@@ -210,7 +210,6 @@ def sortIconObject(theIcon):
     return (theIcon.size[0] * theIcon.size[1])
 
 debug("Sections: " + str(sections))
-    
 # Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
     if not section[1] == {}:
