@@ -139,6 +139,7 @@ for section in sections:
                         itemsSheet = pandas.read_csv(fullPath)
                     # Convert the Pandas dataframe to an array of dicts, lowercasing all the keys and replacing all "NaN" values with empty string.
                     for itemsIndex, itemsRow in itemsSheet.iterrows():
+                        debug("itemsRow: " + str(itemsRow))
                         newItem = {}
                         for colName in itemsRow.keys():
                             if pandas.isna(itemsRow[colName]):
