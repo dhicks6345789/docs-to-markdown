@@ -29,6 +29,7 @@ debug = False
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"], optionalArgs=["debug"])
 
+print(args)
 if "debug" in args.keys():
     debug = True
 if debug:
