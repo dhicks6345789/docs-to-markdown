@@ -23,9 +23,17 @@ import docsToMarkdownLib
 # We use the Pandas library to load in Excel / CSV files for the configuration settings.
 import pandas
 
-# Get any arguments given via the command line.
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"])
+# A global debug flag - debugging information is printed to the console if the "--debug" commandline option is passed.
+debug = False
 
+# Get any arguments given via the command line.
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"generator":"hugo"}, requiredArgs=["input","output"], optionalArgs=["debug"])
+
+if "debug" in args.keys():
+    debug = True
+if debug:
+    print("Debug set.")
+    
 print("STATUS: processDashboard: " + args["input"] + " to " + args["output"], flush=True)
 
 # Make sure the output folder exists.
