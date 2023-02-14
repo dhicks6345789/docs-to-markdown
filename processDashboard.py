@@ -208,10 +208,7 @@ def arrayIsIn(leftArray, rightArray):
 def sortIconObject(theIcon):
     return (theIcon.size[0] * theIcon.size[1])
 
-if "debug" in args.keys():
-    print(sections)
-    print(sections)
-debug(str(sections))
+debug("Sections: " + str(sections))
     
 # Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
