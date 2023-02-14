@@ -145,7 +145,6 @@ for section in sections:
                                 newItem[colName.lower()] = ""
                             else:
                                 newItem[colName.lower()] = itemsRow[colName]
-                        debug("newItem: " + str(newItem))
                         itemsList.append(newItem)
 
 # Returns the URL value from a .url file - can either be a Windows-style .url file or simply a text file with a .url extension.
@@ -209,7 +208,6 @@ def arrayIsIn(leftArray, rightArray):
 def sortIconObject(theIcon):
     return (theIcon.size[0] * theIcon.size[1])
 
-debug("Sections: " + str(sections))
 # Sort the items found into rows, producing one Markdown file per row.
 for section in sections:
     if not section[1] == {}:
