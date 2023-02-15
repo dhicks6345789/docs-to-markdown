@@ -2,8 +2,10 @@
             {{ range .Site.Sections }}
             {{ if eq .Title "Rows" }}
             {{ range .Pages }}
-            {{ $row := . }}
-            <div>Row: {{ .Params.Col1Width }}</div>
+            <p>Row: {{ .Params.Col1Width }}</p>
+            <p>Row: {{ .Params.Col1Type }}</p>
+            <p>Row: {{ .Params.Col1Label }}</p>
+            <p>Row: {{ .Params.Col1URL }}</p>
             {{ end }}
             {{ end }}
             {{ end }}
