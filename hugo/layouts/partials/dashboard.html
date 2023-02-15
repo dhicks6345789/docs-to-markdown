@@ -2,7 +2,7 @@
             {{ range .Site.Sections }}
             {{ if eq .Title "Rows" }}
             {{ range .Pages }}
-            <div>{{ .Title }}</div>
+            <div>{{ .Page.Title }}</div>
             {{ end }}
             {{ end }}
             {{ end }}
