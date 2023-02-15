@@ -1,8 +1,7 @@
         <div class="container-fluid">
             {{ range .Site.Sections }}
-            {{ $section := . }}
-            {{ if eq $section.Title "Rows" }}
-            {{ range $section.Pages }}
+            {{ if eq .Title "Rows" }}
+            {{ range .Pages }}
             <div>Row: {{ .Title }}</div>
             {{ end }}
             {{ end }}
