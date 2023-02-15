@@ -1,6 +1,9 @@
         <div class="container-fluid">
-            {{ range .Site.Sections.Rows }}
-            <div>{{ .Title }}</div>
+            {{ range .Site.Sections }}
+                {% if .Title == "Rows" %}
+                {{ range .Pages }}
+                <div>{{ .Title }}</div>
+                {{ end }}
             {{ end }}
             {% assign rowNum = 1 %}
             {% for row in collections.row %}
