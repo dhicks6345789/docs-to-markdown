@@ -3,7 +3,7 @@
             {{ if eq .Title "Rows" }}
             {{ range .Pages }}
             {{ $row := . }}
-            <div>Row: {{ .Col1Width }}</div>
+            <div>Row: {{ $row.Params.Col1Width }}</div>
             {{ end }}
             {{ end }}
             {{ end }}
