@@ -1,9 +1,7 @@
         <div class="container-fluid">
-            {{ range .Site.Sections }}
-            {{ if eq .Title "Rows" }}
-            {{ range .Pages }}
-            <div>{{ .Page.Title }}</div>
-            {{ end }}
+            {{ range .Site.Sections where "Title" "Rows" }}
+            {{ range .Pages }} 
+            <div>{{ .Title }}</div>
             {{ end }}
             {{ end }}
         </div>
