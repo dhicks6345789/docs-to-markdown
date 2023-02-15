@@ -2,10 +2,15 @@
             {{ range .Site.Sections }}
             {{ if eq .Title "Rows" }}
             {{ range .Pages }}
-            <p>Row: {{ .Params.Col1Width }}</p>
+            <!-- <p>Row: {{ .Params.Col1Width }}</p>
             <p>Row: {{ .Params.Col1Type }}</p>
             <p>Row: {{ .Params.Col1Label }}</p>
-            <p>Row: {{ .Params.Col1URL }}</p>
+            <p>Row: {{ .Params.Col1URL }}</p> -->
+            <div class="p-3 row">
+                <div class="col-sm-12">
+                    <h2 class="p-3 mt-2 mb-2 bg-secondary text-white text-center">{{ .Params.Col1Label }}</h2>
+                </div>
+            </div>
             {{ end }}
             {{ end }}
             {{ end }}
