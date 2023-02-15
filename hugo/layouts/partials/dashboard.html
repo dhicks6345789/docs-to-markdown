@@ -4,33 +4,10 @@
             {% if row.data.title != blank and row.data.title != "" and row.data.title != "-" %}
             <div class="p-3 row">
                 <div class="col-sm-12">
-                    <!-- <h2 class="p-3 mt-2 mb-2 bg-secondary text-white text-center">{{ row.data.title }}</h2> -->
                     A row!
                 </div>
             </div>
             {% endif %}
-            <!--
-            <div class="p-3 row" style="height:{{ row.data.height | times: 9 }}vw">
-                {% for colNum in (1..12) %}
-                {% capture colNumWidth %}col{{ colNum }}Width{% endcapture %}
-                {% if row.data[colNumWidth] > 0 %}
-                {% capture colNumType %}col{{ colNum }}Type{% endcapture %}
-                {% capture colNumURL %}col{{ colNum }}URL{% endcapture %}
-                {% capture colNumLabel %}col{{ colNum }}Label{% endcapture %}
-                <div class="col-sm-{{ row.data[colNumWidth] }}">
-                    {% if row.data[colNumType] == "link" %}
-                    <a href="{{ row.data[colNumURL] }}" target="_blank"><img src="icons/{{ rowNum }}-{{ colNum }}-icon.svg" width="100%"/></a>
-                    <a href="{{ row.data[colNumURL] }}" target="_blank"><div class="p-0 mt-2 mb-2 text-white text-center" style="background-color:CornflowerBlue">{{ row.data[colNumLabel] }}</div></a>
-                    {% elsif row.data[colNumType] == "iframe" %}
-                    <iframe src="{{ row.data[colNumURL] }}" style="margin:0; padding:0; width:100%; height:100%;" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-                    {% elsif row.data[colNumType] == "image" %}
-                    <img src="icons/{{ rowNum }}-{{ colNum }}-icon.svg" width="100%"/>
-                    {% endif %}
-                </div>
-                {% endif %}
-                {% endfor %}
-            </div>
-            -->
             {% assign rowNum = rowNum | plus: 1 %}
             {% endfor %}
         </div>
