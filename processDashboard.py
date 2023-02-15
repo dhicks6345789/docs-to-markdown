@@ -196,12 +196,12 @@ def newRow():
         frontMatter["col" + str(colNum) + "Width"] = str(13-colNum)
         frontMatter["col" + str(colNum) + "Type"] = "blank"
     
-    outputSubfolder = ""
+    outputSubfolder = os.sep
     if args["generator"] == "hugo":
-        outputSubfolder = "content/rows/"
-        os.makedirs(outputSubfolder, exist_ok=True)
+        outputSubfolder = "/content/rows/"
+        os.makedirs(args["output"] + outputSubfolder, exist_ok=True)
         
-    docsToMarkdownLib.putFile(outputSubfolder + args["output"] + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", docsToMarkdownLib.frontMatterToString(frontMatter))
+    docsToMarkdownLib.putFile(args["output"] + outputSubFolder + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", docsToMarkdownLib.frontMatterToString(frontMatter))
     
     rowX = 1
     rowCount = rowCount + 1
