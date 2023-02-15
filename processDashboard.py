@@ -31,11 +31,19 @@ def debug(theMessage):
     if "debug" in args.keys():
         print(theMessage)
 debug("Debug set.")
-    
+
+# Only copy a file if the destination doesn't already exist.
+def copyIfNew(src, dst, *, follow_symlinks=True):
+    if not os.path.exists(dst):
+        shutil.copy2(src, dst, follow_symlinks=follow_symlinks)
+
 print("STATUS: processDashboard: " + args["input"] + " to " + args["output"], flush=True)
 
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
+
+# Copy files to output from generator folder.
+shutil.copytree(args["input"] + "/" args["generator"], args["output"] + "/" args["generator"], copy_function=copyIfNew, dirs_exist_ok=True)
 
 def noBlank(theValue, theDefault):
     if str(theValue).strip() == "":
