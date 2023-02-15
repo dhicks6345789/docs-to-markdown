@@ -201,7 +201,7 @@ def newRow():
         outputSubfolder = "/content/rows/"
         os.makedirs(args["output"] + outputSubfolder, exist_ok=True)
         
-    docsToMarkdownLib.putFile(args["output"] + outputSubFolder + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", docsToMarkdownLib.frontMatterToString(frontMatter))
+    docsToMarkdownLib.putFile(args["output"] + outputSubfolder + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", docsToMarkdownLib.frontMatterToString(frontMatter))
     
     rowX = 1
     rowCount = rowCount + 1
