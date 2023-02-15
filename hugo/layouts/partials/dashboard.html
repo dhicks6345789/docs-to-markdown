@@ -1,4 +1,7 @@
         <div class="container-fluid">
+            {{ range .Site.Sections }}
+            <div>{{ .Title }}</div>
+            {{ end }}
             {% assign rowNum = 1 %}
             {% for row in collections.row %}
             {% if row.data.title != blank and row.data.title != "" and row.data.title != "-" %}
