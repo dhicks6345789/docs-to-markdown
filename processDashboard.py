@@ -198,7 +198,7 @@ def newRow():
     
     outputSubfolder = ""
     if args["generator"] == "hugo":
-        outputSubFolder = "content/rows/"
+        outputSubfolder = "content/rows/"
         os.makedirs(outputSubfolder, exist_ok=True)
         
     docsToMarkdownLib.putFile(outputSubfolder + args["output"] + os.sep + "Row" + docsToMarkdownLib.padInt(rowCount, 3) + ".md", docsToMarkdownLib.frontMatterToString(frontMatter))
