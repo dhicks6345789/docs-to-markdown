@@ -2,7 +2,8 @@
             {{ range .Site.Sections }}
             {{ if eq .Title "Rows" }}
             {{ range .Pages }}
-            <div>Row: {{ .Title }}</div>
+            {{ $row := . }}
+            <div>Row: {{ .Col1Width }}</div>
             {{ end }}
             {{ end }}
             {{ end }}
