@@ -11,7 +11,8 @@
             <div class="p-3 row" style="height:{{ mul (int .Params.height) 9 }}vw">
                 {{ range $colNum := (seq 12) }}
                 <p>col{{ $colNum }}Width</p>
-                {{ $colWidth := printf "Width" | printf "%s/%s" $colNum | printf "col" }}
+                
+                {{ $colWidth := print $colNum "Width" }}
                 <p>{{ $colWidth }}</p>
                 {{ end }}
             </div>
