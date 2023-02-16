@@ -235,6 +235,7 @@ for section in sections:
         for fileName in section[1].keys():
             # Figure out what type of item we have.
             itemType = "blank"
+            print("Check - filename: " + section[1][fileName])
             fileType = arrayIsIn(section[1][fileName], docsToMarkdownLib.urlTypes)
             imageType = arrayIsIn(section[1][fileName], docsToMarkdownLib.imageTypes)
             itemLabel = docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0])
