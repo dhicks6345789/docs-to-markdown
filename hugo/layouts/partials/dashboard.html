@@ -12,7 +12,7 @@
             <div class="p-3 row" style="height:{{ mul (int .Params.height) 9 }}vw">
                 {{ range $colNum := (seq 12) }}
                 {{ $colWidthVar := print "col" $colNum "Width" }}
-                {{ $colWidth := index $rowPage.Params $colWidthVar }}
+                {{ $colWidth := index $rowPage.Params (print "col" $colNum "Width") }}
                 {{ if $colWidth }}
                 <p>{{ $colWidth }}</p>
                 {{ end }}
