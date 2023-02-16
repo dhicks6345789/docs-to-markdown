@@ -320,7 +320,7 @@ for section in sections:
                         print("Image found: " + fileName)
                         thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(PIL.Image.open(section[0] + os.sep + iconInputFileName), "WHITE"), width, height)
                         thumbnailedImage.save(iconBuffered, format="PNG")
-                    Print("Image type: " + imageType)
+                    print("Image type: " + imageType)
                     if imageType == "svg":
                         if iconInputFileName == "default":
                             shutil.copyfile("assets" + os.sep + "default.svg", iconOutputPath)
