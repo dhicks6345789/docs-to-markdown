@@ -323,6 +323,7 @@ for section in sections:
                         thumbnailedImage.save(iconBuffered, format="PNG")
                     print("Image type: " + imageType)
                     if imageType == "svg":
+                        print("iconInputFileName: " + iconInputFileName)
                         if iconInputFileName == "default":
                             shutil.copyfile("assets" + os.sep + "default.svg", iconOutputPath)
                         else:
