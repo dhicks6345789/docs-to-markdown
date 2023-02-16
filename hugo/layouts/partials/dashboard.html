@@ -1,10 +1,12 @@
         <div class="container-fluid">
             {{ range where .Site.Pages "Section" "rows" }}
+            {{ if ne .Params.title "" and ne .Params.title "-" }}
             <div class="p-3 row">
                 <div class="col-sm-12">
-                    <h2 class="p-3 mt-2 mb-2 bg-secondary text-white text-center">{{ .Params.col1Label }}</h2>
+                    <h2 class="p-3 mt-2 mb-2 bg-secondary text-white text-center">{{ .Params.title }}</h2>
                 </div>
             </div>
+            {{ end }}
             <div class="p-3 row" style="height:{{ mul (int .Params.height) 9 }}vw">
                 {{ range $colNum := (seq 12) }}
                 <p>col{{ $colNum }}Width</p>
