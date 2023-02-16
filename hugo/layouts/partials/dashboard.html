@@ -7,6 +7,9 @@
                 </div>
             </div>
             {{ end }}
+            <div>
+                {{ printf "%#v" .Params }}
+            </div>
             <div class="p-3 row" style="height:{{ mul (int .Params.height) 9 }}vw">
                 {{ range $colNum := (seq 12) }}
                 <p>col{{ $colNum }}Width</p>
