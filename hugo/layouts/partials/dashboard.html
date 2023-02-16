@@ -1,5 +1,6 @@
         <div class="container-fluid">
             {{ range where .Site.Pages "Section" "rows" }}
+            {{ $rowPage := . }}
             {{ if isset .Params "height" }}
             {{ if and (isset .Params "title") (ne .Params.title "-") }}
             <div class="p-3 row">
@@ -12,7 +13,7 @@
                 {{ range $colNum := (seq 12) }}
                 <p>col{{ $colNum }}Width</p>
                 {{ $colWidth := print "col" $colNum "Width" }}
-                <p>{{ index .Params $colWidth }}</p>
+                <p>{{ index $rowPage.Params $colWidth }}</p>
                 {{ end }}
             </div>
             {{ end }}
