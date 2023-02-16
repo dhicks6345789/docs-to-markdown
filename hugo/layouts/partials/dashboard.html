@@ -5,7 +5,7 @@
                     <h2 class="p-3 mt-2 mb-2 bg-secondary text-white text-center">{{ .Params.col1Label }}</h2>
                 </div>
             </div>
-            <div class="p-3 row" style="height:{{ mul .Params.height 9 }}vw">
+            <div class="p-3 row" style="height:{{ mul (int .Params.height) 9 }}vw">
                 {{ range $colNum := (seq 12) }}
                 Col {{ . }} {{ $colNum }} col{{ $colNum }}Width
                 {{ end }}
