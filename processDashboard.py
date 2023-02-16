@@ -287,6 +287,7 @@ for section in sections:
                     if imageType == "" and not os.path.exists(iconOutputPath):
                         if itemType == "image":
                             print("ERROR: No image found for image item: " + fileName)
+                            print("Looking for: " + iconOutputPath)
                         else:
                             print("STATUS: No icon found for link: " + fileName + " - downloading favicon for: " + URL, flush=True)
                             icons = favicon.get(URL)
