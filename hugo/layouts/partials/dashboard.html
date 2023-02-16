@@ -12,7 +12,7 @@
                 {{ range $colNum := (seq 12) }}
                 <p>col{{ $colNum }}Width</p>
                 {{ $colWidth := print "col" $colNum "Width" }}
-                <p>{{ $colWidth }}</p>
+                <p>{{ index .Params $colWidth }}</p>
                 {{ end }}
             </div>
             {{ end }}
