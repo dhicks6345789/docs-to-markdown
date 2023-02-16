@@ -235,7 +235,6 @@ for section in sections:
         for fileName in section[1].keys():
             # Figure out what type of item we have.
             itemType = "blank"
-            print("Check - filename: " + str(section[1][fileName]))
             fileType = arrayIsIn(section[1][fileName], docsToMarkdownLib.urlTypes)
             imageType = arrayIsIn(section[1][fileName], docsToMarkdownLib.imageTypes)
             itemLabel = docsToMarkdownLib.removeNumericWord(fileName.rsplit(".", 1)[0])
@@ -321,9 +320,7 @@ for section in sections:
                         print("Image found: " + fileName)
                         thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(PIL.Image.open(section[0] + os.sep + iconInputFileName), "WHITE"), width, height)
                         thumbnailedImage.save(iconBuffered, format="PNG")
-                    print("Image type: " + imageType)
                     if imageType == "svg":
-                        print("iconInputFileName: " + iconInputFileName)
                         if iconInputFileName == "default":
                             shutil.copyfile("assets" + os.sep + "default.svg", iconOutputPath)
                         else:
