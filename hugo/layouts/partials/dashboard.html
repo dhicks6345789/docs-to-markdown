@@ -13,7 +13,7 @@
                 {{ range $colNum := (seq 12) }}
                 {{ $colWidthVar := print "col" $colNum "Width" }}
                 {{ $colWidth := index $rowPage.Params $colWidthVar }}
-                {{ if not (eq $colWidth "") }}
+                {{ if $colWidth }}
                 <p>{{ $colWidth }}</p>
                 {{ end }}
                 {{ end }}
