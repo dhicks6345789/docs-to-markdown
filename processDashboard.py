@@ -316,7 +316,7 @@ for section in sections:
                                         thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(iconObjects[0], "WHITE"), width, height)
                                         thumbnailedImage.save(iconBuffered, format="PNG")
                                         imageType = "png"
-                    elif imageType in bitmapTypes:
+                    elif imageType in docsToMarkdownLib.bitmapTypes:
                         print("Image found: " + fileName)
                         thumbnailedImage = thumbnailImage(setImageTransparencyToSolid(PIL.Image.open(section[0] + os.sep + iconInputFileName), "WHITE"), width, height)
                         thumbnailedImage.save(iconBuffered, format="PNG")
