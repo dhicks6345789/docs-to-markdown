@@ -182,6 +182,8 @@ def newRow():
     if args["generator"] == "eleventy":
         frontMatter["tags"] = "row"
         frontMatter["height"] = str(rowHeight)
+    if args["generator"] == "hugo":
+        frontMatter["height"] = str(rowHeight)
     colNum = 1
     for item in rowItems:
         frontMatter["col" + str(colNum) + "Width"] = str(item[0])
