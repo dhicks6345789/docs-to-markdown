@@ -174,14 +174,15 @@ def reduceInts(theRange, leftInt, rightInt):
     return (leftInt, rightInt)
 
 def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight):
-    print("Video: " + theInputVideo)
     # Figure out the video's dimensions.
     videoDimensions = os.popen("ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x \"" + theInputVideo + "\" 2>&1").read().strip()
     videoWidth = int(videoDimensions.split("x")[0])
     videoHeight = int(videoDimensions.split("x")[1])
+    print("Thumbnailing video: " + theInputVideo + ", Width: " + str(videoWidth) + ", Height: " + str(videoHeight))
     
     # Scale the dimensions given as the output to match the input video.
     width, height = getRatioedDimensions(videoWidth, videoHeight, theBlockWidth, theBlockHeight)
+    print("Scaling video to: " + ", Width: " + str(width) + ", Height: " + str(height))
     
     # Figure out the ratio of width to height of the input video clip...
     pictureRatio = float(videoWidth) / float(videoHeight)
@@ -253,16 +254,14 @@ def getRatioedDimensions(objectWidth, objectHeight, ratioWidth, ratioHeight):
     return width, height
 
 def embedBitmapInSVG(theBitmap, theWidth, theHeight):
-    print("Emedding bitmap: " + theBitmap)
     bitmapObject = PIL.Image.open(theBitmap)
-    
     width, height = getRatioedDimensions(bitmapObject.width, bitmapObject.height, theWidth, theHeight)
+    print("Embedding bitmap in SVG: " + theBitmap + ", Width: " + str(width) + " Height: " + str(height))
     
     bitmapObject = thumbnailImage(bitmapObject, width, height)
     bitmapData = io.BytesIO()
     bitmapObject.save(bitmapData, format="PNG")
     
-    print("Width: " + str(width) + " Height: " + str(height))
     result = "<svg version=\"1.1\" viewBox=\"0 0 " + str(width) + " " + str(height) + "\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n"
     result = result + "    <image width=\"" + str(width) + "\" height=\"" + str(height) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(bitmapData.getvalue()).decode("utf-8") + "\"/>\n"
     result = result + "</svg>"
