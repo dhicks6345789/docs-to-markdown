@@ -5,9 +5,15 @@ import os
 import io
 import sys
 import shutil
+import datetime
 
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
+
+
+
+# Get a timestamp of when we started.
+timestamp = int(round(datetime.datetime.now().timestamp()))
 
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"9", "height":"16"}, requiredArgs=["input","output"])
@@ -82,16 +88,18 @@ slideCount = 1
 slideList = []
 for slide in slides:
     for fileType in slides[slide]:
+        # We add a timestamp string to each filename so that the browser reloads images / videos.
+        fileName = str(slideCount) + "-" + str(timestamp)
         if fileType in docsToMarkdownLib.bitmapTypes:
             SVGContent = docsToMarkdownLib.embedBitmapInSVG(inputFolder + os.sep + slide + "." + fileType, args["width"], args["height"])
-            docsToMarkdownLib.putFile(args["output"] + os.sep + str(slideCount) + ".svg", SVGContent)
-            slideList.append(str(slideCount) + ".svg")
+            docsToMarkdownLib.putFile(args["output"] + os.sep + fileName + ".svg", SVGContent)
+            slideList.append(fileName + ".svg")
         elif fileType in docsToMarkdownLib.videoTypes:
-            docsToMarkdownLib.thumbnailVideo(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + str(slideCount) + ".mp4", args["width"], args["height"])
-            slideList.append(str(slideCount) + ".mp4")
+            docsToMarkdownLib.thumbnailVideo(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + fileName + ".mp4", args["width"], args["height"])
+            slideList.append(fileName + ".mp4")
         else:
-            shutil.copyfile(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + str(slideCount) + "." + fileType.lower())
-            slideList.append(str(slideCount) + "." + fileType.lower())
+            shutil.copyfile(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + fileName + "." + fileType.lower())
+            slideList.append(fileName + "." + fileType.lower())
         slideCount = slideCount + 1
 
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("slideshowIndex.html").replace("<<RESOURCESGOHERE>>", str(slideList).replace("\'", "\"")))
