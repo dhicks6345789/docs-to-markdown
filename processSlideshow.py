@@ -13,7 +13,6 @@ import docsToMarkdownLib
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"16", "height":"9"}, requiredArgs=["input","output"])
 
 print("STATUS: processSlideshow: " + args["input"] + " to " + args["output"], flush=True)
-print("STATUS: Bananas!")
 
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
@@ -44,7 +43,7 @@ def listFileNames(theSubFolder):
                 slides[fileName] = []
             slides[fileName].append(fileType)
 listFileNames("")
-print("STATUS: Listing slides.")
+print("List of slides:")
 print(slides)
 
 config = []
