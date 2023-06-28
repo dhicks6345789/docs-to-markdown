@@ -66,6 +66,7 @@
                     if (resources[slideNum].endsWith(".svg")) {
                         newSlideDiv.innerHTML = "<img src=\"" + resources[slideNum] + "\" width=\"100%\"/>";
                     } else if (resources[currentSlide].endsWith(".mp4")) {
+                        console.log("Found video: " + resources[currentSlide]);
                         newSlideDiv.innerHTML = "<video width=\"100%\" autoplay loop><source src=\"" + resources[slideNum] + "\" type=\"video/mp4\"></video>";
                     }
                     slidesDiv.appendChild(newSlideDiv);
