@@ -10,7 +10,7 @@ import shutil
 import docsToMarkdownLib
 
 # Get any arguments given via the command line.
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"16", "height":"9"}, requiredArgs=["input","output"])
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"9", "height":"16"}, requiredArgs=["input","output"])
 
 print("STATUS: processSlideshow: " + args["input"] + " to " + args["output"], flush=True)
 
