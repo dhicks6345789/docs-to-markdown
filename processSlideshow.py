@@ -43,6 +43,7 @@ def listFileNames(theSubFolder):
                 slides[fileName] = []
             slides[fileName].append(fileType)
 listFileNames("")
+print("STATUS: Listing slides.")
 print(slides)
 
 config = []
