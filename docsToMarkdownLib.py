@@ -182,7 +182,7 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     
     # Scale the dimensions given as the output to match the input video.
     width, height = getRatioedDimensions(videoWidth, videoHeight, theBlockWidth, theBlockHeight)
-    print("Scaling video to: " + ", Width: " + str(width) + ", Height: " + str(height))
+    print("Scaling video to Width: " + str(width) + ", Height: " + str(height))
     
     # Figure out the ratio of width to height of the input video clip...
     pictureRatio = float(videoWidth) / float(videoHeight)
@@ -194,12 +194,14 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
     pasteX = 0
     pasteY = 0
     if pictureRatio < outputRatio:
+        print("pictureRatio < outputRatio")
         padHeightRatio = 1 + (outputRatio - pictureRatio)
         resultHeight = int(videoHeight / padHeightRatio)
         scaledWidth = int(videoWidth / padHeightRatio)
         scaledHeight = resultHeight
         pasteX = int((resultWidth - scaledWidth) / 2)
-    elif pictureRatio > outputRatio:
+    else:
+        print("pictureRatio >= outputRatio")
         padWidthRatio = 1 + (pictureRatio - outputRatio)
         resultWidth = int(videoWidth / padWidthRatio)
         scaledHeight = int(videoHeight / padWidthRatio)
