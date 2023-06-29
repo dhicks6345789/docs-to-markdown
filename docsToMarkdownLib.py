@@ -34,6 +34,13 @@ def getFile(theFilename):
     result = infile.read()
     infile.close()
     return(result)
+
+# A utility function to return the contents of the given binary file.
+def getBinaryFile(theFilename):
+    infile = open(theFilename, "rb")
+    result = infile.read()
+    infile.close()
+    return(result)
     
 # A utility function to write the contents of the given string to the given file.
 def putFile(theFilename, theContent):
