@@ -102,4 +102,4 @@ for slide in slides:
             slideList.append(fileName + "." + fileType.lower())
         slideCount = slideCount + 1
 
-docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("slideshowIndex.html").replace("<<RESOURCESGOHERE>>", str(slideList).replace("\'", "\"")))
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("slideshow/slideshowIndex.html").replace("<<RESOURCESGOHERE>>", str(slideList).replace("\'", "\"")))
