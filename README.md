@@ -9,7 +9,7 @@ Just download / clone the Git repository.
 ## Requirements
 These scripts are written in Python 3 and, as such, should be cross-platform. Each script might have its own set of particular requirements, including requirements for supporting applications, see the relevant script's documentation for details.
 
-The scripts are intended to be run over a simple folder tree. They should work with pretty much anything that looks to the operating system like a local tree of folders, so if you have a utility that maps a cloud-based file system of some kind to a local path (say you're using the Windows Google Drive / OneDrive / Dropbox client) you should be able to run the scripts on that path (either as input or output location) in the same way.
+The scripts are intended to be run over a simple folder tree. They should work with pretty much anything that looks to the operating system like a local tree of folders, so if you have a utility that maps a cloud-based file system of some kind to a local path (say you're using one of the Windows Google Drive / OneDrive / Dropbox clients) you should be able to run the scripts on that path (either as input or output location) in the same way.
 
 If you're on a Linux or MacOS system (or Windows), we can recommend [rclone](https://rclone.org/) as being an excellent way of mounting / cloning over 50 cloud provider's filesystems as a local filesystem.
 
