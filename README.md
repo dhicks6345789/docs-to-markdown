@@ -1,7 +1,7 @@
-# DocsToMarkdown
-A collection of scripts to pre-process folders of content into a form ready for further processing with common static site generation tools ([Hugo](https://gohugo.io/) or [Jekyll](https://jekyllrb.com/), etc).
+# Docs To Markdown
+A collection of scripts to pre-process folders of content into a form ready for further processing with common static site generation tools ([Hugo](https://gohugo.io/) [Jekyll](https://jekyllrb.com/), [Eleventy](https://www.11ty.dev/), etc).
 
-The scanFolders Python script acts as an overall starting point, triggering other scripts to run conversions on a folder tree containing various content. Each script should also be able to be used as a stand-alone application should you want. Some scripts are included in this project repository, some larger / more complex ones have their own projects.
+The scanFolders Python script acts as an overall starting point, triggering other scripts to run conversions on a folder tree containing various content. Each script should also be able to be used as a stand-alone application should you want.
 
 ## Installation
 Just download / clone the Git repository.
