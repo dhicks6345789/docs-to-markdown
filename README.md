@@ -23,7 +23,7 @@ scanFolders.py --input inputFolder --output outputFolder
 That will process all recognised documents in "inputFolder", applying the default behaviour to each one, and place the resulting processed files (.md Markdown files and any other resources generated) in a matching set of folders in "outputFolder". Sub-folders will be recursed into, and the output folder will be created if it doesn't already exist.
 
 ## The Scripts
-- [Docs To Markdown](docsToMarkdown/docsToMarkdown.md)
+- [Docs](docsToMarkdown/processDocs.md)
 - [FAQ](FAQ/processFAQ.md)
 - [Slideshow](slideshow/processSlideshow.md)
 - [Dashboard](dashboard/processDashboard.md)
