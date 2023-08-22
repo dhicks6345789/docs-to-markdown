@@ -82,7 +82,9 @@
                 // Make sure the intial slide is visible.
                 document.getElementById("slide-0").style.display = "block";
                 // Set up the slide transition.
-                setInterval(showNextSlide, slideTransitionTime);
+                if (resources.length > 1) {
+                    setInterval(showNextSlide, slideTransitionTime);
+                }
             }
         </script>
     </head>
