@@ -218,7 +218,7 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight,
     if (scaledHeight % 2) == 1:
         scaledHeight = scaledHeight + 1
 
-    if (!theDoScale):
+    if not theDoScale:
         print("Not scaling video - retaining original dimensions.")
         scaledWidth = videoWidth
         resultWidth = videoWidth
