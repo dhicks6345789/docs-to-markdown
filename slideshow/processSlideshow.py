@@ -16,13 +16,13 @@ import docsToMarkdownLib
 timestamp = int(round(datetime.datetime.now().timestamp()))
 
 # Get any arguments given via the command line.
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"9", "height":"16", "scale":"true"}, requiredArgs=["input","output"])
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"9", "height":"16", "processVideo":"true"}, requiredArgs=["input","output"])
 
 print("STATUS: processSlideshow: " + args["input"] + " to " + args["output"], flush=True)
 
-doScale = False
-if args["scale"] == "true":
-    doScale = True
+doProcessVideo = False
+if args["processVideo"] == "true":
+    doProcessVideo = True
 
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
@@ -94,15 +94,18 @@ for slide in slides:
     for fileType in slides[slide]:
         # We add a timestamp string to each filename so that the browser reloads images / videos.
         fileName = str(slideCount) + "-" + str(timestamp)
+        inputFile = inputFolder + os.sep + slide + "." + fileType
         if fileType in docsToMarkdownLib.bitmapTypes:
-            SVGContent = docsToMarkdownLib.embedBitmapInSVG(inputFolder + os.sep + slide + "." + fileType, args["width"], args["height"])
+            SVGContent = docsToMarkdownLib.embedBitmapInSVG(inputFile, args["width"], args["height"])
             docsToMarkdownLib.putFile(args["output"] + os.sep + fileName + ".svg", SVGContent)
             slideList.append(fileName + ".svg")
-        elif doScale and fileType in docsToMarkdownLib.videoTypes:
-            docsToMarkdownLib.thumbnailVideo(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + fileName + ".mp4", args["width"], args["height"], doScale)
+        elif doProcessVideo and fileType in docsToMarkdownLib.videoTypes:
+            docsToMarkdownLib.thumbnailVideo(inputFile, args["output"] + os.sep + fileName + ".mp4", args["width"], args["height"], doScale)
             slideList.append(fileName + ".mp4")
         else:
-            shutil.copyfile(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + fileName + "." + fileType.lower())
+            outputFile = args["output"] + os.sep + fileName + "." + fileType.lower()
+            print("Copying unprocessed file: " + inputFile + " to " + outputFile)
+            shutil.copyfile(inputFile, outputFile)
             slideList.append(fileName + "." + fileType.lower())
         slideCount = slideCount + 1
 
