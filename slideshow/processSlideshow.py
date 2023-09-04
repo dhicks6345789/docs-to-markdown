@@ -16,9 +16,13 @@ import docsToMarkdownLib
 timestamp = int(round(datetime.datetime.now().timestamp()))
 
 # Get any arguments given via the command line.
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"9", "height":"16"}, requiredArgs=["input","output"])
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"9", "height":"16", "scale":"true"}, requiredArgs=["input","output"])
 
 print("STATUS: processSlideshow: " + args["input"] + " to " + args["output"], flush=True)
+
+doScale = False
+if args["scale"] == "true":
+    doScale = True
 
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
@@ -95,7 +99,7 @@ for slide in slides:
             docsToMarkdownLib.putFile(args["output"] + os.sep + fileName + ".svg", SVGContent)
             slideList.append(fileName + ".svg")
         elif fileType in docsToMarkdownLib.videoTypes:
-            docsToMarkdownLib.thumbnailVideo(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + fileName + ".mp4", args["width"], args["height"])
+            docsToMarkdownLib.thumbnailVideo(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + fileName + ".mp4", args["width"], args["height"], doScale)
             slideList.append(fileName + ".mp4")
         else:
             shutil.copyfile(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + fileName + "." + fileType.lower())
