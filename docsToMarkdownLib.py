@@ -180,7 +180,7 @@ def reduceInts(theRange, leftInt, rightInt):
             return (int(leftDivide), int(rightDivide))
     return (leftInt, rightInt)
 
-def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight):
+def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight, theDoScale):
     # Figure out the video's dimensions.
     videoDimensions = os.popen("ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x \"" + theInputVideo + "\" 2>&1").read().strip()
     videoWidth = int(videoDimensions.split("x")[0])
@@ -217,7 +217,13 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
         scaledWidth = scaledWidth + 1
     if (scaledHeight % 2) == 1:
         scaledHeight = scaledHeight + 1
-    
+
+    if (!theDoScale):
+        scaledWidth = videoWidth
+        resultWidth = videoWidth
+        scaledHeight = videoHeight
+        resultHeight = videoHeight
+        
     ffmpegLine = "ffmpeg -hide_banner -loglevel error -y -i \"" + theInputVideo + "\" -vf \"scale=" + str(scaledWidth) + ":" + str(scaledHeight) + ",pad=" + str(resultWidth) + ":" + str(resultHeight) + ":" + str(pasteX) + ":" + str(pasteY) + ":#FFFFFF@1,format=rgb24\" -vcodec libx264 -crf 18 \"" + theOutputVideo + "\" 2>&1"
     print(ffmpegLine)
     os.system(ffmpegLine)
