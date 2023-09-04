@@ -100,7 +100,7 @@ for slide in slides:
             docsToMarkdownLib.putFile(args["output"] + os.sep + fileName + ".svg", SVGContent)
             slideList.append(fileName + ".svg")
         elif doProcessVideo and fileType in docsToMarkdownLib.videoTypes:
-            docsToMarkdownLib.thumbnailVideo(inputFile, args["output"] + os.sep + fileName + ".mp4", args["width"], args["height"], doScale)
+            docsToMarkdownLib.thumbnailVideo(inputFile, args["output"] + os.sep + fileName + ".mp4", args["width"], args["height"])
             slideList.append(fileName + ".mp4")
         else:
             outputFile = args["output"] + os.sep + fileName + "." + fileType.lower()
