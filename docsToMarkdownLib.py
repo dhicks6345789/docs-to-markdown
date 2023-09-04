@@ -214,9 +214,16 @@ def thumbnailVideo(theInputVideo, theOutputVideo, theBlockWidth, theBlockHeight)
         pasteX = int((resultHeight - scaledHeight) / 2)
     
     if (scaledWidth % 2) == 1:
-        scaledWidth = scaledWidth + 1
+        scaledWidth = scaledWidth - 1
     if (scaledHeight % 2) == 1:
-        scaledHeight = scaledHeight + 1
+        scaledHeight = scaledHeight - 1
+
+    if resultWidth < videoWidth:
+        resultWidth = videoWidth
+        scaledWidth = videoWidth
+    if resultHeight < videoHeight:
+        resultHeight = videoHeight
+        scaledHeight = videoHeight
 
     ffmpegLine = "ffmpeg -hide_banner -loglevel error -y -i \"" + theInputVideo + "\" -vf \"scale=" + str(scaledWidth) + ":" + str(scaledHeight) + ",pad=" + str(resultWidth) + ":" + str(resultHeight) + ":" + str(pasteX) + ":" + str(pasteY) + ":#FFFFFF@1,format=rgb24\" -vcodec libx264 -crf 18 \"" + theOutputVideo + "\" 2>&1"
     print(ffmpegLine)
