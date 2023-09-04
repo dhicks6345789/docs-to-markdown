@@ -98,7 +98,7 @@ for slide in slides:
             SVGContent = docsToMarkdownLib.embedBitmapInSVG(inputFolder + os.sep + slide + "." + fileType, args["width"], args["height"])
             docsToMarkdownLib.putFile(args["output"] + os.sep + fileName + ".svg", SVGContent)
             slideList.append(fileName + ".svg")
-        elif fileType in docsToMarkdownLib.videoTypes:
+        elif doScale and fileType in docsToMarkdownLib.videoTypes:
             docsToMarkdownLib.thumbnailVideo(inputFolder + os.sep + slide + "." + fileType, args["output"] + os.sep + fileName + ".mp4", args["width"], args["height"], doScale)
             slideList.append(fileName + ".mp4")
         else:
