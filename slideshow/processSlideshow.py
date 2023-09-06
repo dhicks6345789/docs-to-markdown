@@ -15,12 +15,13 @@ import docsToMarkdownLib
 # Get a timestamp of when we started.
 dateTimeNow = datetime.datetime.now()
 timestamp = int(round(dateTimeNow.timestamp()))
-dateTimeFormatted = dateTimeNow.strftime("%d %m %Y, %H:%M:%S")
+dateTimeFormatted = dateTimeNow.strftime("%d-%m-%Y, %H:%M:%S")
 
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"9", "height":"16", "processVideo":"true"}, requiredArgs=["input","output"])
 
 print("STATUS: processSlideshow: " + args["input"] + " to " + args["output"], flush=True)
+print("Timestamp: " + str(timestamp) + ", Date / Time: " + dateTimeFormatted)
 
 doProcessVideo = False
 if args["processVideo"] == "true":
