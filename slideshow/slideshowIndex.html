@@ -32,6 +32,10 @@
             
             // Display the next slide.
             function showNextSlide() {
+                if (resources.length == 1 && currentSlide == 0) {
+                    return
+                }
+                
                 nextSlide = currentSlide + 1;
                 if (nextSlide == resources.length) {
                     nextSlide = 0;
@@ -84,9 +88,7 @@
                 // Make sure the intial slide is visible.
                 document.getElementById("slide--1").style.display = "block";
                 // Set up the slide transition.
-                if (resources.length > 1) {
-                    setInterval(showNextSlide, slideTransitionTime);
-                }
+                setInterval(showNextSlide, slideTransitionTime);
             }
         </script>
     </head>
