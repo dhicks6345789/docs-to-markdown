@@ -13,7 +13,9 @@ import docsToMarkdownLib
 
 
 # Get a timestamp of when we started.
-timestamp = int(round(datetime.datetime.now().timestamp()))
+dateTimeNow = datetime.datetime.now()
+timestamp = int(round(dateTimeNow.timestamp()))
+dateTimeFormatted = dateTimeNow.strftime("%d %m %Y, %H:%M:%S")
 
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"9", "height":"16", "processVideo":"true"}, requiredArgs=["input","output"])
@@ -109,4 +111,4 @@ for slide in slides:
             slideList.append(fileName + "." + fileType.lower())
         slideCount = slideCount + 1
 
-docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("slideshow/slideshowIndex.html").replace("<<RESOURCESGOHERE>>", str(slideList).replace("\'", "\"")))
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("slideshow/slideshowIndex.html").replace("<<RESOURCESGOHERE>>", str(slideList).replace("<<TIMESTAMP>>",timestamp).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted)replace("\'", "\"")))
