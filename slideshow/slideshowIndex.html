@@ -2,12 +2,14 @@
 
 <html lang="en" style="margin:0; padding:0; height: 100%;">
     <head>
+        <!-- Set this page (hopefully) to not be cached, so it gets reloaded each time the browser refreshes / reloads / reboots.
+        Seems to be of particular importance for ChromeOS kisok-mode devices, which seem to cache content between reboots. -->
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
         <meta http-equiv="Pragma" content="no-cache"/>
         <meta http-equiv="Expires" content="0"/>
         
         <script>
-            var currentSlide = 0;
+            var currentSlide = -1;
             var slideTransitionTime = 20000;
             var slideFadeStep = 0.05;
             var slideFadeInterval = 200;
@@ -80,7 +82,7 @@
                     slidesDiv.appendChild(newSlideDiv);
                 }
                 // Make sure the intial slide is visible.
-                document.getElementById("slide-0").style.display = "block";
+                document.getElementById("slide--1").style.display = "block";
                 // Set up the slide transition.
                 if (resources.length > 1) {
                     setInterval(showNextSlide, slideTransitionTime);
