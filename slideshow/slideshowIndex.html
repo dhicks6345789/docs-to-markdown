@@ -73,7 +73,7 @@
                 }
                 
                 if (!pageRefreshed) {
-                    console.log(window.location.protocol + "://" + window.location.hostname + "/" + window.location.pathname + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + slideFadeStep + "&fadeinternal=" + (slideFadeInterval/1000) + "&pageRefreshed=true");
+                    console.log(window.location.protocol + "://" + window.location.hostname + window.location.pathname..replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinternal=" + (slideFadeInterval/1000) + "&refreshed=true");
                     // location.replace();
                 }
                 
