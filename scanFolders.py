@@ -20,6 +20,7 @@ matches.append(["/faq/.*", "python3 processFAQ.py"])
 
 def scanFolder(theInput, theOutput):
     inputFolder = docsToMarkdownLib.normalisePath(baseInput + os.sep + theInput)
+    print("scanFolder - inputFolder: " + inputFolder, flush=True)
     for item in os.listdir(inputFolder):
         if os.path.isdir(inputFolder + os.sep + item):
             for match in matches:
