@@ -16,6 +16,7 @@ args["input"] = os.getcwd()
 args["scriptRoot"] = sys.argv[0].rsplit(os.sep, 1)[0]
 
 matches = []
+#matches.append(["", ""])
 matches.append(["/faq/.*", "python3 processFAQ.py"])
 
 def scanFolder(theInput, theOutput):
