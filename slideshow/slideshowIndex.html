@@ -75,13 +75,8 @@
                 }
                 
                 if (!pageRefreshed) {
-                    newURL = window.location.protocol + "//" + window.location.hostname + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&refreshed=true"
-                    console.log(newURL);
-                    location.replace(newURL);
+                    location.replace(window.location.protocol + "//" + window.location.hostname + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&refreshed=true");
                 }
-                console.log("slideTransitionTime: " + slideTransitionTime);
-                console.log("slideFadeStep: " + slideFadeStep);
-                console.log("slideFadeInterval: " + slideFadeInterval);
                 
                 // We want to tell the user what resources we're loading.
                 resourceList = document.getElementById("resourceList");
