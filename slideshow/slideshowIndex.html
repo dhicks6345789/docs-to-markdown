@@ -24,9 +24,11 @@
                 fadeStartSlide.style.opacity = opacity;
                 fadeEndSlide.style.opacity = 1 - opacity;
                 opacity = opacity - slideFadeStep;
-                if (opacity == 0) {
+                if (opacity <= 0) {
                     clearInterval(fadeInterval);
+                    fadeStartSlide.style.opacity = 0;
                     fadeStartSlidestyle.display = "none";
+                    fadeEndSlide.style.opacity = 1;
                 }
             }
             
@@ -73,7 +75,7 @@
                 }
                 
                 if (!pageRefreshed) {
-                    newURL = window.location.protocol + "://" + window.location.hostname + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&refreshed=true"
+                    newURL = window.location.protocol + "//" + window.location.hostname + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&refreshed=true"
                     console.log(newURL);
                     //location.replace(newURL);
                 }
