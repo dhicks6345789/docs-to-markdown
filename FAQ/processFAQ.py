@@ -11,9 +11,8 @@ print("processFAQ: " + inputFolder + " to " + outputFolder, flush=True)
 for inputItem in os.listdir(inputFolder):
     fileType = inputItem.rsplit(".", 1)[1].upper()
     if fileType in ["DOCX", "DOC"]:
-        print("processFAQ - cwd: " + os.getcwd(), flush=True)
         commandLine = "python3 .." + os.sep + "docs-to-markdown" + os.sep + "processDOCFile.py \"" + inputFolder + os.sep + inputItem + "\" \"" + outputFolder + "\""
-        print("ProcessFAQ - running: " + commandLine, flush=True)
+        #print("ProcessFAQ - running: " + commandLine, flush=True)
         os.system(commandLine)
     elif fileType in ["MP4"]:
         # Use FFmpeg to set the size and format of any FAQ videos.
