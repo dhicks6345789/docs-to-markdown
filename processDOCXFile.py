@@ -7,14 +7,15 @@ import docsToMarkdownLib
 inputFile = sys.argv[1]
 outputFolder = sys.argv[2]
 
-if inputFile.rsplit(".", 1)[1].lower() in ["docx", "doc"]:
+docType = inputFile.rsplit(".", 1)[1].upper()
+if docType in ["DOCX", "DOC"]:
   outputFile = inputFile
   if os.sep in outputFile:
     outputFile = outputFile.rsplit(os.sep, 1)[1]
   outputFile = outputFile.rsplit(".", 1)[0] + ".md"
   outputPath = outputFolder + os.sep + outputFile
   if not docsToMarkdownLib.checkModDatesMatch(inputFile, outputPath):
-    print("STATUS: Processing DOCX file: " + inputFile + " to " + outputPath, flush=True)
+    print("Processing " + docTYpe + " file: " + inputFile + " to " + outputPath, flush=True)
     docMarkdown, docFrontmatter = docsToMarkdownLib.docToMarkdown(inputFile)
     trimmedMarkdown = ""
     for markdownLine in docMarkdown.split("\n"):
