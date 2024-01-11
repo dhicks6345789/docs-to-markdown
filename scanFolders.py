@@ -34,7 +34,7 @@ def scanFolder(theInput, theOutput):
                 inputItem = inputFolder + os.sep + item
                 outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
                 if os.path.isfile(inputItem):
-                    inputItem = inputItem.rsplit(os.sep, 1)[0]
+                    outputItem = outputItem.rsplit(os.sep, 1)[0]
                 commandLine = match[1] + " \"" + docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]) + "\" \"" + inputItem + "\" \"" + outputItem + "\""
                 if args["verbose"] == "true":
                     print("DocsToMarkdown - running: " + commandLine, flush=True)
