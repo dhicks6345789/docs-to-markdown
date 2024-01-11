@@ -7,21 +7,12 @@ import docsToMarkdownLib
 inputFolder = sys.argv[1]
 outputFolder = sys.argv[2]
 
-print("STATUS: processFAQ: " + inputFolder + " to " + outputFolder)
+print("processFAQ: " + inputFolder + " to " + outputFolder)
 for inputItem in os.listdir(inputFolder):
     if inputItem.rsplit(".", 1)[1].lower() in ["docx", "doc"]:
-        outputItem = inputItem.rsplit(".", 1)[0] + ".md"
-        if not docsToMarkdownLib.checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
-            print("STATUS: Processing FAQ content: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
-            docMarkdown, docFrontmatter = docsToMarkdownLib.docToMarkdown(inputFolder + os.sep + inputItem)
-            trimmedMarkdown = ""
-            for markdownLine in docMarkdown.split("\n"):
-                if markdownLine.startswith("# ") and not "title" in docFrontmatter.keys():
-                    docFrontmatter["title"] = markdownLine[2:].lstrip()
-                else:
-                    trimmedMarkdown = trimmedMarkdown + markdownLine + "\n"
-            docsToMarkdownLib.putFile(outputFolder + os.sep + outputItem, docsToMarkdownLib.frontMatterToString(docFrontmatter) + trimmedMarkdown.strip())
-            docsToMarkdownLib.makeModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem)
+        commandLine = "python3 .." + os.sep + "processDOCFile.py \"" + inputFolder + os.sep + inputItem + "\" \"" + outputFolder
+        os.print("ProcessFAQ - running: " + commandLine)
+        os.system(commnadLine)
     elif inputItem.rsplit(".", 1)[1].lower() in ["mp4"]:
         # Use FFmpeg to set the size and format of any FAQ videos.
         outputItem = inputItem.rsplit(".", 1)[0] + ".webm"
