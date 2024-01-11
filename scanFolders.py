@@ -26,6 +26,7 @@ def scanFolder(theInput, theOutput):
     for item in os.listdir(inputFolder):
         matched = False
         for match in matches:
+            print("Does " + item + " endwith " + match[0])
             if item.endswith(match[0]):
                 matched = True
                 commandLine = match[1] + " " + inputFolder + os.sep + item + " " + docsToMarkdownLib.normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
