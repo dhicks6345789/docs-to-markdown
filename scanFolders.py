@@ -11,7 +11,7 @@ import docsToMarkdownLib
 
 args = {}
 requiredArgs = ["input","output"]
-optionalArgs = ["scriptRoot"]
+optionalArgs = ["scriptRoot", "verbose"]
 args["input"] = os.getcwd()
 args["scriptRoot"] = sys.argv[0].rsplit(os.sep, 1)[0]
 
@@ -21,7 +21,7 @@ matches.append(["faq", "python3", "FAQ/processFAQ.py"])
 
 def scanFolder(theInput, theOutput):
     inputFolder = docsToMarkdownLib.normalisePath(baseInput + os.sep + theInput)
-    print("Scanning folder: " + inputFolder, flush=True)
+    print("Docs-to-markdown - scanning folder: " + inputFolder, flush=True)
     unmatchedItems = []
     for item in os.listdir(inputFolder):
         matched = False
@@ -29,7 +29,7 @@ def scanFolder(theInput, theOutput):
             if item.endswith(match[0]):
                 matched = True
                 commandLine = match[1] + " \"" + docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]) + "\" \"" + inputFolder + os.sep + item + "\" \"" + docsToMarkdownLib.normalisePath(baseOutput + os.sep + theOutput + os.sep + item) + "\""
-                print("Running: " + commandLine, flush=True)
+                #print("Running: " + commandLine, flush=True)
                 os.system(commandLine + " 2>&1")
         if matched == False:
             unmatchedItems.append(item)
