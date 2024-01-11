@@ -16,20 +16,24 @@ args["input"] = os.getcwd()
 args["scriptRoot"] = sys.argv[0].rsplit(os.sep, 1)[0]
 
 matches = []
-#matches.append(["", ""])
-matches.append(["/faq/.*", "python3 processFAQ.py"])
+matches.append(["\.md", "python3 processMarkdownFile.py"])
+matches.append(["/faq", "python3 processFAQ.py"])
 
 def scanFolder(theInput, theOutput):
     inputFolder = docsToMarkdownLib.normalisePath(baseInput + os.sep + theInput)
-    print("scanFolder - inputFolder: " + inputFolder, flush=True)
+    print("Scanning folder: " + inputFolder, flush=True)
+    unmatchedItems = []
     for item in os.listdir(inputFolder):
-        if os.path.isdir(inputFolder + os.sep + item):
-            for match in matches:
-                if not re.match(match[0], theInput + os.sep + item + os.sep) == None:
-                    commandLine = match[1] + " " + inputFolder + os.sep + item + " " + docsToMarkdownLib.normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
-                    print("Running: " + commandLine)
-                    os.system("cd " + docsToMarkdownLib.normalisePath(args["scriptRoot"]) + "; " + commandLine + " 2>&1")
-    for item in os.listdir(inputFolder):
+        matched = False
+        for match in matches:
+            if not re.match(match[0], theInput + os.sep + item + os.sep) == None:
+                matched = True
+                commandLine = match[1] + " " + inputFolder + os.sep + item + " " + docsToMarkdownLib.normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
+                print("Running: " + commandLine)
+                os.system(commandLine + " 2>&1")
+        if matched == False:
+            unmatchedItems.push(item)
+    for item in unmatchedItems:
         if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
 
