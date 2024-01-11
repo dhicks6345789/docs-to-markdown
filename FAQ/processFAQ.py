@@ -4,6 +4,7 @@ import sys
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
+# Get the command line arguments.
 inputFolder = sys.argv[1]
 outputFolder = sys.argv[2]
 
@@ -11,11 +12,10 @@ print("processFAQ: " + inputFolder + " to " + outputFolder, flush=True)
 for inputItem in os.listdir(inputFolder):
     fileType = inputItem.rsplit(".", 1)[1].upper()
     if fileType in ["DOCX", "DOC"]:
-        commandLine = "python3 .." + os.sep + "docs-to-markdown" + os.sep + "processDOCFile.py \"" + inputFolder + os.sep + inputItem + "\" \"" + outputFolder + "\""
-        #print("ProcessFAQ - running: " + commandLine, flush=True)
-        os.system(commandLine)
+        # Deal with a DOCX / DOC file - pass it over to the processDOCFile script to deal with.
+        os.system("python3 .." + os.sep + "docs-to-markdown" + os.sep + "processDOCFile.py \"" + inputFolder + os.sep + inputItem + "\" \"" + outputFolder + "\"")
     elif fileType in ["MP4"]:
-        # Use FFmpeg to set the size and format of any FAQ videos.
+        # Deal with an MP4 file - use FFmpeg to set the size and format of any videos in this FAQ.
         outputItem = inputItem.rsplit(".", 1)[0] + ".webm"
         if not docsToMarkdownLib.checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
             print("STATUS: Processing FAQ video: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem, flush=True)
