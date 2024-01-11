@@ -19,7 +19,7 @@ for arg in args:
     print(arg + ": " + args[arg])            
 
 matches = []
-matches.append([".docx", "python3", "processDOCXFile.py"])
+matches.append([".docx", "python3", "processDOCFile.py"])
 matches.append(["faq", "python3", "FAQ/processFAQ.py"])
 
 def scanFolder(theInput, theOutput):
