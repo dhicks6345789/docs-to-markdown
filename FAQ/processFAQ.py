@@ -7,17 +7,17 @@ import docsToMarkdownLib
 inputFolder = sys.argv[1]
 outputFolder = sys.argv[2]
 
-print("processFAQ: " + inputFolder + " to " + outputFolder)
+print("processFAQ: " + inputFolder + " to " + outputFolder, flush=True)
 for inputItem in os.listdir(inputFolder):
     if inputItem.rsplit(".", 1)[1].lower() in ["docx", "doc"]:
         commandLine = "python3 .." + os.sep + "processDOCFile.py \"" + inputFolder + os.sep + inputItem + "\" \"" + outputFolder
-        os.print("ProcessFAQ - running: " + commandLine)
+        print("ProcessFAQ - running: " + commandLine, flush=True)
         os.system(commnadLine)
     elif inputItem.rsplit(".", 1)[1].lower() in ["mp4"]:
         # Use FFmpeg to set the size and format of any FAQ videos.
         outputItem = inputItem.rsplit(".", 1)[0] + ".webm"
         if not docsToMarkdownLib.checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
-            print("STATUS: Processing FAQ video: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem)
+            print("STATUS: Processing FAQ video: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem, flush=True)
             
             # Figure out the video's dimensions.
             videoDimensions = os.popen("ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x " + inputFolder + os.sep + inputItem).read().strip()
