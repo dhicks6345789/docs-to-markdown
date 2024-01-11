@@ -32,7 +32,7 @@ def scanFolder(theInput, theOutput):
                 print("Running: " + commandLine)
                 os.system(commandLine + " 2>&1")
         if matched == False:
-            unmatchedItems.push(item)
+            unmatchedItems.append(item)
     for item in unmatchedItems:
         if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
