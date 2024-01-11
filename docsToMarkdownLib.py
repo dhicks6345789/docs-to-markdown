@@ -151,6 +151,10 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
         else:
             print("ERROR: unknown argument, " + argItem)
             sys.exit(1)
+    if "config" in args.keys():
+        fileArgs = processArgsFile(args["config"], defaultArgs=defaultArgs, requiredArgs=requiredArgs, optionalArgs=optionalArgs, optionalArgLists=optionalArgLists)
+        for argName in fileArgs.keys():
+            args[argName] = fileArgs[argName]
     return args
 
 def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
