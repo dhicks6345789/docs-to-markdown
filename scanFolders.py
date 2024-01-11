@@ -28,7 +28,7 @@ def scanFolder(theInput, theOutput):
         for match in matches:
             if item.endswith(match[0]):
                 matched = True
-                commandLine = match[1] + " " + docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]) + " " + inputFolder + os.sep + item + " " + docsToMarkdownLib.normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
+                commandLine = match[1] + " \"" + docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]) + "\" \"" + inputFolder + os.sep + item + "\" \"" + docsToMarkdownLib.normalisePath(baseOutput + os.sep + theOutput + os.sep + item) + "\""
                 print("Running: " + commandLine, flush=True)
                 os.system(commandLine + " 2>&1")
         if matched == False:
