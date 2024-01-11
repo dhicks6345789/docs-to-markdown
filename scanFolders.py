@@ -16,7 +16,7 @@ args["input"] = os.getcwd()
 args["scriptRoot"] = sys.argv[0].rsplit(os.sep, 1)[0]
 
 matches = []
-matches.append(["\.md", "python3 processMarkdownFile.py"])
+matches.append([".md", "python3 processMarkdownFile.py"])
 matches.append(["/faq", "python3 processFAQ.py"])
 
 def scanFolder(theInput, theOutput):
@@ -26,7 +26,7 @@ def scanFolder(theInput, theOutput):
     for item in os.listdir(inputFolder):
         matched = False
         for match in matches:
-            if not re.match(match[0], theInput + os.sep + item + os.sep) == None:
+            if item.endswith(match[0]):
                 matched = True
                 commandLine = match[1] + " " + inputFolder + os.sep + item + " " + docsToMarkdownLib.normalisePath(baseOutput + os.sep + theOutput + os.sep + item)
                 print("Running: " + commandLine)
