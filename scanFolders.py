@@ -9,11 +9,10 @@ import pandas
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
-args = {}
-requiredArgs = ["input","output"]
-optionalArgs = ["scriptRoot", "verbose"]
-args["input"] = os.getcwd()
-args["scriptRoot"] = sys.argv[0].rsplit(os.sep, 1)[0]
+
+
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":sys.argv[0].rsplit(os.sep, 1)[0], "verbose":"false"}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose"]):
+args["verbose"] = args["verbose"].lower()
 
 matches = []
 matches.append([".docx", "python3", "processDOCXFile.py"])
@@ -29,7 +28,8 @@ def scanFolder(theInput, theOutput):
             if item.endswith(match[0]):
                 matched = True
                 commandLine = match[1] + " \"" + docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]) + "\" \"" + inputFolder + os.sep + item + "\" \"" + docsToMarkdownLib.normalisePath(baseOutput + os.sep + theOutput + os.sep + item) + "\""
-                #print("Running: " + commandLine, flush=True)
+                if args["verbose"] == "true":
+                    print("Running: " + commandLine, flush=True)
                 os.system(commandLine + " 2>&1")
         if matched == False:
             unmatchedItems.append(item)
