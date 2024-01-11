@@ -24,16 +24,20 @@ matches.append(["faq", "python3", "FAQ/processFAQ.py"])
 
 def scanFolder(theInput, theOutput):
     inputFolder = docsToMarkdownLib.normalisePath(args["input"] + os.sep + theInput)
-    print("Docs-to-markdown - scanning folder: " + inputFolder, flush=True)
+    print("DocsToMarkdown - scanning folder: " + inputFolder, flush=True)
     unmatchedItems = []
     for item in os.listdir(inputFolder):
         matched = False
         for match in matches:
             if item.endswith(match[0]):
                 matched = True
-                commandLine = match[1] + " \"" + docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]) + "\" \"" + inputFolder + os.sep + item + "\" \"" + docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item) + "\""
+                inputItem = inputFolder + os.sep + item
+                outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
+                if os.path.isfile(inputItem):
+                    inputItem = inputItem.rsplit(os.sep, 1)[0]
+                commandLine = match[1] + " \"" + docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]) + "\" \"" + inputItem + "\" \"" + outputItem + "\""
                 if args["verbose"] == "true":
-                    print("Running: " + commandLine, flush=True)
+                    print("DocsToMarkdown - running: " + commandLine, flush=True)
                 os.system(commandLine + " 2>&1")
         if matched == False:
             unmatchedItems.append(item)
