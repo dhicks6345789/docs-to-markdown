@@ -11,7 +11,7 @@ import docsToMarkdownLib
 
 
 
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":sys.argv[0].rsplit(os.sep, 1)[0], "verbose":"false"}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose"]):
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":sys.argv[0].rsplit(os.sep, 1)[0], "verbose":"false"}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose"])
 args["verbose"] = args["verbose"].lower()
 
 matches = []
