@@ -9,11 +9,12 @@ outputFolder = sys.argv[2]
 
 print("processFAQ: " + inputFolder + " to " + outputFolder, flush=True)
 for inputItem in os.listdir(inputFolder):
-    if inputItem.rsplit(".", 1)[1].lower() in ["docx", "doc"]:
+    fileType = inputItem.rsplit(".", 1)[1].upper()
+    if fileType in ["DOCX", "DOC"]:
         commandLine = "python3 .." + os.sep + "processDOCFile.py \"" + inputFolder + os.sep + inputItem + "\" \"" + outputFolder + "\""
         print("ProcessFAQ - running: " + commandLine, flush=True)
         os.system(commandLine)
-    elif inputItem.rsplit(".", 1)[1].lower() in ["mp4"]:
+    elif fileType in ["MP4"]:
         # Use FFmpeg to set the size and format of any FAQ videos.
         outputItem = inputItem.rsplit(".", 1)[0] + ".webm"
         if not docsToMarkdownLib.checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
