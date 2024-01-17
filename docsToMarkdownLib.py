@@ -161,6 +161,7 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
     args = defaultArgs
 
     print("processArgsFile - config file: " + theFilename, flush=True)
+    print(requiredArgs + optionalArgs, flush=True)
     if theFilename.endswith(".csv"):
         argsData = pandas.read_csv(theFilename, header=0)
     else:
