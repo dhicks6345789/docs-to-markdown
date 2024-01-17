@@ -76,6 +76,7 @@ def checkModDatesMatch(theInputItem, theOutputItem):
     if os.path.isfile(theOutputItem):
         inputItemDetails = os.stat(theInputItem)
         outputItemDetails = os.stat(theOutputItem)
+        print(theInputItem + "-" + str(inputItemDetails.st_mtime) + "==" + theOutputItem + "-" + str(outputItemDetails))
         if inputItemDetails.st_mtime == outputItemDetails.st_mtime:
             return True
     return False
