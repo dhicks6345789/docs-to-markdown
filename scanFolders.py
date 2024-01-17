@@ -11,8 +11,9 @@ import docsToMarkdownLib
 
 
 
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":sys.argv[0].rsplit(os.sep, 1)[0], "verbose":"false"}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose"])
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":sys.argv[0].rsplit(os.sep, 1)[0], "verbose":"false", "produceFolderIndexes":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
 args["verbose"] = args["verbose"].lower()
+args["produceFolderIndexes"] = args["produceFolderIndexes"].lower()
 
 # Print a config summary for the user.
 print("DocsToMarkdown - arguments:", flush=True)
