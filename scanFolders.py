@@ -15,8 +15,9 @@ args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":sys.ar
 args["verbose"] = args["verbose"].lower()
 
 # Print a config summary for the user.
+print("DocsToMarkdown - arguments:", flush=True)
 for arg in args:
-    print(arg + ": " + args[arg])            
+    print(" - " + arg + ": " + args[arg], flush=True)
 
 matches = []
 matches.append([".docx", "python3", "processDOCFile.py"])
