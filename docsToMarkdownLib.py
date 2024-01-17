@@ -167,11 +167,13 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
     else:
         argsData = pandas.read_excel(theFilename, header=0)
     for argsDataIndex, argsDataValues in argsData.iterrows():
-        if argsDataValues.iloc[0] in requiredArgs + optionalArgs:
-            if not argsDataValues.iloc[0] in args:
-                print("processArgsFile - arg: " + str(argsDataValues.iloc[0]) + ", val: " + str(argsDataValues.iloc[1]), flush=True)
-                args[argsDataValues.iloc[0]] = argsDataValues.iloc[1]
-        elif argsDataValues.iloc[0] in optionalArgLists:
+        argName = argsDataValues.iloc[0].strip()
+        print("From config file, arg name: " + argName)
+        if argName in requiredArgs + optionalArgs:
+            if not argName in args:
+                print("processArgsFile - arg: " + str(argName) + ", val: " + str(argsDataValues.iloc[1]), flush=True)
+                args[argName] = argsDataValues.iloc[1]
+        elif argName in optionalArgLists:
             for argsDataValue in argsDataValues[1:].values:
                 if not isnan(argsDataValue):
                     args[argsDataValues[0]].append(argsDataValue)
