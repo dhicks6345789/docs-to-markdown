@@ -165,9 +165,9 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
     else:
         argsData = pandas.read_excel(theFilename, header=0)
     for argsDataIndex, argsDataValues in argsData.iterrows():
-        if argsDataValues[0] in requiredArgs + optionalArgs:
-            if not argsDataValues[0] in args:
-                args[argsDataValues[0]] = argsDataValues[1]
+        if argsDataValues.iloc[0] in requiredArgs + optionalArgs:
+            if not argsDataValues.iloc[0] in args:
+                args[argsDataValues.iloc[0]] = argsDataValues.iloc[1]
         elif argsDataValues[0] in optionalArgLists:
             for argsDataValue in argsDataValues[1:].values:
                 if not isnan(argsDataValue):
