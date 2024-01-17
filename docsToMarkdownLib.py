@@ -159,7 +159,8 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
 
 def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
     args = defaultArgs
-    
+
+    print("processArgsFile - config file: " + theFilename, flush=True)
     if theFilename.endswith(".csv"):
         argsData = pandas.read_csv(theFilename, header=0)
     else:
@@ -167,6 +168,7 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
     for argsDataIndex, argsDataValues in argsData.iterrows():
         if argsDataValues.iloc[0] in requiredArgs + optionalArgs:
             if not argsDataValues.iloc[0] in args:
+                print("processArgsFile - arg: " + str(argsDataValues.iloc[0]) + ", val: " + str(argsDataValues.iloc[1]), flush=True)
                 args[argsDataValues.iloc[0]] = argsDataValues.iloc[1]
         elif argsDataValues.iloc[0] in optionalArgLists:
             for argsDataValue in argsDataValues[1:].values:
