@@ -147,7 +147,9 @@ def docToMarkdownFile(inputFile, outputFile, baseURL="", markdownType="gfm", val
     outputMarkdown, outputFrontmatter = docToMarkdown(inputFile, baseURL=baseURL, markdownType=markdownType, validFrontMatterFields=validFrontMatterFields)
     putFile(outputFile, frontMatterToString(outputFrontmatter) + outputMarkdown)
 
+# Parse any command line arguments passed.
 def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
+    # Step through the system-provided command line arguments - remember sys.argv[0] is the script's path, so we skip that.
     args = {}
     currentArgName = None
     for argItem in sys.argv[1:]:
@@ -159,33 +161,57 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
         else:
             print("ERROR: unknown argument, " + argItem)
             sys.exit(1)
+    
+    # If we have an argument of "config", treat that as a location to load a config file from, and go and process any further arguments given there.
+    # If arguments defined on the command line are also present in the given config file, the command line arguments take precedence.
     if "config" in args.keys():
-        fileArgs = processArgsFile(args["config"], requiredArgs=requiredArgs, optionalArgs=optionalArgs, optionalArgLists=optionalArgLists)
+        fileArgs = processArgsFile(args["config"], optionalArgs=optionalArgs+requiredArgs, optionalArgLists=optionalArgLists)
         for argName in fileArgs.keys():
             args[argName] = fileArgs[argName]
+    
+    # If we have any default argument values defined, and those arguments
+    # aren't already present, add the default values in to the result.
     for argName in defaultArgs.keys():
         if not argName in args.keys():
             args[argName] = defaultArgs[argName]
+
+    # If any required arguments are missing, stop.
+    for argName in requiredArgs:
+        if not argName in args:
+            print("ERROR: Required argument not present: " + argName, flush=True)
+            quit
     return args
 
+# Parse arguments from a config file. Accepts CSV, Excel and YAML formats.
 def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
     args = {}
     argsData = {}
+    # Figure out what format the file is in and use the appropriate loader.
     if theFilename.endswith(".csv"):
         argsData = pandas.read_csv(theFilename, header=0).to_dict(index=False)
     elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
         argsData = pandas.read_excel(theFilename, header=0).to_dict(index=False)
     elif theFilename.endswith(".yaml"):
         argsData = yaml.safe_load(getFile(theFilename))
-    print(argsData, flush=True)
+    
+    # Process any read arguments - check each key/value pair is a valid argument name.
     for argName in argsData.keys():
         argName = argName.strip()
         if argName in requiredArgs + optionalArgs:
             if not argName in args:
                 args[argName] = str(argsData[argName])
+                
+    # If we have any default argument values defined, and those arguments
+    # aren't already present, add the default values in to the result.
     for argName in defaultArgs.keys():
         if not argName in args.keys():
             args[argName] = defaultArgs[argName]
+
+    # If any required arguments are missing, stop.
+    for argName in requiredArgs:
+        if not argName in args:
+            print("ERROR: Required argument not present: " + argName, flush=True)
+            quit
     return args
 
 # Given two ints, returns those two ints divided by their highest common divisor, or simply
