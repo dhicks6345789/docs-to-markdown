@@ -14,11 +14,12 @@ import docsToMarkdownLib
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":sys.argv[0].rsplit(os.sep, 1)[0], "verbose":"false", "produceFolderIndexes":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
 args["verbose"] = args["verbose"].lower()
 args["produceFolderIndexes"] = args["produceFolderIndexes"].lower()
+args["validFrontMatterFields"] = args["validFrontMatterFields"].split(",")
 
 # Print a config summary for the user.
 print("DocsToMarkdown - arguments:", flush=True)
 for arg in args:
-    print(" - " + arg + ": " + args[arg], flush=True)
+    print(" - " + arg + ": " + str(args[arg]), flush=True)
 
 matches = []
 matches.append([".docx", "python3", "processDOCFile.py"])
