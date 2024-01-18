@@ -140,7 +140,7 @@ def docToMarkdownFile(inputFile, outputFile, baseURL="", markdownType="gfm", val
     putFile(outputFile, frontMatterToString(outputFrontmatter) + outputMarkdown)
 
 def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
-    args = []
+    args = {}
     currentArgName = None
     for argItem in sys.argv[1:]:
         if argItem.startswith("--"):
@@ -161,7 +161,7 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
     return args
 
 def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
-    args = []
+    args = {}
     print("processArgsFile - config file: " + theFilename, flush=True)
     print(requiredArgs + optionalArgs, flush=True)
     if theFilename.endswith(".csv"):
