@@ -117,20 +117,27 @@ def frontMatterToString(theFrontMatter):
 # Note: previously, a bug prevented Pandoc correctly parsing DOCX files produced by Word Online. As of around Monday, 4th March 2019, Pandoc 2.7 now seems to work.
 # The Debian 11 (Bullseye) Pandoc package version is 2.9, previous versions are 2.5 or earlier, so you either need to make sure Debian is up-to-date or install
 # Pandoc via the .deb file provided on their website.
-def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFields=["title"]):
+def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFields=[]):
     markdown = ""
     frontMatter = {}
-    
+
+    parsingFrontMatter = True
     pandocProcess = subprocess.Popen("pandoc --wrap=none -s \"" + inputFile + "\" -t " + markdownType + " -o -", shell=True, stdout=subprocess.PIPE)
     for markdownLine in pandocProcess.communicate()[0].decode("utf-8").split("\n"):
+        markdownLine = markdownLine.strip()
+        # Un-escape Markdown control characters embedded in Word documents.
         for markdownReplaceKey in markdownReplace.keys():
             markdownLine = markdownLine.replace(markdownReplaceKey, markdownReplace[markdownReplaceKey])
-        lineIsFrontMatter = False
-        for validFrontMatterField in validFrontMatterFields:
-            if markdownLine.lower().startswith(validFrontMatterField.lower() + ":"):
-                frontMatter[validFrontMatterField] = markdownLine.split(":")[1].strip()
-                lineIsFrontMatter = True
-        if not lineIsFrontMatter:
+        if parsingFrontMatter:
+            parsingFrontMatter = False
+            if ":" in markdownLine:
+                markdownSplit = markdownLine.split(":", 1)
+                frontMatterName = markdownSplit[0].strip()
+                if not " " in frontMatterName:
+                    parsingFrontMatter = True
+                    if (frontMatterName in validFrontMatterFields) or (validFrontMatterFields == []):
+                        frontMatter[markdownSplit[0].strip()] = markdownSplit[1].strip()
+        else:
             markdown = markdown + markdownLine.replace(baseURL, "") + "\n"
     return(markdown, frontMatter)
 
