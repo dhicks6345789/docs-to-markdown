@@ -169,19 +169,18 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
 
 def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
     args = {}
+    argsData = {}
     if theFilename.endswith(".csv"):
-        argsData = pandas.read_csv(theFilename, header=0)
-    else:
-        argsData = pandas.read_excel(theFilename, header=0)
-    for argsDataIndex, argsDataValues in argsData.iterrows():
-        argName = argsDataValues.iloc[0].strip()
+        argsData = pandas.read_csv(theFilename, header=0).to_dict(index=False)
+    elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
+        argsData = pandas.read_excel(theFilename, header=0).to_dict(index=False)
+    elif theFilename.endswith(".yaml"):
+        argsData = yaml.load(getFile(theFilename), Loader=yaml.SafeLoader)
+    for argName in argsData.keys():
+        argName = argName.strip()
         if argName in requiredArgs + optionalArgs:
             if not argName in args:
-                args[argName] = str(argsDataValues.iloc[1])
-        elif argName in optionalArgLists:
-            for argsDataValue in argsDataValues[1:].values:
-                if not isnan(argsDataValue):
-                    args[argsDataValues[0]].append(argsDataValue)
+                args[argName] = str(argsData[argName])
     for argName in defaultArgs.keys():
         if not argName in args.keys():
             args[argName] = defaultArgs[argName]
