@@ -176,7 +176,7 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
     elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
         argsData = pandas.read_excel(theFilename, header=0).to_dict(index=False)
     elif theFilename.endswith(".yaml"):
-        argsData = yaml.load(getFile(theFilename), Loader=yaml.SafeLoader)
+        argsData = yaml.safe_load(getFile(theFilename))
     print(argsData, flush=True)
     for argName in argsData.keys():
         argName = argName.strip()
