@@ -140,7 +140,7 @@ def docToMarkdownFile(inputFile, outputFile, baseURL="", markdownType="gfm", val
     putFile(outputFile, frontMatterToString(outputFrontmatter) + outputMarkdown)
 
 def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
-    args = defaultArgs
+    args = []
     currentArgName = None
     for argItem in sys.argv[1:]:
         if argItem.startswith("--"):
@@ -152,14 +152,16 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
             print("ERROR: unknown argument, " + argItem)
             sys.exit(1)
     if "config" in args.keys():
-        fileArgs = processArgsFile(args["config"], defaultArgs=defaultArgs, requiredArgs=requiredArgs, optionalArgs=optionalArgs, optionalArgLists=optionalArgLists)
+        fileArgs = processArgsFile(args["config"], defaultArgs=[], requiredArgs=requiredArgs, optionalArgs=optionalArgs, optionalArgLists=optionalArgLists)
         for argName in fileArgs.keys():
             args[argName] = fileArgs[argName]
+    for argName in defaultArgs.keys():
+        if not argName in args.keys():
+            args[argName] = defaultArgs[argName]
     return args
 
 def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
-    args = defaultArgs
-
+    args = []
     print("processArgsFile - config file: " + theFilename, flush=True)
     print(requiredArgs + optionalArgs, flush=True)
     if theFilename.endswith(".csv"):
@@ -177,6 +179,9 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
             for argsDataValue in argsDataValues[1:].values:
                 if not isnan(argsDataValue):
                     args[argsDataValues[0]].append(argsDataValue)
+    for argName in defaultArgs.keys():
+        if not argName in args.keys():
+            args[argName] = defaultArgs[argName]
     return args
 
 # Given two ints, returns those two ints divided by their highest common divisor, or simply
