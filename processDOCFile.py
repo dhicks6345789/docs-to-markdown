@@ -19,6 +19,8 @@ if docType in ["DOCX", "DOC"]:
     docMarkdown, docFrontmatter = docsToMarkdownLib.docToMarkdown(inputFile)
     trimmedMarkdown = ""
     for markdownLine in docMarkdown.split("\n"):
+      if outputPath.endswith("section1.0.md"):
+        print("MDLine: " + markdownLine)
       if markdownLine.startswith("# ") and not "title" in docFrontmatter.keys():
         docFrontmatter["title"] = markdownLine[2:].lstrip()
       else:
