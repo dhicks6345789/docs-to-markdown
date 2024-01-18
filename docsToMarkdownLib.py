@@ -146,7 +146,7 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
         if argItem.startswith("--"):
             currentArgName = argItem[2:]
         elif not currentArgName == None:
-            args[currentArgName] = argItem
+            args[currentArgName] = str(argItem)
             currentArgName = None
         else:
             print("ERROR: unknown argument, " + argItem)
@@ -174,7 +174,7 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
         if argName in requiredArgs + optionalArgs:
             if not argName in args:
                 print("processArgsFile - arg: " + str(argName) + ", val: " + str(argsDataValues.iloc[1]), flush=True)
-                args[argName] = argsDataValues.iloc[1]
+                args[argName] = str(argsDataValues.iloc[1])
         elif argName in optionalArgLists:
             for argsDataValue in argsDataValues[1:].values:
                 if not isnan(argsDataValue):
