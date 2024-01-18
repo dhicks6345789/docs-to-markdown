@@ -30,14 +30,15 @@ if docType in ["DOCX", "DOC"]:
     # Our library "function" here calls Pandoc to do the conversion.
     docMarkdown, docFrontmatter = docsToMarkdownLib.docToMarkdown(inputFile)
 
-    # Go through the Markdown line by line, checking for front matter variables.
+    # If we don't already have a "title" front matter variable, go through the Markdown line by line,
+    # checking for the first defined title string that we can use as a title.
     trimmedMarkdown = ""
     for markdownLine in docMarkdown.split("\n"):
-      if outputPath.endswith("section1.0.md"):
-        print("MDLine: " + markdownLine)
       if markdownLine.startswith("# ") and not "title" in docFrontmatter.keys():
         docFrontmatter["title"] = markdownLine[2:].lstrip()
       else:
         trimmedMarkdown = trimmedMarkdown + markdownLine + "\n"
+
+    # Write out the Markdown file, matching the modification date with the original input document so we can skip next time if the input is unmodified.
     docsToMarkdownLib.putFile(outputPath, docsToMarkdownLib.frontMatterToString(docFrontmatter) + trimmedMarkdown.strip())
     docsToMarkdownLib.makeModDatesMatch(inputFile, outputPath)
