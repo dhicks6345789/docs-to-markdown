@@ -2,6 +2,7 @@
 import os
 import io
 import sys
+import yaml
 import base64
 import subprocess
 
