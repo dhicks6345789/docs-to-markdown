@@ -49,7 +49,9 @@ def scanFolder(theInput, theOutput):
         if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
         else:
-            print("DocsToMarkdown - copying file: " + docsToMarkdownLib.normalisePath(theInput + os.sep + item) + " to " + docsToMarkdownLib.normalisePath(theOutput + os.sep + item), flush=True)
-            shutil.copyfile(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
+            inputItem = inputFolder + os.sep + item
+            outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
+            print("DocsToMarkdown - copying file: " + inputItem + " to " + outputItem, flush=True)
+            shutil.copyfile(inputItem, outputItem)
 
 scanFolder("", "")
