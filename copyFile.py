@@ -24,3 +24,4 @@ outputPath = outputFolder + os.sep + outputFile
 if not docsToMarkdownLib.checkModDatesMatch(inputFile, outputPath):
   print("Copying file: " + inputFile + " to " + outputPath, flush=True)
   shutil.copyfile(inputFile, outputPath)
+  docsToMarkdownLib.makeModDatesMatch(inputFile, outputPath)
