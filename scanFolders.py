@@ -25,6 +25,7 @@ for arg in args:
 matches = []
 matches.append([".docx", "python3", "processDOCFile.py"])
 matches.append(["faq", "python3", "FAQ/processFAQ.py"])
+matches.append([".jpg", "python3", "copyFile.py"])
 
 def scanFolder(theInput, theOutput):
     inputFolder = docsToMarkdownLib.normalisePath(args["input"] + os.sep + theInput)
