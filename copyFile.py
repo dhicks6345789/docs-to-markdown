@@ -11,7 +11,7 @@ import docsToMarkdownLib
 
 # Usage: copyFile.py inputFile outputFolder
 inputFile = sys.argv[1]
-outputFolder = sys.argv[2
+outputFolder = sys.argv[2]
 
 # We are passed the output /folder/, so we have to figure out the output file name from the input file name.
 outputFile = inputFile
