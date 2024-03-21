@@ -1,7 +1,7 @@
 import os
 import re
 import sys
-import shutil
+#import shutil
 
 # We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
 import xlrd
@@ -49,10 +49,10 @@ def scanFolder(theInput, theOutput):
     for item in unmatchedItems:
         if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
-        else:
-            inputItem = inputFolder + os.sep + item
-            outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
-            print("DocsToMarkdown - copying file: " + inputItem + " to " + outputItem, flush=True)
-            shutil.copyfile(inputItem, outputItem)
+        #else:
+            #inputItem = inputFolder + os.sep + item
+            #outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
+            #print("DocsToMarkdown - copying file: " + inputItem + " to " + outputItem, flush=True)
+            #shutil.copyfile(inputItem, outputItem)
 
 scanFolder("", "")
