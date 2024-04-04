@@ -143,6 +143,8 @@ def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFie
                             parsingFrontMatter = True
                             if (frontMatterName in validFrontMatterFields) or (validFrontMatterFields == []):
                                 frontMatter[markdownSplit[0].strip()] = markdownSplit[1].strip()
+                    else:
+                        markdown = markdown + markdownLine.replace(baseURL, "") + "\n"
                 blankLineCount = 0
         else:
             markdown = markdown + markdownLine.replace(baseURL, "") + "\n"
