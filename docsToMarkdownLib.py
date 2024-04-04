@@ -123,6 +123,7 @@ def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFie
     frontMatter = {}
 
     parsingFrontMatter = True
+    blankLineCount = 0
     pandocProcess = subprocess.Popen("pandoc --wrap=none -s \"" + inputFile + "\" -t " + markdownType + " -o -", shell=True, stdout=subprocess.PIPE)
     for markdownLine in pandocProcess.communicate()[0].decode("utf-8").split("\n"):
         markdownLine = markdownLine.strip()
@@ -130,14 +131,19 @@ def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFie
         for markdownReplaceKey in markdownReplace.keys():
             markdownLine = markdownLine.replace(markdownReplaceKey, markdownReplace[markdownReplaceKey])
         if parsingFrontMatter:
-            parsingFrontMatter = False
-            if ":" in markdownLine:
-                markdownSplit = markdownLine.split(":", 1)
-                frontMatterName = markdownSplit[0].strip()
-                if not " " in frontMatterName:
-                    parsingFrontMatter = True
-                    if (frontMatterName in validFrontMatterFields) or (validFrontMatterFields == []):
-                        frontMatter[markdownSplit[0].strip()] = markdownSplit[1].strip()
+            if markdownLine == "":
+                blankLineCount = blankLineCount + 1
+            else:
+                blankLineCount = 0
+            if blankLineCount < 2:
+                parsingFrontMatter = False
+                if ":" in markdownLine:
+                    markdownSplit = markdownLine.split(":", 1)
+                    frontMatterName = markdownSplit[0].strip()
+                    if not " " in frontMatterName:
+                        parsingFrontMatter = True
+                        if (frontMatterName in validFrontMatterFields) or (validFrontMatterFields == []):
+                            frontMatter[markdownSplit[0].strip()] = markdownSplit[1].strip()
         else:
             markdown = markdown + markdownLine.replace(baseURL, "") + "\n"
     return(markdown, frontMatter)
