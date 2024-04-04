@@ -134,16 +134,16 @@ def docToMarkdown(inputFile, baseURL="", markdownType="gfm", validFrontMatterFie
             if markdownLine == "":
                 blankLineCount = blankLineCount + 1
             else:
+                if blankLineCount < 2:
+                    parsingFrontMatter = False
+                    if ":" in markdownLine:
+                        markdownSplit = markdownLine.split(":", 1)
+                        frontMatterName = markdownSplit[0].strip()
+                        if not " " in frontMatterName:
+                            parsingFrontMatter = True
+                            if (frontMatterName in validFrontMatterFields) or (validFrontMatterFields == []):
+                                frontMatter[markdownSplit[0].strip()] = markdownSplit[1].strip()
                 blankLineCount = 0
-            if blankLineCount < 2:
-                parsingFrontMatter = False
-                if ":" in markdownLine:
-                    markdownSplit = markdownLine.split(":", 1)
-                    frontMatterName = markdownSplit[0].strip()
-                    if not " " in frontMatterName:
-                        parsingFrontMatter = True
-                        if (frontMatterName in validFrontMatterFields) or (validFrontMatterFields == []):
-                            frontMatter[markdownSplit[0].strip()] = markdownSplit[1].strip()
         else:
             markdown = markdown + markdownLine.replace(baseURL, "") + "\n"
     return(markdown, frontMatter)
