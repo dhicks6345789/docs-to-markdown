@@ -1,5 +1,5 @@
 # DocsToMarkdown
-Converts a folder tree of Word / Excel files (compatability is with those produced by Mircosoft Office / Office 365, exported from Google Docs / Sheets or, hopefully, pretty much any other tool) to the Govspeak varient of Markdown as specified by GOV.UK, or to CSV if appropriate. The output is intended to be used as the input for static site generation tools such as Jeykll, Hugo or Hyde, and various options / assumtions exist to ensure the files produced are suitible for those tools.
+Converts a folder tree of Word and Excel files (compatability is with those produced by [Microsoft Office](https://www.office.com) / Office 365, [Google Workspace](https://workspace.google.com), [LibreOffice](https://www.libreoffice.org), or, hopefully, pretty much any other similar tool) to Markdown, or to CSV if appropriate. The output is intended to be used as the input for static site generation tools such as Jeykll, Hugo or Hyde, and various options / assumtions exist to ensure the files produced are suitible for those tools.
 
 ## Requirements
 This utility is written in Python 3. It depends on Pandas and Numpy Python modules, which should be installable via Pip.
