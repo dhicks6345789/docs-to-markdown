@@ -1,5 +1,5 @@
 @echo off
-echo Installing DocsToMarkdown as a Windows service...
+echo Installing DocsToMarkdown as a Webconsole / Windows Schedualed Task...
 
 rem Parse any parameters.
 if [%1]==[] (
