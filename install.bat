@@ -10,7 +10,7 @@ if [%1]==[] (
 set docsToMarkdownPath=%1
 
 schtasks /query /tn DocsToMarkdown 2>&1 | find /i "ERROR: The system cannot find the file specified."
-if errorlevel 1 (
+if not errorlevel 1 (
   echo DocsToMarkdown Task not present.
 )
 
