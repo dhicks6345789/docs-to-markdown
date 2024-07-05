@@ -187,7 +187,7 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
     for argName in requiredArgs:
         if not argName in args:
             print("ERROR: Required argument not present: " + argName, flush=True)
-            quit
+            sys.exit(1)
     return args
 
 # Parse arguments from a config file. Accepts CSV, Excel and YAML formats.
