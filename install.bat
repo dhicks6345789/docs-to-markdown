@@ -2,7 +2,7 @@
 echo Installing DocsToMarkdown as a Windows service...
 
 rem Parse any parameters.
-if "%1"=="" (
+if [%1]==[] (
   echo Installs DocsToMarkdown as a Windows periodic task.
   echo Usage: install PathToDocsToMarkdownExecutable
   goto end
