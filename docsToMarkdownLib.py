@@ -191,6 +191,22 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
             sys.exit(1)
     return args
 
+# Reads a CSV or Excel file, returns the contents of that file as an associative array, with the first column as the key and the second column as the data. If more than two columns are present, each data item will be an array.
+def readDataFile(theFilename):
+    data = {}
+    if os.path.isfile(path):
+        theDataFile = open(theFilename)
+        for row in csv.reader(theDataFile):
+            print(', '.join(row))
+            if len(row) == 1:
+                data[row[0]] = ""
+            elif len(row) == 2:
+                data[row[0]] = row[1]
+            else:
+                data[row[0]] = row[1,]
+        theDataFile.close()
+    return data
+
 # Parse arguments from a config file. Accepts CSV, Excel and YAML formats.
 def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
     args = {}
@@ -233,16 +249,6 @@ def readMatchesFile(theFilename):
     matches.append([".jpg", "python3", "copyFile.py"])
     matches.append([".gif", "python3", "copyFile.py"])
     return matches
-
-def readChangesFile(theFilename):
-    changes = {}
-    if os.path.isfile(path):
-        theChangesFile = open(theFilename)
-        for row in csv.reader(theChangesFile):
-            print(', '.join(row))
-            changes[row[0]] = row[1]
-        theChangesFile.close()
-    return changes
 
 # Given two ints, returns those two ints divided by their highest common divisor, or simply
 # returns the two same ints if there is no common divisor. Checks from the given range downwards.
