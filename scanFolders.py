@@ -28,7 +28,14 @@ currentChanges = docsToMarkdownLib.getFolderChangeDetails(docsToMarkdownLib.norm
 
 print(previousChanges)
 print(currentChanges)
-
+changedPaths = []
+for item in currentChanges:
+    if item in previousChanges:
+        if not currentChanges[item] == previousChanges[item]:
+            changedPaths.append(item)
+    else:
+        changedPaths.append(item)
+print(changedPaths)
 exit(0)
 
 
