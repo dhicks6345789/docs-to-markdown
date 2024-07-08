@@ -232,6 +232,19 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
             quit
     return args
 
+def getFolderChangeDetails(thePath):
+    changes = {}
+    for item in os.listdir(thePath):
+        itemPath = thePath + os.sep + item
+        if os.path.isdir(itemPath):
+            subChanges = getFolderChangeDetails(itemPath)
+            if not subChanges == {}:
+                changes.update(subChanges)
+                changes[itemPath] = subChanges.values().sort()
+        else:
+            changes[itemPath] = os.path.getmtime(itemPath)
+    return changes
+
 def readMatchesFile(theFilename):
     matches = []
     matches.append([".docx", "python3", "processDOCFile.py"])
