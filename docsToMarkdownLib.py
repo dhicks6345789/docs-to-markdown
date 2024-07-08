@@ -2,7 +2,6 @@
 import os
 import io
 import sys
-import csv
 import yaml
 import base64
 import subprocess
@@ -193,18 +192,11 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
 
 # Reads a CSV or Excel file, returns the contents of that file as an associative array, with the first column as the key and the second column as the data. If more than two columns are present, each data item will be an array.
 def readDataFile(theFilename):
-    data = {}
-    if os.path.isfile(theFilename):
-        theDataFile = open(theFilename)
-        for row in csv.reader(theDataFile):
-            print(', '.join(row))
-            if len(row) == 1:
-                data[row[0]] = ""
-            elif len(row) == 2:
-                data[row[0]] = row[1]
-            else:
-                data[row[0]] = row[1,]
-        theDataFile.close()
+    # Figure out what format the file is in and use the appropriate loader.
+    if theFilename.endswith(".csv"):
+        data = pandas.read_csv(theFilename, header=0).to_dict(index=False)
+    elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
+        data = pandas.read_excel(theFilename, header=0).to_dict(index=False)
     return data
 
 # Parse arguments from a config file. Accepts CSV, Excel and YAML formats.
