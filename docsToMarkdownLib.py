@@ -2,6 +2,7 @@
 import os
 import io
 import sys
+import csv
 import yaml
 import base64
 import subprocess
@@ -232,6 +233,16 @@ def readMatchesFile(theFilename):
     matches.append([".jpg", "python3", "copyFile.py"])
     matches.append([".gif", "python3", "copyFile.py"])
     return matches
+
+def readChangesFile(theFilename):
+    changes = {}
+    if os.path.isfile(path):
+        theChangesFile = open(theFilename)
+        for row in csv.reader(theChangesFile)
+            print(', '.join(row))
+            changes[row[0]] = row[1]
+        theChangesFile.close()
+    return changes
 
 # Given two ints, returns those two ints divided by their highest common divisor, or simply
 # returns the two same ints if there is no common divisor. Checks from the given range downwards.
