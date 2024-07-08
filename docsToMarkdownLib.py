@@ -238,7 +238,7 @@ def readChangesFile(theFilename):
     changes = {}
     if os.path.isfile(path):
         theChangesFile = open(theFilename)
-        for row in csv.reader(theChangesFile)
+        for row in csv.reader(theChangesFile):
             print(', '.join(row))
             changes[row[0]] = row[1]
         theChangesFile.close()
