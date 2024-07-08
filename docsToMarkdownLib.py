@@ -194,7 +194,7 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
 # Reads a CSV or Excel file, returns the contents of that file as an associative array, with the first column as the key and the second column as the data. If more than two columns are present, each data item will be an array.
 def readDataFile(theFilename):
     data = {}
-    if os.path.isfile(path):
+    if os.path.isfile(theFilename):
         theDataFile = open(theFilename)
         for row in csv.reader(theDataFile):
             print(', '.join(row))
