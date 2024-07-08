@@ -222,6 +222,17 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
             quit
     return args
 
+def readMatchesFile(theFilename):
+    matches = []
+    matches.append([".docx", "python3", "processDOCFile.py"])
+    matches.append(["faq", "python3", "FAQ/processFAQ.py"])
+    matches.append([".svg", "python3", "copyFile.py"])
+    matches.append([".webp", "python3", "copyFile.py"])
+    matches.append([".png", "python3", "copyFile.py"])
+    matches.append([".jpg", "python3", "copyFile.py"])
+    matches.append([".gif", "python3", "copyFile.py"])
+    return matches
+
 # Given two ints, returns those two ints divided by their highest common divisor, or simply
 # returns the two same ints if there is no common divisor. Checks from the given range downwards.
 def reduceInts(theRange, leftInt, rightInt):
