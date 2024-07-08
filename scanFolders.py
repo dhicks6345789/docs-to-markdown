@@ -22,8 +22,8 @@ print("DocsToMarkdown - arguments:", flush=True)
 for arg in args:
     print(" - " + arg + ": " + str(args[arg]), flush=True)
 
-matches = readMatchesFile(args["dataRoot"] + os.sep + "matches.csv")
-changes = readChangesFile(args["dataRoot"] + os.sep + "changes.csv")
+matches = docsToMarkdownLib.readMatchesFile(args["dataRoot"] + os.sep + "matches.csv")
+changes = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "changes.csv")
 exit(0)
 
 
