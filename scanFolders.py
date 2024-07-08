@@ -12,7 +12,7 @@ import docsToMarkdownLib
 
 
 
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":sys.argv[0].rsplit(os.sep, 1)[0], "verbose":"false", "produceFolderIndexes":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":sys.argv[0].rsplit(os.sep, 1)[0], "dataRoot":sys.argv[0].rsplit(os.sep, 2)[0], "verbose":"false", "produceFolderIndexes":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
 args["verbose"] = args["verbose"].lower()
 args["produceFolderIndexes"] = args["produceFolderIndexes"].lower()
 args["validFrontMatterFields"] = args["validFrontMatterFields"].split(",")
@@ -22,14 +22,9 @@ print("DocsToMarkdown - arguments:", flush=True)
 for arg in args:
     print(" - " + arg + ": " + str(args[arg]), flush=True)
 
-matches = []
-matches.append([".docx", "python3", "processDOCFile.py"])
-matches.append(["faq", "python3", "FAQ/processFAQ.py"])
-matches.append([".svg", "python3", "copyFile.py"])
-matches.append([".webp", "python3", "copyFile.py"])
-matches.append([".png", "python3", "copyFile.py"])
-matches.append([".jpg", "python3", "copyFile.py"])
-matches.append([".gif", "python3", "copyFile.py"])
+matches = readMatchesFile(args["dataRoot"] + os.sep + "matches.csv")
+changes = readChangesFile(args["dataRoot"] + os.sep + "changes.csv")
+exit(0)
 
 
 
