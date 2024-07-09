@@ -35,9 +35,9 @@ print(scriptStrings)
 previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
 print("previousMatchChanges")
 print(previousMatchChanges)
+currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(".")
 print("currentMatchChanges")
 print(currentMatchChanges)
-currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(".")
 changedMatchPaths = []
 for item in currentMatchChanges:
     if item in previousMatchChanges:
