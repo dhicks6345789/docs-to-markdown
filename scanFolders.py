@@ -38,9 +38,11 @@ changedMatchPaths = []
 for item in currentMatchChanges:
     if item in previousMatchChanges:
         if not currentMatchChanges[item] == previousMatchChanges[item]:
-            changedMatchPaths.append(item)
+            if item in scriptStrings:
+                changedMatchPaths.append(item)
     else:
-        changedMatchPaths.append(item)
+        if item in scriptStrings:
+            changedMatchPaths.append(item)
 print("changedMatchPaths:")
 print(changedMatchPaths)
 docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "matchChanges.csv", currentMatchChanges)
