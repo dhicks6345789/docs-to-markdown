@@ -206,7 +206,7 @@ def readDataFile(theFilename):
             if returnScalars:
                 result[row[0]] = row[1]
             else:
-                result[row[0]] = row.values[1,]
+                result[row[0]] = row.values.flatten().tolist()
         return(result)
     return result
 
