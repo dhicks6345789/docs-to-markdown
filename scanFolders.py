@@ -47,8 +47,8 @@ for item in currentMatchChanges:
     else:
         if item in scriptStrings:
             changedMatchPaths.append(item)
-#print("changedMatchPaths:")
-#print(changedMatchPaths)
+print("changedMatchPaths:")
+print(changedMatchPaths)
 docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "matchChanges.csv", currentMatchChanges)
 
 previousInputChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "inputChanges.csv")
