@@ -257,7 +257,7 @@ def getFolderChangeDetails(thePath):
             subChanges = getFolderChangeDetails(itemPath)
             if not subChanges == {}:
                 changes.update(subChanges)
-                changes[itemPath] = subChanges.values().sort()
+                changes[itemPath] = sorted(subChanges.values())[0]
         else:
             changes[itemPath] = os.path.getmtime(itemPath)
     return changes
