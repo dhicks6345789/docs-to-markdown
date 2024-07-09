@@ -204,7 +204,7 @@ def readDataFile(theFilename):
 def writeDataFile(theFilename, theData):
     # Figure out what format the file is in and use the appropriate writer.
     if theFilename.endswith(".csv"):
-        pandas.DataFrame(theData).to_csv(theFilename, index=[0])
+        pandas.DataFrame(theData, index=[0]).to_csv(theFilename, index=False)
     #elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
         #return pandas.read_excel(theFilename, header=0).to_dict(index=[0])
 
