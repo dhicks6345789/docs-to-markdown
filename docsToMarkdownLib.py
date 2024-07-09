@@ -30,7 +30,7 @@ videoTypes = ["mp4"]
 urlTypes = ["url", "txt"]
 
 # Files / folders to exclude from directory listings.
-fileIgnores = [".git"]
+fileIgnores = [".git", "__pycache__"]
 
 # A utility function to return the contents of the given file.
 def getFile(theFilename):
