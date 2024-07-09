@@ -200,7 +200,7 @@ def readDataFile(theFilename):
         elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
             pandasData = pandas.read_excel(theFilename, header=None)
         for index, row in pandasData.iterrows():
-            print(row.shape)
+            print(row.size)
             result[row[0]] = row[1]
         return(result)
     return result
