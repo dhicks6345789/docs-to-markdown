@@ -23,6 +23,10 @@ for arg in args:
     print(" - " + arg + ": " + str(args[arg]), flush=True)
 
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
+print("matches:")
+print(matches)
+# matchStrings = matches
+
 previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
 currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(".")
 changedMatchPaths = []
