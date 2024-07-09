@@ -195,9 +195,9 @@ def readDataFile(theFilename):
     if os.path.isfile(theFilename):
         # Figure out what format the file is in and use the appropriate loader.
         if theFilename.endswith(".csv"):
-            return pandas.read_csv(theFilename, header=None).to_dict(index=False)
+            return pandas.read_csv(theFilename, header=None).to_dict()
         elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
-            return pandas.read_excel(theFilename, header=None).to_dict(index=False)
+            return pandas.read_excel(theFilename, header=None).to_dict()
     return {}
 
 # Writes the data contained in a dict to a CSV or Excel file.
