@@ -27,7 +27,8 @@ print("matches:")
 print(matches)
 scriptStrings = []
 for item in matches:
-    scriptStrings.append(matches[item][1])
+    if not matches[item][1] in scriptStrings:
+        scriptStrings.append(matches[item][1])
 print("scriptStrings:")
 print(scriptStrings)
 
@@ -42,6 +43,7 @@ for item in currentMatchChanges:
         changedMatchPaths.append(item)
 print("changedMatchPaths:")
 print(changedMatchPaths)
+docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "matchChanges.csv", currentMatchChanges)
 
 previousInputChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "inputChanges.csv")
 currentInputChanges = docsToMarkdownLib.getFolderChangeDetails(docsToMarkdownLib.normalisePath(args["input"]))
@@ -54,8 +56,8 @@ for item in currentInputChanges:
         changedInputPaths.append(item)
 print("changedInputPaths:")
 print(changedInputPaths)
+docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "inputChanges.csv", currentInputChanges)
 
-docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "changes.csv", currentChanges)
 exit(0)
 
 
