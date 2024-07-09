@@ -205,7 +205,9 @@ def writeDataFile(theFilename, theData):
     print("Filename to write: " + theFilename)
     # Figure out what format the file is in and use the appropriate writer.
     if theFilename.endswith(".csv"):
-        pandas.DataFrame(theData, index=[0]).to_csv(theFilename, index=False)
+        CSVDF = pandas.DataFrame(theData, index=[0])
+        print(CSVDF)
+        CSVDF.to_csv(theFilename, index=False)
     #elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
         #return pandas.read_excel(theFilename, header=0).to_dict(index=[0])
 
