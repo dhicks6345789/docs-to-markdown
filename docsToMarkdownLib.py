@@ -262,7 +262,7 @@ def getFolderChangeDetails(thePath):
     changes = {}
     for item in os.listdir(thePath):
         if not item in fileIgnores:
-            itemPath = thePath + os.sep + item
+            itemPath = thePath + "/" + item
             if os.path.isdir(itemPath):
                 subChanges = getFolderChangeDetails(itemPath)
                 if not subChanges == {}:
