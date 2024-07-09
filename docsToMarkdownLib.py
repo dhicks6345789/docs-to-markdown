@@ -209,9 +209,9 @@ def writeDataFile(theFilename, theData):
     
     # Figure out what format the file is in and use the appropriate writer.
     if theFilename.endswith(".csv"):
-        pandasDataframe.to_csv(theFilename, index=False, header=False)
-    #elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
-        #return pandas.read_excel(theFilename, header=0).to_dict(index=[0])
+        outputDataframe.to_csv(theFilename, index=False, header=False)
+    elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
+        outputDataframe.to_excel(theFilename, index=False, header=False)
 
 # Parse arguments from a config file. Accepts CSV, Excel and YAML formats.
 def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[], optionalArgLists=[]):
