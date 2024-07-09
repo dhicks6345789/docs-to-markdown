@@ -29,6 +29,9 @@ videoTypes = ["mp4"]
 # An array of "url file" types.
 urlTypes = ["url", "txt"]
 
+# Files / folders to exclude from directory listings.
+fileIgnores = [".git"]
+
 # A utility function to return the contents of the given file.
 def getFile(theFilename):
     infile = open(theFilename)
@@ -258,14 +261,15 @@ def processArgsFile(theFilename, defaultArgs={}, requiredArgs=[], optionalArgs=[
 def getFolderChangeDetails(thePath):
     changes = {}
     for item in os.listdir(thePath):
-        itemPath = thePath + os.sep + item
-        if os.path.isdir(itemPath):
-            subChanges = getFolderChangeDetails(itemPath)
-            if not subChanges == {}:
-                changes.update(subChanges)
-                changes[itemPath] = sorted(subChanges.values())[0]
-        else:
-            changes[itemPath] = os.path.getmtime(itemPath)
+        if not item in fileIgnores:
+            itemPath = thePath + os.sep + item
+            if os.path.isdir(itemPath):
+                subChanges = getFolderChangeDetails(itemPath)
+                if not subChanges == {}:
+                    changes.update(subChanges)
+                    changes[itemPath] = sorted(subChanges.values())[0]
+            else:
+                changes[itemPath] = os.path.getmtime(itemPath)
     return changes
 
 # Given two ints, returns those two ints divided by their highest common divisor, or simply
