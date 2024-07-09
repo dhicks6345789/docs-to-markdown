@@ -59,12 +59,14 @@ docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "inputChanges.csv", 
 
 
 def scanFolder(theInput, theOutput):
-    inputFolder = docsToMarkdownLib.normalisePath(args["input"] + os.sep + theInput)
+    inputFolder = docsToMarkdownLib.normalisePath(args["input"] + "/" + theInput)
     print("DocsToMarkdown - scanning folder: " + inputFolder, flush=True)
     unmatchedItems = []
     for item in os.listdir(inputFolder):
         matched = False
         for match in matches:
+            print(match)
+            #if not re.match(match[0], item) == None
             if item.endswith(match[0]):
                 matched = True
                 inputItem = inputFolder + os.sep + item
