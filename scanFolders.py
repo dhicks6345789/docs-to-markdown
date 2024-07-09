@@ -35,7 +35,7 @@ for item in currentChanges:
     else:
         changedPaths.append(item)
 print(changedPaths)
-docsToMarkdownLib.writeDataFile(currentChanges, args["dataRoot"] + os.sep + "changes.csv")
+docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "changes.csv", currentChanges)
 exit(0)
 
 
