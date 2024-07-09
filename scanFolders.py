@@ -23,24 +23,30 @@ for arg in args:
     print(" - " + arg + ": " + str(args[arg]), flush=True)
 
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
+previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
 currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(".")
-print("currentMatchChanges:")
-print(currentMatchChanges)
-print("Matches:")
-print(matches)
-previousChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "changes.csv")
-currentChanges = docsToMarkdownLib.getFolderChangeDetails(docsToMarkdownLib.normalisePath(args["input"]))
-print("currentChanges:")
-print(currentChanges)
-changedPaths = []
-for item in currentChanges:
-    if item in previousChanges:
-        if not currentChanges[item] == previousChanges[item]:
-            changedPaths.append(item)
+changedMatchPaths = []
+for item in currentMatchChanges:
+    if item in previousMatchChanges:
+        if not currentMatchChanges[item] == previousMatchChanges[item]:
+            changedMatchPaths.append(item)
     else:
-        changedPaths.append(item)
-print("changedPaths:")
-print(changedPaths)
+        changedMatchPaths.append(item)
+print("changedMatchPaths:")
+print(changedMatchPaths)
+
+previousInputChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "inputChanges.csv")
+currentInputChanges = docsToMarkdownLib.getFolderChangeDetails(docsToMarkdownLib.normalisePath(args["input"]))
+changedInputPaths = []
+for item in currentInputChanges:
+    if item in previousInputChanges:
+        if not currentInputChanges[item] == previousInputChanges[item]:
+            changedInputPaths.append(item)
+    else:
+        changedInputPaths.append(item)
+print("changedInputPaths:")
+print(changedInputPaths)
+
 docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "changes.csv", currentChanges)
 exit(0)
 
