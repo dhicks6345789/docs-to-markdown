@@ -65,8 +65,9 @@ def scanFolder(theInput, theOutput):
     for item in os.listdir(inputFolder):
         matched = False
         for match in matches:
-            print(match)
+            print(match + " == " + item)
             if not re.match(match, item) == None:
+                print("Matched: " + match)
                 matched = True
                 inputItem = inputFolder + os.sep + item
                 outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
