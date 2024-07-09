@@ -24,8 +24,6 @@ for arg in args:
 
 matches = docsToMarkdownLib.readMatchesFile(args["dataRoot"] + os.sep + "matches.csv")
 previousChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "changes.csv")
-print("Previous changes:")
-print(previousChanges)
 currentChanges = docsToMarkdownLib.getFolderChangeDetails(docsToMarkdownLib.normalisePath(args["input"]))
 changedPaths = []
 for item in currentChanges:
@@ -34,8 +32,6 @@ for item in currentChanges:
             changedPaths.append(item)
     else:
         changedPaths.append(item)
-print("Changed paths:")
-print(changedPaths)
 docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "changes.csv", currentChanges)
 exit(0)
 
