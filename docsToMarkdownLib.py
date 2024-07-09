@@ -199,10 +199,14 @@ def readDataFile(theFilename):
             pandasData = pandas.read_csv(theFilename, header=None)
         elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
             pandasData = pandas.read_excel(theFilename, header=None)
-        print("Shape:")
-        print(pandasData.shape)
+        returnScalars = False
+        if pandasData.shape == 2:
+            returnScalars = True
         for index, row in pandasData.iterrows():
-            result[row[0]] = row[1]
+            if returnScalars:
+                result[row[0]] = row[1]
+            else:
+                result[row[0]] = row[1,]
         return(result)
     return result
 
