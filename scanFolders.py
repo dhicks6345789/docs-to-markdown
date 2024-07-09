@@ -1,11 +1,10 @@
 import os
 import re
 import sys
-#import shutil
 
 # We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
-import xlrd
-import pandas
+#import xlrd
+#import pandas
 
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
@@ -36,6 +35,7 @@ for item in currentChanges:
     else:
         changedPaths.append(item)
 print(changedPaths)
+docsToMarkdownLib.writeDataFile(currentChanges, args["dataRoot"] + os.sep + "changes.csv")
 exit(0)
 
 
