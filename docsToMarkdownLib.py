@@ -205,7 +205,7 @@ def writeDataFile(theFilename, theData):
     pandasData = []
     for item in theData:
             pandasData.append([item, theData[item]])
-    outputDataframe = pandas.DataFrame(CSVData)
+    outputDataframe = pandas.DataFrame(pandasData)
     
     # Figure out what format the file is in and use the appropriate writer.
     if theFilename.endswith(".csv"):
