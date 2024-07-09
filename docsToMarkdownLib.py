@@ -200,9 +200,21 @@ def readDataFile(theFilename):
         elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
             pandasData = pandas.read_excel(theFilename, header=None)
         for index, row in pandasData.iterrows():
+            print(row.shape)
             result[row[0]] = row[1]
         return(result)
     return result
+
+def readMatchesFile(theFilename):
+    matches = []
+    matches.append([".docx", "python3", "processDOCFile.py"])
+    matches.append(["faq", "python3", "FAQ/processFAQ.py"])
+    matches.append([".svg", "python3", "copyFile.py"])
+    matches.append([".webp", "python3", "copyFile.py"])
+    matches.append([".png", "python3", "copyFile.py"])
+    matches.append([".jpg", "python3", "copyFile.py"])
+    matches.append([".gif", "python3", "copyFile.py"])
+    return matches
 
 # Writes the data contained in a dict to a CSV or Excel file.
 def writeDataFile(theFilename, theData):
@@ -261,17 +273,6 @@ def getFolderChangeDetails(thePath):
         else:
             changes[itemPath] = os.path.getmtime(itemPath)
     return changes
-
-def readMatchesFile(theFilename):
-    matches = []
-    matches.append([".docx", "python3", "processDOCFile.py"])
-    matches.append(["faq", "python3", "FAQ/processFAQ.py"])
-    matches.append([".svg", "python3", "copyFile.py"])
-    matches.append([".webp", "python3", "copyFile.py"])
-    matches.append([".png", "python3", "copyFile.py"])
-    matches.append([".jpg", "python3", "copyFile.py"])
-    matches.append([".gif", "python3", "copyFile.py"])
-    return matches
 
 # Given two ints, returns those two ints divided by their highest common divisor, or simply
 # returns the two same ints if there is no common divisor. Checks from the given range downwards.
