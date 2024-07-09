@@ -1,7 +1,7 @@
-".docx", "python3", "./processDOCFile.py"
-"faq", "python3", "./FAQ/processFAQ.py"
-".svg", "python3", "./copyFile.py"
-".webp", "python3", "./copyFile.py"
-".png", "python3", "./copyFile.py"
-".jpg", "python3", "./copyFile.py"
-".gif", "python3", "./copyFile.py"
+.docx,python3,./processDOCFile.py
+faq,python3,./FAQ/processFAQ.py
+.svg,python3,./copyFile.py
+.webp,python3,./copyFile.py
+.png,python3,./copyFile.py
+.jpg,python3,./copyFile.py
+.gif,python3,./copyFile.py
