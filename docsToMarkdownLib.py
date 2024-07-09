@@ -205,7 +205,9 @@ def readDataFile(theFilename):
         elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
             pandasData = pandas.read_excel(theFilename, header=None)
         returnScalars = False
-        if pandasData.shape == 2:
+        print("readDataFile shape:")
+        print(pandasData.shape)
+        if pandasData.shape[1] == 2:
             returnScalars = True
         for index, row in pandasData.iterrows():
             if returnScalars:
