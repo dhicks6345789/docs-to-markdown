@@ -202,6 +202,7 @@ def readDataFile(theFilename):
 
 # Writes the data contained in a dict to a CSV or Excel file.
 def writeDataFile(theFilename, theData):
+    print("Filename to write: " + theFilename)
     # Figure out what format the file is in and use the appropriate writer.
     if theFilename.endswith(".csv"):
         pandas.DataFrame(theData, index=[0]).to_csv(theFilename, index=False)
