@@ -23,21 +23,13 @@ for arg in args:
     print(" - " + arg + ": " + str(args[arg]), flush=True)
 
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
-#print("matches:")
-#print(matches)
 scriptStrings = []
 for item in matches:
     if not matches[item][1] in scriptStrings:
         scriptStrings.append(matches[item][1])
-#print("scriptStrings:")
-#print(scriptStrings)
 
 previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
-#print("previousMatchChanges")
-#print(previousMatchChanges)
 currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(".")
-#print("currentMatchChanges")
-#print(currentMatchChanges)
 changedMatchPaths = []
 for item in currentMatchChanges:
     if item in previousMatchChanges:
@@ -64,8 +56,6 @@ print("changedInputPaths:")
 print(changedInputPaths)
 docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "inputChanges.csv", currentInputChanges)
 
-exit(0)
-
 
 
 def scanFolder(theInput, theOutput):
@@ -84,16 +74,10 @@ def scanFolder(theInput, theOutput):
                 commandLine = match[1] + " \"" + docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]) + "\" \"" + inputItem + "\" \"" + outputItem + "\""
                 if args["verbose"] == "true":
                     print("DocsToMarkdown - running: " + commandLine, flush=True)
-                os.system(commandLine + " 2>&1")
+                #os.system(commandLine + " 2>&1")
         if matched == False:
             unmatchedItems.append(item)
     for item in unmatchedItems:
         if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
-        #else:
-            #inputItem = inputFolder + os.sep + item
-            #outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
-            #print("DocsToMarkdown - copying file: " + inputItem + " to " + outputItem, flush=True)
-            #shutil.copyfile(inputItem, outputItem)
-
 scanFolder("", "")
