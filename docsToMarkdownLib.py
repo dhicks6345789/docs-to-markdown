@@ -59,11 +59,11 @@ def putFile(theFilename, theContent):
 # A utility function to return a given path string in normalised format, i.e. without any double os.sep characters,
 # and with no os.sep character at the end of the string.
 def normalisePath(thePath):
-    thePath = thePath.strip()
-    if thePath == "":
+    result = thePath.strip()
+    if result == "":
         return ""
-    result = thePath.replace(os.sep, "/")
-    result = thePath.replace("//", "/")
+    result = result.replace(os.sep, "/")
+    result = result.replace("//", "/")
     if result[len(result)-1] == "/":
         result = result[:-1]
     return result
