@@ -1,5 +1,5 @@
 ^.*\.docx$,python3,./processDOCFile.py
-^faq/.*$,python3,./FAQ/processFAQ.py
+^.*/faq/.*$,python3,./FAQ/processFAQ.py
 ^.*\.svg$,python3,./copyFile.py
 ^.*\.webp$,python3,./copyFile.py
 ^.*\.png$,python3,./copyFile.py
