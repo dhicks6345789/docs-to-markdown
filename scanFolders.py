@@ -25,6 +25,8 @@ for arg in args:
 matches = docsToMarkdownLib.readMatchesFile(args["dataRoot"] + os.sep + "matches.csv")
 previousChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "changes.csv")
 currentChanges = docsToMarkdownLib.getFolderChangeDetails(docsToMarkdownLib.normalisePath(args["input"]))
+print("currentChanges:")
+print(currentChanges)
 changedPaths = []
 for item in currentChanges:
     if item in previousChanges:
