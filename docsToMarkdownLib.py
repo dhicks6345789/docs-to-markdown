@@ -195,24 +195,21 @@ def readDataFile(theFilename):
     if os.path.isfile(theFilename):
         # Figure out what format the file is in and use the appropriate loader.
         if theFilename.endswith(".csv"):
-            return pandas.read_csv(theFilename, header=0).to_dict(index=False)
+            return pandas.read_csv(theFilename, header=None).to_dict(index=False)
         elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
-            return pandas.read_excel(theFilename, header=0).to_dict(index=False)
+            return pandas.read_excel(theFilename, header=None).to_dict(index=False)
     return {}
 
 # Writes the data contained in a dict to a CSV or Excel file.
 def writeDataFile(theFilename, theData):
-    print("Filename to write: " + theFilename)
-    print("Data to write:")
-    print(theData)
+    pandasData = []
+    for item in theData:
+            pandasData.append([item, theData[item]])
+    outputDataframe = pandas.DataFrame(CSVData)
+    
     # Figure out what format the file is in and use the appropriate writer.
     if theFilename.endswith(".csv"):
-        CSVData = []
-        for item in theData:
-            CSVData.append([item, theData[item]])
-        CSVDF = pandas.DataFrame(CSVData)
-        print(CSVDF)
-        CSVDF.to_csv(theFilename, index=False)
+        pandasDataframe.to_csv(theFilename, index=False, header=False)
     #elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
         #return pandas.read_excel(theFilename, header=0).to_dict(index=[0])
 
