@@ -207,7 +207,7 @@ def readDataFile(theFilename):
                 result[row[0]] = row[1]
             else:
                 print("Row:")
-                print(row)
+                print(row.values.flatten().tolist())
                 result[row[0]] = row.values.flatten().tolist()
         return(result)
     return result
