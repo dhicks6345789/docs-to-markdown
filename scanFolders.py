@@ -23,21 +23,21 @@ for arg in args:
     print(" - " + arg + ": " + str(args[arg]), flush=True)
 
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
-print("matches:")
-print(matches)
+#print("matches:")
+#print(matches)
 scriptStrings = []
 for item in matches:
     if not matches[item][1] in scriptStrings:
         scriptStrings.append(matches[item][1])
-print("scriptStrings:")
-print(scriptStrings)
+#print("scriptStrings:")
+#print(scriptStrings)
 
 previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
-print("previousMatchChanges")
-print(previousMatchChanges)
+#print("previousMatchChanges")
+#print(previousMatchChanges)
 currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(".")
-print("currentMatchChanges")
-print(currentMatchChanges)
+#print("currentMatchChanges")
+#print(currentMatchChanges)
 changedMatchPaths = []
 for item in currentMatchChanges:
     if item in previousMatchChanges:
@@ -47,8 +47,8 @@ for item in currentMatchChanges:
     else:
         if item in scriptStrings:
             changedMatchPaths.append(item)
-print("changedMatchPaths:")
-print(changedMatchPaths)
+#print("changedMatchPaths:")
+#print(changedMatchPaths)
 docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "matchChanges.csv", currentMatchChanges)
 
 previousInputChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "inputChanges.csv")
