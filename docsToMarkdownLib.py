@@ -206,22 +206,9 @@ def readDataFile(theFilename):
             if returnScalars:
                 result[row[0]] = row[1]
             else:
-                print("Row:")
-                print(row.values.flatten().tolist())
-                result[row[0]] = row.values.flatten().tolist()
+                result[row[0]] = row.values.flatten().tolist()[1,]
         return(result)
     return result
-
-def readMatchesFile(theFilename):
-    matches = []
-    matches.append([".docx", "python3", "processDOCFile.py"])
-    matches.append(["faq", "python3", "FAQ/processFAQ.py"])
-    matches.append([".svg", "python3", "copyFile.py"])
-    matches.append([".webp", "python3", "copyFile.py"])
-    matches.append([".png", "python3", "copyFile.py"])
-    matches.append([".jpg", "python3", "copyFile.py"])
-    matches.append([".gif", "python3", "copyFile.py"])
-    return matches
 
 # Writes the data contained in a dict to a CSV or Excel file.
 def writeDataFile(theFilename, theData):
