@@ -192,13 +192,17 @@ def processCommandLineArgs(defaultArgs={}, requiredArgs=[], optionalArgs=[], opt
 
 # Reads a CSV or Excel file, returns the contents of that file as an associative array, with the first column as the key and the second column as the data. If more than two columns are present, each data item will be an array.
 def readDataFile(theFilename):
+    result = {}
     if os.path.isfile(theFilename):
         # Figure out what format the file is in and use the appropriate loader.
         if theFilename.endswith(".csv"):
-            return pandas.read_csv(theFilename, header=None).to_dict(orient="list")
+            pandasData = pandas.read_csv(theFilename, header=None)
         elif theFilename.endswith(".xlsx") or theFilename.endswith(".xls"):
-            return pandas.read_excel(theFilename, header=None).to_dict()
-    return {}
+            pandasData = pandas.read_excel(theFilename, header=None)
+        for index, row in pandasData.iterrows():
+            result[row[0]] = row[1]
+        return(result)
+    return result
 
 # Writes the data contained in a dict to a CSV or Excel file.
 def writeDataFile(theFilename, theData):
