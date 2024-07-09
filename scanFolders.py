@@ -25,7 +25,11 @@ for arg in args:
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
 print("matches:")
 print(matches)
-# matchStrings = matches
+scriptStrings = []
+for item in matches:
+    scriptStrings.append(matches[item][1])
+print("scriptStrings:")
+print(scriptStrings)
 
 previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
 currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(".")
