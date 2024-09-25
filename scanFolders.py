@@ -65,7 +65,7 @@ def scanFolder(theInput, theOutput):
     unmatchedItems = []
 
     items = os.listdir(inputFolder)
-    #items.insert(0, "")
+    items.insert(0, "")
     for item in items:
         matched = False
         for match in matches:
@@ -80,7 +80,7 @@ def scanFolder(theInput, theOutput):
                     print("DocsToMarkdown - matched: " + inputItem + " with " + match, flush=True)
                     print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
                 subprocess.run(commandLine)
-        if matched == False:
+        if (matched == False) and (not item == ""):
             unmatchedItems.append(item)
     for item in unmatchedItems:
         if os.path.isdir(inputFolder + os.sep + item):
