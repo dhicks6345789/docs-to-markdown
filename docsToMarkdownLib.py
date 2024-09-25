@@ -64,6 +64,7 @@ def normalisePath(thePath):
         return ""
     result = result.replace(os.sep, "/")
     result = result.replace("//", "/")
+    result = result.replace("/./", "/")
     if result[len(result)-1] == "/":
         result = result[:-1]
     return result
