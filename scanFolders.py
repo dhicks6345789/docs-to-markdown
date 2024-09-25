@@ -65,7 +65,7 @@ def scanFolder(theInput, theOutput):
     unmatchedItems = []
 
     items = os.listdir(inputFolder)
-    items.insert(0, "")
+    #items.insert(0, "")
     for item in items:
         matched = False
         for match in matches:
