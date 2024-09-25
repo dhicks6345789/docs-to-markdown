@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import subprocess
 
 # We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
 #import xlrd
@@ -73,10 +74,10 @@ def scanFolder(theInput, theOutput):
                 outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
                 if os.path.isfile(inputItem):
                     outputItem = outputItem.rsplit(os.sep, 1)[0]
-                commandLine = match[1] + " \"" + docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]) + "\" \"" + inputItem + "\" \"" + outputItem + "\""
+                commandLine = [match[1], docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]), inputItem, outputItem]
                 if args["verbose"] == "true":
-                    print("DocsToMarkdown - running: " + commandLine, flush=True)
-                #os.system(commandLine + " 2>&1")
+                    print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
+                #subprocess.run(commandLine)
         if matched == False:
             unmatchedItems.append(item)
     for item in unmatchedItems:
