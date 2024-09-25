@@ -66,7 +66,6 @@ def scanFolder(theInput, theOutput):
     for item in os.listdir(inputFolder):
         matched = False
         for match in matches:
-            #print(match + " == " + item)
             if not re.match(match, item) == None:
                 matched = True
                 inputItem = inputFolder + os.sep + item
