@@ -27,6 +27,8 @@ scriptStrings = []
 for item in matches:
     if not matches[item][1] in scriptStrings:
         scriptStrings.append(matches[item][1])
+print("matches:")
+print(matches)
 
 previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
 currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(".")
