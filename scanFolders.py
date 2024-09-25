@@ -66,15 +66,15 @@ def scanFolder(theInput, theOutput):
     for item in os.listdir(inputFolder):
         matched = False
         for match in matches:
-            if not re.match(match, item) == None:
+            inputItem = inputFolder + "/" + item
+            if not re.match(match, inputItem) == None:
                 matched = True
-                inputItem = inputFolder + os.sep + item
                 outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
                 if os.path.isfile(inputItem):
                     outputItem = outputItem.rsplit(os.sep, 1)[0]
                 commandLine = [matches[match][0], docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + matches[match][1]), inputItem, outputItem]
                 if args["verbose"] == "true":
-                    print("DocsToMarkdown - matched: " + item + " with " + match, flush=True)
+                    print("DocsToMarkdown - matched: " + inputItem + " with " + match, flush=True)
                     print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
                 subprocess.run(commandLine)
         if matched == False:
