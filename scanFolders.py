@@ -67,9 +67,9 @@ def scanFolder(theInput, theOutput):
         matched = False
         for match in matches:
             inputItem = inputFolder + "/" + item
-            if not re.match(match, inputItem) == None:
+            if (matched == False) and (not re.match(match, inputItem) == None):
                 matched = True
-                outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
+                outputItem = docsToMarkdownLib.normalisePath(args["output"] + "/" + theOutput + "/" + item)
                 if os.path.isfile(inputItem):
                     outputItem = outputItem.rsplit(os.sep, 1)[0]
                 commandLine = [matches[match][0], docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + matches[match][1]), inputItem, outputItem]
