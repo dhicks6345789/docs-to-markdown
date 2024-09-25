@@ -68,7 +68,6 @@ def scanFolder(theInput, theOutput):
         for match in matches:
             #print(match + " == " + item)
             if not re.match(match, item) == None:
-                print("Matched: " + match)
                 matched = True
                 inputItem = inputFolder + os.sep + item
                 outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
@@ -76,8 +75,9 @@ def scanFolder(theInput, theOutput):
                     outputItem = outputItem.rsplit(os.sep, 1)[0]
                 commandLine = [matches[match][0], docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + matches[match][1]), inputItem, outputItem]
                 if args["verbose"] == "true":
+                    print("DocsToMarkdown - matched: " + item + " with " + match, flush=True)
                     print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
-                #subprocess.run(commandLine)
+                subprocess.run(commandLine)
         if matched == False:
             unmatchedItems.append(item)
     for item in unmatchedItems:
