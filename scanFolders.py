@@ -63,22 +63,30 @@ def scanFolder(theInput, theOutput):
     inputFolder = docsToMarkdownLib.normalisePath(args["input"] + "/" + theInput)
     print("DocsToMarkdown - scanning folder: " + inputFolder, flush=True)
     unmatchedItems = []
-    for item in os.listdir(inputFolder):
-        matched = False
-        for match in matches:
-            inputItem = inputFolder + "/" + item
-            if (matched == False) and (not re.match(match, inputItem) == None):
-                matched = True
-                outputItem = docsToMarkdownLib.normalisePath(args["output"] + "/" + theOutput + "/" + item)
-                if os.path.isfile(inputItem):
-                    outputItem = outputItem.rsplit(os.sep, 1)[0]
-                commandLine = [matches[match][0], docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + matches[match][1]), inputItem, outputItem]
-                if args["verbose"] == "true":
-                    print("DocsToMarkdown - matched: " + inputItem + " with " + match, flush=True)
-                    print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
-                subprocess.run(commandLine)
-        if matched == False:
-            unmatchedItems.append(item)
+    
+    folderMatched = False
+    for match in matches:
+        inputItem = inputFolder + "/"
+        if (matched == False) and (not re.match(match, inputItem) == None):
+            folderMatched = True
+            print("DocsToMarkdown - folder matched: " + inputItem + " with " + match, flush=True)
+    if not folderMatched:
+        for item in os.listdir(inputFolder):
+            matched = False
+            for match in matches:
+                inputItem = inputFolder + "/" + item
+                if (matched == False) and (not re.match(match, inputItem) == None):
+                    matched = True
+                    outputItem = docsToMarkdownLib.normalisePath(args["output"] + "/" + theOutput + "/" + item)
+                    if os.path.isfile(inputItem):
+                        outputItem = outputItem.rsplit(os.sep, 1)[0]
+                    commandLine = [matches[match][0], docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + matches[match][1]), inputItem, outputItem]
+                    if args["verbose"] == "true":
+                        print("DocsToMarkdown - matched: " + inputItem + " with " + match, flush=True)
+                        print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
+                    subprocess.run(commandLine)
+            if matched == False:
+                unmatchedItems.append(item)
     for item in unmatchedItems:
         if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
