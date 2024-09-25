@@ -65,7 +65,7 @@ def scanFolder(theInput, theOutput):
     for item in os.listdir(inputFolder):
         matched = False
         for match in matches:
-            print(match + " == " + item)
+            #print(match + " == " + item)
             if not re.match(match, item) == None:
                 print("Matched: " + match)
                 matched = True
