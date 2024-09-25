@@ -66,12 +66,15 @@ def scanFolder(theInput, theOutput):
 
     items = os.listdir(inputFolder)
     items.insert(0, "")
+    folderMatched = False
     for item in items:
         matched = False
         for match in matches:
             inputItem = inputFolder + "/" + item
-            if (matched == False) and (not re.match(match, inputItem) == None):
+            if (matched == False) and (folderMatched == False) and (not re.match(match, inputItem) == None):
                 matched = True
+                if item == "":
+                    folderMatched = True
                 outputItem = docsToMarkdownLib.normalisePath(args["output"] + "/" + theOutput + "/" + item)
                 if os.path.isfile(inputItem):
                     outputItem = outputItem.rsplit(os.sep, 1)[0]
@@ -80,7 +83,7 @@ def scanFolder(theInput, theOutput):
                     print("DocsToMarkdown - matched: " + inputItem + " with " + match, flush=True)
                     print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
                 subprocess.run(commandLine)
-        if (matched == False) and (not item == ""):
+        if (matched == False) and (folderMatched == False) and (not item == ""):
             unmatchedItems.append(item)
     for item in unmatchedItems:
         if os.path.isdir(inputFolder + os.sep + item):
