@@ -76,6 +76,7 @@ def scanFolder(theInput, theOutput):
                     outputItem = outputItem.rsplit(os.sep, 1)[0]
                 commandLine = [match[1], docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + match[2]), inputItem, outputItem]
                 if args["verbose"] == "true":
+                    print(match)
                     print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
                 #subprocess.run(commandLine)
         if matched == False:
