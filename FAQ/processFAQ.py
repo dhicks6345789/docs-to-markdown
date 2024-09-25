@@ -18,6 +18,7 @@ for inputItem in os.listdir(inputFolder):
     elif fileType in ["MP4"]:
         # Deal with an MP4 file - use FFmpeg to set the size and format of any videos in this FAQ.
         outputItem = inputItem.rsplit(".", 1)[0] + ".webm"
+        # Video files can take time / processing power to deal with, so we check we actually need to update something first before going ahead.
         if not docsToMarkdownLib.checkModDatesMatch(inputFolder + os.sep + inputItem, outputFolder + os.sep + outputItem):
             print("STATUS: Processing FAQ video: " + inputFolder + os.sep + inputItem + " to " + outputFolder + os.sep + outputItem, flush=True)
             
