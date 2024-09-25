@@ -21,16 +21,12 @@ args["validFrontMatterFields"] = args["validFrontMatterFields"].split(",")
 print("DocsToMarkdown - arguments:", flush=True)
 for arg in args:
     print(" - " + arg + ": " + str(args[arg]), flush=True)
-
-print("matches path:")
-print(args["dataRoot"] + os.sep + "matches.csv")
+    
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
 scriptStrings = []
 for item in matches:
     if not matches[item][1] in scriptStrings:
         scriptStrings.append(matches[item][1])
-print("matches:")
-print(matches)
 
 previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
 currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(".")
