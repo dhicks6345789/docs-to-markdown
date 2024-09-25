@@ -22,6 +22,8 @@ print("DocsToMarkdown - arguments:", flush=True)
 for arg in args:
     print(" - " + arg + ": " + str(args[arg]), flush=True)
 
+print("matches path:")
+print(args["dataRoot"] + os.sep + "matches.csv")
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
 scriptStrings = []
 for item in matches:
