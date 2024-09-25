@@ -1,6 +1,6 @@
 import os
 import sys
-import 
+import subprocess
 
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
@@ -13,8 +13,8 @@ print("processFAQ: " + inputFolder + " to " + outputFolder, flush=True)
 for inputItem in os.listdir(inputFolder):
     fileType = inputItem.rsplit(".", 1)[1].upper()
     if fileType in ["DOCX", "DOC"]:
-        # Deal with a DOCX / DOC file - pass it over to the processDOCFile script to deal with.
-        os.system("python3 .." + os.sep + "docs-to-markdown" + os.sep + "processDOCFile.py \"" + inputFolder + os.sep + inputItem + "\" \"" + outputFolder + "\"")
+        # Deal with a DOCX / DOC file - pass it up to the processDOCFile script to deal with.
+        subprocess.run(["python3", "../docs-to-markdown/processDOCFile.py", docsToMarkdownLib.normalisePath(inputFolder + "/" + inputItem), docsToMarkdownLib.normalisePath(outputFolder)])
     elif fileType in ["MP4"]:
         # Deal with an MP4 file - use FFmpeg to set the size and format of any videos in this FAQ.
         outputItem = inputItem.rsplit(".", 1)[0] + ".webm"
