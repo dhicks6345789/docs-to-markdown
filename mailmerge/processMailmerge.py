@@ -29,4 +29,4 @@ for inputItem in os.listdir(inputFolder):
     mailData = pandas.read_excel(inputFolder + "/" + inputItem)
 
 for mailIndex, mailItem in mailData.iterrows():
-  print(mailItem.index)
+  print(mailItem.index.str.lower())
