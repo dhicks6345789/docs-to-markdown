@@ -38,6 +38,10 @@ for inputItem in os.listdir(inputFolder):
   if os.path.isfile(inputFolder + os.sep + inputItem):
     fileName = inputItem.rsplit(".", 1)[0].lower()
     fileType = inputItem.rsplit(".", 1)[1].upper()
+    
+    # Make sure there's an output folder with a name that matches the input filename.
+    os.makedirs(outputFolder + os.sep + fileName, exist_ok=True)
+    
     # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
     if not fileName in ["synonyms", "default"]:
       if fileType in ["XLSX"]:
