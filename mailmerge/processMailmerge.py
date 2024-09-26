@@ -32,21 +32,24 @@ for inputItem in os.listdir(inputFolder):
       defaultTemplate = inputFolder + "/" + inputItem
 
 for inputItem in os.listdir(inputFolder):
-  fileName = inputItem.rsplit(".", 1)[0].lower()
-  fileType = inputItem.rsplit(".", 1)[1].upper()
-  # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
-  if not fileName in ["synonyms", "default"]:
-    if fileType in ["XLSX"]:
-      mailData = pandas.read_excel(inputFolder + "/" + inputItem)
-      
-      # Make any column headers lower case for easier comparison.
-      mailData.columns = map(str.lower, mailData.columns)
-      for mailIndex, mailItem in mailData.iterrows():
-        # Set the template file to use - see if there's a specific template for the subject given, otherwise use the default.
-        templateFile = defaultTemplate
-        if "subject" in mailItem.index:
-          if os.path.isfile(inputFolder + os.sep + mailItem["subject"].lower() + ".docx"):
-            templateFile = inputFolder + os.sep + mailItem["subject"].lower() + ".docx"
+  if os.path.isfile(inputFolder + os.sep + inputItem):
+    fileName = inputItem.rsplit(".", 1)[0].lower()
+    fileType = inputItem.rsplit(".", 1)[1].upper()
+    # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
+    if not fileName in ["synonyms", "default"]:
+      if fileType in ["XLSX"]:
+        mailData = pandas.read_excel(inputFolder + "/" + inputItem)
+        
+        # Make any column headers lower case for easier comparison.
+        mailData.columns = map(str.lower, mailData.columns)
 
-        # Do the mailmerge.
-        print("Do Mailmerge: " + mailItem["subject"] + " " + templateFile)
+        # Process each item in the mailmerge data.
+        for mailIndex, mailItem in mailData.iterrows():
+          # Set the template file to use - see if there's a specific template for the subject given, otherwise use the default.
+          templateFile = defaultTemplate
+          if "subject" in mailItem.index:
+            if os.path.isfile(inputFolder + os.sep + mailItem["subject"].lower() + ".docx"):
+              templateFile = inputFolder + os.sep + mailItem["subject"].lower() + ".docx"
+  
+          # Do the mailmerge.
+          print("Do Mailmerge: " + mailItem["subject"] + " " + templateFile)
