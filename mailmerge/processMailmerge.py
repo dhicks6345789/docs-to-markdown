@@ -21,7 +21,6 @@ inputFolder = sys.argv[1]
 outputFolder = sys.argv[2]
 
 print("Processing Mailmerge folder: " + inputFolder + " to " + outputFolder, flush=True)
-mailData = pandas.DataFrame()
 
 # First, check for a "synonyms" file, or for a default template file.
 defaultTemplate = "../default.docx"
@@ -39,13 +38,19 @@ for inputItem in os.listdir(inputFolder):
     fileName = inputItem.rsplit(".", 1)[0].lower()
     fileType = inputItem.rsplit(".", 1)[1].upper()
     
-    # Make sure there's an output folder with a name that matches the input filename.
-    os.makedirs(outputFolder + os.sep + fileName, exist_ok=True)
-    
     # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
     if not fileName in ["synonyms", "default"]:
-      if fileType in ["XLSX"]:
+      mailData = None
+      if fileType in ["XLSX", "XLS"]:
         mailData = pandas.read_excel(inputFolder + "/" + inputItem)
+      elif fileType in ["CSV"]:
+        mailData = pandas.read_csv(inputFolder + "/" + inputItem)
+
+      if not mailData == None:
+        print("Processing " + inputItem + "...")
+        
+        # Make sure there's an output folder with a name that matches the input filename.
+        os.makedirs(outputFolder + os.sep + fileName, exist_ok=True)
         
         # Make any column headers lower case for easier comparison.
         mailData.columns = map(str.lower, mailData.columns)
