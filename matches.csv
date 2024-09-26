@@ -1,8 +1,8 @@
-^.*/faq/$,python3,./FAQ/processFAQ.py
-^.*/mailmerge/,python3,./mailmerge/processMailmerge.py
-^.*\.docx$,python3,./processDOCFile.py
-^.*\.svg$,python3,./copyFile.py
-^.*\.webp$,python3,./copyFile.py
-^.*\.png$,python3,./copyFile.py
-^.*\.jpg$,python3,./copyFile.py
-^.*\.gif$,python3,./copyFile.py
+^.*/faq/$,python,./FAQ/processFAQ.py
+^.*/mailmerge/,python,./mailmerge/processMailmerge.py
+^.*\.docx$,python,./processDOCFile.py
+^.*\.svg$,python,./copyFile.py
+^.*\.webp$,python,./copyFile.py
+^.*\.png$,python,./copyFile.py
+^.*\.jpg$,python,./copyFile.py
+^.*\.gif$,python,./copyFile.py
