@@ -67,4 +67,4 @@ for inputItem in os.listdir(inputFolder):
               templateFile = inputFolder + os.sep + subject + ".docx"
   
           # Do the mailmerge.
-          print("Do Mailmerge: " + mailItem["subject"] + " " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + mailIndex + ".docx")
+          print("Do Mailmerge: " + mailItem["subject"] + " " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
