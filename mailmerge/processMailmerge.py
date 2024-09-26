@@ -29,7 +29,7 @@ synonyms = {}
 for inputItem in os.listdir(inputFolder):
   if inputItem.lower() == "synonyms.xlsx":
       for synonymIndex, synonymItem in pandas.read_excel(inputFolder + "/" + inputItem, header=None).iterrows():
-        synonym[synonymItem[0]] = synonymItem[1]
+        synonyms[synonymItem[0]] = synonymItem[1]
   if inputItem.lower() == "default.docx":
       defaultTemplate = inputFolder + "/" + inputItem
 print(synonyms)
