@@ -30,6 +30,6 @@ for inputItem in os.listdir(inputFolder):
 
 mailData.columns = map(str.lower, mailData.columns)
 for mailIndex, mailItem in mailData.iterrows():
-  if "subject" in mailItem.index.to_list():
+  if "subject" in mailItem.index:
     print("Subject: ")
-    print(mailItem.index["subject"])
+    print(mailItem["subject"])
