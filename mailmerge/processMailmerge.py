@@ -53,7 +53,7 @@ for inputItem in os.listdir(inputFolder):
           if "subject" in mailItem.index:
             subject = mailItem["subject"].lower()
             if subject in synonyms.keys():
-              subject = synonyms[subject]
+              subject = synonyms[subject].lower()
             if os.path.isfile(inputFolder + os.sep + subject + ".docx"):
               templateFile = inputFolder + os.sep + subject + ".docx"
   
