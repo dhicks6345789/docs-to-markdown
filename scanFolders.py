@@ -70,14 +70,14 @@ def scanFolder(theInput, theOutput):
     for item in items:
         matched = False
         for match in matches:
-            inputItem = inputFolder + os.sep + item
+            inputItem = inputFolder + "/" + item
             if (matched == False) and (folderMatched == False) and (not re.match(match, inputItem) == None):
                 matched = True
                 if item == "":
                     folderMatched = True
-                outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
-                if os.path.isfile(inputItem):
-                    outputItem = outputItem.rsplit(os.sep, 1)[0]
+                outputItem = docsToMarkdownLib.normalisePath(args["output"] + "/" + theOutput + "/" + item)
+                if os.path.isfile(docsToMarkdownLib.platformPath(inputItem)):
+                    outputItem = outputItem.rsplit("/", 1)[0]
                 commandLine = [docsToMarkdownLib.platformPath(matches[match][0]), docsToMarkdownLib.platformPath(args["scriptRoot"] + "/" + matches[match][1]), docsToMarkdownLib.platformPath(inputItem), docsToMarkdownLib.platformPath(outputItem)]
                 if args["verbose"] == "true":
                     print("DocsToMarkdown - matched: " + inputItem + " with " + match, flush=True)
