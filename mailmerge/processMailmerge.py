@@ -71,6 +71,6 @@ for inputItem in os.listdir(inputFolder):
           # Open the template document using python-docx...
           mailDoc = docx.Document(templateFile)
           # ...replace key / value pairs...
-          python_docx_replace.docx_replace(mailDoc, **{"name":mailItem["name"]})
+          python_docx_replace.docx_replace(mailDoc, **{"name":mailItem["name"], "subject":mailItem["subject"]})
           # ...save the output document.
           mailDoc.save(outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
