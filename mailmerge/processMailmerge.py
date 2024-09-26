@@ -35,11 +35,11 @@ print(synonyms)
 
 for inputItem in os.listdir(inputFolder):
   if os.path.isfile(inputFolder + os.sep + inputItem):
-    fileName = inputItem.rsplit(".", 1)[0].lower()
+    fileName = inputItem.rsplit(".", 1)[0]
     fileType = inputItem.rsplit(".", 1)[1].upper()
     
     # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
-    if not fileName in ["synonyms", "default"]:
+    if not fileName.lower() in ["synonyms", "default"]:
       mailData = pandas.DataFrame()
       if fileType in ["XLSX", "XLS"]:
         mailData = pandas.read_excel(inputFolder + "/" + inputItem)
@@ -67,4 +67,4 @@ for inputItem in os.listdir(inputFolder):
               templateFile = inputFolder + os.sep + subject + ".docx"
   
           # Do the mailmerge.
-          print("Do Mailmerge: " + mailItem["subject"] + " " + templateFile)
+          print("Do Mailmerge: " + mailItem["subject"] + " " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + mailIndex + ".docx")
