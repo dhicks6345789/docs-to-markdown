@@ -62,10 +62,11 @@ for inputItem in os.listdir(inputFolder):
           templateFile = defaultTemplate
           for heading in mailItem.index:
             heading = heading.lower()
-            if heading in synonyms.keys():
-              heading = synonyms[heading].lower()
-            if os.path.isfile(inputFolder + os.sep + heading + os.sep + mailItem[heading] + ".docx"):
-              templateFile = inputFolder + os.sep + heading + os.sep + mailItem[heading] + ".docx"
+            value = mailItem[heading].lower()
+            if value in synonyms.keys():
+              value = synonyms[value].lower()
+            if os.path.isfile(inputFolder + os.sep + heading + os.sep + value + ".docx"):
+              templateFile = inputFolder + os.sep + heading + os.sep + value + ".docx"
   
           # Do the mailmerge.
           print("Do Mailmerge: " + mailItem["subject"] + " " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
