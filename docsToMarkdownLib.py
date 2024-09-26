@@ -56,8 +56,8 @@ def putFile(theFilename, theContent):
     outfile.write(theContent)
     outfile.close()
 
-# A utility function to return a given path string in normalised format, i.e. without any double os.sep characters,
-# and with no os.sep character at the end of the string.
+# A utility function to return a given path string in normalised format, i.e. with a consistant path separator ("/") accross platforms,
+# and without any doubled path separators / no path separator at the end of the string.
 def normalisePath(thePath):
     result = thePath.strip()
     if result == "":
@@ -67,8 +67,11 @@ def normalisePath(thePath):
     result = result.replace("/./", "/")
     if result[len(result)-1] == "/":
         result = result[:-1]
-    result = result.replace("/", os.sep)
     return result
+
+# Normalise the given path string, then replace any path separators with the platform-specific os.sep.
+def platformPath(thePath):
+    return normalisePath(thePath).replace("/", os.sep)
 
 # A utility function to determine whether a variable has a value of "NaN" or not.
 # Checks if a string has a value of "NaN" (any case) as well as float values.
