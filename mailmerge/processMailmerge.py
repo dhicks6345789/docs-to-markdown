@@ -3,6 +3,7 @@
 # Standard libraries.
 import os
 import sys
+import shutil
 
 # The python-docx library, for manipulating DOCX files.
 # Importantly, when installing with pip, that's not the "docx" library, that's an earlier version - do "pip install python-docx"...
@@ -48,7 +49,8 @@ for inputItem in os.listdir(inputFolder):
       if not mailData.empty:
         print("Processing " + fileName + "...")
         
-        # Make sure there's an output folder with a name that matches the input filename.
+        # Make sure there's an empty output folder with a name that matches the input filename.
+        shutil.rmtree(outputFolder + os.sep + fileName)
         os.makedirs(outputFolder + os.sep + fileName, exist_ok=True)
         
         # Make any column headers lower case for easier comparison.
@@ -71,6 +73,6 @@ for inputItem in os.listdir(inputFolder):
           # Open the template document using python-docx...
           mailDoc = docx.Document(templateFile)
           # ...replace key / value pairs...
-          python_docx_replace.docx_replace(mailDoc, **{"name":mailItem["name"], "subject":mailItem["subject"]})
+          python_docx_replace.docx_replace(mailDoc, **mailItem.to_dict())
           # ...save the output document.
           mailDoc.save(outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
