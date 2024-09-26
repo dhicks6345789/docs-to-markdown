@@ -24,10 +24,13 @@ print("Processing Mailmerge folder: " + inputFolder + " to " + outputFolder, flu
 mailData = pandas.DataFrame()
 
 # First, check for a "synonyms" file, or for a default template file.
-defaultTemplate = "default.docx"
+defaultTemplate = "../default.docx"
+synonyms = {}
 for inputItem in os.listdir(inputFolder):
   if inputItem.lower() == "synonyms.xlsx":
-      synonyms = pandas.read_excel(inputFolder + "/" + inputItem)
+      for synonymIndex, synonymItem in pandas.read_excel(inputFolder + "/" + inputItem).iterrows():
+        print(synonymItem)
+    
   if inputItem.lower() == "default.docx":
       defaultTemplate = inputFolder + "/" + inputItem
 
