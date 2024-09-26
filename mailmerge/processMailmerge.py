@@ -2,6 +2,7 @@
 
 # Standard libraries.
 import os
+import sys
 
 # The python-docx library, for manipulating DOCX files.
 # Importantly, when installing with pip, that's not the "docx" library, that's an earlier version - do "pip install python-docx"...
