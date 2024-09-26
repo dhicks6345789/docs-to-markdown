@@ -28,6 +28,7 @@ for inputItem in os.listdir(inputFolder):
   if fileType in ["XLSX"]:
     mailData = pandas.read_excel(inputFolder + "/" + inputItem)
 
-mailData.index = mailData.index.str.lower()
+#mailData.index = mailData.index.str.lower()
+mailData.columns = map(str.lower, mailData.columns)
 for mailIndex, mailItem in mailData.iterrows():
   print(mailItem.index)
