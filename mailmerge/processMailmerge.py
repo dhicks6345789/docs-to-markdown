@@ -69,8 +69,7 @@ for inputItem in os.listdir(inputFolder):
               templateFile = inputFolder + os.sep + heading + os.sep + value + ".docx"
   
           # Do the mailmerge.
-          print("Do Mailmerge: " + mailItem["subject"] + " " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
-          
+          print("Do Mailmerge: " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
           # Open the template document using python-docx...
           mailDoc = docx.Document(templateFile)
           # ...replace key / value pairs...
