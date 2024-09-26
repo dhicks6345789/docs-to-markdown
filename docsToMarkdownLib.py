@@ -67,6 +67,7 @@ def normalisePath(thePath):
     result = result.replace("/./", "/")
     if result[len(result)-1] == "/":
         result = result[:-1]
+    result = result.replace("/", os.sep)
     return result
 
 # A utility function to determine whether a variable has a value of "NaN" or not.
