@@ -23,12 +23,19 @@ outputFolder = sys.argv[2]
 print("Processing Mailmerge folder: " + inputFolder + " to " + outputFolder, flush=True)
 mailData = pandas.DataFrame()
 for inputItem in os.listdir(inputFolder):
+  fileName = inputItem.rsplit(".", 1)[0].lower()
   fileType = inputItem.rsplit(".", 1)[1].upper()
   # Load mailmerege data from Excel (XLSX, XLS) or CSV files.
   if fileType in ["XLSX"]:
-    mailData = pandas.read_excel(inputFolder + "/" + inputItem)
+    if fileName == "synonyms":
+      synonyms = pandas.read_excel(inputFolder + "/" + inputItem)
+    else:
+      mailData = pandas.read_excel(inputFolder + "/" + inputItem)
 
 mailData.columns = map(str.lower, mailData.columns)
 for mailIndex, mailItem in mailData.iterrows():
+  templateFile = "default.docx"
   if "subject" in mailItem.index:
-    print(inputFolder + os.sep + mailItem["subject"].lower())
+    subjectTemplate = inputFolder + os.sep + mailItem["subject"].lower() + ".docx"
+    if os.path.isfile(subjectTemplate):
+      templateFile = subjectTemplate
