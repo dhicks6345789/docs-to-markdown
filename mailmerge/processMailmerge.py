@@ -35,6 +35,8 @@ for inputItem in os.listdir(inputFolder):
 mailData.columns = map(str.lower, mailData.columns)
 for mailIndex, mailItem in mailData.iterrows():
   templateFile = "default.docx"
+  if os.path.isfile(inputFolder + os.sep + "default.docx"):
+    templateFile = inputFolder + os.sep + "default.docx"
   if "subject" in mailItem.index:
     subjectTemplate = inputFolder + os.sep + mailItem["subject"].lower() + ".docx"
     if os.path.isfile(subjectTemplate):
