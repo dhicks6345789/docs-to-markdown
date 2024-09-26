@@ -40,13 +40,13 @@ for inputItem in os.listdir(inputFolder):
     
     # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
     if not fileName in ["synonyms", "default"]:
-      mailData = None
+      mailData = pandas.DataFrame()
       if fileType in ["XLSX", "XLS"]:
         mailData = pandas.read_excel(inputFolder + "/" + inputItem)
       elif fileType in ["CSV"]:
         mailData = pandas.read_csv(inputFolder + "/" + inputItem)
 
-      if not mailData == None:
+      if not mailData.empty:
         print("Processing " + inputItem + "...")
         
         # Make sure there's an output folder with a name that matches the input filename.
