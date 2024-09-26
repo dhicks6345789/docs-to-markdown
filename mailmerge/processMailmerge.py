@@ -31,7 +31,6 @@ for inputItem in os.listdir(inputFolder):
         synonyms[synonymItem[0]] = synonymItem[1]
   if inputItem.lower() == "default.docx":
       defaultTemplate = inputFolder + "/" + inputItem
-print(synonyms)
 
 for inputItem in os.listdir(inputFolder):
   if os.path.isfile(inputFolder + os.sep + inputItem):
@@ -47,7 +46,7 @@ for inputItem in os.listdir(inputFolder):
         mailData = pandas.read_csv(inputFolder + "/" + inputItem)
 
       if not mailData.empty:
-        print("Processing " + inputItem + "...")
+        print("Processing " + fileName + "...")
         
         # Make sure there's an output folder with a name that matches the input filename.
         os.makedirs(outputFolder + os.sep + fileName, exist_ok=True)
