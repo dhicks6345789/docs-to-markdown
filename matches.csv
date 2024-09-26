@@ -1,6 +1,6 @@
 ^.*/faq/$,python3,./FAQ/processFAQ.py
+^.*/mailmerge/,python3,./mailmerge/processMailmerge.py
 ^.*\.docx$,python3,./processDOCFile.py
-^.*/certificates/.xlsx$,python3,./FAQ/processFAQ.py
 ^.*\.svg$,python3,./copyFile.py
 ^.*\.webp$,python3,./copyFile.py
 ^.*\.png$,python3,./copyFile.py
