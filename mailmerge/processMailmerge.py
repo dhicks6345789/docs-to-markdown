@@ -68,8 +68,8 @@ for inputItem in os.listdir(inputFolder):
           # Do the mailmerge.
           print("Do Mailmerge: " + mailItem["subject"] + " " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
           
-          # get your document using python-docx
-          mailDoc = docx.Document("document.docx")
+          # Open the template document using python-docx.
+          mailDoc = docx.Document(templateFile)
           # call the replace function with your key value pairs
           python_docx_replace.docx_replace(mailDoc, name="subject", subject="bananas")
           # do whatever you want after that, usually save the document
