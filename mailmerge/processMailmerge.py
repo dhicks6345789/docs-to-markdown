@@ -12,3 +12,19 @@ import docx_replace
 # We use Pandas to import Excel / CSV files for configuration details.
 import pandas
 
+# Our own Docs To Markdown library.
+import docsToMarkdownLib
+
+# Get the command line arguments.
+inputFolder = sys.argv[1]
+outputFolder = sys.argv[2]
+
+print("Processing Mailmerge folder: " + inputFolder + " to " + outputFolder, flush=True)
+mailData = pandas.DataFrame()
+for inputItem in os.listdir(inputFolder):
+  fileType = inputItem.rsplit(".", 1)[1].upper()
+  # Load mailmerege data from Excel (XLSX, XLS) or CSV files.
+  if fileType in ["XLSX"]:
+    mailData = pandas.read_excel(inputFolder + "/" + inputItem)
+
+print(mailData)
