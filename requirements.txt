@@ -1,1 +1,3 @@
 xlrd
+python-docx
+python-docx-merge
