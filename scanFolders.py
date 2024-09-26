@@ -78,7 +78,7 @@ def scanFolder(theInput, theOutput):
                 outputItem = docsToMarkdownLib.normalisePath(args["output"] + os.sep + theOutput + os.sep + item)
                 if os.path.isfile(inputItem):
                     outputItem = outputItem.rsplit(os.sep, 1)[0]
-                commandLine = [matches[match][0], docsToMarkdownLib.normalisePath(args["scriptRoot"] + os.sep + matches[match][1]), inputItem, outputItem]
+                commandLine = [docsToMarkdownLib.platformPath(matches[match][0]), docsToMarkdownLib.platformPath(args["scriptRoot"] + "/" + matches[match][1]), docsToMarkdownLib.platformPath(inputItem), docsToMarkdownLib.platformPath(outputItem)]
                 if args["verbose"] == "true":
                     print("DocsToMarkdown - matched: " + inputItem + " with " + match, flush=True)
                     print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
