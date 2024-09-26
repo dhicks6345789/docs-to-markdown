@@ -58,14 +58,15 @@ for inputItem in os.listdir(inputFolder):
 
         # Process each item in the mailmerge data.
         for mailIndex, mailItem in mailData.iterrows():
-          # Set the template file to use - see if there's a specific template for the subject given, otherwise use the default.
+          # Set the template file to use. See if there's a folder matching a column heading and template file matching a value, otherwise use the default.
           templateFile = defaultTemplate
-          if "subject" in mailItem.index:
-            subject = mailItem["subject"].lower()
-            if subject in synonyms.keys():
-              subject = synonyms[subject].lower()
-            if os.path.isfile(inputFolder + os.sep + subject + ".docx"):
-              templateFile = inputFolder + os.sep + subject + ".docx"
+          for heading in mailItem.index:
+            heading = heading.lower()
+            if heading in synonyms.keys():
+              heading = synonyms[heading].lower()
+            for value in mailItem.index[heading]:
+              if os.path.isfile(inputFolder + os.sep + heading + os.sep + value.lower() + ".docx"):
+                templateFile = inputFolder + os.sep + heading + os.sep + value.lower() + ".docx"
   
           # Do the mailmerge.
           print("Do Mailmerge: " + mailItem["subject"] + " " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
