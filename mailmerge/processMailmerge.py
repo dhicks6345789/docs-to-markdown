@@ -117,11 +117,11 @@ def processFolder(inputFolder, outputFolder):
               if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
                 blankFound = True
           if not blankFound:
-            print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + fileName + os.sep + str(mailIndex+1) + ".docx", flush=True)
+            print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
             # ...replace key / value pairs...
             python_docx_replace.docx_replace(mailDoc, **mailValues)
             # ...save the output document.
-            mailDoc.save(outputPath + os.sep + fileName + os.sep + str(mailIndex+1) + ".docx")
+            mailDoc.save(outputPath + os.sep + str(mailIndex+1) + ".docx")
         
   # Figure out if we want to resurse into any sub-folders.
   for inputItem in os.listdir(inputFolder):
