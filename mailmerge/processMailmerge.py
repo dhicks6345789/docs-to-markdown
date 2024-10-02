@@ -69,6 +69,8 @@ print(sortedTemplateFiles)
 
 # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
 for inputItem in inputItems:
+  fileName = inputItem.rsplit(".", 1)[0]
+  fileType = inputItem.rsplit(".", 1)[1].upper()
   mailData = pandas.DataFrame()
   if fileType in ["XLSX", "XLS"]:
     mailData = pandas.read_excel(inputFolder + "/" + inputItem)
