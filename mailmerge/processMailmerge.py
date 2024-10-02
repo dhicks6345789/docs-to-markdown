@@ -50,10 +50,6 @@ for inputItem in os.listdir(inputFolder):
     elif fileType in ["DOCX"]:
       templateFiles.append(inputItem)
 
-print("inputItems:")
-print(inputItems)
-print("templateFiles:")
-print(templateFiles)
 # Figure out the default template file - basically, any DOCX file that doesn't match an Excel file processed by this script.
 sortedTemplateFiles = []
 for inputItem in templateFiles:
@@ -64,8 +60,6 @@ for inputItem in templateFiles:
 sortedTemplateFiles = sorted(sortedTemplateFiles)
 if len(sortedTemplateFiles) > 0:
   defaultTemplate = sortedTemplateFiles[0]
-print("sortedTemplateFiles:")
-print(sortedTemplateFiles)
 
 # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
 for inputItem in inputItems:
