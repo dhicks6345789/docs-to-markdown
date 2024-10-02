@@ -97,7 +97,7 @@ for inputItem in inputItems:
       # Do the mailmerge.
       print("Do Mailmerge: " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
       # Open the template document using python-docx...
-      mailDoc = docx.Document(templateFile)
+      mailDoc = docx.Document(inputFolder + os.sep + templateFile)
       # ...replace key / value pairs...
       python_docx_replace.docx_replace(mailDoc, **mailItem.to_dict())
       # ...save the output document.
