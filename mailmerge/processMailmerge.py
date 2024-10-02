@@ -70,7 +70,7 @@ def processFolder(inputFolder, outputFolder):
       mailData = pandas.read_csv(inputFolder + "/" + inputItem)
   
     if not mailData.empty:
-      print("Processing " + fileName + "...")
+      print("Processing " + fileName + "...", flush=True)
       
       # Make sure there's an empty output folder with a name that matches the input filename.
       if os.path.isdir(outputFolder + os.sep + fileName):
