@@ -96,7 +96,6 @@ def processFolder(inputFolder, outputFolder):
             templateFile = inputFolder + os.sep + heading + os.sep + value + ".docx"
   
         # Do the mailmerge.
-        print("Do Mailmerge: " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex+1) + ".docx", flush=True)
         mailValues = mailItem.to_dict()
         # Open the template document using python-docx...
         mailDoc = docx.Document(inputFolder + os.sep + templateFile)
@@ -106,9 +105,10 @@ def processFolder(inputFolder, outputFolder):
         for mailKey in mailKeys:
           if mailKey.lower() in mailValues.keys():
             print(mailKey.lower() + ": " + str(mailValues[mailKey.lower()]), flush=True)
-            if mailValues[mailKey.lower()] in [None, "", numpy.nan]:
+            if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
               blankFound = True
         if not blankFound:
+          print("Do Mailmerge: " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex+1) + ".docx", flush=True)
           # ...replace key / value pairs...
           python_docx_replace.docx_replace(mailDoc, **mailValues)
           # ...save the output document.
