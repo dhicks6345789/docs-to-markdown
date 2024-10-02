@@ -101,10 +101,8 @@ def processFolder(inputFolder, outputFolder):
         mailDoc = docx.Document(inputFolder + os.sep + templateFile)
         mailKeys = python_docx_replace.docx_get_keys(mailDoc)
         blankFound = False
-        print(mailKeys, flush=True)
         for mailKey in mailKeys:
           if mailKey.lower() in mailValues.keys():
-            print(mailKey.lower() + ": " + str(mailValues[mailKey.lower()]), flush=True)
             if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
               blankFound = True
         if not blankFound:
