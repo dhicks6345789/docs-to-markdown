@@ -65,12 +65,16 @@ def processFolder(inputFolder, outputFolder):
     fileName = inputItem.rsplit(".", 1)[0]
     fileType = inputItem.rsplit(".", 1)[1].upper()
     mailData = pandas.DataFrame()
+    mailArray = []
     if fileType in ["XLSX", "XLS"]:
-      mailData = pandas.read_excel(inputFolder + "/" + inputItem)
+      mailArray = pandas.read_excel(inputFolder + "/" + inputItem, sheet_name=None)
     elif fileType in ["CSV"]:
-      mailData = pandas.read_csv(inputFolder + "/" + inputItem)
-  
-    if not mailData.empty:
+      mailArray = []
+      mailArray.append(pandas.read_csv(inputFolder + "/" + inputItem))
+    
+    print(mailArray)
+    #if not mailData.empty:
+    if not len(mailArray) == 0:
       print("Processing " + fileName + "...", flush=True)
       
       # Make sure there's an empty output folder with a name that matches the input filename.
