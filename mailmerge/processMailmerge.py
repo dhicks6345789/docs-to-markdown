@@ -72,8 +72,6 @@ def processFolder(inputFolder, outputFolder):
       mailArray = []
       mailArray.append(pandas.read_csv(inputFolder + "/" + inputItem))
     
-    print(mailArray)
-    #if not mailData.empty:
     if not len(mailArray) == 0:
       print("Processing " + fileName + "...", flush=True)
       
