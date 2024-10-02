@@ -88,7 +88,7 @@ for inputItem in inputItems:
       templateFile = defaultTemplate
       for heading in mailItem.index:
         heading = heading.lower()
-        value = mailItem[heading].lower()
+        value = str(mailItem[heading]).lower()
         if value in synonyms.keys():
           value = synonyms[value].lower()
         if os.path.isfile(inputFolder + os.sep + heading + os.sep + value + ".docx"):
