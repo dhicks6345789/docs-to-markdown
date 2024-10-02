@@ -38,8 +38,11 @@ for inputItem in os.listdir(inputFolder):
       fileType = fileSplit[1].upper()
       
     # Check for a "synonyms" XLSX (or XLS / CSV) file.
-    if inputItem.lower() == "synonyms.xlsx":
+    if inputItem.lower() in["synonyms.xlsx", "synonyms.xls"]:
         for synonymIndex, synonymItem in pandas.read_excel(inputFolder + "/" + inputItem, header=None).iterrows():
+          synonyms[synonymItem[0]] = synonymItem[1]
+    elif inputItem.lower() in["synonyms.csv"]:
+      for synonymIndex, synonymItem in pandas.read_csv(inputFolder + "/" + inputItem, header=None).iterrows():
           synonyms[synonymItem[0]] = synonymItem[1]
     # Otherwise, any XLSX / XLS / CSV file is an input file.
     elif fileType in ["XLSX", "XLS", "CSV"]:
