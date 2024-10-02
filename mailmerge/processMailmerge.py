@@ -106,8 +106,10 @@ def processFolder(inputFolder, outputFolder):
     
           # Do the mailmerge.
           mailValues = mailItem.to_dict()
-          # Open the template document using python-docx...
+          # Open the template document using python-docx.
           mailDoc = docx.Document(inputFolder + os.sep + templateFile)
+          # We skip any lines in the spreadsheet which have blank value for any variable included in
+          # the template, otherwise we'll end up with an un-replaced variable string in the document.
           mailKeys = python_docx_replace.docx_get_keys(mailDoc)
           blankFound = False
           for mailKey in mailKeys:
@@ -115,6 +117,7 @@ def processFolder(inputFolder, outputFolder):
               if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
                 blankFound = True
           if not blankFound:
+            # Print a message for the user...
             print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
             # ...replace key / value pairs...
             python_docx_replace.docx_replace(mailDoc, **mailValues)
