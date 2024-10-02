@@ -104,7 +104,7 @@ def processFolder(inputFolder, outputFolder):
         blankFound = False
         for mailKey in mailKeys:
           if mailKey.lower() in mailValues.keys():
-            print(mailKey.lower + ": " + str(mailValues[mailKey.lower()]))
+            print(mailKey.lower() + ": " + str(mailValues[mailKey.lower()]))
             if mailValues[mailKey.lower()] in [None, "", numpy.nan]:
               blankFound = True
         if not blankFound:
