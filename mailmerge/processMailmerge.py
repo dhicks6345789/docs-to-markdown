@@ -81,7 +81,8 @@ for inputItem in inputItems:
     print("Processing " + fileName + "...")
     
     # Make sure there's an empty output folder with a name that matches the input filename.
-    shutil.rmtree(outputFolder + os.sep + fileName)
+    if os.path.isdir(outputFolder + os.sep + fileName):
+      shutil.rmtree(outputFolder + os.sep + fileName)
     os.makedirs(outputFolder + os.sep + fileName, exist_ok=True)
     
     # Make any column headers lower case for easier comparison.
