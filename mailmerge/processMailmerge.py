@@ -11,7 +11,8 @@ import docx
 # ...and the docs-replace library, to install do "pip install python-docx-replace".
 import python_docx_replace 
 
-# We use Pandas to import Excel / CSV data.
+# We use Numpy and Pandas to import Excel / CSV data.
+import numpy
 import pandas
 
 # Our own Docs To Markdown library.
@@ -103,7 +104,7 @@ def processFolder(inputFolder, outputFolder):
         blankFound = False
         for mailKey in mailKeys:
           if mailKey.lower() in mailValues.keys():
-            if mailValues[mailKey.lower()] in [None, ""]:
+            if mailValues[mailKey.lower()] in [None, "", numpy.nan]:
               blankFound = True
         if not blankFound:
           # ...replace key / value pairs...
