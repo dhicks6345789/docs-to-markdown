@@ -34,7 +34,7 @@ for inputItem in os.listdir(inputFolder):
     fileSplit = inputItem.rsplit(".", 1)
     fileName = fileSplit[0]
     fileType = ""
-    if fileSplit.length > 1:
+    if len(fileSplit) > 1:
       fileType = fileSplit[1].upper()
       
     # Check for a "synonyms" XLSX (or XLS / CSV) file.
@@ -58,7 +58,7 @@ for inputItem in templateFiles:
   if not inputItem in inputItems and not os.path.isdir(inputFolder + os.sep + fileName):
     sortedTemplateFiles.append(inputItem)
 sortedTemplateFiles = sorted(sortedTemplateFiles)
-if sortedTemplateFiles.length > 0:
+if len(sortedTemplateFiles) > 0:
   defaultTemplate = sortedTemplateFiles[0]
 
 # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
