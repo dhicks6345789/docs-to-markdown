@@ -95,8 +95,8 @@ def processFolder(inputFolder, outputFolder):
             templateFile = inputFolder + os.sep + heading + os.sep + value + ".docx"
   
         # Do the mailmerge.
-        print("Do Mailmerge: " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
-        mailValues = mailItem.to_dict()
+        print("Do Mailmerge: " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx", flush=True)
+          mailValues = mailItem.to_dict()
         # Open the template document using python-docx...
         mailDoc = docx.Document(inputFolder + os.sep + templateFile)
         mailKeys = python_docx_replace.docx_get_keys(mailDoc)
