@@ -30,7 +30,7 @@ templateFiles = []
 defaultTemplate = "../default.docx"
 for inputItem in os.listdir(inputFolder):
   if os.path.isfile(inputFolder + os.sep + inputItem):
-    # Get the filename and file type (extension, if ther is one).
+    # Get the filename and file type (extension, if there is one).
     fileSplit = inputItem.rsplit(".", 1)
     fileName = fileSplit[0]
     fileType = ""
@@ -50,6 +50,10 @@ for inputItem in os.listdir(inputFolder):
     elif fileType in ["DOCX"]:
       templateFiles.append(inputItem)
 
+print("inputItems:")
+print(inputItems)
+print("templateFiles:")
+print(templateFiles)
 # Figure out the default template file - basically, any DOCX file that doesn't match an Excel file processed by this script.
 sortedTemplateFiles = []
 for inputItem in templateFiles:
@@ -60,6 +64,8 @@ for inputItem in templateFiles:
 sortedTemplateFiles = sorted(sortedTemplateFiles)
 if len(sortedTemplateFiles) > 0:
   defaultTemplate = sortedTemplateFiles[0]
+print("sortedTemplateFiles:")
+print(sortedTemplateFiles)
 
 # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
 for inputItem in inputItems:
