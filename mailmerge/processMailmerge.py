@@ -96,12 +96,20 @@ def processFolder(inputFolder, outputFolder):
   
         # Do the mailmerge.
         print("Do Mailmerge: " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
+        mailValues = mailItem.to_dict()
         # Open the template document using python-docx...
         mailDoc = docx.Document(inputFolder + os.sep + templateFile)
-        # ...replace key / value pairs...
-        python_docx_replace.docx_replace(mailDoc, **mailItem.to_dict())
-        # ...save the output document.
-        mailDoc.save(outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
+        mailKeys = python_docx_replace.docx_get_keys(mailDoc)
+        blankFound = False
+        for mailKey in mailKeys:
+          if mailKey.lower() in mailValues.keys():
+            if mailValues[mailKey.lower()] in [None, ""]:
+              blankFound = True
+        if not blankFound:
+          # ...replace key / value pairs...
+          python_docx_replace.docx_replace(mailDoc, **mailValues)
+          # ...save the output document.
+          mailDoc.save(outputFolder + os.sep + fileName + os.sep + str(mailIndex) + ".docx")
         
   # Figure out if we want to resurse into any sub-folders.
   for inputItem in os.listdir(inputFolder):
