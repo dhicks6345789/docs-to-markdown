@@ -81,40 +81,47 @@ def processFolder(inputFolder, outputFolder):
       if os.path.isdir(outputFolder + os.sep + fileName):
         shutil.rmtree(outputFolder + os.sep + fileName)
       os.makedirs(outputFolder + os.sep + fileName, exist_ok=True)
+
+      for mailArraySheetName in mailArray.keys():
+        outputPath = outputFolder + os.sep + fileName
+        if len(mailArray) > 1:
+          outputPath = outputPath + os.sep + mailArraySheetName
+          os.makedirs(outputPath, exist_ok=True)
+        mailData = mailArray[mailArraySheetName]
       
-      # Make any column headers lower case for easier comparison.
-      mailData.columns = map(str.lower, mailData.columns)
-  
-      # Process each item in the mailmerge data.
-      for mailIndex, mailItem in mailData.iterrows():
-        # Set the template file to use. See if there's a folder matching a column heading and template file matching a value, otherwise use the default.
-        templateFile = defaultTemplate
-        for heading in mailItem.index:
-          heading = heading.lower()
-          value = str(mailItem[heading]).lower()
-          if value in synonyms.keys():
-            value = synonyms[value].lower()
-          if os.path.isdir(inputFolder + os.sep + heading):
-            foundHeadings.append(heading)
-          if os.path.isfile(inputFolder + os.sep + heading + os.sep + value + ".docx"):
-            templateFile = inputFolder + os.sep + heading + os.sep + value + ".docx"
-  
-        # Do the mailmerge.
-        mailValues = mailItem.to_dict()
-        # Open the template document using python-docx...
-        mailDoc = docx.Document(inputFolder + os.sep + templateFile)
-        mailKeys = python_docx_replace.docx_get_keys(mailDoc)
-        blankFound = False
-        for mailKey in mailKeys:
-          if mailKey.lower() in mailValues.keys():
-            if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
-              blankFound = True
-        if not blankFound:
-          print("Do Mailmerge: " + templateFile + " to " + outputFolder + os.sep + fileName + os.sep + str(mailIndex+1) + ".docx", flush=True)
-          # ...replace key / value pairs...
-          python_docx_replace.docx_replace(mailDoc, **mailValues)
-          # ...save the output document.
-          mailDoc.save(outputFolder + os.sep + fileName + os.sep + str(mailIndex+1) + ".docx")
+        # Make any column headers lower case for easier comparison.
+        mailData.columns = map(str.lower, mailData.columns)
+    
+        # Process each item in the mailmerge data.
+        for mailIndex, mailItem in mailData.iterrows():
+          # Set the template file to use. See if there's a folder matching a column heading and template file matching a value, otherwise use the default.
+          templateFile = defaultTemplate
+          for heading in mailItem.index:
+            heading = heading.lower()
+            value = str(mailItem[heading]).lower()
+            if value in synonyms.keys():
+              value = synonyms[value].lower()
+            if os.path.isdir(inputFolder + os.sep + heading):
+              foundHeadings.append(heading)
+            if os.path.isfile(inputFolder + os.sep + heading + os.sep + value + ".docx"):
+              templateFile = inputFolder + os.sep + heading + os.sep + value + ".docx"
+    
+          # Do the mailmerge.
+          mailValues = mailItem.to_dict()
+          # Open the template document using python-docx...
+          mailDoc = docx.Document(inputFolder + os.sep + templateFile)
+          mailKeys = python_docx_replace.docx_get_keys(mailDoc)
+          blankFound = False
+          for mailKey in mailKeys:
+            if mailKey.lower() in mailValues.keys():
+              if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
+                blankFound = True
+          if not blankFound:
+            print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + fileName + os.sep + str(mailIndex+1) + ".docx", flush=True)
+            # ...replace key / value pairs...
+            python_docx_replace.docx_replace(mailDoc, **mailValues)
+            # ...save the output document.
+            mailDoc.save(outputPath + os.sep + fileName + os.sep + str(mailIndex+1) + ".docx")
         
   # Figure out if we want to resurse into any sub-folders.
   for inputItem in os.listdir(inputFolder):
