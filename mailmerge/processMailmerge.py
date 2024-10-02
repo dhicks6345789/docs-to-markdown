@@ -5,13 +5,13 @@ import os
 import sys
 import shutil
 
-# The python-docx library, for manipulating DOCX files.
-# Importantly, when installing with pip, that's not the "docx" library, that's an earlier version - do "pip install python-docx"...
+# The python-docx library, for manipulating DOCX files. Importantly, when installing with pip,
+# that's not the "docx" library, that's a different / earlier version - do "pip install python-docx"...
 import docx
-# ...and the docs-replace library, to install do ""pip install python-docx-replace".
+# ...and the docs-replace library, to install do "pip install python-docx-replace".
 import python_docx_replace 
 
-# We use Pandas to import Excel / CSV files for configuration details.
+# We use Pandas to import Excel / CSV data.
 import pandas
 
 # Our own Docs To Markdown library.
@@ -46,9 +46,8 @@ for inputItem in os.listdir(inputFolder):
       inputItems.append(inputItem)
     elif fileType in ["DOCX"]:
       templateFiles.append(inputItem)
-    elif inputItem.lower() == "default.docx":
-        defaultTemplate = inputFolder + "/" + inputItem
 
+# Figure out the default template file - basically, any DOCX file that doesn't match an Excel file processed by this script.
 sortedTemplateFiles = []
 for inputItem in templateFiles:
   fileName = inputItem.rsplit(".", 1)[0]
@@ -58,9 +57,9 @@ for inputItem in templateFiles:
 sortedTemplateFiles = sorted(sortedTemplateFiles)
 if sortedTemplateFiles.length > 0:
   defaultTemplate = sortedTemplateFiles[0]
-  
+
+# Process each mailmerge data Excel (XLSX, XLS) or CSV file.
 for inputItem in inputItems:
-  # Process each mailmerge data Excel (XLSX, XLS) or CSV file.
   mailData = pandas.DataFrame()
   if fileType in ["XLSX", "XLS"]:
     mailData = pandas.read_excel(inputFolder + "/" + inputItem)
