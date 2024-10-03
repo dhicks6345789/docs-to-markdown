@@ -128,8 +128,9 @@ def processFolder(inputFolder, outputFolder):
           # Do the mailmerge.
           mailValues = mailItem.to_dict()
 
-          docText = extractDocx(inputFolder + os.sep + templateFile, "docTemp")
-          print(len(docText))
+          docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
+          putFile("docxTemp/word/document.xml", docxText)
+          compressDocx("docxTemp", outputPath + os.sep + str(mailIndex+1) + ".docx")
           
           ## Open the template document using python-docx.
           #mailDoc = docx.Document(inputFolder + os.sep + templateFile)
