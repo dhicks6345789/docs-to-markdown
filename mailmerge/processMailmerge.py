@@ -139,6 +139,8 @@ def processFolder(inputFolder, outputFolder):
           docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
           
           matches = re.finditer("\{\{.*?\}\}", docxText, re.MULTILINE | re.DOTALL)
+          print("Matches:")
+          print(matches)
           for matchNum, match in enumerate(matches):
             for groupNum in range(0, len(match.groups())):
               print("Match!", flush=True)
