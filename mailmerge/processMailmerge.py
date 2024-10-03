@@ -138,8 +138,9 @@ def processFolder(inputFolder, outputFolder):
           print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
           docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
           
-          matches = re.finditer("\{\{.*?\}\}", docxText, re.MULTILINE | re.DOTALL)
+          matches = re.match("\{\{.*?\}\}", docxText, re.MULTILINE | re.DOTALL)
           print("Matches:")
+          print(len(matches))
           print(matches)
           for matchNum, match in enumerate(matches):
             for groupNum in range(0, len(match.groups())):
