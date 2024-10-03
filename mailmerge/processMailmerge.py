@@ -138,7 +138,8 @@ def processFolder(inputFolder, outputFolder):
               templateFile = inputFolder + os.sep + heading + os.sep + value + ".docx"
 
           if multiDoc == None:
-            multiDoc = docx.Document()
+            multiDoc = docx.Document(inputFolder + os.sep + templateFile)
+            multiDoc.add_page_break()
             multiDocComposer = docxcompose.composer.Composer(multiDoc)
 
           # Open the template document as a plain text XML file.
