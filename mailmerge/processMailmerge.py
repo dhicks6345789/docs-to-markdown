@@ -9,12 +9,12 @@ import zipfile
 
 # The python-docx library, for manipulating DOCX files. Importantly, when installing with pip,
 # that's not the "docx" library, that's a different / earlier version - do "pip install python-docx"...
-import docx
+#import docx
 # ...and the docs-replace library, to install do "pip install python-docx-replace".
-import python_docx_replace 
+#import python_docx_replace 
 
-# We use Numpy and Pandas to import Excel / CSV data.
-import numpy
+# We use Pandas to import Excel / CSV data.
+#import numpy
 import pandas
 
 # Our own Docs To Markdown library.
@@ -148,7 +148,7 @@ def processFolder(inputFolder, outputFolder):
           blankFound = False
           for mailKey in mailKeys:
             if mailKey.lower() in mailValues.keys():
-              if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
+              if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, ""]:
                 blankFound = True
                 
           if not blankFound:
