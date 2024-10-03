@@ -129,7 +129,7 @@ def processFolder(inputFolder, outputFolder):
           mailValues = mailItem.to_dict()
 
           docText = extractDocx(inputFolder + os.sep + templateFile, "docTemp")
-          print(docText)
+          print(len(docText))
           
           ## Open the template document using python-docx.
           #mailDoc = docx.Document(inputFolder + os.sep + templateFile)
