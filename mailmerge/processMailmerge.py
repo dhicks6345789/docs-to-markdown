@@ -2,6 +2,7 @@
 
 # Standard libraries.
 import os
+import re
 import sys
 import shutil
 import zipfile
@@ -133,11 +134,11 @@ def processFolder(inputFolder, outputFolder):
           # Do the mailmerge.
           mailValues = mailItem.to_dict()
           
-          docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
-
           # Print a message for the user...
           print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
-          
+          docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
+          for docxTextVar in re.search("\{\{.*?\}\}", docxText):
+            print(docxTextVar)
           putFile("docxTemp/word/document.xml", docxText)
           compressDocx("docxTemp", outputPath + os.sep + str(mailIndex+1) + ".docx")
           
