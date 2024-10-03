@@ -137,7 +137,7 @@ def processFolder(inputFolder, outputFolder):
           # Print a message for the user...
           print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
           docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
-          for docxTextVar in re.search("{{.*?}}", docxText).groups():
+          for docxTextVar in re.search("\{\{.*\}\}", docxText).groups():
             print("Group:")
             print(docxTextVar)
           putFile("docxTemp/word/document.xml", docxText)
