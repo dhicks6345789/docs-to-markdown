@@ -140,7 +140,7 @@ def processFolder(inputFolder, outputFolder):
 
           mailKeys = []
           for docxMatch in re.finditer(r"\{\{.*?\}\}", docxText, re.MULTILINE | re.DOTALL):
-            mailKeys.append(docxMatch.group(0))
+            mailKeys.append(docxMatch.group(0)[2:-2])
           
           # Open the template document using python-docx.
           #mailDoc = docx.Document(inputFolder + os.sep + templateFile)
