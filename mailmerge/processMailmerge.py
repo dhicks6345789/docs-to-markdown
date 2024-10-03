@@ -4,6 +4,7 @@
 import os
 import sys
 import shutil
+import zipfile
 
 # The python-docx library, for manipulating DOCX files. Importantly, when installing with pip,
 # that's not the "docx" library, that's a different / earlier version - do "pip install python-docx"...
@@ -17,6 +18,26 @@ import pandas
 
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
+
+# Extract the given DOCX file to a given temporary folder.
+# Reads and returns the contents of the "document.xml" contained in the DOCX file.
+def extractDocx(theFilename, destinationPath):
+  templateDocx = zipfile.ZipFile(theFilename, "r")
+	templateDocx.extractall(destinationPath)
+	templateDocx.close()
+	textHandle = open(destinationPath + "word/document.xml")
+	docxText = str(textHandle.read())
+	textHandle.close()
+	return(docxText)
+
+# Turns the contents of the given folder into a DOCX file. Deletes the source folder when done.
+def compressDocx(sourcePath, theFilename):
+	theDocx = zipfile.ZipFile(theFilename, "w")
+	for root, dirs, files in os.walk(sourcePath):
+		for file in files:
+			theDocx.write(os.path.join(root, file), os.path.join(root, file)[len(sourcePath):])
+	theDocx.close()
+	shutil.rmtree(sourcePath)
 
 def processFolder(inputFolder, outputFolder):
   print("Processing Mailmerge folder: " + inputFolder + " to " + outputFolder, flush=True)
@@ -106,30 +127,34 @@ def processFolder(inputFolder, outputFolder):
     
           # Do the mailmerge.
           mailValues = mailItem.to_dict()
-          # Open the template document using python-docx.
-          mailDoc = docx.Document(inputFolder + os.sep + templateFile)
-          # We skip any lines in the spreadsheet which have blank value for any variable included in
-          # the template, otherwise we'll end up with an un-replaced variable string in the document.
-          mailKeys = python_docx_replace.docx_get_keys(mailDoc)
-          print("mailKeys:")
-          print(mailKeys)
-          blankFound = False
-          for mailKey in mailKeys:
-            if mailKey.lower() in mailValues.keys():
-              if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
-                blankFound = True
-          if not blankFound:
-            # Print a message for the user...
-            print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
-            # ...replace key / value pairs...
-            python_docx_replace.docx_replace(mailDoc, **mailValues)
-            print("mailTables: " + str(len(mailDoc.tables)))
-            print(mailDoc.tables)
-            for mailTable in mailDoc.tables:
-              print(mailTable)
-              python_docx_replace.docx_replace(mailTable, **mailValues)
-            # ...save the output document.
-            mailDoc.save(outputPath + os.sep + str(mailIndex+1) + ".docx")
+
+          docText = extractDocx(inputFolder + os.sep + templateFile, "docTemp")
+          print(docText)
+          
+          ## Open the template document using python-docx.
+          #mailDoc = docx.Document(inputFolder + os.sep + templateFile)
+          ## We skip any lines in the spreadsheet which have blank value for any variable included in
+          ## the template, otherwise we'll end up with an un-replaced variable string in the document.
+          #mailKeys = python_docx_replace.docx_get_keys(mailDoc)
+          #print("mailKeys:")
+          #print(mailKeys)
+          #blankFound = False
+          #for mailKey in mailKeys:
+          #  if mailKey.lower() in mailValues.keys():
+          #    if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
+          #      blankFound = True
+          #if not blankFound:
+          #  # Print a message for the user...
+          #  print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
+          #  # ...replace key / value pairs...
+          #  python_docx_replace.docx_replace(mailDoc, **mailValues)
+          #  print("mailTables: " + str(len(mailDoc.tables)))
+          #  print(mailDoc.tables)
+          #  for mailTable in mailDoc.tables:
+          #    print(mailTable)
+          #    python_docx_replace.docx_replace(mailTable, **mailValues)
+          #  # ...save the output document.
+          #  mailDoc.save(outputPath + os.sep + str(mailIndex+1) + ".docx")
         
   # Figure out if we want to resurse into any sub-folders.
   for inputItem in os.listdir(inputFolder):
