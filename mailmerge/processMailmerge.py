@@ -132,8 +132,12 @@ def processFolder(inputFolder, outputFolder):
     
           # Do the mailmerge.
           mailValues = mailItem.to_dict()
-
+          
           docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
+
+          # Print a message for the user...
+          print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
+          
           putFile("docxTemp/word/document.xml", docxText)
           compressDocx("docxTemp", outputPath + os.sep + str(mailIndex+1) + ".docx")
           
