@@ -121,6 +121,8 @@ def processFolder(inputFolder, outputFolder):
             print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
             # ...replace key / value pairs...
             python_docx_replace.docx_replace(mailDoc, **mailValues)
+            print("mailTables: " + str(len(mailDoc.tables)))
+            print(mailDoc.tables)
             for mailTable in mailDoc.tables:
               print(mailTable)
               python_docx_replace.docx_replace(mailTable, **mailValues)
