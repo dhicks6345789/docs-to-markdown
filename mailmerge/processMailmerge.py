@@ -111,6 +111,8 @@ def processFolder(inputFolder, outputFolder):
           # We skip any lines in the spreadsheet which have blank value for any variable included in
           # the template, otherwise we'll end up with an un-replaced variable string in the document.
           mailKeys = python_docx_replace.docx_get_keys(mailDoc)
+          print("mailKeys:")
+          print(mailKeys)
           blankFound = False
           for mailKey in mailKeys:
             if mailKey.lower() in mailValues.keys():
