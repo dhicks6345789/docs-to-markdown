@@ -110,8 +110,8 @@ def processFolder(inputFolder, outputFolder):
       os.makedirs(outputFolder + os.sep + fileName, exist_ok=True)
 
       # Set up a Composer object to hold the multi-document version of the output.
-      multiDoc = docx.Document()
-      multiDocComposer = docxcompose.composer.Composer(multiDoc)
+      multiDoc = None #docx.Document()
+      multiDocComposer = None #docxcompose.composer.Composer(multiDoc)
       
       for mailArraySheetName in mailArray.keys():
         outputPath = outputFolder + os.sep + fileName
@@ -136,7 +136,11 @@ def processFolder(inputFolder, outputFolder):
               foundHeadings.append(heading)
             if os.path.isfile(inputFolder + os.sep + heading + os.sep + value + ".docx"):
               templateFile = inputFolder + os.sep + heading + os.sep + value + ".docx"
-    
+
+          if multiDoc == None:
+            multiDoc = docx.Document()
+            multiDocComposer = docxcompose.composer.Composer(multiDoc)
+
           # Open the template document as a plain text XML file.
           mailValues = mailItem.to_dict()
           docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
@@ -175,7 +179,9 @@ def processFolder(inputFolder, outputFolder):
             compressDocx("docxTemp", outputPath + os.sep + str(mailIndex+1) + ".docx")
 
             mergedDoc = docx.Document(outputPath + os.sep + str(mailIndex+1) + ".docx")
+            mergedDoc.add_page_break()
             multiDocComposer.append(mergedDoc)
+    print("Writing: " + outputFolder + os.sep + fileName + ".docx")
     multiDocComposer.save(outputFolder + os.sep + fileName + ".docx")
         
   # Figure out if we want to resurse into any sub-folders.
