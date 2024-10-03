@@ -140,7 +140,7 @@ def processFolder(inputFolder, outputFolder):
           
           matches = re.search("\{.*\}", docxText, re.MULTILINE | re.DOTALL)
           print("Matches:")
-          print(matches)
+          print(len(matches.groups()))
           for matchNum, match in enumerate(matches):
             for groupNum in range(0, len(match.groups())):
               print("Match!", flush=True)
