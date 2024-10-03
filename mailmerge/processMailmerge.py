@@ -25,7 +25,7 @@ def extractDocx(theFilename, destinationPath):
   templateDocx = zipfile.ZipFile(theFilename, "r")
   templateDocx.extractall(destinationPath)
   templateDocx.close()
-  textHandle = open(destinationPath + "word/document.xml")
+  textHandle = open(destinationPath + "/word/document.xml")
   docxText = str(textHandle.read())
   textHandle.close()
   return(docxText)
