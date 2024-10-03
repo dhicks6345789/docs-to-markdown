@@ -39,6 +39,11 @@ def compressDocx(sourcePath, theFilename):
   theDocx.close()
   shutil.rmtree(sourcePath)
 
+def putFile(thePath, theData):
+  textHandle = open(thePath, "w")
+  textHandle.write(theData)
+  textHandle.close()
+
 def processFolder(inputFolder, outputFolder):
   print("Processing Mailmerge folder: " + inputFolder + " to " + outputFolder, flush=True)
   
