@@ -136,6 +136,9 @@ def processFolder(inputFolder, outputFolder):
           docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
           # Open the template document using python-docx.
           #mailDoc = docx.Document(inputFolder + os.sep + templateFile)
+
+          # Note: this simple plain text search-and-replace seems to work okay, but in theory we might need to
+          # be able to search for variable names (i.e. {{varname}}) split accross XML elements.
           
           # Extract a list of keys (i.e. variables to replace) from the document.
           mailKeys = []
