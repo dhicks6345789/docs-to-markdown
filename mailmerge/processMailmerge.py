@@ -131,25 +131,20 @@ def processFolder(inputFolder, outputFolder):
             if os.path.isfile(inputFolder + os.sep + heading + os.sep + value + ".docx"):
               templateFile = inputFolder + os.sep + heading + os.sep + value + ".docx"
     
-          # Do the mailmerge.
+          # Open the template document as a plain text XML file.
           mailValues = mailItem.to_dict()
-          
-          # Print a message for the user...
-          print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
           docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
-
+          # Open the template document using python-docx.
+          #mailDoc = docx.Document(inputFolder + os.sep + templateFile)
+          
+          # Extract a list of keys (i.e. variables to replace) from the document.
           mailKeys = []
           for docxMatch in re.finditer(r"\{\{.*?\}\}", docxText, re.MULTILINE | re.DOTALL):
             mailKeys.append(docxMatch.group(0)[2:-2])
-          
-          # Open the template document using python-docx.
-          #mailDoc = docx.Document(inputFolder + os.sep + templateFile)
-          # We skip any lines in the spreadsheet which have blank value for any variable included in
-          # the template, otherwise we'll end up with an un-replaced variable string in the document.
           #mailKeys = python_docx_replace.docx_get_keys(mailDoc)
 
-          print("mailKeys:")
-          print(mailKeys)
+          # We skip any lines in the spreadsheet which have blank value for any variable included in
+          # the template, otherwise we'll end up with an un-replaced variable string in the document.
           blankFound = False
           for mailKey in mailKeys:
             if mailKey.lower() in mailValues.keys():
