@@ -11,7 +11,6 @@ import zipfile
 # that's not the "docx" library, that's a different / earlier version - do "pip install python-docx"...
 import docx
 # ...and the docxcompose library for concatenating/appending DOCX files.
-#import docxcompose
 import docxcompose.composer
 # ...and the docs-replace library, to install do "pip install python-docx-replace".
 #import python_docx_replace
@@ -112,7 +111,7 @@ def processFolder(inputFolder, outputFolder):
 
       # Set up a Composer object to hold the multi-document version of the output.
       multiDoc = docx.Document()
-      multiDocComposer = docxcompose.composer.Composer(master)
+      multiDocComposer = docxcompose.composer.Composer(multiDoc)
       
       for mailArraySheetName in mailArray.keys():
         outputPath = outputFolder + os.sep + fileName
