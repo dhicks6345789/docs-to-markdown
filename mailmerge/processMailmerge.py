@@ -9,9 +9,11 @@ import zipfile
 
 # The python-docx library, for manipulating DOCX files. Importantly, when installing with pip,
 # that's not the "docx" library, that's a different / earlier version - do "pip install python-docx"...
-#import docx
+import docx
+# ...and the docxcompose library for concatenating/appending DOCX files.
+import docxcompose
 # ...and the docs-replace library, to install do "pip install python-docx-replace".
-#import python_docx_replace 
+#import python_docx_replace
 
 # We use Pandas to import Excel / CSV data.
 #import numpy
@@ -107,6 +109,10 @@ def processFolder(inputFolder, outputFolder):
         shutil.rmtree(outputFolder + os.sep + fileName)
       os.makedirs(outputFolder + os.sep + fileName, exist_ok=True)
 
+      # Set up a Composer object to hold the multi-document version of the output.
+      multiDoc = docx.Document("master.docx")
+      multiDocComposer = docxcompose.composer.Composer(master)
+
       for mailArraySheetName in mailArray.keys():
         outputPath = outputFolder + os.sep + fileName
         if len(mailArray) > 1:
@@ -167,6 +173,10 @@ def processFolder(inputFolder, outputFolder):
             #mailDoc.save(outputPath + os.sep + str(mailIndex+1) + ".docx")
             putFile("docxTemp/word/document.xml", docxText)
             compressDocx("docxTemp", outputPath + os.sep + str(mailIndex+1) + ".docx")
+
+            mergedDoc = docx.Document(outputPath + os.sep + str(mailIndex+1) + ".docx")
+            multiDocComposer.append(mergedDoc)
+    multiDocComposer.save(outputFolder + os.sep + fileName + ".docx")
         
   # Figure out if we want to resurse into any sub-folders.
   for inputItem in os.listdir(inputFolder):
