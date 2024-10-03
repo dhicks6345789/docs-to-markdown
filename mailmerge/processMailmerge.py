@@ -162,7 +162,7 @@ def processFolder(inputFolder, outputFolder):
             # ...replace key / value pairs...
 
             for mailKey in mailKeys:
-              docxText = docxText.replace("{{" + mailKey + "}}", mailValues[mailKey])
+              docxText = docxText.replace("{{" + mailKey + "}}", str(mailValues[mailKey]))
             #python_docx_replace.docx_replace(mailDoc, **mailValues)
           
             # ...and save the output document.
