@@ -23,21 +23,21 @@ import docsToMarkdownLib
 # Reads and returns the contents of the "document.xml" contained in the DOCX file.
 def extractDocx(theFilename, destinationPath):
   templateDocx = zipfile.ZipFile(theFilename, "r")
-	templateDocx.extractall(destinationPath)
-	templateDocx.close()
-	textHandle = open(destinationPath + "word/document.xml")
-	docxText = str(textHandle.read())
-	textHandle.close()
-	return(docxText)
+  templateDocx.extractall(destinationPath)
+  templateDocx.close()
+  textHandle = open(destinationPath + "word/document.xml")
+  docxText = str(textHandle.read())
+  textHandle.close()
+  return(docxText)
 
 # Turns the contents of the given folder into a DOCX file. Deletes the source folder when done.
 def compressDocx(sourcePath, theFilename):
-	theDocx = zipfile.ZipFile(theFilename, "w")
-	for root, dirs, files in os.walk(sourcePath):
-		for file in files:
-			theDocx.write(os.path.join(root, file), os.path.join(root, file)[len(sourcePath):])
-	theDocx.close()
-	shutil.rmtree(sourcePath)
+  theDocx = zipfile.ZipFile(theFilename, "w")
+  for root, dirs, files in os.walk(sourcePath):
+    for file in files:
+      theDocx.write(os.path.join(root, file), os.path.join(root, file)[len(sourcePath):])
+  theDocx.close()
+  shutil.rmtree(sourcePath)
 
 def processFolder(inputFolder, outputFolder):
   print("Processing Mailmerge folder: " + inputFolder + " to " + outputFolder, flush=True)
