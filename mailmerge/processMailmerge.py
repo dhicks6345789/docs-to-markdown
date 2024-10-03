@@ -138,44 +138,37 @@ def processFolder(inputFolder, outputFolder):
           print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
           docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
 
-          print("Matches 1:")
+          mailKeys = []
           for docxMatch in re.finditer(r"\{\{.*?\}\}", docxText, re.MULTILINE | re.DOTALL):
-            print(docxMatch.group(0))
+            mailKeys.append(docxMatch.group(0))
           
-          matches = re.search("\{.*\}", docxText, re.MULTILINE | re.DOTALL)
-          print("Matches 2:")
-          print(len(matches.groups()))
-          for matchNum, match in enumerate(matches):
-            for groupNum in range(0, len(match.groups())):
-              print("Match!", flush=True)
-              print (match.group(1))
-          putFile("docxTemp/word/document.xml", docxText)
-          compressDocx("docxTemp", outputPath + os.sep + str(mailIndex+1) + ".docx")
-          
-          ## Open the template document using python-docx.
+          # Open the template document using python-docx.
           #mailDoc = docx.Document(inputFolder + os.sep + templateFile)
-          ## We skip any lines in the spreadsheet which have blank value for any variable included in
-          ## the template, otherwise we'll end up with an un-replaced variable string in the document.
+          # We skip any lines in the spreadsheet which have blank value for any variable included in
+          # the template, otherwise we'll end up with an un-replaced variable string in the document.
           #mailKeys = python_docx_replace.docx_get_keys(mailDoc)
-          #print("mailKeys:")
-          #print(mailKeys)
-          #blankFound = False
-          #for mailKey in mailKeys:
-          #  if mailKey.lower() in mailValues.keys():
-          #    if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
-          #      blankFound = True
-          #if not blankFound:
-          #  # Print a message for the user...
-          #  print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
-          #  # ...replace key / value pairs...
-          #  python_docx_replace.docx_replace(mailDoc, **mailValues)
-          #  print("mailTables: " + str(len(mailDoc.tables)))
-          #  print(mailDoc.tables)
-          #  for mailTable in mailDoc.tables:
-          #    print(mailTable)
-          #    python_docx_replace.docx_replace(mailTable, **mailValues)
-          #  # ...save the output document.
-          #  mailDoc.save(outputPath + os.sep + str(mailIndex+1) + ".docx")
+
+          print("mailKeys:")
+          print(mailKeys)
+          blankFound = False
+          for mailKey in mailKeys:
+            if mailKey.lower() in mailValues.keys():
+              if pandas.isnull(mailValues[mailKey.lower()]) or mailValues[mailKey.lower()] in [None, "", numpy.nan]:
+                blankFound = True
+                
+          if not blankFound:
+            # Print a message for the user...
+            print("Do Mailmerge: " + templateFile + " to " + outputPath + os.sep + str(mailIndex+1) + ".docx", flush=True)
+            # ...replace key / value pairs...
+
+            for mailKey in mailKeys:
+              docxText = docxText.replace("{{" + mailKey + "}}", mailValues[mailKey])
+            #python_docx_replace.docx_replace(mailDoc, **mailValues)
+          
+            # ...and save the output document.
+            #mailDoc.save(outputPath + os.sep + str(mailIndex+1) + ".docx")
+            putFile("docxTemp/word/document.xml", docxText)
+            compressDocx("docxTemp", outputPath + os.sep + str(mailIndex+1) + ".docx")
         
   # Figure out if we want to resurse into any sub-folders.
   for inputItem in os.listdir(inputFolder):
