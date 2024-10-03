@@ -139,8 +139,8 @@ def processFolder(inputFolder, outputFolder):
           docxText = extractDocx(inputFolder + os.sep + templateFile, "docxTemp")
 
           print("Matches 1:")
-          for m in re.finditer(r"\{.*\}", docxText):
-            print('%02d-%02d: %s' % (m.start(), m.end(), m.group(0)))
+          for docxMatch in re.finditer(r"\{.*\}", docxText, re.MULTILINE | re.DOTALL):
+            print(docxMatch.group(0))
           
           matches = re.search("\{.*\}", docxText, re.MULTILINE | re.DOTALL)
           print("Matches 2:")
