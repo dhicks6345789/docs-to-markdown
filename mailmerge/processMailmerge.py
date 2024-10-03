@@ -110,7 +110,7 @@ def processFolder(inputFolder, outputFolder):
       os.makedirs(outputFolder + os.sep + fileName, exist_ok=True)
 
       # Set up a Composer object to hold the multi-document version of the output.
-      multiDoc = docx.Document("master.docx")
+      multiDoc = docx.Document()
       multiDocComposer = docxcompose.composer.Composer(master)
 
       for mailArraySheetName in mailArray.keys():
