@@ -66,6 +66,8 @@
             // The page load function - execution starts here.
             function startSlides() {
                 pageRefreshed = false;
+
+                console.log(screen.width);
                 
                 // Extract any optional parameters from the URL.
                 const searchParams = new URLSearchParams(window.location.search);
