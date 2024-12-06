@@ -59,16 +59,16 @@
             }
 
             function handleClickOrPress(theEvent) {
-                console.log("clientX: " + event.clientX);
-                console.log("clientY: " + event.clientY);
+                if (event.clientX < int(window.innerWidth / 2)) {
+                    console.log("Left!");
+                } else {
+                    console.log("Right!");
+                }
             }
             
             // The page load function - execution starts here.
             function startSlides() {
                 pageRefreshed = false;
-
-                console.log(screen.width);
-                console.log(window.innerWidth);
                 
                 // Extract any optional parameters from the URL.
                 const searchParams = new URLSearchParams(window.location.search);
