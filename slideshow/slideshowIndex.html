@@ -13,6 +13,7 @@
             var slideTransitionTime = 20000;
             var slideFadeStep = 0.05;
             var slideFadeInterval = 200;
+            var clickRequired = false;
             const resources = <<RESOURCESGOHERE>>;
             
             // An interval function, along with some global variables, to fade between slides.
@@ -42,7 +43,7 @@
                 if (nextSlide == resources.length) {
                     nextSlide = 0;
                 }
-                
+
                 // Set up the fade effect between the current slide and the next.
                 opacity = 1;
                 fadeStartSlide = document.getElementById("slide-" + currentSlide);
@@ -61,16 +62,19 @@
                 // Extract any optional parameters from the URL.
                 const searchParams = new URLSearchParams(window.location.search);
                 for (const searchParam of searchParams) {
-                    if (searchParam[0].toLowerCase() == "transition") {
+                    paramName = searchParam[0].toLowerCase()
+                    if (paramName == "transition") {
                         slideTransitionTime = parseInt(searchParam[1]) * 1000;
-                    } else if (searchParam[0].toLowerCase() == "fadesteps") {
+                    } else if (paramName == "fadesteps") {
                         slideFadeStep = 1 / parseInt(searchParam[1]);
-                    } else if (searchParam[0].toLowerCase() == "fadeinterval") {
+                    } else if (paramName == "fadeinterval") {
                         slideFadeInterval = Number(searchParam[1]) * 1000;
-                    } else if (searchParam[0].toLowerCase() == "refreshed") {
+                    } else if (paramName == "refreshed") {
                         if (searchParam[1].toLowerCase() == "true") {
                             pageRefreshed = true;
                         }
+                    } else if (paramName == "clickRequired") {
+                        clickRequired = true;
                     }
                 }
                 
@@ -109,8 +113,13 @@
                 resource0.style.display = "none";
                 // Make sure the intial slide is visible.
                 document.getElementById("slide--1").style.display = "block";
-                // Set up the slide transition.
-                setInterval(showNextSlide, slideTransitionTime);
+                // Set up the slide transition - if the "clickRequired" parameter is set, we wait for the user to click (or press)...
+                if (clickRequired) {
+                    document.addEventListener("click", showNextSlide);
+                } else {
+                    // ...otherwise, we show the next slide after the defined internal time.
+                    setInterval(showNextSlide, slideTransitionTime);
+                }
             }
         </script>
     </head>
