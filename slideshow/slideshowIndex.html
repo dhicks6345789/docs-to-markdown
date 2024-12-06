@@ -63,6 +63,7 @@
                 const searchParams = new URLSearchParams(window.location.search);
                 for (const searchParam of searchParams) {
                     paramName = searchParam[0].toLowerCase()
+                    console.log(paramName);
                     if (paramName == "transition") {
                         slideTransitionTime = parseInt(searchParam[1]) * 1000;
                     } else if (paramName == "fadesteps") {
@@ -80,6 +81,8 @@
                             console.log(clickRequired.toString())
                         }
                     }
+
+                    console.log(clickRequired.toString());
                 }
                 
                 //if (!pageRefreshed) {
