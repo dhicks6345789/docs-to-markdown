@@ -59,7 +59,7 @@
             }
 
             function handleClickOrPress(theEvent) {
-                if (event.clientX < int(window.innerWidth / 2)) {
+                if (event.clientX < Math.floor(window.innerWidth / 2)) {
                     console.log("Left!");
                 } else {
                     console.log("Right!");
