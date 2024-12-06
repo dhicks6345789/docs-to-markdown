@@ -74,7 +74,9 @@
                             pageRefreshed = true;
                         }
                     } else if (paramName == "clickRequired") {
-                        clickRequired = true;
+                        if (searchParam[1].toLowerCase() == "true") {
+                            clickRequired = true;
+                        }
                     }
                 }
                 
