@@ -57,9 +57,12 @@
                     nextSlide = 0;
                 }
 
-                if (resources[slideNum].endsWith(".mp4") && clickRequired) {
-                    currentVideoElement.pause();
-                    currentVideoElement.currentTime = 0;
+                // If the next slide is a video, and "clickRequired" is set, make sure the video is
+                // stopped and ready to play from the start.
+                if (resources[nextSlide].endsWith(".mp4") && clickRequired) {
+                    nextVideoElement = document.getElementById("slide-" + nextSlide).childNodes[0];
+                    nextVideoElement.pause();
+                    nextVideoElement.currentTime = 0;
                 }
 
                 // Set up the fade effect between the current slide and the next.
