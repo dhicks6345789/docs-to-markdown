@@ -57,6 +57,11 @@
                     nextSlide = 0;
                 }
 
+                if (resources[slideNum].endsWith(".mp4") && clickRequired) {
+                    currentVideoElement.pause();
+                    currentVideoElement.currentTime = 0;
+                }
+
                 // Set up the fade effect between the current slide and the next.
                 opacity = 1;
                 fadeStartSlide = document.getElementById("slide-" + currentSlide);
