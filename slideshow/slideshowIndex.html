@@ -16,7 +16,7 @@
             var slideFadeStep = 0.05;
             var slideFadeInterval = 200;
             var clickRequired = false;
-            const resources = [];
+            var resources = [];
 
             // A function to check if a given file / URL exists (server-side). See:
             // https://www.kirupa.com/html5/checking_if_a_file_exists.htm
@@ -139,7 +139,9 @@
                     if (doesFileExist("content.mp4")) {
                         resources = ["content.mp4"];
                     }
-                } else {
+                }
+                
+                if (resources == []) {
                     console.log("Error: unable to find any resources to load.")
                 }
                 
