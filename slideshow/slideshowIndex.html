@@ -137,13 +137,13 @@
 
                 console.log(resources);
                 
-                if (resources == []) {
+                if (resources.length == 0) {
                     if (doesFileExist("content.mp4")) {
                         resources = ["content.mp4"];
                     }
                 }
                 
-                if (resources == []) {
+                if (resources.length == 0) {
                     console.log("Error: unable to find any resources to load.")
                 }
 
