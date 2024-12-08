@@ -134,6 +134,8 @@
                 if (!pageRefreshed) {
                     location.replace(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&clickRequired=" + clickRequired.toString() + "&refreshed=true");
                 }
+
+                console.log(resources);
                 
                 if (resources == []) {
                     if (doesFileExist("content.mp4")) {
@@ -144,6 +146,8 @@
                 if (resources == []) {
                     console.log("Error: unable to find any resources to load.")
                 }
+
+                console.log(resources);
                 
                 // We want to tell the user what resources we're loading.
                 resourceList = document.getElementById("resourceList");
