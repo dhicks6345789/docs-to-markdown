@@ -84,6 +84,7 @@
             }
 
             function playVideo(theEvent) {
+                console.log("playVideo called");
                 if (resources[currentSlide].endsWith(".mp4")) {
                     document.getElementById("slide-" + currentSlide).childNodes[0].play();
                 }
