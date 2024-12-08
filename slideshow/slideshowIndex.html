@@ -79,10 +79,10 @@
                     currentVideoElement = document.getElementById("slide-" + currentSlide).childNodes[0];
                     videoPlaying = !!(currentVideoElement.currentTime > 0 && !currentVideoElement.paused && !currentVideoElement.ended && currentVideoElement.readyState > 2);
                     if (videoPlaying) {
-                        currentVideoElement.play();
-                    } else {
                         currentVideoElement.pause();
                         currentVideoElement.currentTime = 0;
+                    } else {
+                        currentVideoElement.play();
                     }
                 }
             }
