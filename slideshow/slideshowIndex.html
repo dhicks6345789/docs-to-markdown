@@ -48,10 +48,6 @@
                     nextSlideInterval = setInterval(showNextSlide, slideTransitionTime);
                 }
                 
-                if (resources.length == 1 && currentSlide == 0) {
-                    return
-                }
-                
                 nextSlide = currentSlide + 1;
                 if (nextSlide == resources.length) {
                     nextSlide = 0;
@@ -60,18 +56,21 @@
                 // If the next slide is a video, and "clickRequired" is set, make sure the video is
                 // stopped and ready to play from the start.
                 if (resources[nextSlide].endsWith(".mp4") && clickRequired) {
+                    console.log("Video should be stopping...");
                     nextVideoElement = document.getElementById("slide-" + nextSlide).childNodes[0];
                     nextVideoElement.pause();
                     nextVideoElement.currentTime = 0;
                 }
 
-                // Set up the fade effect between the current slide and the next.
-                opacity = 1;
-                fadeStartSlide = document.getElementById("slide-" + currentSlide);
-                fadeEndSlide = document.getElementById("slide-" + nextSlide);
-                fadeEndSlide.style.opacity = 0;
-                fadeEndSlide.style.display = "block";
-                fadeInterval = setInterval(fadeSlides, 200);
+                // Set up the fade effect between the current slide and the next - skip if there's only one slide.
+                if (resources.length != 1 && currentSlide != 0) {
+                    opacity = 1;
+                    fadeStartSlide = document.getElementById("slide-" + currentSlide);
+                    fadeEndSlide = document.getElementById("slide-" + nextSlide);
+                    fadeEndSlide.style.opacity = 0;
+                    fadeEndSlide.style.display = "block";
+                    fadeInterval = setInterval(fadeSlides, 200);
+                }
                 
                 currentSlide = nextSlide;
             }
