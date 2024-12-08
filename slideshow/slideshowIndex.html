@@ -21,12 +21,10 @@
             // A function to check if a given file / URL exists (server-side). See:
             // https://www.kirupa.com/html5/checking_if_a_file_exists.htm
             function doesFileExist(urlToFile) {
-                console.log("Checking for " + urlToFile);
                 var xhr = new XMLHttpRequest();
                 xhr.open('HEAD', urlToFile, false);
                 xhr.send();
                 
-                console.log(xhr.status);
                 if (xhr.status == "404") {
                     return false;
                 } else {
@@ -134,8 +132,6 @@
                 if (!pageRefreshed) {
                     location.replace(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&clickRequired=" + clickRequired.toString() + "&refreshed=true");
                 }
-
-                console.log(resources);
                 
                 if (resources.length == 0) {
                     if (doesFileExist("content.mp4")) {
@@ -146,8 +142,6 @@
                 if (resources.length == 0) {
                     console.log("Error: unable to find any resources to load.")
                 }
-
-                console.log(resources);
                 
                 // We want to tell the user what resources we're loading.
                 resourceList = document.getElementById("resourceList");
