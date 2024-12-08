@@ -21,10 +21,12 @@
             // A function to check if a given file / URL exists (server-side). See:
             // https://www.kirupa.com/html5/checking_if_a_file_exists.htm
             function doesFileExist(urlToFile) {
+                console.log("Checking for " + urlToFile);
                 var xhr = new XMLHttpRequest();
                 xhr.open('HEAD', urlToFile, false);
                 xhr.send();
                 
+                console.log(xhr.status);
                 if (xhr.status == "404") {
                     return false;
                 } else {
