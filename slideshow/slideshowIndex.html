@@ -9,6 +9,8 @@
         <meta http-equiv="Expires" content="0"/>
         
         <script>
+            var nextSlideInterval = 1;
+            
             var currentSlide = -1;
             var slideTransitionTime = 20000;
             var slideFadeStep = 0.05;
@@ -37,6 +39,16 @@
             // Display the next slide.
             function showNextSlide() {
                 console.log("Next slide!");
+
+                // Clear the current next-slide transition time...
+                clearInterval(nextSlideInterval);
+                // ...and set up the next one. If the "clickRequired" parameter is set, we wait for the user to click (or press)...
+                if (clickRequired) {
+                    document.addEventListener("click", handleClickOrPress);
+                } else {
+                    // ...otherwise, we show the next slide after the defined internal time.
+                    nextSlideInterval = setInterval(showNextSlide, slideTransitionTime);
+                }
                 
                 if (resources.length == 1 && currentSlide == 0) {
                     return
@@ -56,6 +68,10 @@
                 fadeInterval = setInterval(fadeSlides, 200);
                 
                 currentSlide = nextSlide;
+
+                if (resources[currentSlide].endsWith(".mp4")) {
+                    console.log(document.getElementById("slide-" + currentSlide).childNodes)
+                }
             }
 
             function handleClickOrPress(theEvent) {
@@ -116,7 +132,8 @@
                     if (resources[slideNum].endsWith(".svg")) {
                         newSlideDiv.innerHTML = "<img src=\"" + resources[slideNum] + "\" width=\"100%\"/>";
                     } else if (resources[slideNum].endsWith(".mp4")) {
-                        newSlideDiv.innerHTML = "<video width=\"100%\" height=\"100%\" autoplay loop><source src=\"" + resources[slideNum] + "\" type=\"video/mp4\"></video>";
+                        //newSlideDiv.innerHTML = "<video width=\"100%\" height=\"100%\" autoplay loop><source src=\"" + resources[slideNum] + "\" type=\"video/mp4\"></video>";
+                        newSlideDiv.innerHTML = "<video width=\"100%\" height=\"100%\"><source src=\"" + resources[slideNum] + "\" type=\"video/mp4\"></video>";
                     } else if (resources[slideNum].endsWith(".html")) {
                         newSlideDiv.innerHTML = "<iframe src=\"" + resources[slideNum] + "\" style=\"width:100vw; height:100vh; overflow-y:hidden; overflow-x:hidden;\"></iframe>";
                     }
@@ -125,13 +142,8 @@
                 resource0.style.display = "none";
                 // Make sure the intial slide is visible.
                 document.getElementById("slide--1").style.display = "block";
-                // Set up the slide transition - if the "clickRequired" parameter is set, we wait for the user to click (or press)...
-                if (clickRequired) {
-                    document.addEventListener("click", handleClickOrPress);
-                } else {
-                    // ...otherwise, we show the next slide after the defined internal time.
-                    setInterval(showNextSlide, slideTransitionTime);
-                }
+                // Set up the slide transition.
+                nextSlideInterval = setInterval(showNextSlide, slideTransitionTime);
             }
         </script>
     </head>
