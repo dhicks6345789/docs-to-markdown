@@ -17,6 +17,20 @@
             var slideFadeInterval = 200;
             var clickRequired = false;
             const resources = [];
+
+            // A function to check if a given file / URL exists (server-side). See:
+            // https://www.kirupa.com/html5/checking_if_a_file_exists.htm
+            function doesFileExist(urlToFile) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('HEAD', urlToFile, false);
+                xhr.send();
+                
+                if (xhr.status == "404") {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
             
             // An interval function, along with some global variables, to fade between slides.
             var opacity = 1;
@@ -117,6 +131,14 @@
                 
                 if (!pageRefreshed) {
                     location.replace(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&clickRequired=" + clickRequired.toString() + "&refreshed=true");
+                }
+                
+                if (resources == []) {
+                    if (doesFileExist("content.mp4")) {
+                        resources = ["content.mp4"];
+                    }
+                } else {
+                    console.log("Error: unable to find any resources to load.")
                 }
                 
                 // We want to tell the user what resources we're loading.
