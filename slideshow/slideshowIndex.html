@@ -65,6 +65,8 @@
                 fadeEndSlide = document.getElementById("slide-" + nextSlide);
                 fadeEndSlide.style.opacity = 0;
                 fadeEndSlide.style.display = "block";
+                fadeStartSlide.style.zIndex = "0";
+                fadeEndSlide.style.zIndex = "1";
                 fadeInterval = setInterval(fadeSlides, 200);
                 
                 currentSlide = nextSlide;
