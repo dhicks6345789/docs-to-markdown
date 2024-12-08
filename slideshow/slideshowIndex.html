@@ -38,8 +38,6 @@
             
             // Display the next slide.
             function showNextSlide() {
-                console.log("Next slide!");
-
                 // Clear the current next-slide transition time...
                 clearInterval(nextSlideInterval);
                 // ...and set up the next one. If the "clickRequired" parameter is set, we don't set up
@@ -56,7 +54,6 @@
                 // If the next slide is a video, and "clickRequired" is set, make sure the video is
                 // stopped and ready to play from the start.
                 if (resources[nextSlide].endsWith(".mp4") && clickRequired) {
-                    console.log("Video should be stopping...");
                     nextVideoElement = document.getElementById("slide-" + nextSlide).childNodes[0];
                     nextVideoElement.pause();
                     nextVideoElement.currentTime = 0;
@@ -76,11 +73,11 @@
             }
 
             function handleClickOrPress(theEvent) {
-                if (event.clientX < Math.floor(window.innerWidth / 2)) {
-                    console.log("Left!");
-                } else {
-                    console.log("Right!");
-                }
+                //if (event.clientX < Math.floor(window.innerWidth / 2)) {
+                    // Left!
+                //} else {
+                    // Right!
+                //}
                 nextSlideInterval = setInterval(showNextSlide, slideTransitionTime);
                 if (resources[currentSlide].endsWith(".mp4")) {
                     currentVideoElement = document.getElementById("slide-" + currentSlide).childNodes[0];
