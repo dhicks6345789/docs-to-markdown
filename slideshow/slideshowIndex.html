@@ -8,6 +8,10 @@
         <meta http-equiv="Pragma" content="no-cache"/>
         <meta http-equiv="Expires" content="0"/>
         
+        <!-- Disable pinch-to-zoom functionality - this is intended to be used as a kiosk application, possibly on a touch screen,
+        where it turns out to be too easy to accidently zoom ratherthan just press the screen to advance the slide. -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        
         <script>
             var nextSlideInterval = 1;
             
