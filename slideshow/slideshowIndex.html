@@ -9,7 +9,7 @@
         <meta http-equiv="Expires" content="0"/>
         
         <!-- Ideally, we want to disable pinch-to-zoom functionality - this is intended to be used as a kiosk application, possibly
-        on a touch screen, where it turns out to be too easy to accidently zoom ratherthan just press the screen to advance the slide. -->
+        on a touch screen, where it turns out to be too easy to accidently zoom rather than just press the screen to advance the slide. -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         
         <script>
@@ -110,7 +110,12 @@
             
             // The page load function - execution starts here.
             function startSlides() {
-                pageRefreshed = false;
+                refreshAt = [];
+                currentDate = new Date();
+                currentDate.setSeconds(refreshAt.getSeconds() + 10);
+                refreshAt[0] = currentDate.getHours();
+                refreshAt[1] = currentDate.getMinutes();
+                refreshAt[2] = currentDate.getSeconds();
                 
                 // Extract any optional parameters from the URL.
                 const searchParams = new URLSearchParams(window.location.search);
@@ -122,10 +127,12 @@
                         slideFadeStep = 1 / parseInt(searchParam[1]);
                     } else if (paramName == "fadeinterval") {
                         slideFadeInterval = Number(searchParam[1]) * 1000;
-                    } else if (paramName == "refreshed") {
-                        if (searchParam[1].toLowerCase() == "true") {
-                            pageRefreshed = true;
-                        }
+                    } else if (paramName == "refreshat") {
+                        // To do: add ability to have "*" as an option for any hour/minute/second.
+                        splitTime = searchParam[1].split(":");
+                        refreshAt[0] = splitTime[0];
+                        refreshAt[1] = splitTime[1];
+                        refreshAt[2] = splitTime[2];
                     } else if (paramName == "clickrequired") {
                         if (searchParam[1].toLowerCase() == "true") {
                             clickRequired = true;
