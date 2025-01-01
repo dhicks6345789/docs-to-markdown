@@ -114,7 +114,7 @@
             
             // The page load function - execution starts here.
             function startSlides() {
-                pageNeedsRefresh = True;
+                pageNeedsRefresh = true;
                 
                 refreshAt = [];
                 currentDate = new Date();
@@ -139,7 +139,7 @@
                         refreshAt[0] = splitTime[0];
                         refreshAt[1] = splitTime[1];
                         refreshAt[2] = splitTime[2];
-                        pageNeedsRefresh = False;
+                        pageNeedsRefresh = false;
                     } else if (paramName == "clickrequired") {
                         if (searchParam[1].toLowerCase() == "true") {
                             clickRequired = true;
