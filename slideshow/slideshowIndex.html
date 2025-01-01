@@ -107,9 +107,15 @@
                     }
                 }
             }
+
+            function doReload() {
+                location.reload();
+            }
             
             // The page load function - execution starts here.
             function startSlides() {
+                pageNeedsRefresh = True;
+                
                 refreshAt = [];
                 currentDate = new Date();
                 currentDate.setSeconds(refreshAt.getSeconds() + 10);
@@ -133,15 +139,27 @@
                         refreshAt[0] = splitTime[0];
                         refreshAt[1] = splitTime[1];
                         refreshAt[2] = splitTime[2];
+                        pageNeedsRefresh = False;
                     } else if (paramName == "clickrequired") {
                         if (searchParam[1].toLowerCase() == "true") {
                             clickRequired = true;
                         }
                     }
                 }
-                
-                if (!pageRefreshed) {
-                    location.replace(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&clickRequired=" + clickRequired.toString() + "&refreshed=true");
+
+                if (pageNeedsRefresh) {
+                    location.replace(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&clickRequired=" + clickRequired.toString() + "&refreshAt=" + refreshAt[0] + ":" + refreshAt[1] + ":" + refreshAt[2]);
+                }
+
+                nextDate = new Date();
+                nextDate.setHours(refreshAt[0]);
+                nextDate.setMinutes(refreshAt[1]);
+                nextDate.setSeconds(refreshAt[2]);
+                currentDate = new Date();
+                timeoutTime = nextDate.getTime() - currentDate.getTime();
+                console.log(timeoutTime);
+                if (timeoutTime > 10) {
+                    setTimeout(doReload, timeoutTime);
                 }
                 
                 if (resources.length == 0) {
