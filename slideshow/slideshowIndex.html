@@ -179,7 +179,7 @@ on browsers in kiosk mode. -->
                 nextDate.setSeconds(refreshAt[2]);
                 currentDate = new Date();
                 timeoutTime = nextDate.getTime() - currentDate.getTime();
-                if (timeoutTime <= 1000) {
+                if (timeoutTime <= minimumRefreshPeriod) {
                     nextDate.setTime(nextDate.getTime() + (86400000 - minimumRefreshPeriod));
                     timeoutTime = nextDate.getTime() - currentDate.getTime();
                 }
