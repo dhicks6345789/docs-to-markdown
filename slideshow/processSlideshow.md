@@ -6,8 +6,7 @@ This project consists of a Python script, intended to be run server-side, and a 
 
 ## Server-Side Python Script
 
-The server-side Python script should be able to process most formats of image and video files into standardised versions suitible for showing via the web-based client. It replies on external libraries
-
+The server-side Python script should be able to process most formats of image and video files into standardised versions suitible for showing via the web-based client. It replies on external applications (ffmpeg) to do that.
 
 ## Client-Side Slideshow Web Page
 
@@ -17,3 +16,7 @@ fadesteps 5
 fadeinterval seconds
 clickRequired true false
 refreshAt hours:min:sec
+
+## Installation
+
+The server-side script is part of the docsToMarkdown project, and should be installed as part of that project.
