@@ -24,9 +24,25 @@ The web page component can simply be used as a single-page web application in yo
 
 ### Usage
 
-You can modify the array defined at the start of the web page component 
+For stand-alone usage, download the "slideshowIndex.html" file. You are probably best off placing it in its own sub folder, along with the resource files you want to use (images, videos, PDF documents, HTML documents, etc), and renaming it "index.html" so your web server will see it as the default index file for that folder. Make sure resources are in formats that can be viewed by the web browser (see the server-side component above if you need a way of doing that).
 
-The web page, if renamed to "index.html" and placed in a folder of resources
+You can modify the (by default) empty array defined at the start of the web page to contain a list of resources you want to load. Look for the line:
+
+```
+var resources = [];
+```
+
+and modify to be a list of your resources:
+
+```
+var resources = ["myImage.png", "myVideo.mp4", "myDocument.pdf"];
+```
+
+The slides will be loaded in the order defined in the array.
+
+#### Parameters
+
+The web page component accepts parameters passed in as part of the URL string.
 
 transition seconds
 fadesteps 5
