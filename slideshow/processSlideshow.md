@@ -9,8 +9,8 @@ This project consists of a Python script, intended to be run server-side, and a 
 ## Server-Side Python Script
 
 ## Client-Side Slideshow Web Page
-
-
-
-
-                    location.replace(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&clickRequired=" + clickRequired.toString() + "&refreshAt=" + refreshAt[0] + ":" + refreshAt[1] + ":" + refreshAt[2]);
+transition seconds
+fadesteps 5
+fadeinterval seconds
+clickRequired true false
+refreshAt hours:min:sec
