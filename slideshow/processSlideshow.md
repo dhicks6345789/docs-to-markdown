@@ -24,7 +24,7 @@ The web page component can simply be used as a single-page web application in yo
 
 ### Usage
 
-For stand-alone usage, download the "slideshowIndex.html" file. You are probably best off placing it in its own sub-folder, along with the resource files you want to use (images, videos, PDF documents, HTML documents, etc), and renaming it "index.html" so your web server will see it as the default index file for that folder. For example, if you created a folder called "slideshow001" in the root folder of your web servers main public folder, the contents of that folder might be:
+For stand-alone usage, download the "slideshowIndex.html" file. You are probably best off placing it in its own sub-folder, along with the resource files you want to use (images, videos, PDF documents, HTML documents, etc), and renaming it "index.html" so your web server will see it as the default index file for that folder. For example, if you created a folder called "slideshow001" in the root folder of your web server's main public folder, the contents of that folder might be:
 
 ```
 index.html (the downloaded and renamed "slideshowIndex.html" file)
