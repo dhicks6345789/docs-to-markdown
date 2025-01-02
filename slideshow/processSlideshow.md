@@ -20,7 +20,7 @@ The client-side web page component is used by the server-side script, but can al
 
 ### Installation
 
-The web page component can simply be used as a single-page web application in your own projects - just download the "slideshowIndex.html" file. It is self-contained, any Javascript code or CSS styles are included in the one file.
+The web page component can simply be used as a single-page web application in your own projects - just download the "slideshowIndex.html" file, include it in your own code or repository if you want. It is self-contained, any Javascript code or CSS styles are included in the one file.
 
 ### Usage
 
