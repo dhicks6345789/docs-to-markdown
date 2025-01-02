@@ -181,7 +181,7 @@ on browsers in kiosk mode. -->
                 currentDate = new Date();
                 timeoutTime = nextDate.getTime() - currentDate.getTime();
                 if (timeoutTime <= minimumRefreshPeriod) {
-                    nextDate.setDate(nextDate.getDay() + 1);
+                    nextDate.setDate(nextDate.getTime() + (86400000 - minimumRefreshPeriod));
                     timeoutTime = nextDate.getTime() - currentDate.getTime();
                 }
                 console.log("timeoutTime: " + timeoutTime);
