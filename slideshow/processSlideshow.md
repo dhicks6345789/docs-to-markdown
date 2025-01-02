@@ -1,6 +1,6 @@
 # Slideshow
 
-Given a set of image/video/PDF/HTML files in a folder, produces an HTML file that cycles through each sub-page in turn, with defineable transition method (fade) and time.
+Given a set of image/video/PDF/HTML/etc files in a folder, produces an HTML file that cycles through each sub-page in turn, with defineable transition method (fade) and time.
 
 This project consists of a Python script, intended to be run server-side, and a client-side web page component. The client-side web page can be used as a stand-alone component without the server-side script.
 
