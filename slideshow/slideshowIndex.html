@@ -142,8 +142,6 @@ on browsers in kiosk mode. -->
                 refreshAt[0] = currentDate.getHours();
                 refreshAt[1] = currentDate.getMinutes();
                 refreshAt[2] = currentDate.getSeconds();
-                console.log("refreshAt 1:")
-                console.log(refreshAt)
                 
                 // Extract any optional parameters from the URL. This page is usable as a self-contained stand-alone component - see documentation for more details on each parameter.
                 const searchParams = new URLSearchParams(window.location.search);
@@ -171,14 +169,9 @@ on browsers in kiosk mode. -->
                 
                 // We refresh the page, explicity including any defined parameters in the new URL.
                 if (pageNeedsRefresh) {
-                    newLocation = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&clickRequired=" + clickRequired.toString() + "&refreshAt=" + refreshAt[0] + ":" + refreshAt[1] + ":" + refreshAt[2];
-                    console.log(newLocation);
-                    location.replace(newLocation);
+                    location.replace(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&clickRequired=" + clickRequired.toString() + "&refreshAt=" + refreshAt[0] + ":" + refreshAt[1] + ":" + refreshAt[2]);
                 }
-
-                console.log("refreshAt 2:")
-                console.log(refreshAt)
-
+                
                 // Set the time to refresh. If the user didn't explicitly set a refresh time as a parameter, the refresh time will be in a few seconds.
                 // If the refresh time is now (i.e. within the minimum refresh period time), simply set the refresh time as the same time tomorrow.
                 nextDate = new Date();
@@ -191,8 +184,7 @@ on browsers in kiosk mode. -->
                     nextDate.setTime(nextDate.getTime() + (86400000 - minimumRefreshPeriod));
                     timeoutTime = nextDate.getTime() - currentDate.getTime();
                 }
-                console.log("timeoutTime: " + timeoutTime);
-                //setTimeout(doReload, timeoutTime);
+                setTimeout(doReload, timeoutTime);
 
 
                 
