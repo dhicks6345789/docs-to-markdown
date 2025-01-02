@@ -158,9 +158,9 @@ on browsers in kiosk mode. -->
                     } else if (paramName == "refreshat") {
                         // To do: add ability to have "*" as an option for any hour/minute/second.
                         splitTime = searchParam[1].split(":");
-                        refreshAt[0] = splitTime[0];
-                        refreshAt[1] = splitTime[1];
-                        refreshAt[2] = splitTime[2];
+                        refreshAt[0] = parseInt(splitTime[0]);
+                        refreshAt[1] = parseInt(splitTime[1]);
+                        refreshAt[2] = parseInt(splitTime[2]);
                         pageNeedsRefresh = false;
                     } else if (paramName == "clickrequired") {
                         if (searchParam[1].toLowerCase() == "true") {
