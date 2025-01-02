@@ -16,15 +16,23 @@ on browsers in kiosk mode. -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
         
         <script>
+            // The minimum refresh period, in milliseconds.
             const minimumRefreshPeriod = 4000;
+            // The default slide transition time, in milliseconds.
+            const defaultSlideTransitionTime = 20000;
             
+            // A variable to store the ID of the "next slide" interval function.
             var nextSlideInterval = 1;
             
+            // The current slide number. Starts at -1, the special slide only shown once at the start to tell the user some setup information.
             var currentSlide = -1;
-            var slideTransitionTime = 20000;
+            // User-definable parameters, default values.
+            var slideTransitionTime = defaultSlideTransitionTime;
             var slideFadeStep = 0.05;
             var slideFadeInterval = 200;
             var clickRequired = false;
+            // By default, as a stand-alone application, the "resources" array will be empty. The server-side script replaces this line with a list
+            // of resources, or some later code will try to find resources.
             var resources = [];
             var resources = ["1-1735751952.mp4"];
 
@@ -42,7 +50,7 @@ on browsers in kiosk mode. -->
                 }
             }
             
-            // An function, used as an interval function along with some global variables, to fade between slides.
+            // A function, used as an interval function along with some global variables, to fade between slides.
             var opacity = 1;
             var fadeStartSlide = 1;
             var fadeEndSlide = 1;
@@ -95,7 +103,9 @@ on browsers in kiosk mode. -->
                 currentSlide = nextSlide;
             }
 
+            // If the "clickRequired" parameter is set to true, the user has to click the mouse or a button (or press the screen if on a touch-screen device) to advance to the next slide.
             function handleClickOrPress(theEvent) {
+                // To do: add an option for the user to be able to go both back and forward through the slides.
                 //if (event.clientX < Math.floor(window.innerWidth / 2)) {
                     // Left!
                 //} else {
@@ -114,6 +124,7 @@ on browsers in kiosk mode. -->
                 }
             }
 
+            // Do a page reload. According to all the documentation I can find, this /should/ be the same as the user hitting the "refresh" button in the browser, so cached files should be reloaded.
             function doReload() {
                 location.reload();
             }
@@ -247,10 +258,10 @@ on browsers in kiosk mode. -->
                     }
                 }
                 resource0.style.display = "none";
-                // Make sure the intial slide is visible.
+                // Make sure the intial slide is visible - we show the initial "-1" slide just once.
                 document.getElementById("slide--1").style.display = "block";
-                // Set up the slide transition.
-                nextSlideInterval = setInterval(showNextSlide, slideTransitionTime);
+                // Set up the first slide transition - we use the default value intially.
+                nextSlideInterval = setInterval(showNextSlide, defaultSlideTransitionTime);
             }
         </script>
     </head>
