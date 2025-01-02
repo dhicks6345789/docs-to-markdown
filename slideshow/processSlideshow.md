@@ -24,7 +24,22 @@ The web page component can simply be used as a single-page web application in yo
 
 ### Usage
 
-For stand-alone usage, download the "slideshowIndex.html" file. You are probably best off placing it in its own sub folder, along with the resource files you want to use (images, videos, PDF documents, HTML documents, etc), and renaming it "index.html" so your web server will see it as the default index file for that folder. Make sure resources are in formats that can be viewed by the web browser (see the server-side component above if you need a way of doing that).
+For stand-alone usage, download the "slideshowIndex.html" file. You are probably best off placing it in its own sub folder, along with the resource files you want to use (images, videos, PDF documents, HTML documents, etc), and renaming it "index.html" so your web server will see it as the default index file for that folder. For example, if you created a folder called "slideshow001" in the root folder of your web servers main public folder, the contents of that folder might be:
+
+```
+index.html (the downloaded and renamed "slideshowIndex.html" file)
+myImage.png
+myVideo.mp4
+myDocument.pdf
+```
+
+The public URL of the slideshow might now be something along the lines of:
+
+```
+https://example.com/slideshow1
+```
+
+Make sure resources are in formats that can be viewed by the web browser (see the server-side component above if you need a way of doing that).
 
 You can modify the (by default) empty array defined at the start of the web page to contain a list of resources you want to load. Look for the line:
 
@@ -42,10 +57,27 @@ The slides will be loaded in the order defined in the array.
 
 #### Parameters
 
-The web page component accepts parameters passed in as part of the URL string.
+The web page component accepts parameters passed in as part of the URL string. Using the example from above, we can set the transition time of slides (in seconds):
 
-transition seconds
-fadesteps 5
-fadeinterval seconds
-clickRequired true false
-refreshAt hours:min:sec
+```
+https://example.com/slideshow1/?transition=20
+```
+
+There are several user-setable parameters:
+- transition: The transition time, in seconds, of each slide.
+- fadesteps: The number of "steps" the fade effect uses. Using more steps giveas you a more gradual fade effect.
+- fadeinterval: The time, in seconds, that the fade effect takes. Again, a longer time goves youa more gradual fade effect.
+- clickRequired: true or false. If set to "true", the slideshow will wait for user input before proceding to the next slide. This can be a keypress, mouse click or (if running on a touch screen) a screen press event.
+- refreshAt: The time, given in hours:minutes:seconds, that the page should refresh itself.
+
+The parameters given above all have default values, so any can be left blank. Any values left blank will be filled in by reloading the URL - when you load the web page, you'll see the URL refresh straight away to include the missing values. Therefore, if you were to load the URL:
+
+```
+https://example.com/slideshow1/?clickRequired=true
+```
+
+you would find that it would refresh straight away to be something like:
+
+```
+https://example.com/slideshow1/?transition=20&fadesteps=20&fadeinterval=0.2&clickRequired=true&refreshAt=12:00:10
+```
