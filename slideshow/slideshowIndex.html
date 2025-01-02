@@ -173,7 +173,7 @@ on browsers in kiosk mode. -->
                 if (pageNeedsRefresh) {
                     newLocation = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + window.location.pathname.replace(/\/$/, "") + "?transition=" + (slideTransitionTime/1000) + "&fadesteps=" + (1/slideFadeStep) + "&fadeinterval=" + (slideFadeInterval/1000) + "&clickRequired=" + clickRequired.toString() + "&refreshAt=" + refreshAt[0] + ":" + refreshAt[1] + ":" + refreshAt[2];
                     console.log(newLocation);
-                    location.replace();
+                    location.replace(newLocation);
                 }
 
                 console.log("refreshAt 2:")
