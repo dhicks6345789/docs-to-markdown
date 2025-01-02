@@ -142,6 +142,8 @@ on browsers in kiosk mode. -->
                 refreshAt[0] = currentDate.getHours();
                 refreshAt[1] = currentDate.getMinutes();
                 refreshAt[2] = currentDate.getSeconds();
+                console.log("refreshAt:")
+                console.log(refreshAt[2])
                 
                 // Extract any optional parameters from the URL. This page is usable as a self-contained stand-alone component - see documentation for more details on each parameter.
                 const searchParams = new URLSearchParams(window.location.search);
