@@ -37,19 +37,13 @@ The public URL of the slideshow might now be something along the lines of `https
 
 Make sure resources are in formats that can be viewed by the web browser (see the server-side component above if you need a way of doing that).
 
-You can modify the (by default) empty array defined at the start of the web page to contain a list of resources you want to load. Look for the line:
-
-```
-var resources = [];
-```
-
-and modify to be a list of your resources:
+You can modify the (by default) empty array defined at the start of the web page to contain a list of resources you want to load. Look for the line `var resources = [];` and modify to be a list of your resources:
 
 ```
 var resources = ["myImage.png", "myVideo.mp4", "myDocument.pdf"];
 ```
 
-The slides will be loaded in the order defined in the array.
+The slides will be displayed in the order defined in the array.
 
 #### Parameters
 
@@ -66,14 +60,4 @@ There are several user-setable parameters:
 - clickRequired: true or false. If set to "true", the slideshow will wait for user input before proceding to the next slide. This can be a keypress, mouse click or (if running on a touch screen) a screen press event.
 - refreshAt: The time, given in hours:minutes:seconds, that the page should refresh itself.
 
-The parameters given above all have default values, so any can be left blank. Any values left blank will be filled in by reloading the URL - when you load the web page, you'll see the URL refresh straight away to include the missing values. Therefore, if you were to load the URL:
-
-```
-https://example.com/slideshow1/?clickRequired=true
-```
-
-you would find that it would refresh straight away to be something like:
-
-```
-https://example.com/slideshow1/?transition=20&fadesteps=20&fadeinterval=0.2&clickRequired=true&refreshAt=12:00:10
-```
+The parameters given above all have default values, so any can be left blank. Any values left blank will be filled in by reloading the URL - when you load the web page, you'll see the URL refresh straight away to include the missing values. Therefore, if you were to load the URL `https://example.com/slideshow1/?clickRequired=true` you would find that it would refresh straight away to be something like `https://example.com/slideshow1/?transition=20&fadesteps=20&fadeinterval=0.2&clickRequired=true&refreshAt=12:00:10`.
