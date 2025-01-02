@@ -137,7 +137,7 @@ on browsers in kiosk mode. -->
                 // We set a default refresh time of a few seconds into the future - if no refresh time is set as a parameter, the page will be refreshed.
                 refreshAt = [];
                 currentDate = new Date();
-                currentDate.setSeconds(currentDate.getSeconds() + (minimumRefreshPeriod / 1000));
+                currentDate.setSeconds(currentDate.getSeconds() + 1 + (minimumRefreshPeriod / 1000));
                 refreshAt[0] = currentDate.getHours();
                 refreshAt[1] = currentDate.getMinutes();
                 refreshAt[2] = currentDate.getSeconds();
