@@ -173,14 +173,14 @@ on browsers in kiosk mode. -->
                 }
                 
                 // Set the time to refresh. If the user didn't explicitly set a refresh time as a parameter, the refresh time will be in a few seconds.
-                // If the refresh time is now (i.e. within the minimum refresh period time), simply set the refresh time as the same time tomorrow.
+                // If the refresh time is now (i.e. within a second or so), simply set the refresh time as the same time tomorrow.
                 nextDate = new Date();
                 nextDate.setHours(refreshAt[0]);
                 nextDate.setMinutes(refreshAt[1]);
                 nextDate.setSeconds(refreshAt[2]);
                 currentDate = new Date();
                 timeoutTime = nextDate.getTime() - currentDate.getTime();
-                if (timeoutTime <= minimumRefreshPeriod) {
+                if (timeoutTime <= 1000) {
                     nextDate.setTime(nextDate.getTime() + (86400000 - minimumRefreshPeriod));
                     timeoutTime = nextDate.getTime() - currentDate.getTime();
                 }
