@@ -3,11 +3,21 @@
 <!-- The main HTML element - set margins to 0 and size to 100% so it fills the whole page (or whole screen in full-screen mode). -->
 <html lang="en" style="margin:0; padding:0; height:100%;">
     <head>
+        <meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
         <!-- Set this page (hopefully) to not be cached, so it gets reloaded each time the browser refreshes / reloads / reboots.
         Seems to be of particular importance for ChromeOS kisok-mode devices, which seem to cache content between reboots. -->
         <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
         <meta http-equiv="Pragma" content="no-cache"/>
         <meta http-equiv="Expires" content="0"/>
+        
+		<title>Audio Cues</title>
+            
+        <!-- Our user interface is constructed with Bootstrap 5, including Popper 2. -->
+		<link rel="stylesheet" href="bootstrap/5.1.3/css/bootstrap.min.css">
+		<script src="popper/2.11.5/popper.min.js"></script>
+		<script src="bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
         
         <script>
             // By default, as a stand-alone application, the "resources" array will be empty. The server-side script replaces this line with a list
@@ -30,19 +40,15 @@
             
             // The page load function - execution starts here.
             function startApp() {
-                // Load resources - if we don't already have a defined list of resources to load, try the default "content.mp4".
-                if (resources.length == 0) {
-                    if (doesFileExist("content.mp4")) {
-                        resources = ["content.mp4"];
-                    }
+                // Load resources.
+                if (doesFileExist("index.csv")) {
+                    resources = ["content.mp4"];
                 }
-
+                
                 // If we still haven't managed to find any resources to display, report an error.
                 if (resources.length == 0) {
                     document.getElementById("errorMessage").innerHTML = "Error: Unable to find any resources to load.";
                 }
-                
-                
             }
         </script>
     </head>
