@@ -1,12 +1,12 @@
-# Slideshow
+# Audio Cues
 
-Given a set of image/video/PDF/HTML/etc files in a folder, produces an HTML file that cycles through each sub-page in turn, with defineable transition method (fade) and time.
+Given a set of audio files in a folder, produces an HTML file that shows each audio cue as its own click/press-able icon that plays that audio. Handy for playing sound effects and similar for plays.
 
 This project consists of a Python script, intended to be run server-side, and a client-side web page component. The client-side web page can be used as a stand-alone component without the server-side script.
 
 ## Server-Side Python Script
 
-The server-side Python script should be able to process most formats of image and video files into standardised versions suitible for showing via the web-based client. It replies on external applications (ffmpeg) to do that.
+The server-side Python script should be able to process most formats of audio files into standardised versions suitable for playing via the web-based client. It replies on external applications (ffmpeg) to do that.
 
 ### Installation
 
@@ -16,26 +16,26 @@ The server-side script is part of the [Docs To Markdown](https://github.com/dhic
 
 ## Client-Side Slideshow Web Page
 
-The client-side web page component is used by the server-side script, but can also be used as a self-contained, stand-alone slideshow application - as long as you can get your images, videos, etc into formats viewable by the browser you should be able to use it. The slideshow page should work on most modern web browsers, including browsers in kiosk mode as typically used for digital signage appliations. Client-side resources (i.e. RAM, disk space) used will depend on the content, but shouldn't be more than average.
+The client-side web page component is used by the server-side script, but can also be used as a self-contained, stand-alone slideshow application - as long as you can get your audio files into formats playable by the browser you should be able to use it. The web page should work on most modern web browsers.
 
 ### Installation
 
-The web page component can simply be used as a single-page web application in your own projects - just download the "slideshowIndex.html" file, include it in your own code or repository if you want. It is self-contained, any Javascript code or CSS styles are included in the one file.
+The web page component can simply be used as a single-page web application in your own projects - just download the "audioCuesIndex.html" file, include it in your own code or repository if you want. It is self-contained, any Javascript code or CSS styles are included in the one file.
 
 ### Usage
 
-For stand-alone usage, download the "slideshowIndex.html" file. You are probably best off placing it in its own sub-folder, along with the resource files you want to use (images, videos, PDF documents, HTML documents, etc), and renaming it "index.html" so your web server will see it as the default index file for that folder. For example, if you created a folder called `slideshow1` in the root folder of your web server's main public folder, the contents of that folder might be:
+For stand-alone usage, download the "audioCuesIndex.html" file. You are probably best off placing it in its own sub-folder, along with the resource files you want to use (index.csv, any audio files, optional images for icons), and renaming it "index.html" so your web server will see it as the default index file for that folder. For example, if you created a folder called `audiocues1` in the root folder of your web server's main public folder, the contents of that folder might be:
 
 ```
-index.html (the downloaded and renamed "slideshowIndex.html" file)
-myImage.png
-myVideo.mp4
-myDocument.pdf
+index.html (the downloaded and renamed "audioCuesIndex.html" file)
+index.csv
+bell.mp3
+bang.mp3
 ```
 
-The public URL of the slideshow might now be something along the lines of `https://example.com/slideshow1`.
+The public URL of the slideshow might now be something along the lines of `https://example.com/audiocues1`.
 
-Make sure resources are in formats that can be viewed by the web browser (see the server-side component above if you need a way of doing that).
+Make sure resources are in formats that can be played by the web browser (see the server-side component above if you need a way of doing that).
 
 You can modify the (by default) empty array defined at the start of the web page to contain a list of resources you want to load. Look for the line `var resources = [];` and modify to be a list of your resources:
 
