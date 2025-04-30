@@ -33,7 +33,7 @@ myVideo.mp4
 myDocument.pdf
 ```
 
-The public URL of the slideshow might now be something along the lines of `https://example.com/slideshow1`.
+The public URL of the slideshow might now be something along the lines of `https://example.com/slideshow001`.
 
 Make sure resources are in formats that can be viewed by the web browser (see the server-side component above if you need a way of doing that).
 
