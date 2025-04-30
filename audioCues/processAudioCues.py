@@ -71,10 +71,10 @@ for file in files:
 
 itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
-for files in files:
-    if slide.lower() == "items" or slide.lower().endswith("/items"):
-        for fileType in slides.pop(slide):
-            fullPath = slide + "." + fileType
+for file in files:
+    if file.lower() == "items" or file.lower().endswith("/items"):
+        for fileType in files.pop(slide):
+            fullPath = file + "." + fileType
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Items file found: " + fullPath, flush=True)
                 if fileType.lower() in ["xls", "xlsx"]:
@@ -91,25 +91,19 @@ for files in files:
                             newItem[colName.lower()] = itemsRow[colName]
                     itemsList.append(newItem)
 
-slideCount = 1
-slideList = []
-for slide in slides:
+cueCount = 1
+cueList = []
+for file in files:
     for fileType in slides[slide]:
         # We add a timestamp string to each filename so that the browser reloads images / videos.
         fileName = str(slideCount) + "-" + str(timestamp)
         inputFile = inputFolder + os.sep + slide + "." + fileType
-        if fileType in docsToMarkdownLib.bitmapTypes:
-            SVGContent = docsToMarkdownLib.embedBitmapInSVG(inputFile, args["width"], args["height"])
-            docsToMarkdownLib.putFile(args["output"] + os.sep + fileName + ".svg", SVGContent)
-            slideList.append(fileName + ".svg")
-        elif doProcessVideo and fileType in docsToMarkdownLib.videoTypes:
-            docsToMarkdownLib.thumbnailVideo(inputFile, args["output"] + os.sep + fileName + ".mp4", args["width"], args["height"])
-            slideList.append(fileName + ".mp4")
+        if fileType in docsToMarkdownLib.audioTypes:
+            cueCount = cueCount + 1
         else:
-            outputFile = args["output"] + os.sep + fileName + "." + fileType.lower()
-            print("Copying unprocessed file: " + inputFile + " to " + outputFile)
-            shutil.copyfile(inputFile, outputFile)
-            slideList.append(fileName + "." + fileType.lower())
-        slideCount = slideCount + 1
+            #outputFile = args["output"] + os.sep + fileName + "." + fileType.lower()
+            print("Unprocessed file: " + inputFile)
+            #shutil.copyfile(inputFile, outputFile)
+            #slideList.append(fileName + "." + fileType.lower())
 
-docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("slideshow/slideshowIndex.html").replace("var resources = [];", str("var resources = " + str(slideList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("audioCue/audioCueIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
