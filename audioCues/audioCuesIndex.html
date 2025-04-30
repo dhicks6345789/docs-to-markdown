@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<!-- The main HTML element - set margins to 0 and size to 100% so it fills the whole page (or whole screen in full-screen mode). -->
+<html lang="en" style="margin:0; padding:0; height:100%;">
+    <head>
+        <!-- Set this page (hopefully) to not be cached, so it gets reloaded each time the browser refreshes / reloads / reboots.
+        Seems to be of particular importance for ChromeOS kisok-mode devices, which seem to cache content between reboots. -->
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+        <meta http-equiv="Pragma" content="no-cache"/>
+        <meta http-equiv="Expires" content="0"/>
+        
+        <script>
+            // By default, as a stand-alone application, the "resources" array will be empty. The server-side script replaces this line with a list
+            // of resources, or some later code will try to find resources.
+            var resources = [];
+
+            // A function to check if a given file / URL exists (server-side). See:
+            // https://www.kirupa.com/html5/checking_if_a_file_exists.htm
+            function doesFileExist(urlToFile) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('HEAD', urlToFile, false);
+                xhr.send();
+                
+                if (xhr.status == "404") {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            
+            // The page load function - execution starts here.
+            function startApp() {
+                // Load resources - if we don't already have a defined list of resources to load, try the default "content.mp4".
+                if (resources.length == 0) {
+                    if (doesFileExist("content.mp4")) {
+                        resources = ["content.mp4"];
+                    }
+                }
+
+                // If we still haven't managed to find any resources to display, report an error.
+                if (resources.length == 0) {
+                    document.getElementById("errorMessage").innerHTML = "Error: Unable to find any resources to load.";
+                }
+                
+                
+            }
+        </script>
+    </head>
+    <!-- The main body element - again, we set width and height to fit the whole page / screen, and we hide any scrollbars. -->
+    <body onload="startApp()" style="margin:0; padding:0; height:100vh; max-height:100vh; float:left; width:100vw; overflow-y:hidden; overflow-x:hidden;">
+        <div>
+            Bananas
+        </div>
+    </body>
+</html>
