@@ -18,14 +18,14 @@ timestamp = int(round(dateTimeNow.timestamp()))
 dateTimeFormatted = dateTimeNow.strftime("%d-%m-%Y, %H:%M:%S")
 
 # Get any arguments given via the command line.
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"width":"9", "height":"16", "processVideo":"true"}, requiredArgs=["input","output"])
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"processAudio":"true"}, requiredArgs=["input","output"])
 
-print("STATUS: processSlideshow: " + args["input"] + " to " + args["output"], flush=True)
+print("STATUS: processAudioCues: " + args["input"] + " to " + args["output"], flush=True)
 print("Timestamp: " + str(timestamp) + ", Date / Time: " + dateTimeFormatted)
 
-doProcessVideo = False
-if args["processVideo"] == "true":
-    doProcessVideo = True
+doProcessAudio = False
+if args["processAudio"] == "true":
+    doProcessAudio = True
 
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
@@ -33,12 +33,12 @@ os.makedirs(args["output"], exist_ok=True)
 
 
 # Check through items in the given input folder, recursing into sub-folders.
-# Produces an array (in the global "slides" variable) containing tuples of file names and an array of extensions found.
-slides = {}
+# Produces an array (in the global "files" variable) containing tuples of file names and an array of extensions found.
+files = {}
 inputFolder = docsToMarkdownLib.normalisePath(args["input"])
 def listFileNames(theSubFolder):
     global inputFolder
-    global slides
+    global files
     
     inputPath = inputFolder + os.sep + theSubFolder
     for inputItem in sorted(os.listdir(inputPath)):
@@ -52,26 +52,26 @@ def listFileNames(theSubFolder):
                 fileName = theSubFolder + os.sep + fileName
             if len(fileSplit) == 2:
                 fileType = fileSplit[1]
-            if not fileName in slides.keys():
-                slides[fileName] = []
-            slides[fileName].append(fileType)
+            if not fileName in files.keys():
+                files[fileName] = []
+            files[fileName].append(fileType)
 listFileNames("")
-print("List of slides:")
-print(slides)
+print("List of files:")
+print(files)
 
 config = []
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
-for slide in slides:
+for file in files:
     if slide.lower() == "config" or slide.lower().endswith("/config"):
         for fileType in slides.pop(slide):
-            fullPath = slide + "." + fileType
+            fullPath = file + "." + fileType
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Config file found: " + fullPath, flush=True)
                 docsToMarkdownLib.processArgsFile(fullPath, defaultArgs=args)
 
 itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
-for slide in slides:
+for files in files:
     if slide.lower() == "items" or slide.lower().endswith("/items"):
         for fileType in slides.pop(slide):
             fullPath = slide + "." + fileType
