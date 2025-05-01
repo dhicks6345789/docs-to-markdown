@@ -17,6 +17,8 @@ dateTimeNow = datetime.datetime.now()
 timestamp = int(round(dateTimeNow.timestamp()))
 dateTimeFormatted = dateTimeNow.strftime("%d-%m-%Y, %H:%M:%S")
 
+print("STATUS: processAudioCues - starting.", flush=True)
+
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"processAudio":"true"}, requiredArgs=["input","output"])
 
