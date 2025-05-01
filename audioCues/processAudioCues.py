@@ -93,12 +93,13 @@ for file in files:
 
 cueCount = 1
 cueList = []
-print("Files:")
-print(files)
+outputFolder = docsToMarkdownLib.normalisePath(args["output"])
+print("STATUS: processAudioCues - processing found audio files.", flush=True)
 for file in files:
     for fileType in files[file]:
         inputFile = inputFolder + os.sep + file + "." + fileType
         if fileType in docsToMarkdownLib.audioTypes:
+            print("Processing: " + inputFile, flush=True)
             outputFile = outputFolder + os.sep + file + ".mp3"
             os.system("ffmpeg -i " + inputFile + " -vn -ar 44100 -ac 2 -b:a 192k " + outputFile)
             cueList.append(file + ".mp3")
