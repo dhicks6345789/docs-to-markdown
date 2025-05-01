@@ -29,6 +29,9 @@ videoTypes = ["mp4"]
 # An array of "url file" types.
 urlTypes = ["url", "txt"]
 
+# An array of "audio file" types.
+audioTypes = ["mp3", "ogg", "wav"]
+
 # Files / folders to exclude from directory listings.
 fileIgnores = [".git", "__pycache__"]
 
