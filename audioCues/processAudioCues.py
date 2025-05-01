@@ -101,7 +101,9 @@ for file in files:
         if fileType in docsToMarkdownLib.audioTypes:
             print("Processing: " + inputFile, flush=True)
             outputFile = outputFolder + os.sep + file + ".mp3"
-            os.system("ffmpeg -i " + inputFile + " -vn -ar 44100 -ac 2 -b:a 192k " + outputFile)
+            ffmpegCommand = "ffmpeg -i " + inputFile + " -vn -ar 44100 -ac 2 -b:a 192k " + outputFile
+            print(ffmpegCommand)
+            os.system(ffmpegCommand)
             cueList.append(file + ".mp3")
             cueCount = cueCount + 1
         else:
