@@ -101,11 +101,14 @@ for file in files:
         if fileType in docsToMarkdownLib.audioTypes:
             print("Processing: " + inputFile, flush=True)
             outputFile = outputFolder + os.sep + file + ".mp3"
-            ffmpegCommand = "ffmpeg -y -i " + inputFile + " -vn -ar 44100 -ac 2 -b:a 192k " + outputFile + " 2>&1"
+            ffmpegCommand = "ffmpeg -y -i " + inputFile + " -vn -ar 44100 -ac 2 -b:a 192k " + outputFile + " 2>&1 >/dev/null"
             print(ffmpegCommand, flush=True)
             os.system(ffmpegCommand)
-            cueList.append(file + ".mp3")
-            cueCount = cueCount + 1
+            if os.path.exists(outputfile):
+                cueList.append(file + ".mp3")
+                cueCount = cueCount + 1
+            else:
+                print("ERROR: File not converted: " + file + "." + fileType)
         else:
             print("Unprocessed file: " + inputFile)
 
