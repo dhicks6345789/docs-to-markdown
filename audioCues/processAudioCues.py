@@ -1,4 +1,4 @@
-# A script to generate a slideshow (a folder containing index.html and a set of normalised assets) from a folder of assets (images, videos, audio).
+# A script to generate an audio cues page (a folder containing index.html and a set of normalised assets) from a folder of assets (audio clips).
 
 # Standard libraries.
 import os
@@ -64,8 +64,8 @@ print(files)
 config = []
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
 for file in files:
-    if slide.lower() == "config" or slide.lower().endswith("/config"):
-        for fileType in slides.pop(slide):
+    if file.lower() == "config" or file.lower().endswith("/config"):
+        for fileType in files.pop(file):
             fullPath = file + "." + fileType
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Config file found: " + fullPath, flush=True)
@@ -75,7 +75,7 @@ itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
 for file in files:
     if file.lower() == "items" or file.lower().endswith("/items"):
-        for fileType in files.pop(slide):
+        for fileType in files.pop(file):
             fullPath = file + "." + fileType
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Items file found: " + fullPath, flush=True)
@@ -96,16 +96,13 @@ for file in files:
 cueCount = 1
 cueList = []
 for file in files:
-    for fileType in slides[slide]:
+    for fileType in files[file]:
         # We add a timestamp string to each filename so that the browser reloads images / videos.
-        fileName = str(slideCount) + "-" + str(timestamp)
-        inputFile = inputFolder + os.sep + slide + "." + fileType
+        fileName = str(cueCount) + "-" + str(timestamp)
+        inputFile = inputFolder + os.sep + file + "." + fileType
         if fileType in docsToMarkdownLib.audioTypes:
             cueCount = cueCount + 1
         else:
-            #outputFile = args["output"] + os.sep + fileName + "." + fileType.lower()
             print("Unprocessed file: " + inputFile)
-            #shutil.copyfile(inputFile, outputFile)
-            #slideList.append(fileName + "." + fileType.lower())
 
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("audioCue/audioCueIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
