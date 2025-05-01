@@ -93,12 +93,15 @@ for file in files:
 
 cueCount = 1
 cueList = []
+print("Files:")
+print(files)
 for file in files:
     for fileType in files[file]:
-        # We add a timestamp string to each filename so that the browser reloads images / videos.
-        fileName = str(cueCount) + "-" + str(timestamp)
         inputFile = inputFolder + os.sep + file + "." + fileType
         if fileType in docsToMarkdownLib.audioTypes:
+            outputFile = outputFolder + os.sep + file + ".mp3"
+            os.system("ffmpeg -i " + inputFile + " -vn -ar 44100 -ac 2 -b:a 192k " + outputFile)
+            cueList.append(file + ".mp3")
             cueCount = cueCount + 1
         else:
             print("Unprocessed file: " + inputFile)
