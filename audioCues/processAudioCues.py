@@ -102,7 +102,7 @@ for file in files:
             print("Processing: " + inputFile, flush=True)
             outputFile = outputFolder + os.sep + file + ".mp3"
             ffmpegCommand = "ffmpeg -i " + inputFile + " -vn -ar 44100 -ac 2 -b:a 192k " + outputFile
-            print(ffmpegCommand)
+            print(ffmpegCommand, flush=True)
             os.system(ffmpegCommand)
             cueList.append(file + ".mp3")
             cueCount = cueCount + 1
