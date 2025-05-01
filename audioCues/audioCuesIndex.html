@@ -40,22 +40,39 @@
             
             // The page load function - execution starts here.
             function startApp() {
-                // Load resources.
-                if (doesFileExist("index.csv")) {
-                    resources = ["content.mp4"];
+                // If we don't already have resources defined (which we might have, if this file is being used as a template from a server-side script), try and find some.
+                if (resources.length == 0) {
+                    // Load resources.
+                    if (doesFileExist("index.csv")) {
+                        resources = ["content.mp4"];
+                    }
                 }
                 
                 // If we still haven't managed to find any resources to display, report an error.
                 if (resources.length == 0) {
                     document.getElementById("errorMessage").innerHTML = "Error: Unable to find any resources to load.";
+                } else {
+                    for (resource = 0; resource < resources.length; resource = resource + 1) {
+                        console.log(resources[resource]);
+                    }
                 }
             }
         </script>
     </head>
     <!-- The main body element - again, we set width and height to fit the whole page / screen, and we hide any scrollbars. -->
     <body onload="startApp()" style="margin:0; padding:0; height:100vh; max-height:100vh; float:left; width:100vw; overflow-y:hidden; overflow-x:hidden;">
-        <div>
-            Bananas
+        <div id="audioPlayer">
+            Play
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">One</div>
+                <div class="col-sm-2">Two</div>
+                <div class="col-sm-2">Three</div>
+                <div class="col-sm-2">Four</div>
+                <div class="col-sm-2">Five</div>
+                <div class="col-sm-2">Six</div>
+            </div>
         </div>
     </body>
 </html>
