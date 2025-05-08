@@ -101,7 +101,7 @@ for file in files:
         if fileType in docsToMarkdownLib.audioTypes:
             print("Processing: " + inputFile, flush=True)
             outputFile = outputFolder + os.sep + file + ".mp3"
-            ffmpegCommand = "ffmpeg -y -i " + inputFile + " -vn -ar 44100 -ac 2 -b:a 192k " + outputFile + " >/dev/null 2>&1"
+            ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
             print(ffmpegCommand, flush=True)
             os.system(ffmpegCommand)
             if os.path.exists(outputFile):
