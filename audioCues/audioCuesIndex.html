@@ -55,11 +55,13 @@
                     itemCount = 0;
                     for (resource = 0; resource < resources.length; resource = resource + 1) {
                         itemCount = itemCount + 1;
-                        if (itemCount % 6 == 0) {
+                        if (itemCount > 6 && itemCount % 6 == 1) {
                             newRow = document.getElementById("row0").cloneNode(true);
-                            console.log(newRow.childNodes[0]);
-                            console.log(newRow.childNodes[1]);
-                            document.getElementById("playerRows").appendChild(clone);
+                            newRow.childNodes[1].id = "resource-" + itemCount
+                            console.log(newRow.childNodes[2]);
+                            console.log(newRow.childNodes[3]);
+                            console.log(newRow.childNodes[4]);
+                            document.getElementById("playerRows").appendChild(newRow);
                         }
                         newPlayer = document.getElementById("audioPlayer").cloneNode(true);
                         document.getElementById("resource-" + itemCount).appendChild(newPlayer);
