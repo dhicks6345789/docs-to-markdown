@@ -55,9 +55,9 @@
                     itemCount = 0;
                     for (resource = 0; resource < resources.length; resource = resource + 1) {
                         itemCount = itemCount + 1;
-                        if (itemCount > 6 && itemCount % 6 == 1) {
+                        if (itemCount == 1 || itemCount % 6 == 1) {
                             newRow = document.getElementById("row-0").cloneNode(true);
-                            newRow.id = "row-" + Math.floor(itemCount / 6);
+                            newRow.id = "row-" + (Math.floor(itemCount / 6) + 1);
                             newRow.childNodes[1].id = "resource-" + itemCount;
                             newRow.childNodes[3].id = "resource-" + (itemCount+1);
                             newRow.childNodes[5].id = "resource-" + (itemCount+2);
@@ -65,6 +65,7 @@
                             newRow.childNodes[9].id = "resource-" + (itemCount+4);
                             newRow.childNodes[11].id = "resource-" + (itemCount+5);
                             document.getElementById("playerRows").appendChild(newRow);
+                            newRow.style.display = "block";
                         }
                         newPlayer = document.getElementById("audioPlayer").cloneNode(true);
                         document.getElementById("resource-" + itemCount).appendChild(newPlayer);
@@ -81,13 +82,13 @@
             Play
         </div>
         <div id="playerRows" style="margin:0; padding:0; height:16.6vw; width:100%;">
-            <div id="row-0" class="row align-items-center text-center" style="margin:0; padding:0; height:16.6vw; width:100%;">
-                <div id="resource-1" class="col" style="width:16.7vw; height:100%;"></div>
-                <div id="resource-2" class="col" style="width:16.7vw; height:100%;"></div>
-                <div id="resource-3" class="col" style="width:16.6vw; height:100%;"></div>
-                <div id="resource-4" class="col" style="width:16.6vw; height:100%;"></div>
-                <div id="resource-5" class="col" style="width:16.7vw; height:100%;"></div>
-                <div id="resource-6" class="col" style="width:16.7vw; height:100%;"></div>
+            <div id="row-0" class="row align-items-center text-center" style="margin:0; padding:0; height:16.6vw; width:100%; display:none;">
+                <div id="resource-01" class="col" style="width:16.7vw; height:100%;"></div>
+                <div id="resource-02" class="col" style="width:16.7vw; height:100%;"></div>
+                <div id="resource-03" class="col" style="width:16.6vw; height:100%;"></div>
+                <div id="resource-04" class="col" style="width:16.6vw; height:100%;"></div>
+                <div id="resource-05" class="col" style="width:16.7vw; height:100%;"></div>
+                <div id="resource-06" class="col" style="width:16.7vw; height:100%;"></div>
             </div>
         </div>
     </body>
