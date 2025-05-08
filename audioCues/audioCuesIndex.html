@@ -52,8 +52,18 @@
                 if (resources.length == 0) {
                     document.getElementById("errorMessage").innerHTML = "Error: Unable to find any resources to load.";
                 } else {
+                    itemCount = 0;
                     for (resource = 0; resource < resources.length; resource = resource + 1) {
-                        console.log(resources[resource]);
+                        itemCount = itemCount + 1;
+                        if (itemCount % 6 == 0) {
+                            newRow = document.getElementById("row0").cloneNode(true);
+                            console.log(newRow.childNodes[0]);
+                            console.log(newRow.childNodes[1]);
+                            document.getElementById("playerRows").appendChild(clone);
+                        }
+                        newPlayer = document.getElementById("audioPlayer").cloneNode(true);
+                        document.getElementById("resource-" + itemCount).appendChild(newPlayer);
+                        newPlayer.innerHTML = resources[resource];
                     }
                 }
             }
@@ -65,14 +75,14 @@
         <div id="audioPlayer">
             Play
         </div>
-        <div style="margin:0; padding:0; height:16.6vw; width:100%;">
-            <div class="row align-items-center text-center" style="margin:0; padding:0; height:16.6vw; width:100%;">
-                <div class="col" style="width:16.7vw; height:100%;">1</div>
-                <div class="col" style="width:16.7vw; height:100%;">2</div>
-                <div class="col" style="width:16.6vw; height:100%;">3</div>
-                <div class="col" style="width:16.6vw; height:100%;">4</div>
-                <div class="col" style="width:16.7vw; height:100%;">5</div>
-                <div class="col" style="width:16.7vw; height:100%;">6</div>
+        <div id="playerRows" style="margin:0; padding:0; height:16.6vw; width:100%;">
+            <div id="row0" class="row align-items-center text-center" style="margin:0; padding:0; height:16.6vw; width:100%;">
+                <div id="resource-1" class="col" style="width:16.7vw; height:100%;">1</div>
+                <div id="resource-2" class="col" style="width:16.7vw; height:100%;">2</div>
+                <div id="resource-3" class="col" style="width:16.6vw; height:100%;">3</div>
+                <div id="resource-4" class="col" style="width:16.6vw; height:100%;">4</div>
+                <div id="resource-5" class="col" style="width:16.7vw; height:100%;">5</div>
+                <div id="resource-6" class="col" style="width:16.7vw; height:100%;">6</div>
             </div>
         </div>
     </body>
