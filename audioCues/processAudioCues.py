@@ -91,25 +91,56 @@ for file in files:
                             newItem[colName.lower()] = itemsRow[colName]
                     itemsList.append(newItem)
 
-cueCount = 1
-cueList = []
+cueList = [["Filename", "Title", "Description", "Icon"]]
 outputFolder = docsToMarkdownLib.normalisePath(args["output"])
 print("STATUS: processAudioCues - processing found audio files.", flush=True)
 for file in files:
+    fileHasAudio = False
+    fileHasIcon = False
     for fileType in files[file]:
-        inputFile = inputFolder + os.sep + file + "." + fileType
-        if fileType in docsToMarkdownLib.audioTypes:
-            print("Processing: " + inputFile, flush=True)
+        if fileType.lower() in docsToMarkdownLib.audioTypes:
+            fileHasAudio = True
+        if fileType.lower() in docsToMarkdownLib.imageTypes:
+            fileHasIcon = True
+    if fileHasAudio:
+        cueRow = ["", "", "", ""]
+        for fileType in files[file]:
+            inputFile = inputFolder + os.sep + file + "." + fileType
             outputFile = outputFolder + os.sep + file + ".mp3"
-            ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
-            print(ffmpegCommand, flush=True)
-            #os.system(ffmpegCommand)
-            if os.path.exists(outputFile):
-                cueList.append(file + ".mp3")
-                cueCount = cueCount + 1
+            iconFile = outputFolder + os.sep + file + ".png"
+            if fileType.lower() in docsToMarkdownLib.audioTypes:
+                print("Processing audio file: " + inputFile, flush=True)
+                outputFile = outputFolder + os.sep + file + ".mp3"
+                ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
+                print(ffmpegCommand, flush=True)
+                #os.system(ffmpegCommand)
+                if os.path.exists(outputFile):
+                    cueRow[0] = file + ".mp3"
+                    cueRow[1] = file
+                    cueRow[2] = "Description goes here."
+
+                    # If the audio file dioesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
+                    if not fileHasIcon:
+                        print("Extracting album art as icon file: " + iconFile, flush=True)
+                        ffmpegCommand = "ffmpeg -y -i \"" + outputFile + "\" -an -vcodec copy \"" + iconFile + "\" >/dev/null 2>&1"
+                        print(ffmpegCommand, flush=True)
+                        os.system(ffmpegCommand)
+                        if os.path.exists(iconFile):
+                            cueRow[3] = file + ".png"
+                else:
+                    print("ERROR: File not converted: " + file + "." + fileType)
+            elif fileType.lower() in docsToMarkdownLib.imageTypes:
+                print("Processing image file: " + inputFile, flush=True)
+                ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" \"" + iconFile + "\" >/dev/null 2>&1"
+                print(ffmpegCommand, flush=True)
+                os.system(ffmpegCommand)
+                if os.path.exists(iconFile):
+                    cueRow[3] = file + ".png"
+                else:
+                    print("ERROR: File not converted: " + file + "." + fileType)
             else:
-                print("ERROR: File not converted: " + file + "." + fileType)
-        else:
-            print("Unprocessed file: " + inputFile)
+                print("Unprocessed file: " + inputFile)
+        if not cueRow[0] == "":
+            cueList.append(cueRow)
 
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
