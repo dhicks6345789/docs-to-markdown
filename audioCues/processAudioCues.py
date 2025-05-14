@@ -3,6 +3,7 @@
 # Standard libraries.
 import os
 import io
+import re
 import sys
 import shutil
 import datetime
@@ -116,6 +117,9 @@ for file in files:
                 #os.system(ffmpegCommand)
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
+                    fileTitle = file.strip()
+                    if re.match("^\d+ *- *.*", fileTitle) != None:
+                        fileTitle = fileTitle.split("-", 1)[1].strip()
                     cueRow[1] = file
                     cueRow[2] = "Description goes here."
 
