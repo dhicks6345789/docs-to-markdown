@@ -8,6 +8,9 @@ import sys
 import shutil
 import datetime
 
+# The Pillow image -handling library.
+import pil
+
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
@@ -123,7 +126,7 @@ for file in files:
                     cueRow[1] = fileTitle
                     cueRow[2] = "Description goes here."
 
-                    # If the audio file dioesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
+                    # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
                     if not fileHasIcon:
                         print("Extracting album art as icon file: " + iconFile, flush=True)
                         ffmpegCommand = "ffmpeg -y -i \"" + outputFile + "\" -an -vcodec copy \"" + iconFile + "\" >/dev/null 2>&1"
@@ -139,11 +142,16 @@ for file in files:
                 print(ffmpegCommand, flush=True)
                 os.system(ffmpegCommand)
                 if os.path.exists(iconFile):
-                    cueRow[3] = file + ".png"
+                    cueRow[5] = file + ".png"
                 else:
                     print("ERROR: File not converted: " + file + "." + fileType)
             else:
                 print("Unprocessed file: " + inputFile)
+            if os.path.exists(iconFile):
+                iconImage = PIL.Image.open(iconFile)
+                iconImage.thumbnail((1024,1024))
+                iconImage.save(iconFile)
+    N=N+1
         if not cueRow[0] == "":
             cueList.append(cueRow)
 
