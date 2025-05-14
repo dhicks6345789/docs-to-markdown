@@ -119,8 +119,9 @@ for file in files:
                     cueRow[0] = file + ".mp3"
                     fileTitle = file.strip()
                     if re.match("^[0-9]+ *- *.*", fileTitle) != None:
+                        print("Match!: " + fileTitle)
                         fileTitle = fileTitle.split("-", 1)[1].strip()
-                    cueRow[1] = file
+                    cueRow[1] = fileTitle
                     cueRow[2] = "Description goes here."
 
                     # If the audio file dioesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
