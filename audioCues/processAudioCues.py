@@ -147,11 +147,12 @@ for file in files:
                     print("ERROR: File not converted: " + file + "." + fileType)
             else:
                 print("Unprocessed file: " + inputFile)
+
+            # If we have an icon file, make sure it's square.
             if os.path.exists(iconFile):
                 iconImage = PIL.Image.open(iconFile)
                 iconImage.thumbnail((1024,1024))
                 iconImage.save(iconFile)
-    N=N+1
         if not cueRow[0] == "":
             cueList.append(cueRow)
 
