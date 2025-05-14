@@ -91,7 +91,7 @@ for file in files:
                             newItem[colName.lower()] = itemsRow[colName]
                     itemsList.append(newItem)
 
-cueList = [["Filename", "Title", "Description", "Icon"]]
+cueList = [["Filename", "Title", "Description", "TrimLeft", "TrimRight", "Icon"]]
 outputFolder = docsToMarkdownLib.normalisePath(args["output"])
 print("STATUS: processAudioCues - processing found audio files.", flush=True)
 for file in files:
@@ -113,11 +113,13 @@ for file in files:
                 outputFile = outputFolder + os.sep + file + ".mp3"
                 ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
                 print(ffmpegCommand, flush=True)
-                os.system(ffmpegCommand)
+                #os.system(ffmpegCommand)
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
                     cueRow[1] = file
                     cueRow[2] = "Description goes here."
+                    cueRow[3] = 0
+                    cueRow[4] = 0
 
                     # If the audio file dioesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
                     if not fileHasIcon:
@@ -126,7 +128,7 @@ for file in files:
                         print(ffmpegCommand, flush=True)
                         os.system(ffmpegCommand)
                         if os.path.exists(iconFile):
-                            cueRow[3] = file + ".png"
+                            cueRow[5] = file + ".png"
                 else:
                     print("ERROR: File not converted: " + file + "." + fileType)
             elif fileType.lower() in docsToMarkdownLib.imageTypes:
