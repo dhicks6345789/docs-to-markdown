@@ -54,25 +54,27 @@
                 } else {
                     itemCount = 0;
                     for (resource = 0; resource < resources.length; resource = resource + 1) {
-                        itemCount = itemCount + 1;
-                        if (itemCount == 1 || itemCount % 6 == 1) {
-                            newRow = document.getElementById("row-0").cloneNode(true);
-                            newRow.id = "row-" + (Math.floor(itemCount / 6) + 1);
-                            newRow.childNodes[1].id = "resource-" + itemCount;
-                            newRow.childNodes[3].id = "resource-" + (itemCount+1);
-                            newRow.childNodes[5].id = "resource-" + (itemCount+2);
-                            newRow.childNodes[7].id = "resource-" + (itemCount+3);
-                            newRow.childNodes[9].id = "resource-" + (itemCount+4);
-                            newRow.childNodes[11].id = "resource-" + (itemCount+5);
-                            document.getElementById("playerRows").appendChild(newRow);
-                            newRow.style.display = "";
+                        if (resources[resource][0] != "Filename") {
+                            itemCount = itemCount + 1;
+                            if (itemCount == 1 || itemCount % 6 == 1) {
+                                newRow = document.getElementById("row-0").cloneNode(true);
+                                newRow.id = "row-" + (Math.floor(itemCount / 6) + 1);
+                                newRow.childNodes[1].id = "resource-" + itemCount;
+                                newRow.childNodes[3].id = "resource-" + (itemCount+1);
+                                newRow.childNodes[5].id = "resource-" + (itemCount+2);
+                                newRow.childNodes[7].id = "resource-" + (itemCount+3);
+                                newRow.childNodes[9].id = "resource-" + (itemCount+4);
+                                newRow.childNodes[11].id = "resource-" + (itemCount+5);
+                                document.getElementById("playerRows").appendChild(newRow);
+                                newRow.style.display = "";
+                            }
+                            newPlayer = document.getElementById("audioPlayer").cloneNode(true);
+                            document.getElementById("resource-" + itemCount).appendChild(newPlayer);
+                            //newPlayer.innerHTML = resources[resource];
+                            newPlayer.style.display = "";
+                            console.log(resources[resource]);
+                            //newPlayer.style.backgroundImage = "url('" + resources[resource] + "');";
                         }
-                        newPlayer = document.getElementById("audioPlayer").cloneNode(true);
-                        document.getElementById("resource-" + itemCount).appendChild(newPlayer);
-                        //newPlayer.innerHTML = resources[resource];
-                        newPlayer.style.display = "";
-                        console.log(resources[resource]);
-                        //newPlayer.style.backgroundImage = "url('" + resources[resource] + "');";
                     }
                 }
             }
