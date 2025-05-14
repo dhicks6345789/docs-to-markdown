@@ -103,7 +103,7 @@ for file in files:
         if fileType.lower() in docsToMarkdownLib.imageTypes:
             fileHasIcon = True
     if fileHasAudio:
-        cueRow = ["", "", "", ""]
+        cueRow = ["", "", "", 0, 0, ""]
         for fileType in files[file]:
             inputFile = inputFolder + os.sep + file + "." + fileType
             outputFile = outputFolder + os.sep + file + ".mp3"
@@ -118,8 +118,6 @@ for file in files:
                     cueRow[0] = file + ".mp3"
                     cueRow[1] = file
                     cueRow[2] = "Description goes here."
-                    cueRow[3] = 0
-                    cueRow[4] = 0
 
                     # If the audio file dioesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
                     if not fileHasIcon:
