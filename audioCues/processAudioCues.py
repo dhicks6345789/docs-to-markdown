@@ -8,8 +8,8 @@ import sys
 import shutil
 import datetime
 
-# The Pillow image -handling library.
-import pil
+# The Pillow image-handling library.
+import PIL
 
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
