@@ -119,7 +119,6 @@ for file in files:
                     cueRow[0] = file + ".mp3"
                     fileTitle = file.strip()
                     if re.match("^[0-9]+ *- *.*", fileTitle) != None:
-                        print("Match!: " + fileTitle)
                         fileTitle = fileTitle.split("-", 1)[1].strip()
                     cueRow[1] = fileTitle
                     cueRow[2] = "Description goes here."
