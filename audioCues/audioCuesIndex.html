@@ -73,7 +73,9 @@
                             //newPlayer.innerHTML = resources[resource];
                             newPlayer.style.display = "";
                             console.log(resources[resource]);
-                            //newPlayer.style.backgroundImage = "url('" + resources[resource] + "');";
+                            if (resources[resource][5] != "") {
+                                newPlayer.style.backgroundImage = "url('" + resources[resource][5] + "');";
+                            }
                         }
                     }
                 }
