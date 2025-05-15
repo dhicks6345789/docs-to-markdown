@@ -57,7 +57,6 @@
                         if (resources[resource][0] != "Filename") {
                             itemCount = itemCount + 1;
                             if (itemCount == 1 || itemCount % 6 == 1) {
-                                console.log("New row!");
                                 newRow = document.getElementById("row-0").cloneNode(true);
                                 newRow.id = "row-" + (Math.floor(itemCount / 6) + 1);
                                 newRow.childNodes[1].id = "resource-" + itemCount;
@@ -72,15 +71,15 @@
                             newPlayer = document.getElementById("audioPlayer-0").cloneNode(true);
                             newPlayer.id = "audioPlayer-" + itemCount
                             document.getElementById("resource-" + itemCount).appendChild(newPlayer);
-                            //newPlayer.innerHTML = resources[resource];
                             newPlayer.style.display = "";
-                            console.log(resources[resource]);
                             if (resources[resource][5] != "") {
                                 newPlayer.style.backgroundImage = "url(\'" + resources[resource][5] + "\')";
-                                //newPlayer.childNodes[1].setAttribute("src", resources[resource][5]);
                             } else {
                                 newPlayer.style.backgroundImage = "url(\'/bootstrap-icons/1.8.1/soundwave.svg\')";
                             }
+                            newPlayer.style.backgroundPosition = "center center";
+                            newPlayer.style.backgroundSize = "100% 100%";
+                            newPalyer.style.backgroundRepeat = "no-repeat";
                         }
                     }
                 }
@@ -91,7 +90,6 @@
     <body onload="startApp()" style="margin:0; padding:0; height:100vh; max-height:100vh; float:left; width:100vw; overflow-x:hidden;">
     <body>
         <div id="audioPlayer-0" class="bg align-items-center text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
-            <!-- <img src="/bootstrap-icons/1.8.1/soundwave.svg" width="100%" height="100%" style="float:left"> -->
             <button type="button" class="btn btn-success" style="opacity: 0.5; float:left;"><img src="/bootstrap-icons/1.8.1/play.svg"></button>
         </div>
         <div id="playerRows" style="margin:0; padding:0; height:16.6vw; width:100%;">
