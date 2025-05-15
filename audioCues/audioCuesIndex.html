@@ -76,9 +76,7 @@
                             console.log(resources[resource]);
                             if (resources[resource][5] != "") {
                                 //newPlayer.style.backgroundImage = "url(\'" + resources[resource][5] + "\')";
-                                console.log(newPlayer.childNodes[0]);
-                                console.log(newPlayer.childNodes[1]);
-                                console.log(newPlayer.childNodes[2]);
+                                newPlayer.childNodes[1].setAttribute("src", resources[resource][5]);
                             }
                         }
                     }
