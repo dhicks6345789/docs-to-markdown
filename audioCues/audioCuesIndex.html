@@ -78,6 +78,8 @@
                             if (resources[resource][5] != "") {
                                 newPlayer.style.backgroundImage = "url(\'" + resources[resource][5] + "\')";
                                 //newPlayer.childNodes[1].setAttribute("src", resources[resource][5]);
+                            } else {
+                                newPlayer.style.backgroundImage = "url(\'/bootstrap-icons/1.8.1/soundwave.svg\')";
                             }
                         }
                     }
@@ -88,7 +90,7 @@
     <!-- The main body element - again, we set width and height to fit the whole page / screen, and we hide any scrollbars. -->
     <body onload="startApp()" style="margin:0; padding:0; height:100vh; max-height:100vh; float:left; width:100vw; overflow-x:hidden;">
     <body>
-        <div id="audioPlayer-0" class="bg align-items-center text-center" style="margin:0; padding:0; height:100%; width:100%; background:url('/bootstrap-icons/1.8.1/soundwave.svg'); display:none;">
+        <div id="audioPlayer-0" class="bg align-items-center text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
             <!-- <img src="/bootstrap-icons/1.8.1/soundwave.svg" width="100%" height="100%" style="float:left"> -->
             <button type="button" class="btn btn-success" style="opacity: 0.5; float:left;"><img src="/bootstrap-icons/1.8.1/play.svg"></button>
         </div>
