@@ -66,7 +66,6 @@
                 } else {
                     itemCount = 0;
                     for (resource = 0; resource < resources.length; resource = resource + 1) {
-                        console.log(resources[resource]);
                         if (resources[resource][0] != "Filename") {
                             itemCount = itemCount + 1;
                             if (itemCount == 1 || itemCount % 6 == 1) {
@@ -83,7 +82,7 @@
                             }
                             newPlayer = document.getElementById("audioPlayer-0").cloneNode(true);
                             newPlayer.id = "audioPlayer-" + itemCount;
-                            newPlayer.innerHTML = newPlayer.innerHTML.replace("{{TITLE}}", resources[resource][1]).replace("(0)","(" + resource + ")");
+                            newPlayer.innerHTML = newPlayer.innerHTML.replaceAll("{{TITLE}}", resources[resource][1]).replace("(0)","(" + resource + ")");
                             document.getElementById("resource-" + itemCount).appendChild(newPlayer);
                             newPlayer.style.display = "";
                             if (resources[resource][5] != "") {
