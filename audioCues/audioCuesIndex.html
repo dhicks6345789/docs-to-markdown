@@ -83,7 +83,7 @@
                             }
                             newPlayer = document.getElementById("audioPlayer-0").cloneNode(true);
                             newPlayer.id = "audioPlayer-" + itemCount;
-                            newPlayer.innerHTML = newPlayer.innerHTML.replace("{{TITLE}}", resources[resource][1]);
+                            newPlayer.innerHTML = newPlayer.innerHTML.replace("{{TITLE}}", resources[resource][1]).replace("(0)","(" + resource + ")");
                             document.getElementById("resource-" + itemCount).appendChild(newPlayer);
                             newPlayer.style.display = "";
                             if (resources[resource][5] != "") {
@@ -110,10 +110,10 @@
             </div>
             <div style="height:3vw">
                 <div class="row" style="style="margin:0; padding:0; width:100%">
-                    <div class="col text-start">
+                    <div class="col text-center">
                         <button type="button" class="btn btn-success" style="opacity:0.9; width:3vw; height:3vw;"><img src="/bootstrap-icons/1.8.1/repeat.svg" height="100%" width="100%" onclick="rewindAudio(0);"></button>
                     </div>
-                    <div class="col text-end">
+                    <div class="col text-center">
                         <button type="button" class="btn btn-success" style="opacity:0.9; width:3vw; height:3vw;"><img src="/bootstrap-icons/1.8.1/three-dots.svg" height="100%" width="100%" onclick="showOptions(0);"></button>
                     </div>
                 </div>
