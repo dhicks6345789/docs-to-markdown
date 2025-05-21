@@ -82,6 +82,7 @@
                             }
                             newPlayer = document.getElementById("audioPlayer-0").cloneNode(true);
                             newPlayer.id = "audioPlayer-" + itemCount
+                            newPlayer.innerHTML = newPlayer.innerHTML.replace("{{TITLE}}", resources[resource[1])
                             document.getElementById("resource-" + itemCount).appendChild(newPlayer);
                             newPlayer.style.display = "";
                             if (resources[resource][5] != "") {
@@ -102,7 +103,7 @@
     <body onload="startApp()" style="margin:0; padding:0; height:100vh; max-height:100vh; float:left; width:100vw; overflow-x:hidden;">
     <body>
         <div id="audioPlayer-0" class="bg text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
-            <div style="height:5.8vw"></div>
+            <div style="height:5.8vw">{{TITLE}}</div>
             <div style="height:7.8vw">
                 <button type="button" class="btn btn-success" style="opacity:0.9; width:5vw; height:5vw;" onclick="playAudio(0);"><img src="/bootstrap-icons/1.8.1/play.svg" height="100%" width="100%"></button>
             </div>
