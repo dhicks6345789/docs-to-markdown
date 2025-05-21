@@ -82,7 +82,7 @@
                             }
                             newPlayer = document.getElementById("audioPlayer-0").cloneNode(true);
                             newPlayer.id = "audioPlayer-" + itemCount;
-                            newPlayer.innerHTML = newPlayer.innerHTML.replace("{{TITLE}}", resources[resource[1]);
+                            newPlayer.innerHTML = newPlayer.innerHTML.replace("{{TITLE}}", resources[resource[1]]);
                             document.getElementById("resource-" + itemCount).appendChild(newPlayer);
                             newPlayer.style.display = "";
                             if (resources[resource][5] != "") {
