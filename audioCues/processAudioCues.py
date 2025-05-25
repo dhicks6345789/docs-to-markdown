@@ -12,7 +12,6 @@ import datetime
 import PIL
 
 # The JSON-handling library.
-# import json
 import html
 
 # The eyeD3 library for getting information from MP3 files.
@@ -42,13 +41,6 @@ if args["processAudio"] == "true":
 os.makedirs(args["output"], exist_ok=True)
 
 
-
-# Escape any double or single quotes.
-def escapeChars(theString):
-    if theString == None:
-        return ""
-    return html.escape(theString)
-    #return theString.replace("\"","\\\"").replace("\'","\\\'")
 
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "files" variable) containing tuples of file names and an array of extensions found.
@@ -141,8 +133,8 @@ for file in files:
                     cueRow[2] = ""
                     audioFileData = eyed3.load(inputFile)
                     if not audioFileData == None:
-                        print(audioFileData.tag.title)
-                        cueRow[1] = escapeChars(audioFileData.tag.title)
+                        if not audioFileData.tag.title == None:
+                            cueRow[1] = html.escape(audioFileData.tag.title)
                         #cueRow[2] = "" #audioFile.tag
                     
                     # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
