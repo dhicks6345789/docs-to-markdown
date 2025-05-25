@@ -127,7 +127,7 @@ for file in files:
                     if re.match("^[0-9]+ *- *.*", fileTitle) != None:
                         fileTitle = fileTitle.split("-", 1)[1].strip()
                     cueRow[1] = fileTitle
-                    cueRow[2] = ""
+                    cueRow[2] = "-"
                     audioFileData = eyed3.load(inputFile)
                     if not audioFileData == None:
                         cueRow[1] = audioFileData.tag.title
