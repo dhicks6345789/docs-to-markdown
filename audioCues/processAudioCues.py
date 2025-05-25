@@ -139,6 +139,7 @@ for file in files:
                     cueRow[2] = ""
                     audioFileData = eyed3.load(inputFile)
                     if not audioFileData == None:
+                        print(audioFileData.tag.title)
                         cueRow[1] = escapeChars(audioFileData.tag.title)
                         #cueRow[2] = "" #audioFile.tag
                     
