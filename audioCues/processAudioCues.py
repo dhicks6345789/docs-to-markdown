@@ -135,7 +135,8 @@ for file in files:
                     if not audioFileData == None:
                         if not audioFileData.tag.title == None:
                             cueRow[1] = html.escape(audioFileData.tag.title)
-                        cueRow[2] = audioFileData.tag.comments[0].text
+                        if len(audioFileData.tag.comments) > 0:
+                            cueRow[2] = audioFileData.tag.comments[0].text
                         
                     # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
                     if not fileHasIcon:
