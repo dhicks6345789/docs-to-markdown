@@ -12,7 +12,7 @@ import datetime
 import PIL
 
 # The JSON-handling library.
-import json
+# import json
 
 # The eyeD3 library for getting information from MP3 files.
 import eyed3
@@ -46,7 +46,7 @@ os.makedirs(args["output"], exist_ok=True)
 def escapeChars(theString):
     if theString == None:
         return ""
-    return theString.replace("\"","\"").replace("\'","\'")
+    return theString.replace("\"","\\\"").replace("\'","\\\'")
 
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "files" variable) containing tuples of file names and an array of extensions found.
@@ -172,4 +172,4 @@ for file in files:
         if not cueRow[0] == "":
             cueList.append(cueRow)
 
-docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + json.dumps(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
