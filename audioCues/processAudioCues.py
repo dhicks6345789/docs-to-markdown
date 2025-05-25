@@ -46,7 +46,7 @@ os.makedirs(args["output"], exist_ok=True)
 def escapeChars(theString):
     if theString == None:
         return ""
-    return theString.replace("\"","\\\"").replace("\'","\\\'")
+    return theString.replace("\"","\\"").replace("\'","\\'")
 
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "files" variable) containing tuples of file names and an array of extensions found.
