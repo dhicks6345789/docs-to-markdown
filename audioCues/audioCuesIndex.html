@@ -41,11 +41,14 @@
             function playPauseAudio(theResource) {
                 console.log("Play: " + theResource);
                 audioPlayer = document.getElementById("audioPlayer-" + theResource);
-                playerIcon = audioPlayer.childNodes[3].childNodes[1].childNodes[0];
+                playerButton = audioPlayer.childNodes[3].childNodes[1];
+                playerIcon = playerButton.childNodes[0];
                 if (playerIcon.getAttribute("src") == "/bootstrap-icons/1.8.1/play.svg") {
                     playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
+                    playerButton.className = "btn btn-warning";
                 } else {
                     playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
+                    playerButton.className = "btn btn-success";
                 }
             }
             
