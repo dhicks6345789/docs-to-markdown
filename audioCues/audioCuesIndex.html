@@ -111,12 +111,12 @@
 
                             // Now, add the HTML audio element to the player.
                             newAudioObject = document.createElement("AUDIO");
-                            audioObject.src = resources[resource][0];
-                            audioObject.load();
+                            newAudioObject.src = resources[resource][0];
+                            newAudioObject.load();
                             newPlayer.appendChild(newAudioObject);
                             
                             // Once the new audio player is set up on the page, save references to the object for control later on.
-                            audioObjects.append({"player":newPlayer, "audioObject":newAudioObject});
+                            audioObjects.append({"audioPlayer":newPlayer, "audioObject":newAudioObject});
                         }
                     }
                 }
