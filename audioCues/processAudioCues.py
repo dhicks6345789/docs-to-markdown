@@ -11,6 +11,9 @@ import datetime
 # The Pillow image-handling library.
 import PIL
 
+# The JSON-handling library.
+import json
+
 # The eyeD3 library for getting information from MP3 files.
 import eyed3
 
@@ -127,11 +130,10 @@ for file in files:
                     if re.match("^[0-9]+ *- *.*", fileTitle) != None:
                         fileTitle = fileTitle.split("-", 1)[1].strip()
                     cueRow[1] = fileTitle
-                    cueRow[2] = "-"
+                    cueRow[2] = ""
                     audioFileData = eyed3.load(inputFile)
                     if not audioFileData == None:
                         cueRow[1] = audioFileData.tag.title
-                        print(audioFileData.tag)
                         #cueRow[2] = "" #audioFile.tag
                     
                     # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
@@ -164,4 +166,4 @@ for file in files:
         if not cueRow[0] == "":
             cueList.append(cueRow)
 
-docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + json.dumps(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
