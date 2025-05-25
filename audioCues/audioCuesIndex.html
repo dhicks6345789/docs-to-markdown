@@ -42,7 +42,7 @@
                 console.log("Play: " + theResource);
                 audioPlayer = document.getElementById("audioPlayer-" + theResource);
                 playerIcon = audioPlayer.childNodes[3].childNodes[1].childNodes[0];
-                if (playerIcon.getAttribute() == "/bootstrap-icons/1.8.1/play.svg") {
+                if (playerIcon.getAttribute("src") == "/bootstrap-icons/1.8.1/play.svg") {
                     playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
                 } else {
                     playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
