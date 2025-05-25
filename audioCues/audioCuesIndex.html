@@ -41,7 +41,12 @@
             function playPauseAudio(theResource) {
                 console.log("Play: " + theResource);
                 audioPlayer = document.getElementById("audioPlayer-" + theResource);
-                console.log(audioPlayer.childNodes[3].childNodes[1].childNodes[0]);
+                playerIcon = audioPlayer.childNodes[3].childNodes[1].childNodes[0];
+                if playerIcon.getAttribute() == "/bootstrap-icons/1.8.1/play.svg" {
+                    playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
+                } else {
+                    playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
+                }
             }
             
             function rewindAudio(theResource) {
