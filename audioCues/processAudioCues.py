@@ -126,11 +126,13 @@ for file in files:
                     fileTitle = file.strip()
                     if re.match("^[0-9]+ *- *.*", fileTitle) != None:
                         fileTitle = fileTitle.split("-", 1)[1].strip()
-                    audioFile = eyed3.load(inputFile)
-                    #cueRow[1] = fileTitle
-                    cueRow[1] = audioFile.tag.title
-                    print(audioFile.tag)
-                    cueRow[2] = "" #audioFile.tag
+                    cueRow[1] = fileTitle
+                    cueRow[2] = ""
+                    audioFileData = eyed3.load(inputFile)
+                    if not audioFileData == None:
+                        cueRow[1] = audioFileData.tag.title
+                        print(audioFileData.tag)
+                        #cueRow[2] = "" #audioFile.tag
                     
                     # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
                     if not fileHasIcon:
