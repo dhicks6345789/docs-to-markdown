@@ -40,24 +40,30 @@
             }
 
             function playPauseAudio(theResource) {
-                audioPlayer = audioObjects[theResource]["audioPlayer"];
+                audioPlayer = audioObjects[theResource-1]["audioPlayer"];
                 playerButton = audioPlayer.childNodes[3].childNodes[1];
                 playerIcon = playerButton.childNodes[0];
-                audioObject = audioObjects[theResource]["audioObject"];
+                audioObject = audioObjects[theResource-1]["audioObject"];
                 if (playerIcon.getAttribute("src") == "/bootstrap-icons/1.8.1/play.svg") {
-                    playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
                     playerButton.className = "btn btn-warning";
+                    playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
                     audioObject.play();
                 } else {
-                    playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
                     playerButton.className = "btn btn-success";
+                    playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
                     audioObject.pause();
                 }
             }
             
             function rewindAudio(theResource) {
-                audioPlayer = audioObjects[theResource]["audioPlayer"];
-                audioObject.seek(0);
+                audioPlayer = audioObjects[theResource-1]["audioPlayer"];
+                playerButton = audioPlayer.childNodes[3].childNodes[1];
+                playerIcon = playerButton.childNodes[0];
+
+                playerButton.className = "btn btn-success";
+                playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
+                audioObject.pause();
+                audioObject.fastSeek(0);
             }
             
             function showOptions(theResource) {
