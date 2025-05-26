@@ -40,7 +40,7 @@
             }
 
             function updatePlayer(theResource) {
-                progressValue = ((audioObjects[theResource-1]["audioObject"].currentTime / audioObjects[theResource-1]["audioLength"]) * 100);
+                progressValue = Math.ceil((parseFloat(audioObjects[theResource-1]["audioObject"].currentTime) / parseFloat(audioObjects[theResource-1]["audioLength"])) * parseFloat(100));
                 console.log(progressValue);
                 audioObjects[theResource-1]["playerProgress"].style.width = progressValue + "%";
             }
