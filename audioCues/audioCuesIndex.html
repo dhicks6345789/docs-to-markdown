@@ -62,7 +62,6 @@
                     playerButton.className = "btn btn-success";
                     playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
                     audioObject.pause();
-                    playerProgress.style.display = "none";
                 }
             }
             
@@ -70,6 +69,7 @@
                 audioPlayer = audioObjects[theResource-1]["audioPlayer"];
                 playerButton = audioObjects[theResource-1]["playerButton"];
                 playerIcon = audioObjects[theResource-1]["playerIcon"];
+                playerProgress = audioObjects[theResource-1]["playerProgress"];
                 audioObject = audioObjects[theResource-1]["audioObject"];
 
                 clearInterval(audioObjects[theResource-1]["playerInterval"]);
@@ -77,6 +77,7 @@
                 playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
                 audioObject.pause();
                 audioObject.currentTime = 0;
+                playerProgress.style.display = "none";
             }
             
             function showOptions(theResource) {
@@ -137,6 +138,7 @@
                             
                             // Once the new audio player is set up on the page, save references to the object for control later on.
                             audioObjects.push({"audioPlayer":newPlayer, "playerButton":newPlayer.childNodes[3].childNodes[1], "playerIcon":newPlayer.childNodes[3].childNodes[1].childNodes[0], "playerProgress":newPlayer.childNodes[5].childNodes[1].childNodes[1].childNodes[1], "playerInterval":0, "audioObject":newAudioObject});
+                            newPlayer.childNodes[5].childNodes[1].childNodes[1].childNodes[1].style.display = "none";
                         }
                     }
                 }
