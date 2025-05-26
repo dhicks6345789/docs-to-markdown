@@ -121,7 +121,7 @@
                             newAudioObject = document.createElement("AUDIO");
                             newAudioObject.src = resources[resource][0];
                             newAudioObject.load();
-                            newAudioObject.onended = function("rewindAudio(" + resource + ")");
+                            newAudioObject.onended = Function("rewindAudio(" + resource + ")");
                             newPlayer.appendChild(newAudioObject);
                             
                             // Once the new audio player is set up on the page, save references to the object for control later on.
