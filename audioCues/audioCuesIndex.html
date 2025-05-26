@@ -42,7 +42,7 @@
             function updatePlayer(theResource) {
                 console.log("Update!: " + theResource);
                 console.log(audioObjects[theResource-1]["playerProgress"]);
-                audioObjects[theResource-1]["playerProgress"].setAttribute("aria-valuenow", 50);
+                audioObjects[theResource-1]["playerProgress"].style.width = "50%";
             }
 
             function playPauseAudio(theResource) {
@@ -135,7 +135,7 @@
                             newPlayer.appendChild(newAudioObject);
                             
                             // Once the new audio player is set up on the page, save references to the object for control later on.
-                            audioObjects.push({"audioPlayer":newPlayer, "playerButton":newPlayer.childNodes[3].childNodes[1], "playerIcon":newPlayer.childNodes[3].childNodes[1].childNodes[0], "playerProgress":newPlayer.childNodes[5].childNodes[1].childNodes[1], "playerInterval":0, "audioObject":newAudioObject});
+                            audioObjects.push({"audioPlayer":newPlayer, "playerButton":newPlayer.childNodes[3].childNodes[1], "playerIcon":newPlayer.childNodes[3].childNodes[1].childNodes[0], "playerProgress":newPlayer.childNodes[5].childNodes[1].childNodes[1].childNodes[1], "playerInterval":0, "audioObject":newAudioObject});
                         }
                     }
                 }
@@ -152,8 +152,8 @@
             </div>
             <div style="height:1vw">
                 <div class="row" style="style="margin:0; padding:0; width:100%">
-                    <div class="progress">
-                        <div class="progress-bar w-75" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress w-75">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
             </div>
