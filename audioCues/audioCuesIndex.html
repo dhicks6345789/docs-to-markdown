@@ -40,9 +40,8 @@
             }
 
             function updatePlayer(theResource) {
-                console.log(audioObjects[theResource-1]["audioObject"].duration);
                 currentTime = parseFloat(audioObjects[theResource-1]["audioObject"].currentTime);
-                audioLength = audioObjects[theResource-1]["audioLength"];
+                audioLength = parseFloat(audioObjects[theResource-1]["audioObject"].duration);
                 progressValue = Math.ceil((currentTime / audioLength) * 100);
                 console.log(currentTime);
                 console.log(audioLength);
@@ -140,8 +139,7 @@
                             newPlayer.appendChild(newAudioObject);
                             
                             // Once the new audio player is set up on the page, save references to the object for control later on.
-                            console.log(newAudioObject.duration);
-                            audioObjects.push({"audioPlayer":newPlayer, "playerButton":newPlayer.childNodes[3].childNodes[1], "playerIcon":newPlayer.childNodes[3].childNodes[1].childNodes[0], "playerProgress":newPlayer.childNodes[5].childNodes[1].childNodes[1].childNodes[1], "playerInterval":0, "audioLength":parseFloat(newAudioObject.duration), "audioObject":newAudioObject});
+                            audioObjects.push({"audioPlayer":newPlayer, "playerButton":newPlayer.childNodes[3].childNodes[1], "playerIcon":newPlayer.childNodes[3].childNodes[1].childNodes[0], "playerProgress":newPlayer.childNodes[5].childNodes[1].childNodes[1].childNodes[1], "playerInterval":0, "audioObject":newAudioObject});
                         }
                     }
                 }
