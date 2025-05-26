@@ -66,8 +66,6 @@ def listFileNames(theSubFolder):
                 files[fileName] = []
             files[fileName].append(fileType)
 listFileNames("")
-print("List of files:")
-print(files)
 
 config = []
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
@@ -171,6 +169,7 @@ for file in files:
 indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.replace("/bootstrap/","bootstrap/").replace("/bootstrap-icons/","bootstrap-icons/").replace("/popper/","popper/"))
 
+print("STATUS: processAudioCues - creating zip file for local download...", flush=True)
 if os.path.exists(args["output"] + os.sep + "audioCues.zip"):
     os.system("rm " + args["output"] + os.sep + "audioCues.zip")
 os.system("cp -r ../../www/popper www")
