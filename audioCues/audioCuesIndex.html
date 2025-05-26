@@ -40,9 +40,7 @@
             }
 
             function updatePlayer(theResource) {
-                console.log("Update!: " + theResource);
-                console.log(audioObjects[theResource-1]["playerProgress"]);
-                audioObjects[theResource-1]["playerProgress"].style.width = "50%";
+                audioObjects[theResource-1]["playerProgress"].style.width = ((audioObjects[theResource-1]["audioObject"].currentTime / audioObjects[theResource-1]["audioLength"]) * 100) + "%";
             }
 
             function playPauseAudio(theResource) {
