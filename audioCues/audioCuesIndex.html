@@ -40,7 +40,9 @@
             }
 
             function updatePlayer(theResource) {
-                audioObjects[theResource-1]["playerProgress"].style.width = ((audioObjects[theResource-1]["audioObject"].currentTime / audioObjects[theResource-1]["audioLength"]) * 100) + "%";
+                progressValue = ((audioObjects[theResource-1]["audioObject"].currentTime / audioObjects[theResource-1]["audioLength"]) * 100);
+                console.log(progressValue);
+                audioObjects[theResource-1]["playerProgress"].style.width = progressValue + "%";
             }
 
             function playPauseAudio(theResource) {
@@ -150,7 +152,7 @@
             </div>
             <div style="height:1vw">
                 <div class="row" style="style="margin:0; padding:0; width:100%">
-                    <div class="progress w-75">
+                    <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
