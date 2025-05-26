@@ -54,7 +54,7 @@
                     playerButton.className = "btn btn-warning";
                     playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
                     audioObject.play();
-                    audioObjects[theResource-1]["playerInterval"] = setInterval(Function("updatePlayer(" + theResource + ");"), 500);
+                    audioObjects[theResource-1]["playerInterval"] = setInterval(Function("updatePlayer(" + theResource + ");"), 200);
                     playerBar.style.display = "";
                     updatePlayer(theResource);
                 } else {
@@ -152,7 +152,7 @@
             <div style="height:5.8vw">
                 <button type="button" class="btn btn-success" style="opacity:0.9; width:5vw; height:5vw;" onclick="playPauseAudio(0);"><img src="/bootstrap-icons/1.8.1/play.svg" height="100%" width="100%"></button>
             </div>
-            <div class="text-center align-items-center" style="height:1vw;">
+            <div class="text-center align-items-center" style="height:1vw; width:100%;">
                 <div style="margin:0; padding:0; width:80%; display:none;">
                     <div class="progress">
                         <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
