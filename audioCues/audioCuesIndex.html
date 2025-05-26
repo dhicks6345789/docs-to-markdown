@@ -41,6 +41,7 @@
 
             function updatePlayer(theResource) {
                 console.log("Update!: " + theResource);
+                audioObjects[theResource-1]["playerProgress"].setAttribute("aria-valuenow", 50);
             }
 
             function playPauseAudio(theResource) {
@@ -68,7 +69,8 @@
                 playerButton = audioObjects[theResource-1]["playerButton"];
                 playerIcon = audioObjects[theResource-1]["playerIcon"];
                 audioObject = audioObjects[theResource-1]["audioObject"];
-                
+
+                clearInterval(audioObjects[theResource-1]["playerInterval"]);
                 playerButton.className = "btn btn-success";
                 playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
                 audioObject.pause();
