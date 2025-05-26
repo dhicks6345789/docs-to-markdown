@@ -172,5 +172,7 @@ docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdown
 
 if os.path.exists(args["output"] + os.sep + "audioCues.zip"):
     os.system("rm " + args["output"] + os.sep + "audioCues.zip")
+os.system("cp -r ../../www/popper www")
+os.system("cp -r ../../www/bootstrap www")
 os.system("cd " + args["output"] + "; zip -r .." + os.sep + "audioCues.zip *")
 os.system("mv audioCues.zip " + args["output"])
