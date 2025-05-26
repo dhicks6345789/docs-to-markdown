@@ -169,3 +169,8 @@ for file in files:
             cueList.append(cueRow)
 
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
+
+if os.path.exists(args["output"] + os.sep + "audioCues.zip"):
+    os.system("rm " + args["output"] + os.sep + "audioCues.zip")
+os.system("zip -r audioCues.zip " + args["output"])
+os.system("mv audioCues.zip " + args["output"])
