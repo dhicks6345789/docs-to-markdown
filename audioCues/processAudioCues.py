@@ -169,13 +169,15 @@ for file in files:
             cueList.append(cueRow)
 
 indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
-docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.replace("/bootstrap/","bootstrap/").replace("/popper/","popper/"))
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.replace("/bootstrap/","bootstrap/").replace("/bootstrap-icons/","bootstrap-icons/").replace("/popper/","popper/"))
 
 if os.path.exists(args["output"] + os.sep + "audioCues.zip"):
     os.system("rm " + args["output"] + os.sep + "audioCues.zip")
 os.system("cp -r ../../www/popper www")
 os.system("cp -r ../../www/bootstrap www")
+os.system("cp -r ../../www/bootstrap-icons www")
 os.system("cd " + args["output"] + "; zip -r .." + os.sep + "audioCues.zip *")
 os.system("mv audioCues.zip " + args["output"])
+os.system("cd " + args["output"] + "; rm -rf popper; rm -rf bootstrap; rm -rf bootstrap-icons")
 
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML)
