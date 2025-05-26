@@ -41,6 +41,7 @@
 
             function updatePlayer(theResource) {
                 console.log("Update!: " + theResource);
+                console.log(audioObjects[theResource-1]["playerProgress"]);
                 audioObjects[theResource-1]["playerProgress"].setAttribute("aria-valuenow", 50);
             }
 
@@ -146,15 +147,17 @@
     <body>
         <div id="audioPlayer-0" class="bg text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
             <div style="height:5.8vw;"><span style="background-color:white; opacity:0.5;">{{TITLE}}</span></div>
-            <div style="height:7.8vw">
+            <div style="height:6.8vw">
                 <button type="button" class="btn btn-success" style="opacity:0.9; width:5vw; height:5vw;" onclick="playPauseAudio(0);"><img src="/bootstrap-icons/1.8.1/play.svg" height="100%" width="100%"></button>
             </div>
-            <div style="height:3vw">
+            <div style="height:1vw">
                 <div class="row" style="style="margin:0; padding:0; width:100%">
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar w-75" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
+            </div>
+            <div style="height:3vw">
                 <div class="row" style="style="margin:0; padding:0; width:100%">
                     <div class="col text-center">
                         <button type="button" class="btn btn-success" style="opacity:0.9; width:3vw; height:3vw;"><img src="/bootstrap-icons/1.8.1/repeat.svg" height="100%" width="100%" onclick="rewindAudio(0);"></button>
