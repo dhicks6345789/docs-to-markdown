@@ -137,7 +137,7 @@
                             newPlayer.appendChild(newAudioObject);
                             
                             // Once the new audio player is set up on the page, save references to the object for control later on.
-                            audioObjects.push({"audioPlayer":newPlayer, "playerButton":newPlayer.childNodes[3].childNodes[1], "playerIcon":newPlayer.childNodes[3].childNodes[1].childNodes[0], "playerBar":newPlayer.childNodes[5].childNodes[1], "playerProgress":newPlayer.childNodes[5].childNodes[1].childNodes[1].childNodes[1], "playerInterval":0, "audioObject":newAudioObject});
+                            audioObjects.push({"audioPlayer":newPlayer, "playerButton":newPlayer.childNodes[3].childNodes[1], "playerIcon":newPlayer.childNodes[3].childNodes[1].childNodes[0], "playerBar":newPlayer.childNodes[5].childNodes[1].childNodes[1], "playerProgress":newPlayer.childNodes[5].childNodes[1].childNodes[1].childNodes[1].childNodes[1], "playerInterval":0, "audioObject":newAudioObject});
                         }
                     }
                 }
@@ -152,16 +152,18 @@
             <div style="height:5.8vw">
                 <button type="button" class="btn btn-success" style="opacity:0.9; width:5vw; height:5vw;" onclick="playPauseAudio(0);"><img src="/bootstrap-icons/1.8.1/play.svg" height="100%" width="100%"></button>
             </div>
-            <div class="text-center align-items-center" style="height:1vw; width:100%;">
-                <div style="margin:0; padding:0; width:80%; display:none;">
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="row" style="height:1vw; width:100%;">
+                <div class="col text-center">
+                    <div style="margin:0; padding:0; width:80%; display:none;">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div style="height:1vw"></div>
-            <div style="height:3vw">
-                <div class="row" style="style="margin:0; padding:0; width:100%">
+            <div style="height:1vw;"></div>
+            <div style="height:3vw;">
+                <div class="row" style="margin:0; padding:0; width:100%;">
                     <div class="col text-center">
                         <button type="button" class="btn btn-success" style="opacity:0.9; width:3vw; height:3vw;"><img src="/bootstrap-icons/1.8.1/repeat.svg" height="100%" width="100%" onclick="rewindAudio(0);"></button>
                     </div>
