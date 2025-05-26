@@ -176,7 +176,7 @@ if os.path.exists(args["output"] + os.sep + "audioCues.zip"):
 os.system("cp -r ../../www/popper www")
 os.system("cp -r ../../www/bootstrap www")
 os.system("cp -r ../../www/bootstrap-icons www")
-os.system("cd " + args["output"] + "; zip -r .." + os.sep + "audioCues.zip *")
+os.system("cd " + args["output"] + "; zip -r .." + os.sep + "audioCues.zip * >/dev/null 2>&1")
 os.system("mv audioCues.zip " + args["output"])
 os.system("cd " + args["output"] + "; rm -rf popper; rm -rf bootstrap; rm -rf bootstrap-icons")
 
