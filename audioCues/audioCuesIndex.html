@@ -40,13 +40,7 @@
             }
 
             function updatePlayer(theResource) {
-                currentTime = parseFloat(audioObjects[theResource-1]["audioObject"].currentTime);
-                audioLength = parseFloat(audioObjects[theResource-1]["audioObject"].duration);
-                progressValue = Math.ceil((currentTime / audioLength) * 100);
-                console.log(currentTime);
-                console.log(audioLength);
-                console.log(progressValue);
-                audioObjects[theResource-1]["playerProgress"].style.width = progressValue + "%";
+                audioObjects[theResource-1]["playerProgress"].style.width = Math.ceil((parseFloat(audioObjects[theResource-1]["audioObject"].currentTime) / parseFloat(audioObjects[theResource-1]["audioObject"].duration)) * 100) + "%";
             }
 
             function playPauseAudio(theResource) {
@@ -60,12 +54,15 @@
                     playerButton.className = "btn btn-warning";
                     playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
                     audioObject.play();
-                    audioObjects[theResource-1]["playerInterval"] = setInterval(Function("updatePlayer(" + theResource + ");"), 3000);
+                    audioObjects[theResource-1]["playerInterval"] = setInterval(Function("updatePlayer(" + theResource + ");"), 500);
+                    playerProgress.style.display = "";
+                    updatePlayer(theResource);
                 } else {
                     clearInterval(audioObjects[theResource-1]["playerInterval"]);
                     playerButton.className = "btn btn-success";
                     playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
                     audioObject.pause();
+                    playerProgress.style.display = "none";
                 }
             }
             
@@ -157,7 +154,7 @@
             <div style="height:1vw">
                 <div class="row" style="style="margin:0; padding:0; width:100%">
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="display:none;"></div>
                     </div>
                 </div>
             </div>
