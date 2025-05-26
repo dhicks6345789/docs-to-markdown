@@ -168,7 +168,8 @@ for file in files:
         if not cueRow[0] == "":
             cueList.append(cueRow)
 
-docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
+indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.replace("/bootstrap","bootstrap").replace("/popper","popper"))
 
 if os.path.exists(args["output"] + os.sep + "audioCues.zip"):
     os.system("rm " + args["output"] + os.sep + "audioCues.zip")
@@ -176,3 +177,5 @@ os.system("cp -r ../../www/popper www")
 os.system("cp -r ../../www/bootstrap www")
 os.system("cd " + args["output"] + "; zip -r .." + os.sep + "audioCues.zip *")
 os.system("mv audioCues.zip " + args["output"])
+
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML)
