@@ -39,17 +39,24 @@
                 }
             }
 
+            function updatePlayer(theResource) {
+                console.log("Update!: " + theResource);
+            }
+
             function playPauseAudio(theResource) {
                 audioPlayer = audioObjects[theResource-1]["audioPlayer"];
                 playerButton = audioObjects[theResource-1]["playerButton"];
                 playerIcon = audioObjects[theResource-1]["playerIcon"];
+                playerProgress = audioObjects[theResource-1]["playerProgress"];
                 audioObject = audioObjects[theResource-1]["audioObject"];
                 
                 if (playerIcon.getAttribute("src") == "/bootstrap-icons/1.8.1/play.svg") {
                     playerButton.className = "btn btn-warning";
                     playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
                     audioObject.play();
+                    audioObjects[theResource-1]["playerInterval"] = setInterval(Function("updatePlayer(" + theResource + ");"), 3000);
                 } else {
+                    clearInterval(audioObjects[theResource-1]["playerInterval"]);
                     playerButton.className = "btn btn-success";
                     playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
                     audioObject.pause();
@@ -125,7 +132,7 @@
                             newPlayer.appendChild(newAudioObject);
                             
                             // Once the new audio player is set up on the page, save references to the object for control later on.
-                            audioObjects.push({"audioPlayer":newPlayer, "playerButton":newPlayer.childNodes[3].childNodes[1], "playerIcon":newPlayer.childNodes[3].childNodes[1].childNodes[0], "audioObject":newAudioObject});
+                            audioObjects.push({"audioPlayer":newPlayer, "playerButton":newPlayer.childNodes[3].childNodes[1], "playerIcon":newPlayer.childNodes[3].childNodes[1].childNodes[0], "playerProgress":newPlayer.childNodes[5].childNodes[1].childNodes[1], "playerInterval":0, "audioObject":newAudioObject});
                         }
                     }
                 }
@@ -141,6 +148,11 @@
                 <button type="button" class="btn btn-success" style="opacity:0.9; width:5vw; height:5vw;" onclick="playPauseAudio(0);"><img src="/bootstrap-icons/1.8.1/play.svg" height="100%" width="100%"></button>
             </div>
             <div style="height:3vw">
+                <div class="row" style="style="margin:0; padding:0; width:100%">
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
                 <div class="row" style="style="margin:0; padding:0; width:100%">
                     <div class="col text-center">
                         <button type="button" class="btn btn-success" style="opacity:0.9; width:3vw; height:3vw;"><img src="/bootstrap-icons/1.8.1/repeat.svg" height="100%" width="100%" onclick="rewindAudio(0);"></button>
