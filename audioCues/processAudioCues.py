@@ -124,7 +124,7 @@ for file in files:
                     ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
                     print(ffmpegCommand, flush=True)
                     os.system(ffmpegCommand)
-                    os.system("touch -r " + outputFile + " " + inputFile)
+                    os.system("touch -r \"" + outputFile + "\" \"" + inputFile + "\" >/dev/null 2>&1")
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
                     outputFiles.append(cueRow[0])
@@ -176,6 +176,7 @@ indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCues
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.replace("/bootstrap/","bootstrap/").replace("/bootstrap-icons/","bootstrap-icons/").replace("/popper/","popper/"))
 
 outputFiles.append("index.html")
+outputFiles.append("audioCues.zip")
 for outputItem in os.listdir(args["output"]):
     if not outputItem in outputFiles:
         print("Delete: " + outputItem)
