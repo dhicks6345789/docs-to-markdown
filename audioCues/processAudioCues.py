@@ -193,6 +193,7 @@ docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.repl
 
 # Create the zip file.
 print("STATUS: processAudioCues - creating zip file for local download...", flush=True)
+os.system("cp -r silence.mp3 www")
 os.system("cp -r ../../www/popper www")
 os.system("cp -r ../../www/bootstrap www")
 os.system("cp -r ../../www/bootstrap-icons www")
