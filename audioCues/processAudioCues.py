@@ -162,11 +162,24 @@ for file in files:
             else:
                 print("Unprocessed file: " + inputFile)
 
-            # If we have an icon file, make sure it's square.
+            # If we have an icon file, make sure it's a square, thumbnailed image.
             if os.path.exists(iconFile):
                 iconImage = PIL.Image.open(iconFile)
-                iconImage.thumbnail((1024,1024))
-                iconImage.save(iconFile)
+                cropLeft = 0
+                cropRight = 0
+                cropTop = 0
+                cropBottom = 0
+                iconWidth, iconHeight = im.size
+                if iconWidth > iconHeight:
+                    cropLeft = int((iconWidth - iconHeight) / 2)
+                    cropRight = cropLeft + iconHeight
+                else:
+                    cropTop = int((iconHeight - iconWidth) / 2)
+                    cropBottom = cropTop + iconWidth
+                croppedIcon = iconImage.crop((cropL, cropTop, cropRight, cropBottom))
+                
+                croppedIcon.thumbnail((1024,1024))
+                croppedIcon.save(iconFile)
         if not cueRow[0] == "":
             cueList.append(cueRow)
 
