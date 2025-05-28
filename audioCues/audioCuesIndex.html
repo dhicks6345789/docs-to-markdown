@@ -43,6 +43,10 @@
                 audioObjects[theResource-1]["playerProgress"].style.width = Math.ceil((parseFloat(audioObjects[theResource-1]["audioObject"].currentTime) / parseFloat(audioObjects[theResource-1]["audioObject"].duration)) * 100) + "%";
             }
 
+            function playSilence() {
+                document.getElementById("silence").play();
+            }
+
             function playPauseAudio(theResource) {
                 audioPlayer = audioObjects[theResource-1]["audioPlayer"];
                 playerButton = audioObjects[theResource-1]["playerButton"];
@@ -85,11 +89,11 @@
             }
 
             // Copy the shortcut URL for this page to the clipboard for the user.
-			function copyShortcutURL() {
-				copyText = document.getElementById("shortcutURL");
-				copyText.select();
-				document.execCommand("copy");
-			}
+            function copyShortcutURL() {
+                copyText = document.getElementById("shortcutURL");
+                copyText.select();
+                document.execCommand("copy");
+            }
             
             // The page load function - execution starts here.
             function startApp() {
@@ -99,6 +103,8 @@
                 }
 
                 document.getElementById("shortcutURL").value = window.location;
+
+                setInterval(playSilence, 5000);
                 
                 // If we don't already have resources defined (which we might have, if this file is being used as a template from a server-side script), try and find some.
                 if (resources.length == 0) {
@@ -160,6 +166,7 @@
     </head>
     <!-- The main body element - again, we set width and height to fit the whole page / screen, and we hide the horizontal scrollbar. -->
     <body onload="startApp()" style="margin:0; padding:0; height:100vh; max-height:100vh; width:100vw; overflow-x:hidden;">
+	<div style="display:none;"><audio id="silence"><source src="silence.mp3" type="audio/mp3"></audio></div>
         <div id="audioPlayer-0" class="bg text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
             <div style="height:5.8vw;"><h2 style="background-color:rgb(255 255 255 / 0.3); color:#000;">{{TITLE}}</h2></div>
             <div style="height:5.8vw">
