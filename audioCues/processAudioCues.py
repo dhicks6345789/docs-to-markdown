@@ -102,6 +102,7 @@ for file in files:
 cueList = [["Filename", "Title", "Description", "TrimLeft", "TrimRight", "Icon"]]
 outputFolder = docsToMarkdownLib.normalisePath(args["output"])
 print("STATUS: processAudioCues - processing found audio files.", flush=True)
+outputFiles = []
 for file in files:
     fileHasAudio = False
     fileHasIcon = False
@@ -119,10 +120,13 @@ for file in files:
             if fileType.lower() in docsToMarkdownLib.audioTypes:
                 print("Processing audio file: " + inputFile, flush=True)
                 outputFile = outputFolder + os.sep + file + ".mp3"
-                ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
-                print(ffmpegCommand, flush=True)
-                os.system(ffmpegCommand)
+                if not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
+                    ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
+                    print(ffmpegCommand, flush=True)
+                    os.system(ffmpegCommand)
+                    os.system("touch -r " + outputFile + " " + inputPath)
                 if os.path.exists(outputFile):
+                    outputFiles.append(outputFile)
                     cueRow[0] = file + ".mp3"
                     fileTitle = file.strip()
                     if re.match("^[0-9]+ *- *.*", fileTitle) != None:
@@ -168,6 +172,11 @@ for file in files:
 
 indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.replace("/bootstrap/","bootstrap/").replace("/bootstrap-icons/","bootstrap-icons/").replace("/popper/","popper/"))
+
+outputFiles.append("index.html")
+for outputItem in os.listdir(args["output"]):
+    if not outputItem in outputFiles:
+        print("Delete: " + outputItem)
 
 print("STATUS: processAudioCues - creating zip file for local download...", flush=True)
 if os.path.exists(args["output"] + os.sep + "audioCues.zip"):
