@@ -176,8 +176,7 @@ for file in files:
                 else:
                     cropTop = int((iconHeight - iconWidth) / 2)
                     cropBottom = cropTop + iconWidth
-                croppedIcon = iconImage.crop((cropL, cropTop, cropRight, cropBottom))
-                
+                croppedIcon = iconImage.crop((cropLeft, cropTop, cropRight, cropBottom))
                 croppedIcon.thumbnail((1024,1024))
                 croppedIcon.save(iconFile)
         if not cueRow[0] == "":
