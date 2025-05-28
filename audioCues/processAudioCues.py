@@ -172,14 +172,16 @@ for file in files:
         if not cueRow[0] == "":
             cueList.append(cueRow)
 
-indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
-docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.replace("/bootstrap/","bootstrap/").replace("/bootstrap-icons/","bootstrap-icons/").replace("/popper/","popper/"))
-
-outputFiles.append("index.html")
+# Clear out any extranious files from the output folder (left over from previous runs / changes).
 for outputItem in os.listdir(args["output"]):
     if not outputItem in outputFiles:
         os.system("rm \"" + args["output"] + os.sep + outputItem + "\"")
 
+# Write the index.html file for the zip-ed version.
+indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.replace("/bootstrap/","bootstrap/").replace("/bootstrap-icons/","bootstrap-icons/").replace("/popper/","popper/"))
+
+# Create the zip file.
 print("STATUS: processAudioCues - creating zip file for local download...", flush=True)
 os.system("cp -r ../../www/popper www")
 os.system("cp -r ../../www/bootstrap www")
@@ -188,4 +190,5 @@ os.system("cd " + args["output"] + "; zip -r .." + os.sep + "audioCues.zip * >/d
 os.system("mv audioCues.zip " + args["output"])
 os.system("cd " + args["output"] + "; rm -rf popper; rm -rf bootstrap; rm -rf bootstrap-icons")
 
+# Re-write index.html as the final version.
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML)
