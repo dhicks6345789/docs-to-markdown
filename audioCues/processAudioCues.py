@@ -172,10 +172,10 @@ for file in files:
                 iconWidth, iconHeight = iconImage.size
                 if iconWidth > iconHeight:
                     cropLeft = int((iconWidth - iconHeight) / 2)
-                    cropRight = cropLeft + iconHeight
+                    cropRight = iconWith - cropLeft
                 else:
                     cropTop = int((iconHeight - iconWidth) / 2)
-                    cropBottom = cropTop + iconWidth
+                    cropBottom = iconHeight - cropTop
                 croppedIcon = iconImage.crop((cropLeft, cropTop, cropRight, cropBottom))
                 croppedIcon.thumbnail((1024,1024))
                 croppedIcon.save(iconFile)
