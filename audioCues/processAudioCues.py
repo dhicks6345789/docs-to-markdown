@@ -176,14 +176,11 @@ indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCues
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.replace("/bootstrap/","bootstrap/").replace("/bootstrap-icons/","bootstrap-icons/").replace("/popper/","popper/"))
 
 outputFiles.append("index.html")
-outputFiles.append("audioCues.zip")
 for outputItem in os.listdir(args["output"]):
     if not outputItem in outputFiles:
-        print("Delete: " + outputItem)
+        os.system("rm \"" + args["output"] + os.sep + outputItem + "\"")
 
 print("STATUS: processAudioCues - creating zip file for local download...", flush=True)
-if os.path.exists(args["output"] + os.sep + "audioCues.zip"):
-    os.system("rm " + args["output"] + os.sep + "audioCues.zip")
 os.system("cp -r ../../www/popper www")
 os.system("cp -r ../../www/bootstrap www")
 os.system("cp -r ../../www/bootstrap-icons www")
