@@ -42,6 +42,10 @@ os.makedirs(args["output"], exist_ok=True)
 
 
 
+def systemPrint(theCommandLine):
+    print(theCommandLine, flush=True)
+    os.system(theCommandLine)
+
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "files" variable) containing tuples of file names and an array of extensions found.
 files = {}
@@ -121,10 +125,8 @@ for file in files:
                 outputFile = outputFolder + os.sep + file + ".mp3"
                 if not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
-                    ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
-                    print(ffmpegCommand, flush=True)
-                    os.system(ffmpegCommand)
-                    os.system("touch -r \"" + outputFile + "\" \"" + inputFile + "\" >/dev/null 2>&1")
+                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                    systemPrint("touch -r \"" + outputFile + "\" \"" + inputFile + "\" >/dev/null 2>&1")
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
                     outputFiles.append(cueRow[0])
@@ -143,9 +145,7 @@ for file in files:
                     # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
                     if not fileHasIcon:
                         print("Extracting album art as icon file: " + iconFile, flush=True)
-                        ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" -an -vcodec copy \"" + iconFile + "\" >/dev/null 2>&1"
-                        print(ffmpegCommand, flush=True)
-                        os.system(ffmpegCommand)
+                        systemPrint("ffmpeg -y -i \"" + inputFile + "\" -an -vcodec copy \"" + iconFile + "\" >/dev/null 2>&1")
                         if os.path.exists(iconFile):
                             cueRow[5] = file + ".png"
                             outputFiles.append(cueRow[5])
@@ -153,9 +153,7 @@ for file in files:
                     print("ERROR: File not converted: " + file + "." + fileType)
             elif fileType.lower() in docsToMarkdownLib.imageTypes:
                 print("Processing image file: " + inputFile, flush=True)
-                ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" \"" + iconFile + "\" >/dev/null 2>&1"
-                print(ffmpegCommand, flush=True)
-                os.system(ffmpegCommand)
+                systemPrint("ffmpeg -y -i \"" + inputFile + "\" \"" + iconFile + "\" >/dev/null 2>&1")
                 if os.path.exists(iconFile):
                     cueRow[5] = file + ".png"
                     outputFiles.append(cueRow[5])
@@ -175,7 +173,7 @@ for file in files:
 # Clear out any extranious files from the output folder (left over from previous runs / changes).
 for outputItem in os.listdir(args["output"]):
     if not outputItem in outputFiles:
-        os.system("rm \"" + args["output"] + os.sep + outputItem + "\"")
+        systemPrint("rm \"" + args["output"] + os.sep + outputItem + "\"")
 
 # Write the index.html file for the zip-ed version.
 indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
