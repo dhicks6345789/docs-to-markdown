@@ -118,16 +118,16 @@ for file in files:
             outputFile = outputFolder + os.sep + file + ".mp3"
             iconFile = outputFolder + os.sep + file + ".png"
             if fileType.lower() in docsToMarkdownLib.audioTypes:
-                print("Processing audio file: " + inputFile, flush=True)
                 outputFile = outputFolder + os.sep + file + ".mp3"
                 if not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
+                    print("Processing audio file: " + inputFile, flush=True)
                     ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
                     print(ffmpegCommand, flush=True)
                     os.system(ffmpegCommand)
-                    os.system("touch -r " + outputFile + " " + inputPath)
+                    os.system("touch -r " + outputFile + " " + inputFile)
                 if os.path.exists(outputFile):
-                    outputFiles.append(outputFile)
                     cueRow[0] = file + ".mp3"
+                    outputFiles.append(cueRow[0])
                     fileTitle = file.strip()
                     if re.match("^[0-9]+ *- *.*", fileTitle) != None:
                         fileTitle = fileTitle.split("-", 1)[1].strip()
@@ -148,6 +148,7 @@ for file in files:
                         os.system(ffmpegCommand)
                         if os.path.exists(iconFile):
                             cueRow[5] = file + ".png"
+                            outputFiles.append(cueRow[5])
                 else:
                     print("ERROR: File not converted: " + file + "." + fileType)
             elif fileType.lower() in docsToMarkdownLib.imageTypes:
@@ -157,6 +158,7 @@ for file in files:
                 os.system(ffmpegCommand)
                 if os.path.exists(iconFile):
                     cueRow[5] = file + ".png"
+                    outputFiles.append(cueRow[5])
                 else:
                     print("ERROR: File not converted: " + file + "." + fileType)
             else:
