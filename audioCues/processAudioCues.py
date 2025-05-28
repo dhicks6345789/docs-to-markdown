@@ -126,7 +126,7 @@ for file in files:
                 if not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
                     systemPrint("ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
-                    systemPrint("touch -r \"" + outputFile + "\" \"" + inputFile + "\" >/dev/null 2>&1")
+                    systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
                     outputFiles.append(cueRow[0])
