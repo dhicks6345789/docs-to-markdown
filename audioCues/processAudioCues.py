@@ -172,7 +172,7 @@ for file in files:
                 iconWidth, iconHeight = iconImage.size
                 if iconWidth > iconHeight:
                     cropLeft = int((iconWidth - iconHeight) / 2)
-                    cropRight = iconWith - cropLeft
+                    cropRight = iconWidth - cropLeft
                 else:
                     cropTop = int((iconHeight - iconWidth) / 2)
                     cropBottom = iconHeight - cropTop
