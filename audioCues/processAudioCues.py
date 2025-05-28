@@ -165,11 +165,11 @@ for file in files:
             # If we have an icon file, make sure it's a square, thumbnailed image.
             if os.path.exists(iconFile):
                 iconImage = PIL.Image.open(iconFile)
-                cropLeft = 0
-                cropRight = 0
-                cropTop = 0
-                cropBottom = 0
                 iconWidth, iconHeight = iconImage.size
+                cropLeft = 0
+                cropRight = iconWidth
+                cropTop = 0
+                cropBottom = iconHeight
                 if iconWidth > iconHeight:
                     cropLeft = int((iconWidth - iconHeight) / 2)
                     cropRight = iconWidth - cropLeft
