@@ -140,7 +140,7 @@ for file in files:
                     print("Volume: " + trackMaxVolume, flush=True)
                     # Write the track out, with adjusted volume, as an MP3 file.
                     # systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
-                    systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -filter:a "volume=" + trackMaxVolume + "dB \"" + outputFile + "\" >/dev/null 2>&1")
+                    systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -filter:a \"volume=" + trackMaxVolume + "dB\" \"" + outputFile + "\" >/dev/null 2>&1")
                     # Clear out temporary files.
                     systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
                     systemPrint("rm \"" + tempFileB + "\" >/dev/null 2>&1")
