@@ -7,7 +7,6 @@ import re
 import sys
 import shutil
 import datetime
-import subprocess
 
 # The Pillow image-handling library.
 import PIL
@@ -128,25 +127,18 @@ for file in files:
                 outputFile = outputFolder + os.sep + file + ".mp3"
                 if True: # not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
-                    # Auto-level ("normalise") the volume of the track.
-                    # systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --keep-lra-above-loudness-range-target --target-level -30 >/dev/null 2>&1")
-                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" -lrt 1 >/dev/null 2>&1")
-                    systemPrint("ffmpeg-normalize \"" + tempFileA + "\" -nt peak -t 0 -o \"" + tempFileB + "\" >/dev/null 2>&1")
+                    # Normalise the loudness of the track.
+                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" -lrt 1 2>&1")
+                    systemPrint("ffmpeg-normalize \"" + tempFileA + "\" -nt peak -t 0 -o \"" + tempFileB + "\" 2>&1")
                     systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
                     # Trim silence from start of track.
                     systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -af silenceremove=1:0:-50dB \"" + tempFileA + "\" >/dev/null 2>&1")
-                    # Figure out how much we can increase the volume of the track by.
-                    #volumeResult = subprocess.check_output("ffmpeg -i \"" + tempFileB + "\" -filter:a \"volumedetect\" -map 0:a -f null /dev/null 2>&1 | grep max_volume", shell=True)
-                    #trackMaxVolume = str(volumeResult).split(" ")[4]
-                    #if trackMaxVolume[0] == "-":
-                    #    trackMaxVolume = trackMaxVolume[1:]
-                    #print("Volume: " + trackMaxVolume, flush=True)
-                    # Write the track out, with adjusted volume, as an MP3 file.
+                    # Write the track out as an MP3 file.
                     systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
-                    # systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -filter:a \"volume=" + trackMaxVolume + "dB\" \"" + outputFile + "\" >/dev/null 2>&1")
                     # Clear out temporary files.
                     systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
                     systemPrint("rm \"" + tempFileB + "\" >/dev/null 2>&1")
+                    # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
                     systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
