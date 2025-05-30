@@ -128,7 +128,7 @@ for file in files:
                 if True: # not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
                     # Normalise the loudness of the track.
-                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" -lrt 1 2>&1")
+                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --target-level -70 2>&1")
                     systemPrint("ffmpeg-normalize \"" + tempFileA + "\" -nt peak -t 0 -o \"" + tempFileB + "\" 2>&1")
                     systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
                     # Trim silence from start of track.
