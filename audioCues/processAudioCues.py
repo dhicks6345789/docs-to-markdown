@@ -122,10 +122,16 @@ for file in files:
             outputFile = outputFolder + os.sep + file + ".mp3"
             iconFile = outputFolder + os.sep + file + ".png"
             if fileType.lower() in docsToMarkdownLib.audioTypes:
+                tempFile = outputFolder + os.sep + file + ".wav"
                 outputFile = outputFolder + os.sep + file + ".mp3"
                 if not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
-                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                    # Auto-level ("normalise") the volume of the track...
+                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFile + "\" >/dev/null 2>&1")
+                    # Trim silence from start of track...
+                    systemPrint("ffmpeg -y -i \"" + tempFile + "\" -af silenceremove=1:0:-50dB \"" + tempFile + "\" >/dev/null 2>&1")
+                    # ...write the track out as an MP3 file.
+                    systemPrint("ffmpeg -y -i \"" + tempFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
                     systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
