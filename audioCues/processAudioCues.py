@@ -130,7 +130,7 @@ for file in files:
                     print("Processing audio file: " + inputFile, flush=True)
                     # Auto-level ("normalise") the volume of the track...
                     systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --keep-loudness-range-target >/dev/null 2>&1")
-                    volumeResult = subprocess.check_output("ffmpeg -i \"" + tempFileA + "\" -filter:a \"volumedetect\" -map 0:a -f null /dev/null 2>&1", shell=True)
+                    volumeResult = subprocess.check_output("ffmpeg -i \"" + tempFileA + "\" -filter:a \"volumedetect\" -map 0:a -f null /dev/null 2>&1 | grep max_volume", shell=True)
                     print("Volume: " + str(volumeResult), flush=True)
                     # Trim silence from start of track...
                     systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -af silenceremove=1:0:-50dB \"" + tempFileB + "\" >/dev/null 2>&1")
