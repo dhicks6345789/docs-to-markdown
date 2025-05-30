@@ -124,7 +124,7 @@ for file in files:
             if fileType.lower() in docsToMarkdownLib.audioTypes:
                 tempFile = outputFolder + os.sep + file + ".wav"
                 outputFile = outputFolder + os.sep + file + ".mp3"
-                if not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
+                if True: # not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
                     # Auto-level ("normalise") the volume of the track...
                     systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFile + "\" >/dev/null 2>&1")
