@@ -128,13 +128,13 @@ for file in files:
                 if True: # not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
                     # Auto-level ("normalise") the volume of the track...
-                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" 2>&1")
+                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" >/dev/null 2>&1")
                     # Trim silence from start of track...
-                    systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -af silenceremove=1:0:-50dB \"" + tempFileB + "\" 2>&1")
+                    systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -af silenceremove=1:0:-50dB \"" + tempFileB + "\" >/dev/null 2>&1")
                     # ...write the track out as an MP3 file.
-                    systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" 2>&1")
-                    systemPrint("rm \"" + tempFileA + "\"")
-                    systemPrint("rm \"" + tempFileB + "\"")
+                    systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                    systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
+                    systemPrint("rm \"" + tempFileB + "\" >/dev/null 2>&1")
                     systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
