@@ -128,7 +128,7 @@ for file in files:
                 if True: # not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
                     # Auto-level ("normalise") the volume of the track...
-                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" >/dev/null 2>&1")
+                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --keep-loudness-range-target >/dev/null 2>&1")
                     # Trim silence from start of track...
                     systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -af silenceremove=1:0:-50dB \"" + tempFileB + "\" >/dev/null 2>&1")
                     # ...write the track out as an MP3 file.
