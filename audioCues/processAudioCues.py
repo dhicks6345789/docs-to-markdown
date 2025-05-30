@@ -122,17 +122,19 @@ for file in files:
             outputFile = outputFolder + os.sep + file + ".mp3"
             iconFile = outputFolder + os.sep + file + ".png"
             if fileType.lower() in docsToMarkdownLib.audioTypes:
-                tempFile = outputFolder + os.sep + file + ".wav"
+                tempFileA = outputFolder + os.sep + file + "-A.wav"
+                tempFileB = outputFolder + os.sep + file + "-B.wav"
                 outputFile = outputFolder + os.sep + file + ".mp3"
                 if True: # not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
                     # Auto-level ("normalise") the volume of the track...
-                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFile + "\" 2>&1")
+                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" 2>&1")
                     # Trim silence from start of track...
-                    systemPrint("ffmpeg -y -i \"" + tempFile + "\" -af silenceremove=1:0:-50dB \"" + tempFile + "\" 2>&1")
+                    systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -af silenceremove=1:0:-50dB \"" + tempFileB + "\" 2>&1")
                     # ...write the track out as an MP3 file.
-                    systemPrint("ffmpeg -y -i \"" + tempFile + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" 2>&1")
-                    systemPrint("rm \"" + tempFile + "\"")
+                    systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" 2>&1")
+                    systemPrint("rm \"" + tempFileA + "\"")
+                    systemPrint("rm \"" + tempFileB + "\"")
                     systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
