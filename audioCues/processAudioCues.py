@@ -131,7 +131,7 @@ for file in files:
                     # Auto-level ("normalise") the volume of the track...
                     systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --keep-loudness-range-target >/dev/null 2>&1")
                     volumeResult = subprocess.check_output("ffmpeg -i \"" + tempFileA + "\" -filter:a \"volumedetect\" -map 0:a -f null /dev/null 2>&1", shell=True)
-                    print("Volume: " + volumeResult.stdout, flush=True)
+                    print("Volume: " + str(volumeResult), flush=True)
                     # Trim silence from start of track...
                     systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -af silenceremove=1:0:-50dB \"" + tempFileB + "\" >/dev/null 2>&1")
                     # ...write the track out as an MP3 file.
