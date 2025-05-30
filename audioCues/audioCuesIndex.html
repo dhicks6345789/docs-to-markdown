@@ -151,7 +151,10 @@
 
                             // Now, add the HTML audio element to the player.
                             newAudioObject = document.createElement("AUDIO");
-                            newAudioObject.src = resources[resource][0];
+                            // Set the URL of the audio resource, but include a "fake" paramater to convince the browser to reload a non-cached version of the resource.
+                            // Otherwise, changes to the audio files processed on the server side don't tend to turn up in the browser when the user is expecting them to.
+                            // See: https://stackoverflow.com/questions/25821915/how-to-force-the-html5-audio-tag-to-reload-a-changing-file
+                            newAudioObject.src = resources[resource][0] + "?cb=" + new Date().getTime();
                             newAudioObject.load();
                             newAudioObject.onended = Function("rewindAudio(" + resource + ")");
                             newPlayer.appendChild(newAudioObject);
