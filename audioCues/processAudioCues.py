@@ -164,12 +164,15 @@ for pl in range(0, len(outputFiles)):
     # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
     if iconInputFile == "":
         print("Extracting album art as icon from: " + inputFile, flush=True)
-        systemPrint("ffmpeg -y -i \"" + inputFile + "\" -an -vcodec copy \"" + iconOutputFile + "\" >/dev/null 2>&1")
+        systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + inputFile + "\" -an -vcodec copy \"" + iconOutputFile + "\" >/dev/null 2>&1")
     else:
         print("Processing image file: " + iconInputFile, flush=True)
         systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + iconInputFile + "\" \"" + iconOutputFile + "\" >/dev/null 2>&1")
         
+    # Defaults for the row of CSV / JSON data we'll write to tell the front end about this item. Fields:
+    # Audio file name, Title, Description, TrimLeft, TrimRight, Icon file name
     cueRow = [file + ".mp3", fileTitle, "", 0, 0, ""]
+    
     audioFileData = eyed3.load(inputFolder + os.sep + inputFile)
     if not audioFileData == None:
         if not audioFileData.tag.title == None:
@@ -177,7 +180,7 @@ for pl in range(0, len(outputFiles)):
         if len(audioFileData.tag.comments) > 0:
             cueRow[2] = audioFileData.tag.comments[0].text
     if os.path.exists(iconOutputFile):
-        # If we have an icon file, make sure it's a square, thumbnailed image.
+        # If we have an icon file, make sure it's a square, thumbnailed image...
         iconImage = PIL.Image.open(iconOutputFile)
         iconWidth, iconHeight = iconImage.size
         cropLeft = 0
@@ -193,8 +196,9 @@ for pl in range(0, len(outputFiles)):
         croppedIcon = iconImage.crop((cropLeft, cropTop, cropRight, cropBottom))
         croppedIcon.thumbnail((1024,1024))
         croppedIcon.save(iconOutputFile)
-        
+        # ...and that we tell the front end we have it.
         cueRow[5] = file + ".png"
+    # Append the row of CSV / JSON data for the front end.
     cueList.append(cueRow)
 
 # Write the index.html file for the zip-ed version.
