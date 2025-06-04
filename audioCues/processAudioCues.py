@@ -122,22 +122,27 @@ for file in files:
             outputFile = outputFolder + os.sep + file + ".mp3"
             iconFile = outputFolder + os.sep + file + ".png"
             if fileType.lower() in docsToMarkdownLib.audioTypes:
-                tempFileA = outputFolder + os.sep + file + "-A.wav"
-                tempFileB = outputFolder + os.sep + file + "-B.wav"
+                #tempFileA = outputFolder + os.sep + file + "-A.wav"
+                #tempFileB = outputFolder + os.sep + file + "-B.wav"
                 outputFile = outputFolder + os.sep + file + ".mp3"
                 if True: # not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
+
                     # Trim silence from start of track.
-                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -af silenceremove=1:0:-50dB \"" + tempFileA + "\" >/dev/null 2>&1")
-                    # Apply Dynamic Range Compression - reduce the difference between the quietest and loudest parts of the track.
-                    systemPrint("ffmpeg -i \"" + tempFileA + "\" -filter:a \"compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0\" \"" + tempFileB + "\"")
-                    systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
-                    systemPrint("ffmpeg -i \"" + tempFileB + "\" -filter:a \"dynaudnorm\" \"" + tempFileA + "\"")
-                    # Write the track out as an MP3 file.
-                    systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
-                    # Clear out temporary files.
-                    systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
-                    systemPrint("rm \"" + tempFileB + "\" >/dev/null 2>&1")
+                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -af silenceremove=1:0:-50dB -filter:a \"compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0\" -filter:a \"dynaudnorm\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" 2>&1")
+                    
+                    ## Trim silence from start of track.
+                    #systemPrint("ffmpeg -y -i \"" + inputFile + "\" -af silenceremove=1:0:-50dB \"" + tempFileA + "\" >/dev/null 2>&1")
+                    ## Apply Dynamic Range Compression - reduce the difference between the quietest and loudest parts of the track.
+                    #systemPrint("ffmpeg -i \"" + tempFileA + "\" -filter:a \"compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0\" \"" + tempFileB + "\"")
+                    #systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
+                    #systemPrint("ffmpeg -i \"" + tempFileB + "\" -filter:a \"dynaudnorm\" \"" + tempFileA + "\"")
+                    ## Write the track out as an MP3 file.
+                    #systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                    ## Clear out temporary files.
+                    #systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
+                    #systemPrint("rm \"" + tempFileB + "\" >/dev/null 2>&1")
+                    
                     # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
                     systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
                     
