@@ -130,7 +130,9 @@ for file in files:
                     # Trim silence from start of track.
                     systemPrint("ffmpeg -y -i \"" + inputFile + "\" -af silenceremove=1:0:-50dB \"" + tempFileA + "\" >/dev/null 2>&1")
                     # Apply Dynamic Range Compression - reduce the difference between the quietest and loudest parts of the track.
-                    systemPrint("ffmpeg -i \"" + tempFileA + "\" -filter:a \"dynaudnorm\" \"" + tempFileB + "\"")
+                    systemPrint("ffmpeg -i \"" + tempFileA + "\" -filter:a \"compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0\" \"" + tempFileB + "\"")
+                    #systemPrint("ffmpeg -i \"" + tempFileA + "\" -filter:a \"dynaudnorm\" \"" + tempFileB + "\"")
+                    
                     #systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --target-level -70 2>&1")
                     #systemPrint("ffmpeg-normalize \"" + tempFileA + "\" -nt peak -t 0 -o \"" + tempFileB + "\" 2>&1")
                     systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
