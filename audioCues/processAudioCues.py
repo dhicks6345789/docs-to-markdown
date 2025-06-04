@@ -43,7 +43,7 @@ os.makedirs(args["output"], exist_ok=True)
 
 
 def systemPrint(theCommandLine):
-    print(theCommandLine, flush=True)
+    #print(theCommandLine, flush=True)
     os.system(theCommandLine)
 
 # Check through items in the given input folder, recursing into sub-folders.
@@ -123,7 +123,7 @@ for file in files:
             iconFile = outputFolder + os.sep + file + ".png"
             if fileType.lower() in docsToMarkdownLib.audioTypes:
                 outputFile = outputFolder + os.sep + file + ".mp3"
-                if True: #not os.path.exists(outputFile) or not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
+                if not os.path.exists(outputFile) or not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
                     # Process the input audio file with FFMPEG and write out to an MP3, so the output audio is in a consistant format. Filters used:
                     #     silenceremove - remove any silence at the start of the track.
