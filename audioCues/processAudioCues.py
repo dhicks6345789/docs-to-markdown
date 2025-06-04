@@ -129,7 +129,7 @@ for file in files:
                     #     silenceremove - remove any silence at the start of the track.
                     #     compand - apply some Dynamic Range Compression to the audio to better level out any differences between low and high volume parts of the track.
                     #     dynaudnorm - set the loudest part of the track to max volume, try and have a reasonably consistant sound level.
-                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -filter:a \"silenceremove=1:0:-50dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=0\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -filter:a \"silenceremove=1:0:-50dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=1\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
                     # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
                     systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
                 if os.path.exists(outputFile):
