@@ -129,10 +129,10 @@ for file in files:
                     print("Processing audio file: " + inputFile, flush=True)
 
                     # Trim silence from start of track.
-                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -af silenceremove=1:0:-50dB -filter:a \"compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0\" -filter:a \"dynaudnorm\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" 2>&1")
+                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -vf \"silenceremove=1:0:-50dB:stop_periods=1:stop_duration=0:stop_threshold=-50dB; compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0; dynaudnorm\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
                     
                     ## Trim silence from start of track.
-                    #systemPrint("ffmpeg -y -i \"" + inputFile + "\" -af silenceremove=1:0:-50dB \"" + tempFileA + "\" >/dev/null 2>&1")
+                    #systemPrint("ffmpeg -y -i \"" + inputFile + "\" -af silenceremove=1:0:-50d \"" + tempFileA + "\" >/dev/null 2>&1")
                     ## Apply Dynamic Range Compression - reduce the difference between the quietest and loudest parts of the track.
                     #systemPrint("ffmpeg -i \"" + tempFileA + "\" -filter:a \"compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0\" \"" + tempFileB + "\"")
                     #systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
