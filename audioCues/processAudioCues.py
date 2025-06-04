@@ -123,7 +123,7 @@ for file in files:
             iconFile = outputFolder + os.sep + file + ".png"
             if fileType.lower() in docsToMarkdownLib.audioTypes:
                 outputFile = outputFolder + os.sep + file + ".mp3"
-                if not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
+                if not os.path.exists(outputFile) or not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
                     # Process the input audio file with FFMPEG and write out to an MP3, so the output audio is in a consistant format. Filters used:
                     #     silenceremove - remove any silence at the start of the track.
