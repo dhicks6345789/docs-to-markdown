@@ -127,14 +127,15 @@ for file in files:
                 outputFile = outputFolder + os.sep + file + ".mp3"
                 if True: # not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
-                    # Normalise the loudness of the track.
-                    systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --target-level -70 2>&1")
-                    systemPrint("ffmpeg-normalize \"" + tempFileA + "\" -nt peak -t 0 -o \"" + tempFileB + "\" 2>&1")
-                    systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
                     # Trim silence from start of track.
-                    systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -af silenceremove=1:0:-50dB \"" + tempFileA + "\" >/dev/null 2>&1")
+                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -af silenceremove=1:0:-50dB \"" + tempFileA + "\" >/dev/null 2>&1")
+                    # Apply Dynamic Range Compression - reduce the difference between the quietest and loudest parts of the track.
+                    systemPrint("ffmpeg -i \"" + tempFileA + "\" -filter:a \"dynaudnorm\" \"" + tempFileB + "\"")
+                    #systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --target-level -70 2>&1")
+                    #systemPrint("ffmpeg-normalize \"" + tempFileA + "\" -nt peak -t 0 -o \"" + tempFileB + "\" 2>&1")
+                    systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
                     # Write the track out as an MP3 file.
-                    systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                    systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
                     # Clear out temporary files.
                     systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
                     systemPrint("rm \"" + tempFileB + "\" >/dev/null 2>&1")
