@@ -43,7 +43,7 @@ os.makedirs(args["output"], exist_ok=True)
 
 
 def systemPrint(theCommandLine):
-    print(theCommandLine, flush=True)
+    #print(theCommandLine, flush=True)
     os.system(theCommandLine)
 
 # Check through items in the given input folder, recursing into sub-folders.
