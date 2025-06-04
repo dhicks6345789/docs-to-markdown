@@ -182,7 +182,7 @@ for file in files:
                 else:
                     print("ERROR: File not converted: " + file + "." + fileType)
             elif fileType.lower() in docsToMarkdownLib.imageTypes:
-                if os.path.exists(inputFileTitle):
+                if os.path.exists(inputFileTitle + "." + fileType):
                     print("Processing image file: " + inputFileTitle, flush=True)
                     systemPrint("ffmpeg -y -i \"" + inputFileTitle + "\" \"" + iconFile + "\" >/dev/null 2>&1")
                 else:
