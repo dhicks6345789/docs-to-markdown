@@ -128,18 +128,22 @@ for file in files:
         fileTitle = fileTitle.split("-", 1)[1].strip()
     fileHasAudio = False
     fileHasIcon = False
+    fileIcon = ""
     for fileType in files[file]:
         if fileType.lower() in docsToMarkdownLib.audioTypes:
             fileHasAudio = True
         if fileType.lower() in docsToMarkdownLib.imageTypes:
             fileHasIcon = True
+            fileIcon = file + "." + fileType
     # If the audio file doesn't have a exactly matching named image file to use as an icon, see if there's a matching file title one instead.
     if not fileHasIcon:
         for fileType in fileTitles[fileTitle]:
             if fileType.lower() in docsToMarkdownLib.imageTypes:
                 fileHasIcon = True
+                fileIcon = fileTitle + "." + fileType
     if fileHasAudio:
         cueRow = ["", "", "", 0, 0, ""]
+        print("File icon: " + fileIcon)
         for fileType in files[file]:
             inputFile = inputFolder + os.sep + file + "." + fileType
             inputFileTitle = inputFolder + os.sep + fileTitle + "." + fileType
