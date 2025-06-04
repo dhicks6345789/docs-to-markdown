@@ -103,6 +103,11 @@ for file in files:
                             newItem[colName.lower()] = itemsRow[colName]
                     itemsList.append(newItem)
 
+# Clear out any old icon files from the output folder.
+for outputItem in os.listdir(args["output"]):
+    if outputItem.endswith(".png"):
+        systemPrint("rm \"" + args["output"] + os.sep + outputItem + "\"")
+
 cueList = [["Filename", "Title", "Description", "TrimLeft", "TrimRight", "Icon"]]
 outputFolder = docsToMarkdownLib.normalisePath(args["output"])
 print("STATUS: processAudioCues - processing found audio files.", flush=True)
