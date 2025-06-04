@@ -99,11 +99,14 @@
 
             // 
             function keepSpeakerAwake() {
-                awakeIcon = document.getElementById("speakerAwakeIcon");
+                awakeButton = document.getElementById("speakerAwakeButton");
+                awakeIcon = awakeButton.childNodes[1];
                 if (awakeIcon.getAttribute("src") == "/bootstrap-icons/1.8.1/play.svg") {
+                    awakeButton.className = "btn btn-danger";
                     awakeIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
                     awakeInterval = setInterval(playSilence, 5000);
                 } else {
+                    awakeButton.className = "btn btn-success";
                     awakeIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
                     clearInterval(awakeInterval);
                 }
@@ -229,8 +232,8 @@
             </div>
             <div class="col text-end">
                 Keep speaker awake:
-                <button type="button" class="btn btn-default" aria-label="Keep speaker awake" onclick="keepSpeakerAwake()">
-                    <img id="speakerAwakeImage" src="/bootstrap-icons/1.8.1/play.svg" alt="Keep speaker awake" width="32" height="32">
+                <button id="speakerAwakeButton" type="button" class="btn btn-success" aria-label="Keep speaker awake" onclick="keepSpeakerAwake()">
+                    <img src="/bootstrap-icons/1.8.1/play.svg" alt="Keep speaker awake" width="32" height="32">
                 </button>
             </div>
         </div>
