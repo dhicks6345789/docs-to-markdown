@@ -49,7 +49,6 @@ def systemPrint(theCommandLine):
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "files" variable) containing tuples of file names and an array of extensions found.
 files = {}
-fileTitles = {}
 inputFolder = docsToMarkdownLib.normalisePath(args["input"])
 def listFileNames(theSubFolder):
     global inputFolder
@@ -72,14 +71,8 @@ def listFileNames(theSubFolder):
                 fileType = fileSplit[1]
             if not fileName in files.keys():
                 files[fileName] = []
-            if not fileTitle in fileTitles.keys():
-                fileTitles[fileTitle] = []
             files[fileName].append(fileType)
-            fileTitles[fileTitle].append(fileType)
 listFileNames("")
-
-print(files, flush=True)
-print(fileTitles, flush=True)
 
 config = []
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
@@ -113,11 +106,11 @@ for file in files:
                             newItem[colName.lower()] = itemsRow[colName]
                     itemsList.append(newItem)
 
-cueList = [["Filename", "Title", "Description", "TrimLeft", "TrimRight", "Icon"]]
-outputFolder = docsToMarkdownLib.normalisePath(args["output"])
-print("STATUS: processAudioCues - processing found audio files.", flush=True)
 inputFiles = []
 outputFiles = []
+outputFolder = docsToMarkdownLib.normalisePath(args["output"])
+cueList = [["Filename", "Title", "Description", "TrimLeft", "TrimRight", "Icon"]]
+print("STATUS: processAudioCues - processing found audio files.", flush=True)
 for file in files:
     for fileType in files[file]:
         if fileType.lower() in docsToMarkdownLib.audioTypes:
