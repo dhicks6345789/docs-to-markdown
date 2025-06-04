@@ -49,6 +49,7 @@ def systemPrint(theCommandLine):
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "files" variable) containing tuples of file names and an array of extensions found.
 files = {}
+fileTitles = {}
 inputFolder = docsToMarkdownLib.normalisePath(args["input"])
 def listFileNames(theSubFolder):
     global inputFolder
@@ -62,13 +63,18 @@ def listFileNames(theSubFolder):
             fileType = ""
             fileSplit = inputItem.rsplit(".", 1)
             fileName = fileSplit[0]
+            fileTitle = fileName.strip()
+            if re.match("^[0-9]+ *- *.*", fileTitle) != None:
+                fileTitle = fileTitle.split("-", 1)[1].strip()
             if not theSubFolder == "":
                 fileName = theSubFolder + os.sep + fileName
             if len(fileSplit) == 2:
                 fileType = fileSplit[1]
             if not fileName in files.keys():
                 files[fileName] = []
+                fileTitles[fileTitle] = []
             files[fileName].append(fileType)
+            fileTitles[fileTitle].append(fileType)
 listFileNames("")
 
 config = []
@@ -113,6 +119,9 @@ outputFolder = docsToMarkdownLib.normalisePath(args["output"])
 print("STATUS: processAudioCues - processing found audio files.", flush=True)
 outputFiles = []
 for file in files:
+    fileTitle = file.strip()
+    if re.match("^[0-9]+ *- *.*", fileTitle) != None:
+        fileTitle = fileTitle.split("-", 1)[1].strip()
     fileHasAudio = False
     fileHasIcon = False
     for fileType in files[file]:
@@ -124,6 +133,7 @@ for file in files:
         cueRow = ["", "", "", 0, 0, ""]
         for fileType in files[file]:
             inputFile = inputFolder + os.sep + file + "." + fileType
+            inputFileTitle = inputFolder + os.sep + fileTitle + "." + fileType
             outputFile = outputFolder + os.sep + file + ".mp3"
             iconFile = outputFolder + os.sep + file + ".png"
             if fileType.lower() in docsToMarkdownLib.audioTypes:
@@ -140,9 +150,6 @@ for file in files:
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
                     outputFiles.append(cueRow[0])
-                    fileTitle = file.strip()
-                    if re.match("^[0-9]+ *- *.*", fileTitle) != None:
-                        fileTitle = fileTitle.split("-", 1)[1].strip()
                     cueRow[1] = fileTitle
                     cueRow[2] = ""
                     audioFileData = eyed3.load(inputFile)
@@ -152,6 +159,12 @@ for file in files:
                         if len(audioFileData.tag.comments) > 0:
                             cueRow[2] = audioFileData.tag.comments[0].text
                         
+                    # If the audio file doesn't have a exactly matching named image file to use as an icon, see if there's a matching file title one instead.
+                    if not fileHasIcon:
+                        for fileType in fileTitles[fileTitle]:
+                            if fileType.lower() in docsToMarkdownLib.imageTypes:
+                                fileHasIcon = True
+                    
                     # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
                     if not fileHasIcon:
                         print("Extracting album art as icon file: " + iconFile, flush=True)
@@ -162,8 +175,12 @@ for file in files:
                 else:
                     print("ERROR: File not converted: " + file + "." + fileType)
             elif fileType.lower() in docsToMarkdownLib.imageTypes:
-                print("Processing image file: " + inputFile, flush=True)
-                systemPrint("ffmpeg -y -i \"" + inputFile + "\" \"" + iconFile + "\" >/dev/null 2>&1")
+                if os.path.exists(inputFileTitle):
+                    print("Processing image file: " + inputFileTitle, flush=True)
+                    systemPrint("ffmpeg -y -i \"" + inputFileTitle + "\" \"" + iconFile + "\" >/dev/null 2>&1")
+                else:
+                    print("Processing image file: " + inputFile, flush=True)
+                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" \"" + iconFile + "\" >/dev/null 2>&1")
                 if os.path.exists(iconFile):
                     cueRow[5] = file + ".png"
                     outputFiles.append(cueRow[5])
