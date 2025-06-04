@@ -159,14 +159,12 @@ for pl in range(0, len(outputFiles)):
         elif os.path.exists(inputFolder + os.sep + fileTitle + "." + fileType):
             iconInputFile = fileTitle + "." + fileType
     
-    print("Icon input file: " + iconInputFile)
-    
     # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
     if iconInputFile == "":
-        print("Extracting album art as icon from: " + inputFile, flush=True)
+        print("Extracting any album art as icon from: " + inputFile, flush=True)
         systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + inputFile + "\" -an -vcodec copy \"" + iconOutputFile + "\" >/dev/null 2>&1")
     else:
-        print("Processing image file: " + iconInputFile, flush=True)
+        print("Processing image file as icon: " + iconInputFile, flush=True)
         systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + iconInputFile + "\" \"" + iconOutputFile + "\" >/dev/null 2>&1")
         
     # Defaults for the row of CSV / JSON data we'll write to tell the front end about this item. Fields:
