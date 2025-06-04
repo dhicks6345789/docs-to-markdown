@@ -113,113 +113,89 @@ for file in files:
                             newItem[colName.lower()] = itemsRow[colName]
                     itemsList.append(newItem)
 
-# Clear out any old icon files from the output folder.
-for outputItem in os.listdir(args["output"]):
-    if outputItem.endswith(".png"):
-        systemPrint("rm \"" + args["output"] + os.sep + outputItem + "\"")
-
 cueList = [["Filename", "Title", "Description", "TrimLeft", "TrimRight", "Icon"]]
 outputFolder = docsToMarkdownLib.normalisePath(args["output"])
 print("STATUS: processAudioCues - processing found audio files.", flush=True)
+inputFiles = []
 outputFiles = []
 for file in files:
-    fileTitle = file.strip()
-    if re.match("^[0-9]+ *- *.*", fileTitle) != None:
-        fileTitle = fileTitle.split("-", 1)[1].strip()
-    fileHasAudio = False
-    fileHasIcon = False
-    fileIcon = ""
     for fileType in files[file]:
         if fileType.lower() in docsToMarkdownLib.audioTypes:
-            fileHasAudio = True
-        if fileType.lower() in docsToMarkdownLib.imageTypes:
-            fileHasIcon = True
-            fileIcon = file + "." + fileType
-    # If the audio file doesn't have a exactly matching named image file to use as an icon, see if there's a matching file title one instead.
-    if not fileHasIcon:
-        for fileType in fileTitles[fileTitle]:
-            if fileType.lower() in docsToMarkdownLib.imageTypes:
-                fileHasIcon = True
-                fileIcon = fileTitle + "." + fileType
-    if fileHasAudio:
-        cueRow = ["", "", "", 0, 0, ""]
-        print("File icon: " + fileIcon)
-        for fileType in files[file]:
             inputFile = inputFolder + os.sep + file + "." + fileType
-            inputFileTitle = inputFolder + os.sep + fileTitle + "." + fileType
             outputFile = outputFolder + os.sep + file + ".mp3"
-            iconFile = outputFolder + os.sep + file + ".png"
-            if fileType.lower() in docsToMarkdownLib.audioTypes:
-                outputFile = outputFolder + os.sep + file + ".mp3"
-                if not os.path.exists(outputFile) or not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
-                    print("Processing audio file: " + inputFile, flush=True)
-                    # Process the input audio file with FFMPEG and write out to an MP3, so the output audio is in a consistant format. Filters used:
-                    #     silenceremove - remove any silence at the start of the track.
-                    #     compand - apply some Dynamic Range Compression to the audio to better level out any differences between low and high volume parts of the track.
-                    #     dynaudnorm - set the loudest part of the track to max volume, try and have a reasonably consistant sound level.
-                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -filter:a \"silenceremove=1:0:-45dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=1\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
-                    # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
-                    systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
-                if os.path.exists(outputFile):
-                    cueRow[0] = file + ".mp3"
-                    outputFiles.append(cueRow[0])
-                    cueRow[1] = fileTitle
-                    cueRow[2] = ""
-                    audioFileData = eyed3.load(inputFile)
-                    if not audioFileData == None:
-                        if not audioFileData.tag.title == None:
-                            cueRow[1] = html.escape(audioFileData.tag.title)
-                        if len(audioFileData.tag.comments) > 0:
-                            cueRow[2] = audioFileData.tag.comments[0].text
-                    
-                    # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
-                    if not fileHasIcon:
-                        print("Extracting album art as icon file: " + iconFile, flush=True)
-                        systemPrint("ffmpeg -y -i \"" + inputFile + "\" -an -vcodec copy \"" + iconFile + "\" >/dev/null 2>&1")
-                        if os.path.exists(iconFile):
-                            cueRow[5] = file + ".png"
-                            outputFiles.append(cueRow[5])
-                else:
-                    print("ERROR: File not converted: " + file + "." + fileType)
-            elif fileType.lower() in docsToMarkdownLib.imageTypes:
-                if os.path.exists(inputFileTitle + "." + fileType):
-                    print("Processing image file: " + inputFileTitle, flush=True)
-                    systemPrint("ffmpeg -y -i \"" + inputFileTitle + "\" \"" + iconFile + "\" >/dev/null 2>&1")
-                else:
-                    print("Processing image file: " + inputFile, flush=True)
-                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" \"" + iconFile + "\" >/dev/null 2>&1")
-                if os.path.exists(iconFile):
-                    cueRow[5] = file + ".png"
-                    outputFiles.append(cueRow[5])
-                else:
-                    print("ERROR: File not converted: " + file + "." + fileType)
+            if not os.path.exists(outputFile) or not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
+                print("Processing audio file: " + inputFile, flush=True)
+                # Process the input audio file with FFMPEG and write out to an MP3, so the output audio is in a consistant format. Filters used:
+                #     silenceremove - remove any silence at the start of the track.
+                #     compand - apply some Dynamic Range Compression to the audio to better level out any differences between low and high volume parts of the track.
+                #     dynaudnorm - set the loudest part of the track to max volume, try and have a reasonably consistant sound level.
+                systemPrint("ffmpeg -y -i \"" + inputFile + "\" -filter:a \"silenceremove=1:0:-45dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=1\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
+                systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
+            if os.path.exists(outputFile):
+                inputFiles.append(file + "." + fileType)
+                outputFiles.append(file)
             else:
-                print("Unprocessed file: " + inputFile)
-
-            # If we have an icon file, make sure it's a square, thumbnailed image.
-            if os.path.exists(iconFile):
-                iconImage = PIL.Image.open(iconFile)
-                iconWidth, iconHeight = iconImage.size
-                cropLeft = 0
-                cropRight = iconWidth
-                cropTop = 0
-                cropBottom = iconHeight
-                if iconWidth > iconHeight:
-                    cropLeft = int((iconWidth - iconHeight) / 2)
-                    cropRight = iconWidth - cropLeft
-                else:
-                    cropTop = int((iconHeight - iconWidth) / 2)
-                    cropBottom = iconHeight - cropTop
-                croppedIcon = iconImage.crop((cropLeft, cropTop, cropRight, cropBottom))
-                croppedIcon.thumbnail((1024,1024))
-                croppedIcon.save(iconFile)
-        if not cueRow[0] == "":
-            cueList.append(cueRow)
+                print("ERROR: Could not process audio input file: " + file + "." + fileType, flush=True)
 
 # Clear out any extranious files from the output folder (left over from previous runs / changes).
 for outputItem in os.listdir(args["output"]):
-    if not outputItem in outputFiles:
+    if not outputItem.endswith(".mp3") or not outputItem[:-4] in outputFiles:
         systemPrint("rm \"" + args["output"] + os.sep + outputItem + "\"")
+
+for pl in range(0, len(outputFiles)):
+    file = outputFiles[pl]
+    inputFile = inputFiles[pl]
+    iconOutputFile = outputFolder + os.sep + file + ".png"
+    
+    iconInputFile = ""
+    fileTitle = file.strip()
+    if re.match("^[0-9]+ *- *.*", fileTitle) != None:
+        fileTitle = fileTitle.split("-", 1)[1].strip()
+    
+    for fileType in docsToMarkdownLib.imageTypes():
+        if os.path.exists(inputFolder + os.sep + file + "." + fileType):
+            iconInputFile = file + "." + fileType
+        elif os.path.exists(inputFolder + os.sep + fileTitle + "." + fileType):
+            iconInputFile = fileTitle + "." + fileType
+    
+    print("Icon input file: " + iconInputFile)
+    
+    # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
+    if iconInputFile == "":
+        print("Extracting album art as icon file: " + iconFile, flush=True)
+        systemPrint("ffmpeg -y -i \"" + iconInputFile + "\" -an -vcodec copy \"" + iconOutputFile + "\" >/dev/null 2>&1")
+    else:
+        print("Processing image file: " + iconInputFile, flush=True)
+        systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + iconInputFile + "\" \"" + iconOutputFile + "\" >/dev/null 2>&1")
+        
+    cueRow = [file + ".mp3", fileTitle, "", 0, 0, ""]
+    audioFileData = eyed3.load(inputFile)
+    if not audioFileData == None:
+        if not audioFileData.tag.title == None:
+            cueRow[1] = html.escape(audioFileData.tag.title)
+        if len(audioFileData.tag.comments) > 0:
+            cueRow[2] = audioFileData.tag.comments[0].text
+    if os.path.exists(iconOutputFile):
+        # If we have an icon file, make sure it's a square, thumbnailed image.
+        iconImage = PIL.Image.open(iconOutputFile)
+        iconWidth, iconHeight = iconImage.size
+        cropLeft = 0
+        cropRight = iconWidth
+        cropTop = 0
+        cropBottom = iconHeight
+        if iconWidth > iconHeight:
+            cropLeft = int((iconWidth - iconHeight) / 2)
+            cropRight = iconWidth - cropLeft
+        else:
+            cropTop = int((iconHeight - iconWidth) / 2)
+            cropBottom = iconHeight - cropTop
+        croppedIcon = iconImage.crop((cropLeft, cropTop, cropRight, cropBottom))
+        croppedIcon.thumbnail((1024,1024))
+        croppedIcon.save(iconOutputFile)
+        
+        cueRow[5] = file + ".png"
+    cueList.append(cueRow)
 
 # Write the index.html file for the zip-ed version.
 indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
