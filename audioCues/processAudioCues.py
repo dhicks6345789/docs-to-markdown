@@ -122,32 +122,16 @@ for file in files:
             outputFile = outputFolder + os.sep + file + ".mp3"
             iconFile = outputFolder + os.sep + file + ".png"
             if fileType.lower() in docsToMarkdownLib.audioTypes:
-                #tempFileA = outputFolder + os.sep + file + "-A.wav"
-                #tempFileB = outputFolder + os.sep + file + "-B.wav"
                 outputFile = outputFolder + os.sep + file + ".mp3"
                 if True: # not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                     print("Processing audio file: " + inputFile, flush=True)
-
-                    # Trim silence from start of track.
-                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -filter:a \"silenceremove=1:0:-50dB,compand=.3|.3:1|1:-90/-60|-60/-40|-40/-30|-20/-20:6:0:-90:0.2,dynaudnorm\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
-                    
-                    ## Trim silence from start of track.
-                    #systemPrint("ffmpeg -y -i \"" + inputFile + "\" -af silenceremove=1:0:-50d \"" + tempFileA + "\" >/dev/null 2>&1")
-                    ## Apply Dynamic Range Compression - reduce the difference between the quietest and loudest parts of the track.
-                    #systemPrint("ffmpeg -i \"" + tempFileA + "\" -filter:a \"compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0\" \"" + tempFileB + "\"")
-                    #systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
-                    #systemPrint("ffmpeg -i \"" + tempFileB + "\" -filter:a \"dynaudnorm\" \"" + tempFileA + "\"")
-                    ## Write the track out as an MP3 file.
-                    #systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
-                    ## Clear out temporary files.
-                    #systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
-                    #systemPrint("rm \"" + tempFileB + "\" >/dev/null 2>&1")
-                    
+                    # Process the input audio file with FFMPEG and write out to an MP3, so the output audio is in a consistant format. Filters used:
+                    #     silenceremove - remove any silence at the start of the track.
+                    #     compand - apply some Dynamic Range Compression to the audio to better level out any differences between low and high volume parts of the track.
+                    #     dynaudnorm - set the loudest part of the track to max volume, try and have a reasonably consistant sound level.
+                    systemPrint("ffmpeg -y -i \"" + inputFile + "\" -filter:a \"silenceremove=1:0:-50dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=0\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
                     # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
                     systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
-                    
-                    #systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --target-level -70 2>&1")
-                    #systemPrint("ffmpeg-normalize \"" + tempFileA + "\" -nt peak -t 0 -o \"" + tempFileB + "\" 2>&1")
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
                     outputFiles.append(cueRow[0])
