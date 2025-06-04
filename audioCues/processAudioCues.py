@@ -77,6 +77,9 @@ def listFileNames(theSubFolder):
             fileTitles[fileTitle].append(fileType)
 listFileNames("")
 
+print(files, flush=True)
+print(fileTitles, flush=True)
+
 config = []
 # Check through the files found above to see if the special "config" file is found anywhere, and if so deal with it and remove it from the list.
 for file in files:
