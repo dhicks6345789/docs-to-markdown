@@ -133,6 +133,11 @@ for file in files:
             fileHasAudio = True
         if fileType.lower() in docsToMarkdownLib.imageTypes:
             fileHasIcon = True
+    # If the audio file doesn't have a exactly matching named image file to use as an icon, see if there's a matching file title one instead.
+    if not fileHasIcon:
+        for fileType in fileTitles[fileTitle]:
+            if fileType.lower() in docsToMarkdownLib.imageTypes:
+                fileHasIcon = True
     if fileHasAudio:
         cueRow = ["", "", "", 0, 0, ""]
         for fileType in files[file]:
@@ -162,12 +167,6 @@ for file in files:
                             cueRow[1] = html.escape(audioFileData.tag.title)
                         if len(audioFileData.tag.comments) > 0:
                             cueRow[2] = audioFileData.tag.comments[0].text
-                        
-                    # If the audio file doesn't have a exactly matching named image file to use as an icon, see if there's a matching file title one instead.
-                    if not fileHasIcon:
-                        for fileType in fileTitles[fileTitle]:
-                            if fileType.lower() in docsToMarkdownLib.imageTypes:
-                                fileHasIcon = True
                     
                     # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
                     if not fileHasIcon:
