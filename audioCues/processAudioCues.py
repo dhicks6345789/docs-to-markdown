@@ -153,7 +153,7 @@ for pl in range(0, len(outputFiles)):
     if re.match("^[0-9]+ *- *.*", fileTitle) != None:
         fileTitle = fileTitle.split("-", 1)[1].strip()
     
-    for fileType in docsToMarkdownLib.imageTypes():
+    for fileType in docsToMarkdownLib.imageTypes:
         if os.path.exists(inputFolder + os.sep + file + "." + fileType):
             iconInputFile = file + "." + fileType
         elif os.path.exists(inputFolder + os.sep + fileTitle + "." + fileType):
