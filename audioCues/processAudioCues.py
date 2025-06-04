@@ -72,6 +72,7 @@ def listFileNames(theSubFolder):
                 fileType = fileSplit[1]
             if not fileName in files.keys():
                 files[fileName] = []
+            if not fileTitle in fileTitles.keys():
                 fileTitles[fileTitle] = []
             files[fileName].append(fileType)
             fileTitles[fileTitle].append(fileType)
