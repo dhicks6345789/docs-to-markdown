@@ -131,18 +131,18 @@ for file in files:
                     systemPrint("ffmpeg -y -i \"" + inputFile + "\" -af silenceremove=1:0:-50dB \"" + tempFileA + "\" >/dev/null 2>&1")
                     # Apply Dynamic Range Compression - reduce the difference between the quietest and loudest parts of the track.
                     systemPrint("ffmpeg -i \"" + tempFileA + "\" -filter:a \"compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0\" \"" + tempFileB + "\"")
-                    #systemPrint("ffmpeg -i \"" + tempFileA + "\" -filter:a \"dynaudnorm\" \"" + tempFileB + "\"")
-                    
-                    #systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --target-level -70 2>&1")
-                    #systemPrint("ffmpeg-normalize \"" + tempFileA + "\" -nt peak -t 0 -o \"" + tempFileB + "\" 2>&1")
                     systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
+                    systemPrint("ffmpeg -i \"" + tempFileB + "\" -filter:a \"dynaudnorm\" \"" + tempFileA + "\"")
                     # Write the track out as an MP3 file.
-                    systemPrint("ffmpeg -y -i \"" + tempFileB + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                    systemPrint("ffmpeg -y -i \"" + tempFileA + "\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
                     # Clear out temporary files.
                     systemPrint("rm \"" + tempFileA + "\" >/dev/null 2>&1")
                     systemPrint("rm \"" + tempFileB + "\" >/dev/null 2>&1")
                     # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
                     systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
+                    
+                    #systemPrint("ffmpeg-normalize \"" + inputFile + "\" -o \"" + tempFileA + "\" --target-level -70 2>&1")
+                    #systemPrint("ffmpeg-normalize \"" + tempFileA + "\" -nt peak -t 0 -o \"" + tempFileB + "\" 2>&1")
                 if os.path.exists(outputFile):
                     cueRow[0] = file + ".mp3"
                     outputFiles.append(cueRow[0])
