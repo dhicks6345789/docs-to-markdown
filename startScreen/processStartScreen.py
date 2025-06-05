@@ -51,7 +51,7 @@ for inputItem in os.listdir(inputFolder):
 resources = []
 for dataFrame in dataFrames:
     resourceTable = [["URL", "Title"]]
-    for index, row in dataFrame.iterrows():
+    for index, row in dataFrame[1].iterrows():
         URL = row[0]
         title = row[1]
         resourceTable.append([URL, title])
