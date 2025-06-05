@@ -44,11 +44,16 @@ for inputItem in os.listdir(inputFolder):
     frameTitle = inputItem.rsplit(".", 1)
     inputItemPath = inputFolder + os.sep + inputItem
     if inputItem.endswith(".xls") or inputItem.endswith(".xlsx"):
-        for dataFrame in pandas.read_excel(inputItemPath, sheet_name=None):
-            print(dataFrame)
+        dataFrameMap = pandas.read_excel(inputItemPath, sheet_name=None)
+        for dataFrameName in dataFrameMap:
+            print(dataFrameName)
+            print(dataFrameMap[dataFrameName])
+            dataFrames.append((dataFrameName, dataFrameMap[dataFrameName]))
     elif inputItem.endswith(".csv"):
         dataFrames.append((frameTitle, pandas.read_csv(inputItemPath)))
 
+print("Dataframe:")
+print(dataFrames)
 exit(0)
 
 def listFileNames(theSubFolder):
