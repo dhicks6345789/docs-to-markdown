@@ -8,6 +8,9 @@ import sys
 import shutil
 import datetime
 
+# The Pandas data-handling library.
+import pandas
+
 # The Pillow image-handling library.
 import PIL
 
