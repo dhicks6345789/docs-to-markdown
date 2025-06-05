@@ -1,18 +1,16 @@
-# Audio Cues
+# Start Screen
 
-Given a set of audio files in a folder, produces an HTML file that shows each audio cue as its own click/press-able icon that plays that audio. Handy for playing sound effects and similar for plays.
+Given a spreadsheet (Excel or CSV format), produces a single-page HTML file that acts as a "start screen", a page of links to other pages.
+
+Handy for creating simple landing pages, or for a list-of-links page. Each URL in the spreadsheet is represented by an icon, with a title and description (as roll-over text), separate icon images can be provided or the site's favicon will be used.
 
 This project consists of a Python script, intended to be run server-side, and a client-side web page component. The client-side web page can be used as a stand-alone component without the server-side script.
 
-## Server-Side Python Script
-
-The server-side Python script should be able to process most formats of audio files into standardised versions suitable for playing via the web-based client. It replies on external applications (ffmpeg) to do that.
-
-### Installation
+## Installation
 
 The server-side script is part of the [Docs To Markdown](https://github.com/dhicks6345789/docs-to-markdown/tree/WebconsoleUpdate) project, and should be installed as part of that project.
 
-### Usage
+## Usage
 
 ## Client-Side Slideshow Web Page
 
