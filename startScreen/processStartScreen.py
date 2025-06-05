@@ -11,12 +11,6 @@ import datetime
 # The Pillow image-handling library.
 import PIL
 
-# The JSON-handling library.
-import html
-
-# The eyeD3 library for getting information from MP3 files.
-import eyed3
-
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
@@ -30,26 +24,20 @@ dateTimeFormatted = dateTimeNow.strftime("%d-%m-%Y, %H:%M:%S")
 # Get any arguments given via the command line.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"processAudio":"true"}, requiredArgs=["input","output"])
 
-print("STATUS: processAudioCues: " + args["input"] + " to " + args["output"], flush=True)
+print("STATUS: processStartScreen: " + args["input"] + " to " + args["output"], flush=True)
 print("Timestamp: " + str(timestamp) + ", Date / Time: " + dateTimeFormatted)
-
-doProcessAudio = False
-if args["processAudio"] == "true":
-    doProcessAudio = True
 
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
-
-
-
-def systemPrint(theCommandLine):
-    #print(theCommandLine, flush=True)
-    os.system(theCommandLine)
 
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "files" variable) containing tuples of file names and an array of extensions found.
 files = {}
 inputFolder = docsToMarkdownLib.normalisePath(args["input"])
+
+print("Input folder: " + inputFolder)
+exit(0)
+
 def listFileNames(theSubFolder):
     global inputFolder
     global files
