@@ -48,4 +48,9 @@ for inputItem in os.listdir(inputFolder):
         dataFrames.append((frameTitle, pandas.read_csv(inputItemPath)))
 
 # Write the index.html file.
-docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", "var resources = " + json.dumps(dataFrames) + ";").replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\""))
+indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/startScreen/startScreenIndex.html")
+indexHTML = indexHTML.replace("var resources = [];", "var resources = " + json.dumps(dataFrames) + ";")
+indexHTML = indexHTML.replace("<<TIMESTAMP>>", str(timestamp))
+indexHTML = indexHTML.replace("<<DATETIMEFORMATTED>>", dateTimeFormatted)
+indexHTML = indexHTML.replace("\'", "\"")
+docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML)
