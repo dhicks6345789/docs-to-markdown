@@ -39,6 +39,15 @@ files = {}
 inputFolder = docsToMarkdownLib.normalisePath(args["input"])
 
 print("Input folder: " + inputFolder)
+dataFrames = []
+for inputItem in os.listdir(inputFolder):
+    frameTitle = inputItem.rsplit(".", 1)
+    inputItemPath = inputFolder + os.sep + inputItem
+    if inputItem.endswith(".xls") or inputItem.endswith(".xlsx"):
+        inputDataFrame = pandas.read_excel(inputItemPath)
+    elif inputItem.endswith(".csv"):
+        dataFrames.append((frameTitle, pandas.read_csv(inputItemPath)))
+
 exit(0)
 
 def listFileNames(theSubFolder):
