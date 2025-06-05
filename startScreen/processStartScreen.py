@@ -48,9 +48,19 @@ for inputItem in os.listdir(inputFolder):
     elif inputItem.endswith(".csv"):
         dataFrames.append((frameTitle, pandas.read_csv(inputItemPath)))
 
+resources = []
+for dataFrame in dataFrames:
+    resourceTable = [["URL", "Title"]]
+    for index, row in dataFrame.iterrows():
+        URL = row[0]
+        title = row[1]
+        resourceTable.append([URL, title])
+    resource = (dataFrame[0], resourceTable)
+    resources.append(resource)
+
 # Write the index.html file.
 indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/startScreen/startScreenIndex.html")
-indexHTML = indexHTML.replace("var resources = [];", "var resources = " + json.dumps(dataFrames) + ";")
+indexHTML = indexHTML.replace("var resources = [];", "var resources = " + json.dumps(resources) + ";")
 indexHTML = indexHTML.replace("<<TIMESTAMP>>", str(timestamp))
 indexHTML = indexHTML.replace("<<DATETIMEFORMATTED>>", dateTimeFormatted)
 indexHTML = indexHTML.replace("\'", "\"")
