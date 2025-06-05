@@ -37,25 +37,25 @@ os.makedirs(args["output"], exist_ok=True)
 inputFolder = docsToMarkdownLib.normalisePath(args["input"])
 print("Input folder: " + inputFolder)
 
-dataFrames = []
+dataTuples = []
 for inputItem in os.listdir(inputFolder):
     frameTitle = inputItem.rsplit(".", 1)
     inputItemPath = inputFolder + os.sep + inputItem
     if inputItem.endswith(".xls") or inputItem.endswith(".xlsx"):
         dataFrameMap = pandas.read_excel(inputItemPath, sheet_name=None)
         for dataFrameName in dataFrameMap:
-            dataFrames.append((dataFrameName, dataFrameMap[dataFrameName]))
+            dataTuples.append((dataFrameName, dataFrameMap[dataFrameName]))
     elif inputItem.endswith(".csv"):
-        dataFrames.append((frameTitle, pandas.read_csv(inputItemPath)))
+        dataTuples.append((frameTitle, pandas.read_csv(inputItemPath)))
 
 resources = []
-for dataFrame in dataFrames:
+for dataTuple in dataTuples:
     resourceTable = [["URL", "Title"]]
-    for index, row in dataFrame[1].iterrows():
+    for index, row in dataTuple[1].iterrows():
         URL = row[0]
         title = row[1]
         resourceTable.append([URL, title])
-    resource = (dataFrame[0], resourceTable)
+    resource = (dataTuple[0], resourceTable)
     resources.append(resource)
 
 # Write the index.html file.
