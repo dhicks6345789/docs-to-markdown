@@ -44,7 +44,8 @@ for inputItem in os.listdir(inputFolder):
     frameTitle = inputItem.rsplit(".", 1)
     inputItemPath = inputFolder + os.sep + inputItem
     if inputItem.endswith(".xls") or inputItem.endswith(".xlsx"):
-        inputDataFrame = pandas.read_excel(inputItemPath)
+        for dataFrame in pandas.read_excel(inputItemPath, sheet_name=None):
+            print(dataFrame)
     elif inputItem.endswith(".csv"):
         dataFrames.append((frameTitle, pandas.read_csv(inputItemPath)))
 
