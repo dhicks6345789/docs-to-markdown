@@ -23,8 +23,6 @@
             // By default, as a stand-alone application, the "resources" array will be empty. The server-side script replaces this line with a list
             // of resources, or some later code will try to find resources.
             var resources = [];
-            var audioObjects = [];
-            var awakeInterval = 0;
 
             // A function to check if a given file / URL exists (server-side). See:
             // https://www.kirupa.com/html5/checking_if_a_file_exists.htm
@@ -40,86 +38,8 @@
                 }
             }
 
-            function updatePlayer(theResource) {
-                audioObjects[theResource-1]["playerProgress"].style.width = Math.ceil((parseFloat(audioObjects[theResource-1]["audioObject"].currentTime) / parseFloat(audioObjects[theResource-1]["audioObject"].duration)) * 100) + "%";
-            }
-
-            function playSilence() {
-                document.getElementById("silence").play();
-            }
-
-            function playPauseAudio(theResource) {
-                audioPlayer = audioObjects[theResource-1]["audioPlayer"];
-                playerButton = audioObjects[theResource-1]["playerButton"];
-                playerIcon = audioObjects[theResource-1]["playerIcon"];
-                playerBar = audioObjects[theResource-1]["playerBar"];
-                audioObject = audioObjects[theResource-1]["audioObject"];
-                
-                if (playerIcon.getAttribute("src") == "/bootstrap-icons/1.8.1/play.svg") {
-                    playerButton.className = "btn btn-warning";
-                    playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
-                    audioObject.play();
-                    audioObjects[theResource-1]["playerInterval"] = setInterval(Function("updatePlayer(" + theResource + ");"), 200);
-                    playerBar.style.display = "";
-                    updatePlayer(theResource);
-                } else {
-                    clearInterval(audioObjects[theResource-1]["playerInterval"]);
-                    playerButton.className = "btn btn-success";
-                    playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
-                    audioObject.pause();
-                }
-            }
-            
-            function rewindAudio(theResource) {
-                audioPlayer = audioObjects[theResource-1]["audioPlayer"];
-                playerButton = audioObjects[theResource-1]["playerButton"];
-                playerIcon = audioObjects[theResource-1]["playerIcon"];
-                playerBar = audioObjects[theResource-1]["playerBar"];
-                audioObject = audioObjects[theResource-1]["audioObject"];
-
-                clearInterval(audioObjects[theResource-1]["playerInterval"]);
-                playerButton.className = "btn btn-success";
-                playerIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
-                audioObject.pause();
-                audioObject.currentTime = 0;
-                playerBar.style.display = "none";
-            }
-            
-            function showOptions(theResource) {
-                console.log("Show: " + theResource);
-            }
-
-            // Copy the shortcut URL for this page to the clipboard for the user.
-            function copyShortcutURL() {
-                copyText = document.getElementById("shortcutURL");
-                copyText.select();
-                document.execCommand("copy");
-            }
-
-            // 
-            function keepSpeakerAwake() {
-                awakeButton = document.getElementById("speakerAwakeButton");
-                awakeIcon = awakeButton.childNodes[1];
-                if (awakeIcon.getAttribute("src") == "/bootstrap-icons/1.8.1/play.svg") {
-                    awakeButton.className = "btn btn-danger";
-                    awakeIcon.setAttribute("src", "/bootstrap-icons/1.8.1/pause.svg");
-                    awakeInterval = setInterval(playSilence, 5000);
-                } else {
-                    awakeButton.className = "btn btn-success";
-                    awakeIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
-                    clearInterval(awakeInterval);
-                }
-            }
-            
             // The page load function - execution starts here.
             function startApp() {
-                // Hide the "download this page" message if we're already running on a local file system.
-                if (window.location.protocol == "file:") {
-                    document.getElementById("downloadMessage").style.display = "none";
-                }
-
-                document.getElementById("shortcutURL").value = window.location;
-                
                 // If we don't already have resources defined (which we might have, if this file is being used as a template from a server-side script), try and find some.
                 if (resources.length == 0) {
                     // Load resources.
@@ -128,8 +48,9 @@
                     }
                 }
                 
-                // If we still haven't managed to find any resources to display, report an error.
+                
                 if (resources.length == 0) {
+                    // If we still haven't managed to find any resources to display, report an error.
                     document.getElementById("errorMessage").innerHTML = "Error: Unable to find any resources to load.";
                 } else {
                     // Step through the resources, setting up an audio player on the page for each one.
