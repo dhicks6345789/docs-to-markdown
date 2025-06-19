@@ -55,6 +55,10 @@
                     // Step through the resources, setting up a start item tile on the page for each one.
                     itemCount = 0;
                     for (resource = 0; resource < resources.length; resource = resource + 1) {
+                        itemCount = itemCount + 1;
+                        console.log(resources[resource][0]);
+                    }
+                    /*for (resource = 0; resource < resources.length; resource = resource + 1) {
                         if (resources[resource][0] != "Filename") {
                             itemCount = itemCount + 1;
                             if (itemCount == 1 || itemCount % 6 == 1) {
@@ -73,18 +77,18 @@
                             newTile.id = "itemTile-" + itemCount;
                             newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", resources[resource][1]).replaceAll("(0)","(" + resource + ")");
                             document.getElementById("resource-" + itemCount).appendChild(newTile);
-                            newTile.style.display = "";
+                            newTile.style.display = "";*/
                             /*if (resources[resource][5] != "") {
                                 newTile.style.backgroundImage = "url(\'" + resources[resource][5] + "\')";
                             } else {
                                 newTile.style.backgroundImage = "url(\'/bootstrap-icons/1.8.1/soundwave.svg\')";
                             }*/
-                            newTile.style.backgroundPosition = "center center";
+                            /*newTile.style.backgroundPosition = "center center";
                             newTile.style.backgroundSize = "100% 100%";
                             newTile.style.backgroundRepeat = "no-repeat";
                         }
                     }
-                }
+                }*/
             }
         </script>
     </head>
@@ -93,15 +97,18 @@
         <div id="itemTile-0" class="bg text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
             <div style="height:5.8vw;"><h2 style="background-color:rgb(255 255 255 / 0.3); color:#000;">{{TITLE}}</h2></div>
         </div>
+        <div id="heading-0" class="row" style="margin:0; padding:3; height:16.6vw; display:none;">
+            <h1>{{HEADING}}</h1>
+        </div>
+        <div id="row-0" class="row" style="margin:0; padding:3; height:16.6vw; display:none;">
+            <div id="resource-01" class="col-sm-2" style="height:100%;"></div>
+            <div id="resource-02" class="col-sm-2" style="height:100%;"></div>
+            <div id="resource-03" class="col-sm-2" style="height:100%;"></div>
+            <div id="resource-04" class="col-sm-2" style="height:100%;"></div>
+            <div id="resource-05" class="col-sm-2" style="height:100%;"></div>
+            <div id="resource-06" class="col-sm-2" style="height:100%;"></div>
+        </div>
         <div id="itemRows" style="margin:0; padding:0; width:100%;">
-            <div id="row-0" class="row" style="margin:0; padding:3; height:16.6vw; display:none;">
-                <div id="resource-01" class="col-sm-2" style="height:100%;"></div>
-                <div id="resource-02" class="col-sm-2" style="height:100%;"></div>
-                <div id="resource-03" class="col-sm-2" style="height:100%;"></div>
-                <div id="resource-04" class="col-sm-2" style="height:100%;"></div>
-                <div id="resource-05" class="col-sm-2" style="height:100%;"></div>
-                <div id="resource-06" class="col-sm-2" style="height:100%;"></div>
-            </div>
         </div>
     </body>
 </html>
