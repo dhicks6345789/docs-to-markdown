@@ -66,13 +66,13 @@
                                 newRow.childNodes[7].id = "resource-" + (itemCount+3);
                                 newRow.childNodes[9].id = "resource-" + (itemCount+4);
                                 newRow.childNodes[11].id = "resource-" + (itemCount+5);
-                                document.getElementById("playerRows").appendChild(newRow);
+                                document.getElementById("itemRows").appendChild(newRow);
                                 newRow.style.display = "";
                             }
                             newTile = document.getElementById("itemTile-0").cloneNode(true);
                             newTile.id = "itemTile-" + itemCount;
                             newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", resources[resource][1]).replaceAll("(0)","(" + resource + ")");
-                            document.getElementById("resource-" + itemCount).appendChild(newPlayer);
+                            document.getElementById("resource-" + itemCount).appendChild(newTile);
                             newTile.style.display = "";
                             if (resources[resource][5] != "") {
                                 newTile.style.backgroundImage = "url(\'" + resources[resource][5] + "\')";
