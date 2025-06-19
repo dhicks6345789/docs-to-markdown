@@ -74,11 +74,11 @@
                             newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", resources[resource][1]).replaceAll("(0)","(" + resource + ")");
                             document.getElementById("resource-" + itemCount).appendChild(newTile);
                             newTile.style.display = "";
-                            if (resources[resource][5] != "") {
+                            /*if (resources[resource][5] != "") {
                                 newTile.style.backgroundImage = "url(\'" + resources[resource][5] + "\')";
                             } else {
                                 newTile.style.backgroundImage = "url(\'/bootstrap-icons/1.8.1/soundwave.svg\')";
-                            }
+                            }*/
                             newTile.style.backgroundPosition = "center center";
                             newTile.style.backgroundSize = "100% 100%";
                             newTile.style.backgroundRepeat = "no-repeat";
