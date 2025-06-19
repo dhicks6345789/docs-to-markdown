@@ -48,12 +48,11 @@
                     }
                 }
                 
-                
                 if (resources.length == 0) {
                     // If we still haven't managed to find any resources to display, report an error.
                     document.getElementById("errorMessage").innerHTML = "Error: Unable to find any resources to load.";
                 } else {
-                    // Step through the resources, setting up an audio player on the page for each one.
+                    // Step through the resources, setting up a start item tile on the page for each one.
                     itemCount = 0;
                     for (resource = 0; resource < resources.length; resource = resource + 1) {
                         if (resources[resource][0] != "Filename") {
@@ -70,32 +69,19 @@
                                 document.getElementById("playerRows").appendChild(newRow);
                                 newRow.style.display = "";
                             }
-                            newPlayer = document.getElementById("audioPlayer-0").cloneNode(true);
-                            newPlayer.id = "audioPlayer-" + itemCount;
-                            newPlayer.innerHTML = newPlayer.innerHTML.replaceAll("{{TITLE}}", resources[resource][1]).replaceAll("(0)","(" + resource + ")");
+                            newTile = document.getElementById("itemTile-0").cloneNode(true);
+                            newTile.id = "itemTile-" + itemCount;
+                            newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", resources[resource][1]).replaceAll("(0)","(" + resource + ")");
                             document.getElementById("resource-" + itemCount).appendChild(newPlayer);
-                            newPlayer.style.display = "";
+                            newTile.style.display = "";
                             if (resources[resource][5] != "") {
-                                newPlayer.style.backgroundImage = "url(\'" + resources[resource][5] + "\')";
+                                newTile.style.backgroundImage = "url(\'" + resources[resource][5] + "\')";
                             } else {
-                                newPlayer.style.backgroundImage = "url(\'/bootstrap-icons/1.8.1/soundwave.svg\')";
+                                newTile.style.backgroundImage = "url(\'/bootstrap-icons/1.8.1/soundwave.svg\')";
                             }
-                            newPlayer.style.backgroundPosition = "center center";
-                            newPlayer.style.backgroundSize = "100% 100%";
-                            newPlayer.style.backgroundRepeat = "no-repeat";
-
-                            // Now, add the HTML audio element to the player.
-                            newAudioObject = document.createElement("AUDIO");
-                            // Set the URL of the audio resource, but include a "fake" paramater to convince the browser to reload a non-cached version of the resource.
-                            // Otherwise, changes to the audio files processed on the server side don't tend to turn up in the browser when the user is expecting them to.
-                            // See: https://stackoverflow.com/questions/25821915/how-to-force-the-html5-audio-tag-to-reload-a-changing-file
-                            newAudioObject.src = resources[resource][0] + "?cb=" + new Date().getTime();
-                            newAudioObject.load();
-                            newAudioObject.onended = Function("rewindAudio(" + resource + ")");
-                            newPlayer.appendChild(newAudioObject);
-                            
-                            // Once the new audio player is set up on the page, save references to the object for control later on.
-                            audioObjects.push({"audioPlayer":newPlayer, "playerButton":newPlayer.childNodes[3].childNodes[1], "playerIcon":newPlayer.childNodes[3].childNodes[1].childNodes[0], "playerBar":newPlayer.childNodes[5].childNodes[3].childNodes[1], "playerProgress":newPlayer.childNodes[5].childNodes[3].childNodes[1].childNodes[1], "playerInterval":0, "audioObject":newAudioObject});
+                            newTile.style.backgroundPosition = "center center";
+                            newTile.style.backgroundSize = "100% 100%";
+                            newTile.style.backgroundRepeat = "no-repeat";
                         }
                     }
                 }
@@ -104,34 +90,10 @@
     </head>
     <!-- The main body element - again, we set width and height to fit the whole page / screen, and we hide the horizontal scrollbar. -->
     <body onload="startApp()" style="margin:0; padding:0; height:100vh; max-height:100vh; width:100vw; overflow-x:hidden;">
-	<div style="display:none;"><audio id="silence"><source src="silence.mp3" type="audio/mp3"></audio></div>
-        <div id="audioPlayer-0" class="bg text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
+        <div id="itemTile-0" class="bg text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
             <div style="height:5.8vw;"><h2 style="background-color:rgb(255 255 255 / 0.3); color:#000;">{{TITLE}}</h2></div>
-            <div style="height:5.8vw">
-                <button type="button" class="btn btn-success" style="opacity:0.9; width:5vw; height:5vw;" onclick="playPauseAudio(0);"><img src="/bootstrap-icons/1.8.1/play.svg" height="100%" width="100%"></button>
-            </div>
-            <div class="row" style="height:1vw; width:100%;">
-                <div class="col-1" style="width:10%"></div>
-                <div class="col-10 text-center">
-                    <div class="progress" style="margin:0; padding:0; display:none;">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-                <div class="col-1" style="width:10%"></div>
-            </div>
-            <div style="height:1vw;"></div>
-            <div style="height:3vw;">
-                <div class="row" style="margin:0; padding:0; width:100%;">
-                    <div class="col text-center">
-                        <button type="button" class="btn btn-success" style="opacity:0.9; width:3vw; height:3vw;"><img src="/bootstrap-icons/1.8.1/repeat.svg" height="100%" width="100%" onclick="rewindAudio(0);"></button>
-                    </div>
-                    <div class="col text-center">
-                        <button type="button" class="btn btn-success" style="opacity:0.9; width:3vw; height:3vw;"><img src="/bootstrap-icons/1.8.1/three-dots.svg" height="100%" width="100%" onclick="showOptions(0);"></button>
-                    </div>
-                </div>
-            </div>
         </div>
-        <div id="playerRows" style="margin:0; padding:0; width:100%;">
+        <div id="itemRows" style="margin:0; padding:0; width:100%;">
             <div id="row-0" class="row" style="margin:0; padding:3; height:16.6vw; display:none;">
                 <div id="resource-01" class="col-sm-2" style="height:100%;"></div>
                 <div id="resource-02" class="col-sm-2" style="height:100%;"></div>
@@ -141,22 +103,5 @@
                 <div id="resource-06" class="col-sm-2" style="height:100%;"></div>
             </div>
         </div>
-        <div class="row" style="margin:0; padding:0; width:100%;">
-            <div class="col text-start">
-            </div>
-            <div class="col text-center">
-                Shortcut to save: <input type="text" id="shortcutURL" value="" readonly/>
-                <button type="button" class="btn btn-default" aria-label="Copy shortcut URL" onclick="copyShortcutURL()">
-                    <img src="/bootstrap-icons/1.8.1/stickies.svg" alt="Copy shortcut URL" width="32" height="32">
-                </button>
-            </div>
-            <div class="col text-end">
-                Keep speaker awake:
-                <button id="speakerAwakeButton" type="button" class="btn btn-success" aria-label="Keep speaker awake" onclick="keepSpeakerAwake()">
-                    <img src="/bootstrap-icons/1.8.1/play.svg" alt="Keep speaker awake" width="32" height="32">
-                </button>
-            </div>
-        </div>
-        <div id="downloadMessage" class="text-center">You can <a href="audioCues.zip">download this page</a> to use offline.</div>
     </body>
 </html>
