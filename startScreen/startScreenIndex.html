@@ -80,11 +80,11 @@
                                 }
                                 newTile = document.getElementById("itemTile-0").cloneNode(true);
                                 newTile.id = "itemTile-" + itemCount;
-                                newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", resources[resource][section][1][resource][1]);
+                                newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", resources[section][1][resource][1]);
                                 document.getElementById("resource-" + itemCount).appendChild(newTile);
                                 newTile.style.display = "";
-                                if (resources[resource][section][1][resource][0] != "") {
-                                    newTile.style.backgroundImage = "url(\'" + resources[resource][section][1][resource][0] + "\')";
+                                if (resources[section][1][resource][0] != "") {
+                                    newTile.style.backgroundImage = "url(\'" + resources[section][1][resource][0] + "\')";
                                 } else {
                                     newTile.style.backgroundImage = "url(\'/bootstrap-icons/1.8.1/soundwave.svg\')";
                                 }
