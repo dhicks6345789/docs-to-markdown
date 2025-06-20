@@ -63,39 +63,37 @@
                         newRow.style.display = "";
                         
                         for (resource = 0; resource < resources[section][1].length; resource = resource + 1) {
-                            console.log(resources[section][1]);
+                            if (resources[resource][section][1][resource][0] != "URL") {
+                                console.log(resources[section][1][resource]);
+                                itemCount = itemCount + 1;
+                                if (itemCount == 1 || itemCount % 6 == 1) {
+                                    newRow = document.getElementById("row-0").cloneNode(true);
+                                    newRow.id = "row-" + (Math.floor(itemCount / 6) + 1);
+                                    newRow.childNodes[1].id = "resource-" + itemCount;
+                                    newRow.childNodes[3].id = "resource-" + (itemCount+1);
+                                    newRow.childNodes[5].id = "resource-" + (itemCount+2);
+                                    newRow.childNodes[7].id = "resource-" + (itemCount+3);
+                                    newRow.childNodes[9].id = "resource-" + (itemCount+4);
+                                    newRow.childNodes[11].id = "resource-" + (itemCount+5);
+                                    document.getElementById("itemRows").appendChild(newRow);
+                                    newRow.style.display = "";
+                                }
+                                newTile = document.getElementById("itemTile-0").cloneNode(true);
+                                newTile.id = "itemTile-" + itemCount;
+                                newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", resources[resource][section][1][resource][1]);
+                                document.getElementById("resource-" + itemCount).appendChild(newTile);
+                                newTile.style.display = "";
+                                if (resources[resource][section][1][resource][0] != "") {
+                                    newTile.style.backgroundImage = "url(\'" + resources[resource][section][1][resource][0] + "\')";
+                                } else {
+                                    newTile.style.backgroundImage = "url(\'/bootstrap-icons/1.8.1/soundwave.svg\')";
+                                }
+                                newTile.style.backgroundPosition = "center center";
+                                newTile.style.backgroundSize = "100% 100%";
+                                newTile.style.backgroundRepeat = "no-repeat";
+                            }
                         }
                     }
-                    /*for (resource = 0; resource < resources.length; resource = resource + 1) {
-                        if (resources[resource][0] != "Filename") {
-                            itemCount = itemCount + 1;
-                            if (itemCount == 1 || itemCount % 6 == 1) {
-                                newRow = document.getElementById("row-0").cloneNode(true);
-                                newRow.id = "row-" + (Math.floor(itemCount / 6) + 1);
-                                newRow.childNodes[1].id = "resource-" + itemCount;
-                                newRow.childNodes[3].id = "resource-" + (itemCount+1);
-                                newRow.childNodes[5].id = "resource-" + (itemCount+2);
-                                newRow.childNodes[7].id = "resource-" + (itemCount+3);
-                                newRow.childNodes[9].id = "resource-" + (itemCount+4);
-                                newRow.childNodes[11].id = "resource-" + (itemCount+5);
-                                document.getElementById("itemRows").appendChild(newRow);
-                                newRow.style.display = "";
-                            }
-                            newTile = document.getElementById("itemTile-0").cloneNode(true);
-                            newTile.id = "itemTile-" + itemCount;
-                            newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", resources[resource][1]).replaceAll("(0)","(" + resource + ")");
-                            document.getElementById("resource-" + itemCount).appendChild(newTile);
-                            newTile.style.display = "";*/
-                            /*if (resources[resource][5] != "") {
-                                newTile.style.backgroundImage = "url(\'" + resources[resource][5] + "\')";
-                            } else {
-                                newTile.style.backgroundImage = "url(\'/bootstrap-icons/1.8.1/soundwave.svg\')";
-                            }*/
-                            /*newTile.style.backgroundPosition = "center center";
-                            newTile.style.backgroundSize = "100% 100%";
-                            newTile.style.backgroundRepeat = "no-repeat";
-                        }
-                    }*/
                 }
             }
         </script>
