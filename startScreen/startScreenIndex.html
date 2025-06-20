@@ -61,6 +61,10 @@
                         newRow.innerHTML = newRow.innerHTML.replaceAll("{{HEADING}}", resources[section][0]);
                         document.getElementById("itemRows").appendChild(newRow);
                         newRow.style.display = "";
+                        
+                        for (resource = 0; resource < resources[section][1].length; resource = resource + 1) {
+                            console.log(resources[section][1]);
+                        }
                     }
                     /*for (resource = 0; resource < resources.length; resource = resource + 1) {
                         if (resources[resource][0] != "Filename") {
