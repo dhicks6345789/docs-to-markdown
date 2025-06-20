@@ -63,8 +63,8 @@
                         newRow.style.display = "";
                         
                         for (resource = 0; resource < resources[section][1].length; resource = resource + 1) {
-                            console.log(resources[section][1][resource]);
-                            if (resources[resource][section][1][resource][0] != "URL") {
+                            if (resources[section][1][resource][0] != "URL") {
+                                console.log(resources[section][1][resource]);
                                 itemCount = itemCount + 1;
                                 if (itemCount == 1 || itemCount % 6 == 1) {
                                     newRow = document.getElementById("row-0").cloneNode(true);
