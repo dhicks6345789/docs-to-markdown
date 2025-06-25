@@ -55,7 +55,9 @@
                     // Step through the resources, setting up a start item tile on the page for each one.
                     itemCount = 0;
                     for (section = 0; section < resources.length; section = section + 1) {
-                        itemCount = itemCount + (6 - (itemCount % 6))
+                        if (section != 0) {
+                            itemCount = itemCount + (6 - (itemCount % 6))
+                        }
                         newRow = document.getElementById("heading-0").cloneNode(true);
                         newRow.id = "heading-" + section;
                         newRow.innerHTML = newRow.innerHTML.replaceAll("{{HEADING}}", resources[section][0]);
@@ -64,7 +66,6 @@
                         
                         for (resource = 0; resource < resources[section][1].length; resource = resource + 1) {
                             if (resources[section][1][resource][0] != "URL") {
-                                console.log(resources[section][1][resource]);
                                 itemCount = itemCount + 1;
                                 if (itemCount == 1 || itemCount % 6 == 1) {
                                     newRow = document.getElementById("row-0").cloneNode(true);
@@ -80,7 +81,7 @@
                                 }
                                 newTile = document.getElementById("itemTile-0").cloneNode(true);
                                 newTile.id = "itemTile-" + itemCount;
-                                newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", resources[section][1][resource][1]);
+                                newTile.innerHTML = newTile.innerHTML.replaceAll("{{URL}}", resources[section][1][resource][0]).replaceAll("{{TITLE}}", resources[section][1][resource][1]);
                                 document.getElementById("resource-" + itemCount).appendChild(newTile);
                                 newTile.style.display = "";
                                 if (resources[section][1][resource][0] != "") {
@@ -101,7 +102,7 @@
     <!-- The main body element - again, we set width and height to fit the whole page / screen, and we hide the horizontal scrollbar. -->
     <body onload="startApp()" style="margin:0; padding:0; height:100vh; max-height:100vh; width:100vw; overflow-x:hidden;">
         <div id="itemTile-0" class="bg text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
-            <div style="height:5.8vw;"><h2 style="background-color:rgb(255 255 255 / 0.3); color:#000;">{{TITLE}}</h2></div>
+            <div style="height:5.8vw;"><h2 style="background-color:rgb(255 255 255 / 0.3); color:#000;"><a href="{{URL}}">{{TITLE}}</a></h2></div>
         </div>
         <div id="heading-0" class="row" style="margin:0; padding:3; height:16.6vw; display:none;">
             <h1>{{HEADING}}</h1>
