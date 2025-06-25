@@ -127,9 +127,7 @@
                                 if (tileIcon != "") {
                                     newTile.style.backgroundImage = "url(\'" + tileIcon + "\')";
                                 } else {
-                                    backgroundURL = generateIcon(tileURL);
-                                    console.log(backgroundURL);
-                                    newTile.style.backgroundImage = backgroundURL;
+                                    newTile.style.backgroundImage = "url(\'" + generateIcon(tileURL) + "\')";
                                 }
                                 newTile.style.backgroundPosition = "center center";
                                 newTile.style.backgroundSize = "100% 100%";
