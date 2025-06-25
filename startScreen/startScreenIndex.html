@@ -55,7 +55,7 @@
                     // Step through the resources, setting up a start item tile on the page for each one.
                     itemCount = 0;
                     for (section = 0; section < resources.length; section = section + 1) {
-                        itemCount = itemCount + (itemCount % 6)
+                        itemCount = itemCount + (6 - (itemCount % 6))
                         newRow = document.getElementById("heading-0").cloneNode(true);
                         newRow.id = "heading-" + section;
                         newRow.innerHTML = newRow.innerHTML.replaceAll("{{HEADING}}", resources[section][0]);
