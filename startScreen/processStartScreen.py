@@ -22,7 +22,7 @@ import docsToMarkdownLib
 
 # Returns either the element of the row given by the index, or an empty string if that item doesn't exist.
 def itemOrBlank(theRow, theIndex):
-    if theRow.shape[0] >= theIndex:
+    if theRow.shape[0] > theIndex:
         return theRow[theIndex]
     return ""
 
