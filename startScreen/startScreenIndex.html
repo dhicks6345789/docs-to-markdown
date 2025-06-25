@@ -63,14 +63,14 @@
                 iconCanvas = document.createElement("canvas");
                 iconCanvas.width = 256;
                 iconCanvas.height = 256;
-                iconCcontext = canvas.getContext("2d");
+                iconCcontext = iconCanvas.getContext("2d");
                 for (py = 0; py < iconPixels.length; py = py + 1) {
                     for (px = 0; px < iconPixels.length / 2; px = px + 1) {
-                        context.fillStyle = 255;
-                        context.fillRect(px * 8, py * 8, 8, 8);
+                        iconContext.fillStyle = 255;
+                        iconContext.fillRect(px * 8, py * 8, 8, 8);
                     }
                 }
-                return iconCanvas.toDataURL('image/png');
+                return iconCanvas.toDataURL("image/png");
             }
 
             // The page load function - execution starts here.
