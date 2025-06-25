@@ -20,6 +20,14 @@ import docsToMarkdownLib
 
 
 
+# Returns either the element of the row given by the index, or an empty string if that item doesn't exist.
+def itemOrBlank(theRow, theIndex):
+    if theRow.shape[0] >= theIndex:
+        return theRow[theIndex]
+    return ""
+
+
+
 # Get a timestamp of when we started.
 dateTimeNow = datetime.datetime.now()
 timestamp = int(round(dateTimeNow.timestamp()))
@@ -50,11 +58,15 @@ for inputItem in os.listdir(inputFolder):
 
 resources = []
 for dataTuple in dataTuples:
-    resourceTable = [["URL", "Title"]]
+    resourceTable = [["URL", "Title", "Description", "Icon"]]
     for index, row in dataTuple[1].iterrows():
-        URL = row[0]
-        title = row[1]
-        resourceTable.append([URL, title])
+        URL = itemOrBlank(row, 0)
+        title = itemOrBlank(row, 1)
+        description = itemOrBlank(row, 2)
+        icon = itemOrBlank(row, 3)
+        if icon == "":
+            print("No icon specified for item " + title + " - trying to retreive favicon...")
+        resourceTable.append([URL, title, description, icon])
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
 
