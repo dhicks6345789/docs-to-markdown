@@ -38,9 +38,9 @@
                 }
             }
             
-            // Generate a simple "cyrd53" hash from a given string.
+            // Generate a simple "cyrb53" hash from a given string.
             // See: https://stackoverflow.com/a/52171480/20530257
-            function cyrd53 (str, seed = 0) {
+            function cyrb53 (str, seed = 0) {
                 let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
                 for(let i = 0, ch; i < str.length; i++) {
                     ch = str.charCodeAt(i);
