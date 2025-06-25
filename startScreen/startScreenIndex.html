@@ -66,7 +66,7 @@
                 iconContext = iconCanvas.getContext("2d");
                 for (py = 0; py < iconPixels.length; py = py + 1) {
                     for (px = 0; px < iconPixels.length / 2; px = px + 1) {
-                        iconContext.fillStyle = 255;
+                        iconContext.fillStyle = 128;
                         iconContext.fillRect(px * 8, py * 8, 8, 8);
                     }
                 }
@@ -127,7 +127,7 @@
                                 if (tileIcon != "") {
                                     newTile.style.backgroundImage = "url(\'" + tileIcon + "\')";
                                 } else {
-                                    newTile.style.backgroundImage = generateIcon(tileIcon);
+                                    newTile.style.backgroundImage = generateIcon(tileURL);
                                 }
                                 newTile.style.backgroundPosition = "center center";
                                 newTile.style.backgroundSize = "100% 100%";
