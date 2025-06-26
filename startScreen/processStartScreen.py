@@ -70,7 +70,7 @@ for dataTuple in dataTuples:
         icon = itemOrBlank(row, 3)
         if icon == "":
             print("No icon specified for item " + title + " - trying to retreive favicon...")
-            extract_favicon.favicons = from_url(URL, include_fallbacks=True)
+            favicons = extract_favicon.from_url(URL, include_fallbacks=True)
             for favicon in favicons:
                 print(favicon.url, favicon.format, favicon.width, favicon.height)
         resourceTable.append([URL, title, description, icon])
