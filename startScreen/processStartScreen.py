@@ -70,9 +70,12 @@ for dataTuple in dataTuples:
         icon = itemOrBlank(row, 3)
         if icon == "":
             print("No icon specified for item " + title + " - trying to retreive favicon...")
-            favicons = extract_favicon.from_url(URL, include_fallbacks=True)
-            for favicon in favicons:
-                print(favicon.url, favicon.format, favicon.width, favicon.height)
+            bestFavicon = extract_favicon.get_best_favicon(URL)
+            if bestFavicon:
+                print("Best favicon URL:", bestFavicon.url)
+                print("Favicon dimensions:", bestFavicon.width, "x", bestFavicon.height)
+            else:
+                print("No valid favicon found for this URL.")
         resourceTable.append([URL, title, description, icon])
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
