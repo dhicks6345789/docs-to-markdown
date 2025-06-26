@@ -79,6 +79,7 @@
                             iconContext.fillStyle = fillCol;
                         }
                         iconContext.fillRect(px * 32, py * 32, 32, 32);
+                        iconContext.fillRect((8-px) * 32, py * 32, 32, 32);
                     }
                 }
                 return iconCanvas.toDataURL("image/png");
