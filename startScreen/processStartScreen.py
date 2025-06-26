@@ -70,7 +70,10 @@ for dataTuple in dataTuples:
         icon = itemOrBlank(row, 3)
         if icon == "":
             print("No icon specified for item " + title + " - trying to retreive favicon...", flush=True)
-            bestFavicon = extract_favicon.get_best_favicon(URL)
+            try:
+                bestFavicon = extract_favicon.get_best_favicon(URL)
+            except ValueError:
+                print("Favicon - ValueError raised.", flush=True)
             if bestFavicon:
                 print("Best favicon URL:" + bestFavicon.url, flush=True)
                 print("Favicon dimensions:" + str(bestFavicon.width) + "x" + str(bestFavicon.height), flush=True)
