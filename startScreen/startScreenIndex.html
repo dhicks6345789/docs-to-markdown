@@ -73,7 +73,7 @@
                 iconContext = iconCanvas.getContext("2d");
                 for (py = 0; py < 8; py = py + 1) {
                     for (px = 0; px < 4; px = px + 1) {
-                        if ["0", "1", "2", "3", "4"].includes(URLHash[(py*4)+px]) {
+                        if (["0", "1", "2", "3", "4"].includes(URLHash[(py*4)+px])) {
                             iconContext.fillStyle = "white";
                         } else {
                             iconContext.fillStyle = fillCol;
