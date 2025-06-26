@@ -5,12 +5,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Set this page (hopefully) to not be cached, so it gets reloaded each time the browser refreshes / reloads / reboots.
-        Seems to be of particular importance for ChromeOS kisok-mode devices, which seem to cache content between reboots. -->
-        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-        <meta http-equiv="Pragma" content="no-cache"/>
-        <meta http-equiv="Expires" content="0"/>
         
         <title>Start Screen</title>
             
@@ -20,8 +14,8 @@
         <script src="/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
         
         <script>
-            // By default, as a stand-alone application, the "resources" array will be empty. The server-side script replaces this line with a list
-            // of resources, or some later code will try to find resources.
+            // By default, as a stand-alone application, the "resources" array will be empty. If running with the server-side script
+            // then this line gets replaced with a list of resources. If this array is empty, some later code will try to find resources.
             var resources = [];
 
             // A function to check if a given file / URL exists (server-side). See:
@@ -38,7 +32,8 @@
                 }
             }
             
-            // Generate a simple "cyrb53" hash from a given string.
+            // Generate a simple "cyrb53" hash from a given string. Non-cryptographic, we're just using
+            // this hash to generate a random icon image if there's no other site icon available.
             // See: https://stackoverflow.com/a/52171480/20530257
             function cyrb53 (str, seed = 0) {
                 let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
@@ -55,8 +50,13 @@
                 return 4294967296 * (2097151 & h2) + (h1 >>> 0);
             }
             
-            // Generate an icon image.
+            // Generate an icon image for the given URL. We use a simple hash function to turn a URL into a 32-character string of digits,
+            // then use those digits to pick a drawing colour (black, red, green or blue) and to draw squares on a canvas element, which
+            // we return as a data URL that we can use as an image in the page. The image is "random", but consistant for a given URL, so
+            // the icon for any given URL should always look the same.
             function generateIcon(theURL) {
+                // The hash function produces 16-digit results, we want 32, so we just reverse the input string and get a hash of that
+                // as well, then stick the two strings together.
                 URLHash = cyrb53(theURL).toString() + cyrb53(theURL.split("").reverse().join("")).toString();
                 fillCol = "black";
                 if (["2", "3"].includes(URLHash[0])) {
@@ -66,7 +66,6 @@
                 } else if (["6", "7"].includes(URLHash[0])) {
                     fillCol = "blue";
                 }
-                console.log("URLHash: " + URLHash);
                 iconCanvas = document.createElement("canvas");
                 iconCanvas.width = 256;
                 iconCanvas.height = 256;
@@ -153,12 +152,12 @@
     </head>
     <!-- The main body element - again, we set width and height to fit the whole page / screen, and we hide the horizontal scrollbar. -->
     <body onload="startApp()" style="margin:0; padding:0; height:100vh; max-height:100vh; width:100vw; overflow-x:hidden;">
-        <div id="itemTile-0" class="bg text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
-            <div style="height:5.8vw;"><h2 style="background-color:rgb(255 255 255 / 0.3); color:#000;"><a href="{{URL}}">{{TITLE}}</a></h2></div>
-        </div>
-        <div id="heading-0" class="row" style="margin:0; padding:3; height:16.6vw; display:none;">
+        <!-- A heading row. -->
+        <div id="heading-0" class="row" style="display:none;">
             <h1>{{HEADING}}</h1>
         </div>
+
+        <!-- A row of (6) tiles. -->
         <div id="row-0" class="row" style="margin:0; padding:3; height:16.6vw; display:none;">
             <div id="resource-01" class="col-sm-2" style="height:100%;"></div>
             <div id="resource-02" class="col-sm-2" style="height:100%;"></div>
@@ -167,6 +166,13 @@
             <div id="resource-05" class="col-sm-2" style="height:100%;"></div>
             <div id="resource-06" class="col-sm-2" style="height:100%;"></div>
         </div>
+
+        <!-- A single item tile. -->
+        <div id="itemTile-0" class="bg text-center" style="margin:0; padding:0; height:100%; width:100%; display:none;">
+            <div style="height:5.8vw;"><h2 style="background-color:rgb(255 255 255 / 0.3); color:#000;"><a href="{{URL}}">{{TITLE}}</a></h2></div>
+        </div>
+
+        <!-- The main DIV for the page. -->
         <div id="itemRows" style="margin:0; padding:0; width:100%;">
         </div>
     </body>
