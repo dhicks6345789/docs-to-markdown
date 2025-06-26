@@ -136,7 +136,7 @@
                                 tileIcon = resources[section][1][resource][3];
                                 
                                 newTile.setAttribute("href", tileURL);
-                                newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", tileTitle);
+                                //newTile.innerHTML = newTile.innerHTML.replaceAll("{{TITLE}}", tileTitle);
                                 document.getElementById("resource-" + itemCount).appendChild(newTile);
                                 if (tileIcon != "") {
                                     newTileDIV.style.backgroundImage = "url(\'" + tileIcon + "\')";
