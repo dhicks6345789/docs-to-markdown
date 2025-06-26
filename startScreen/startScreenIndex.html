@@ -57,17 +57,28 @@
             
             // Generate an icon image.
             function generateIcon(theURL) {
-                URLHash = cyrb53(theURL);
+                URLHash = cyrb53(theURL).toString() + cyrb53(theURL.split("").reverse().join("")).toString();
+                fillCol = "black";
+                if (["2", "3"].includes(URLHash[0])) {
+                    fillCol = "red";
+                } else if (["4", "5"].includes(URLHash[0])) {
+                    fillCol = "green";
+                } else if (["6", "7"].includes(URLHash[0])) {
+                    fillCol = "blue";
+                }
                 console.log("URLHash: " + URLHash);
-                iconPixels = [[], [], [], [], [], [], [], []];
                 iconCanvas = document.createElement("canvas");
                 iconCanvas.width = 256;
                 iconCanvas.height = 256;
                 iconContext = iconCanvas.getContext("2d");
-                for (py = 0; py < iconPixels.length; py = py + 1) {
-                    for (px = 0; px < iconPixels.length / 2; px = px + 1) {
-                        iconContext.fillStyle = 128;
-                        iconContext.fillRect(px * 8, py * 8, 8, 8);
+                for (py = 0; py < 8; py = py + 1) {
+                    for (px = 0; px < 4; px = px + 1) {
+                        if ["0", "1", "2", "3", "4"].includes(URLHash[(py*4)+px]) {
+                            iconContext.fillStyle = "white";
+                        } else {
+                            iconContext.fillStyle = fillCol;
+                        }
+                        iconContext.fillRect(px * 32, py * 32, 32, 32);
                     }
                 }
                 return iconCanvas.toDataURL("image/png");
