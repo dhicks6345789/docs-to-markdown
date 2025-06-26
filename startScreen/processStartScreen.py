@@ -9,11 +9,15 @@ import json
 import shutil
 import datetime
 
+# The Pillow image-handling library.
+import PIL
+
 # The Pandas data-handling library.
 import pandas
 
-# The Pillow image-handling library.
-import PIL
+# A library to get favicons from websites. See:
+# https://github.com/AlexMili/extract_favicon/
+import extract_favicon
 
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
@@ -66,6 +70,9 @@ for dataTuple in dataTuples:
         icon = itemOrBlank(row, 3)
         if icon == "":
             print("No icon specified for item " + title + " - trying to retreive favicon...")
+            extract_favicon.favicons = from_url(URL, include_fallbacks=True)
+            for favicon in favicons:
+                print(favicon.url, favicon.format, favicon.width, favicon.height)
         resourceTable.append([URL, title, description, icon])
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
