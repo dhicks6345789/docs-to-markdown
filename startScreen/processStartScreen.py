@@ -41,13 +41,13 @@ dateTimeFormatted = dateTimeNow.strftime("%d-%m-%Y, %H:%M:%S")
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"processAudio":"true"}, requiredArgs=["input","output"])
 
 print("STATUS: processStartScreen: " + args["input"] + " to " + args["output"], flush=True)
-print("Timestamp: " + str(timestamp) + ", Date / Time: " + dateTimeFormatted)
+print("Timestamp: " + str(timestamp) + ", Date / Time: " + dateTimeFormatted, flush=True)
 
 # Make sure the output folder exists.
 os.makedirs(args["output"], exist_ok=True)
 
 inputFolder = docsToMarkdownLib.normalisePath(args["input"])
-print("Input folder: " + inputFolder)
+print("Input folder: " + inputFolder, flush=True)
 
 dataTuples = []
 for inputItem in os.listdir(inputFolder):
@@ -69,13 +69,13 @@ for dataTuple in dataTuples:
         description = itemOrBlank(row, 2)
         icon = itemOrBlank(row, 3)
         if icon == "":
-            print("No icon specified for item " + title + " - trying to retreive favicon...")
+            print("No icon specified for item " + title + " - trying to retreive favicon...", flush=True)
             bestFavicon = extract_favicon.get_best_favicon(URL)
             if bestFavicon:
-                print("Best favicon URL:", bestFavicon.url)
-                print("Favicon dimensions:", bestFavicon.width, "x", bestFavicon.height)
+                print("Best favicon URL:" + bestFavicon.url, flush=True)
+                print("Favicon dimensions:" + str(bestFavicon.width) + "x" + str(bestFavicon.height), flush=True)
             else:
-                print("No valid favicon found for this URL.")
+                print("No valid favicon found for this URL.", flush=True)
         resourceTable.append([URL, title, description, icon])
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
