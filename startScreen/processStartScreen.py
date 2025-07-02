@@ -78,7 +78,7 @@ for dataTuple in dataTuples:
             if bestFavicon:
                 print("Best favicon URL:" + bestFavicon.url, flush=True)
                 print("Favicon dimensions:" + str(bestFavicon.width) + "x" + str(bestFavicon.height), flush=True)
-                print(bestFavicon.url, bestFavicon.valid, bestFavicon.width, bestFavicon.height, flush=True)
+                print(bestFavicon.url, bestFavicon.valid, bestFavicon.width, bestFavicon.height, bestFavicon.image, flush=True)
             else:
                 print("No valid favicon found for this URL.", flush=True)
         resourceTable.append([URL, title, description, icon])
