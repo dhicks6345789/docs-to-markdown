@@ -30,21 +30,29 @@ def itemOrBlank(theRow, theIndex):
         return theRow[theIndex]
     return ""
 
+# Do a Javascript-style (>>>) unsigned right shift, treating the input number as if it is a 32-bit unsigned integer.
+def unsigned_right_shift(theNum, theShift):
+    # Apply mask to ensure the number is treated as unsigned, then perform the right shift.
+    return (theNum & 0xFFFFFFFF) >> theShift
+
+# Do a Javascript-style "imul" operation: multiply two numbers as if they are both 32-bit unsigned integers.
+def imul(a, b):
+    return (a*b) & 0xFFFFFFFF
+    
 # Generate a simple "cyrb53" hash from a given string. Non-cryptographic, we're just using
-# this hash to generate a random icon image if there's no other site icon available.
-# See: https://stackoverflow.com/a/52171480/20530257
-def cyrb53(theStr, seed=0):
-    h1 = pow(0xdeadbeef, seed)
-    h2 = pow(0x41c6ce57, seed)
-    for i in range(0, len(theStr):
-        ch = ord(theStr[i])
-        h1 = Math.imul(pow(h1, ch), 2654435761)
-        h2 = Math.imul(pow(h2, ch, 1597334677)
-    h1  = Math.imul(pow(h1, (h1 >>> 16)), 2246822507)
-    h1 ^= Math.imul(pow(h2, (h2 >>> 13)), 3266489909)
-    h2  = Math.imul(pow(h2, (h2 >>> 16)), 2246822507)
-    h2 ^= Math.imul(pow(h1, (h1 >>> 13)), 3266489909)
-    return 4294967296 * (2097151 & h2) + (h1 >>> 0)
+# this hash to name favicon images. See the original Javascript version: https://stackoverflow.com/a/52171480/20530257
+# And the Python conversion: https://stackoverflow.com/a/79643222/20530257
+def cyrb53x(theStr, seed=0):
+    h1 = 0xdeadbeef ^ seed
+    h2 = 0x41c6ce57 ^ seed
+    for i,ch in enumerate(str):
+        h1 = imul(h1 ^ ord(ch), 2654435761)
+        h2 = imul(h2 ^ ord(ch), 1597334677)
+    h1  = imul(h1 ^ unsigned_right_shift(h1 , 16), 2246822507)
+    h1 ^= imul(h2 ^ unsigned_right_shift(h2 , 13), 3266489909)
+    h2  = imul(h2 ^ unsigned_right_shift(h2 , 16), 2246822507)
+    h2 ^= imul(h1 ^ unsigned_right_shift(h1 , 13), 3266489909)
+    return 4294967296 * (2097151 & h2) + (h1 & 0xFFFFFFFF)
 
 
 
