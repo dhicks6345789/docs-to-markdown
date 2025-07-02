@@ -45,7 +45,7 @@ def imul(a, b):
 def cyrb53(theStr, seed=0):
     h1 = 0xdeadbeef ^ seed
     h2 = 0x41c6ce57 ^ seed
-    for i,ch in enumerate(str):
+    for i,ch in enumerate(theStr):
         h1 = imul(h1 ^ ord(ch), 2654435761)
         h2 = imul(h2 ^ ord(ch), 1597334677)
     h1  = imul(h1 ^ unsigned_right_shift(h1 , 16), 2246822507)
