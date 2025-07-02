@@ -42,7 +42,7 @@ def imul(a, b):
 # Generate a simple "cyrb53" hash from a given string. Non-cryptographic, we're just using
 # this hash to name favicon images. See the original Javascript version: https://stackoverflow.com/a/52171480/20530257
 # And the Python conversion: https://stackoverflow.com/a/79643222/20530257
-def cyrb53x(theStr, seed=0):
+def cyrb53(theStr, seed=0):
     h1 = 0xdeadbeef ^ seed
     h2 = 0x41c6ce57 ^ seed
     for i,ch in enumerate(str):
