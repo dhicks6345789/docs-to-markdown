@@ -103,16 +103,18 @@ for dataTuple in dataTuples:
             if downloadIcon:
                 print("Item " + title + " - trying to retreive / refresh favicon...", flush=True)
                 bestFavicon = None
-                try:
-                    bestFavicon = extract_favicon.get_best_favicon(URL)
-                except ValueError:
-                    print("Favicon - ValueError raised.", flush=True)
+                bestFavicon = extract_favicon.get_best_favicon(URL)
+                #try:
+                    #bestFavicon = extract_favicon.get_best_favicon(URL)
+                #except ValueError:
+                    #print("Favicon - ValueError raised.", flush=True)
                 if bestFavicon:
                     print("Best favicon URL:" + bestFavicon.url, flush=True)
                     print("Favicon dimensions:" + str(bestFavicon.width) + "x" + str(bestFavicon.height), flush=True)
                     print(bestFavicon.url, bestFavicon.valid, bestFavicon.width, bestFavicon.height, bestFavicon.image, flush=True)
                     bestFavicon.image.thumbnail((256, 256))
                     bestFavicon.image.save(iconFilename, "PNG")
+                    icon = URLHash + ".png"
                 else:
                     print("No valid favicon found for this URL.", flush=True)
         resourceTable.append([URL, title, description, icon])
