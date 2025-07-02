@@ -118,8 +118,7 @@ for dataTuple in dataTuples:
                     #favicon = from_google(URL)
                     bestFavicon = extract_favicon.get_best_favicon(URL, strategy = ["duckduckgo", "google"])
                     print(bestFavicon.url, bestFavicon.valid, bestFavicon.width, bestFavicon.height, bestFavicon.image, flush=True)
-                else:
-                    print("No valid favicon found for this URL.", flush=True)
+                    #print("No valid favicon found for this URL.", flush=True)
         resourceTable.append([URL, title, description, icon])
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
