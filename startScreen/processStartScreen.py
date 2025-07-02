@@ -96,6 +96,7 @@ for dataTuple in dataTuples:
         icon = itemOrBlank(row, 3)
         if icon == "":
             downloadIcon = True
+            icon = URLHash + ".png"
             if os.path.exists(iconFilename):
                 downloadIcon = False
             if downloadIcon:
@@ -116,9 +117,9 @@ for dataTuple in dataTuples:
                     print(bestFavicon.url, bestFavicon.valid, bestFavicon.width, bestFavicon.height, bestFavicon.image, flush=True)
                     bestFavicon.image.thumbnail((256, 256))
                     bestFavicon.image.save(iconFilename, "PNG")
-                    icon = URLHash + ".png"
                 else:
                     print("No valid favicon found for this URL.", flush=True)
+                    icon = ""
         resourceTable.append([URL, title, description, icon])
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
