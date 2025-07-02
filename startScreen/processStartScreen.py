@@ -89,10 +89,8 @@ for dataTuple in dataTuples:
     resourceTable = [["URL", "Title", "Description", "Icon"]]
     for index, row in dataTuple[1].iterrows():
         URL = itemOrBlank(row, 0)
-        print(URL, flush=True)
         URLHash = str(cyrb53(URL)) + str(cyrb53(URL[::-1]))
         iconFilename = "www" + os.sep + URLHash + ".png"
-        print(URLHash, flush=True)
         title = itemOrBlank(row, 1)
         description = itemOrBlank(row, 2)
         icon = itemOrBlank(row, 3)
@@ -103,22 +101,24 @@ for dataTuple in dataTuples:
             if downloadIcon:
                 print("Item " + title + " - trying to retreive / refresh favicon...", flush=True)
                 bestFavicon = None
+                # The "Extract Favicon" library is very useful, but seems to have a bug that sometimes results in a ValueError being thrown from somewhere inside its own dependancy
+                # of the Python PIL image library (seems to be an issue trying to retrive the sizes of some icon files). Therefore, we try a plain "get Favicon from site" operation,
+                # and if that fails (including if it throws an exception) we move on to the "download from DuckDuckGo / Google cache" option.
                 try:
-                    bestFavicon = extract_favicon.get_best_favicon(URL)
+                    bestFavicon = extract_favicon.get_best_favicon(URL,  strategy = ["content"])
                 except ValueError:
                     print("Favicon - ValueError raised.", flush=True)
+                # If there was a problem getting the Favicon, try a couple of different caches.
+                if bestFavicon == None:
+                    bestFavicon = extract_favicon.get_best_favicon(URL, strategy = ["duckduckgo", "google"])
+                # Now, we hopefully have a downloaded Favicon.
                 if bestFavicon:
-                    print("Best favicon URL:" + bestFavicon.url, flush=True)
-                    print("Favicon dimensions:" + str(bestFavicon.width) + "x" + str(bestFavicon.height), flush=True)
                     print(bestFavicon.url, bestFavicon.valid, bestFavicon.width, bestFavicon.height, bestFavicon.image, flush=True)
                     bestFavicon.image.thumbnail((256, 256))
                     bestFavicon.image.save(iconFilename, "PNG")
                     icon = URLHash + ".png"
                 else:
-                    #favicon = from_google(URL)
-                    bestFavicon = extract_favicon.get_best_favicon(URL, strategy = ["duckduckgo", "google"])
-                    print(bestFavicon.url, bestFavicon.valid, bestFavicon.width, bestFavicon.height, bestFavicon.image, flush=True)
-                    #print("No valid favicon found for this URL.", flush=True)
+                    print("No valid favicon found for this URL.", flush=True)
         resourceTable.append([URL, title, description, icon])
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
