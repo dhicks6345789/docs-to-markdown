@@ -116,7 +116,7 @@ for dataTuple in dataTuples:
                 if bestFavicon:
                     print(bestFavicon.url, bestFavicon.valid, bestFavicon.width, bestFavicon.height, bestFavicon.image, flush=True)
                     #bestFavicon.image.thumbnail((256, 256))
-                    bestFaviconImage = bestFavicon.image.resize((256, 256), resample=Image.BOX)
+                    bestFaviconImage = bestFavicon.image.resize((256, 256), resample=PIL.Image.BOX)
                     bestFaviconImage.save(iconFilename, "PNG")
                 else:
                     print("No valid favicon found for this URL.", flush=True)
