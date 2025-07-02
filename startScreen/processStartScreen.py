@@ -114,9 +114,9 @@ for dataTuple in dataTuples:
                     bestFavicon = extract_favicon.get_best_favicon(URL, strategy = ["duckduckgo", "google"])
                 # Now, we hopefully have a downloaded Favicon.
                 if bestFavicon:
-                    print(bestFavicon.url, bestFavicon.valid, bestFavicon.width, bestFavicon.height, bestFavicon.image, flush=True)
                     #bestFavicon.image.thumbnail((256, 256))
-                    bestFaviconImage = bestFavicon.image.resize((256, 256), resample=PIL.Image.BOX)
+                    #bestFaviconImage = bestFavicon.image.resize((256, 256), resample=PIL.Image.BOX)
+                    bestFaviconImage = bestFavicon.image.resize((256, 256))
                     bestFaviconImage.save(iconFilename, "PNG")
                 else:
                     print("No valid favicon found for this URL.", flush=True)
