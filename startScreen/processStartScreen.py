@@ -155,7 +155,7 @@ for dataTuple in dataTuples:
                 if URLType == "googleFile":
                     #print("Icon is a Google Drive file - downloading with rclone...")
                     downloadedFilename = rcloneLib.downloadGoogleFile(docReference, args["output"])
-                    if downloadedFilename.lower().endsWith(".svg"):
+                    if downloadedFilename.lower().endswith(".svg"):
                         os.rename(args["output"] + os.sep + downloadedFilename, args["output"] + os.sep + URLHash + ".svg")
                     else:
                         iconImage = PIL.Image.open(args["output"] + os.sep + downloadedFilename)
