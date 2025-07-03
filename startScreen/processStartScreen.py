@@ -40,6 +40,11 @@ def itemOrBlank(theRow, theIndex):
             return item
     return ""
 
+def resizeAndSavePILImage(theImage, theURLHash):
+    theImage = theImage.resize((256, 256))
+    theImage.save(args["output"] + os.sep + theURLHash + ".png", "PNG")
+    return theURLHash + ".png"
+
 # Do a Javascript-style (>>>) unsigned right shift, treating the input number as if it is a 32-bit unsigned integer.
 def unsigned_right_shift(theNum, theShift):
     # Apply mask to ensure the number is treated as unsigned, then perform the right shift.
@@ -141,24 +146,26 @@ for dataTuple in dataTuples:
                     # Some possible options to resize images - plain resize (with basic anti-aliasing) seems about best. Could add AI upscaling, but that seems slightly like overkill here.
                     #bestFavicon.image.thumbnail((256, 256))
                     #bestFaviconImage = bestFavicon.image.resize((256, 256), resample=PIL.Image.BOX)
-                    bestFaviconImage = bestFavicon.image.resize((256, 256))
-                    bestFaviconImage.save(args["output"] + os.sep + URLHash + ".png", "PNG")
-                    icon = URLHash + ".png"
+                    icon = resizeAndSavePILImage(bestFavicon.image, URLHash)
                 else:
                     print("No Favicon found for this URL.", flush=True)
             else:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
                 URLType, docReference = rcloneLib.URLToTypeAndReference(icon)
                 if URLType == "googleFile":
-                    print("Icon is a Google Drive file - downloading with rclone...")
+                    #print("Icon is a Google Drive file - downloading with rclone...")
+                    downloadedFilename = rcloneLib.downloadGoogleFile(docReference, args["output"])
+                    if downloadedFilename.lower().endsWith(".svg"):
+                        os.rename(args["output"] + os.sep + downloadedFilename, args["output"] + os.sep + URLHash + ".svg")
+                    else:
+                        iconImage = PIL.Image.open(args["output"] + os.sep + downloadedFilename)
+                        icon = resizeAndSavePILImage(iconImage, URLHash)
                 else:
                     iconResponse = requests.get(icon)
                     iconType = iconResponse.headers["Content-Type"].split("/")[1].lower()
                     if iconType in docsToMarkdownLib.bitmapTypes:
                         iconImage = PIL.Image.open(io.BytesIO(iconResponse.content))
-                        iconImage = iconImage.resize((256, 256))
-                        iconImage.save(args["output"] + os.sep + URLHash + ".png", "PNG")
-                        icon = URLHash + ".png"
+                        icon = resizeAndSavePILImage(iconImage, URLHash):
                     elif iconType in ["svg+xml"]:
                         iconOut = open(args["output"] + os.sep + URLHash + ".svg", "wb")
                         iconOut.write(iconResponse.content)
