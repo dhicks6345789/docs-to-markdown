@@ -87,6 +87,7 @@ for inputItem in os.listdir(inputFolder):
         dataTuples.append((frameTitle, pandas.read_csv(inputItemPath)))
 
 resources = []
+validFiles = ["index.html"]
 for dataTuple in dataTuples:
     resourceTable = [["URL", "Title", "Description", "Icon"]]
     for index, row in dataTuple[1].iterrows():
@@ -100,10 +101,9 @@ for dataTuple in dataTuples:
             URLHash = str(cyrb53(URL)) + str(cyrb53(URL[::-1]))
         else:
             URLHash = str(cyrb53(URL)) + str(cyrb53(icon))
-        iconFilename = "www" + os.sep + URLHash + ".png"
+        iconFilename = args["output"] + os.sep + URLHash + ".png"
         
         downloadIcon = True
-        
         # To do: add date check (expire after one week?).
         if os.path.exists(iconFilename):
             downloadIcon = False
@@ -111,6 +111,7 @@ for dataTuple in dataTuples:
         if downloadIcon:
             if icon == "":
                 print("Item " + title + " - trying to retreive / refresh favicon...", flush=True)
+                icon = URLHash + ".png"
                 bestFavicon = None
                 # The "Extract Favicon" library is very useful, but seems to have a bug that sometimes results in a ValueError being thrown from somewhere inside its own dependancy
                 # of the Python PIL image library (seems to be an issue trying to retrive the sizes of some icon files). Therefore, we try a plain "get Favicon from site" operation,
@@ -129,12 +130,14 @@ for dataTuple in dataTuples:
                     #bestFaviconImage = bestFavicon.image.resize((256, 256), resample=PIL.Image.BOX)
                     bestFaviconImage = bestFavicon.image.resize((256, 256))
                     bestFaviconImage.save(iconFilename, "PNG")
-                    icon = URLHash + ".png"
                 else:
                     print("No Favicon found for this URL.", flush=True)
+                    icon = ""
             else:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
+                icon = URLHash + ".png"
         resourceTable.append([URL, title, description, icon])
+        validFiles.append[icon]
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
 
@@ -145,3 +148,8 @@ indexHTML = indexHTML.replace("<<TIMESTAMP>>", str(timestamp))
 indexHTML = indexHTML.replace("<<DATETIMEFORMATTED>>", dateTimeFormatted)
 indexHTML = indexHTML.replace("\'", "\"")
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML)
+
+# Clear out any unwanted files from the output folder.
+for item in os.listdir(args["output"]):
+    if not item in validFiles:
+        print("Removing unwanted output file: " + item, flush=True)
