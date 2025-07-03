@@ -34,7 +34,6 @@ import rcloneLib
 # Also returns an empty string instead of a float value of "nan".
 def itemOrBlank(theRow, theIndex):
     if theRow.shape[0] > theIndex:
-        #item = theRow[theIndex]
         item = theRow.iloc[theIndex]
         if not str(item) == "nan":
             return item
@@ -56,7 +55,8 @@ def resizeAndSavePILImage(theImage, theURLHash):
     print(newWidth)
     print("newHeight:")
     print(newHeight)
-    theImage = theImage.resize((newWidth, 256))
+    #theImage = theImage.resize((newWidth, 256))
+    theImage = PIL.ImageOps.contain(theImage, (256, 256))
     theImage.save(args["output"] + os.sep + theURLHash + ".png", "PNG")
     return theURLHash + ".png"
 
