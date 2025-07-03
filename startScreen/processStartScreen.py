@@ -92,7 +92,7 @@ for inputItem in os.listdir(inputFolder):
 # Get a list of images from the output folder.
 outputImages = {}
 for outputImage in os.listdir(args["output"]):
-    imageSplit = outputImage.lower.rsplit(".", 1)
+    imageSplit = outputImage.lower().rsplit(".", 1)
     if len(imageSplit) > 1:
         if imageSplit[1] in docsToMarkdownLib.bitmapTypes:
             outputImages[imageSplit[0]] = imageSplit[1]
