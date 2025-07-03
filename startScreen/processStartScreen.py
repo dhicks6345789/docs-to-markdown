@@ -145,18 +145,22 @@ for dataTuple in dataTuples:
                     print("No Favicon found for this URL.", flush=True)
             else:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
-                iconResponse = requests.get(icon)
-                iconType = iconResponse.headers["Content-Type"].split("/")[1].lower()
-                if iconType in docsToMarkdownLib.bitmapTypes:
-                    iconImage = PIL.Image.open(io.BytesIO(iconResponse.content))
-                    iconImage = iconImage.resize((256, 256))
-                    iconImage.save(args["output"] + os.sep + URLHash + ".png", "PNG")
-                    icon = URLHash + ".png"
-                elif iconType in ["svg+xml"]:
-                    iconOut = open(args["output"] + os.sep + URLHash + ".svg", "wb")
-                    iconOut.write(iconResponse.content)
-                    iconOut.close()
-                    icon = URLHash + ".svg"
+                URLType, docReference = rcloneLib.URLToTypeAndReference(icon)
+                if URLType == "googleFile":
+                    print("Icon is a Google Drive file - downloading with rclone...")
+                else:
+                    iconResponse = requests.get(icon)
+                    iconType = iconResponse.headers["Content-Type"].split("/")[1].lower()
+                    if iconType in docsToMarkdownLib.bitmapTypes:
+                        iconImage = PIL.Image.open(io.BytesIO(iconResponse.content))
+                        iconImage = iconImage.resize((256, 256))
+                        iconImage.save(args["output"] + os.sep + URLHash + ".png", "PNG")
+                        icon = URLHash + ".png"
+                    elif iconType in ["svg+xml"]:
+                        iconOut = open(args["output"] + os.sep + URLHash + ".svg", "wb")
+                        iconOut.write(iconResponse.content)
+                        iconOut.close()
+                        icon = URLHash + ".svg"
         resourceTable.append([URL, title, description, icon])
         if not icon == "":
             validFiles.append(icon)
