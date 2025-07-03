@@ -106,8 +106,6 @@ for dataTuple in dataTuples:
         title = itemOrBlank(row, 1)
         description = itemOrBlank(row, 2)
         icon = itemOrBlank(row, 3)
-        print("Icon:")
-        print(icon, flush=True)
         if icon == "":
             URLHash = str(cyrb53(URL)) + str(cyrb53(URL[::-1]))
         else:
@@ -147,13 +145,12 @@ for dataTuple in dataTuples:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
                 iconResponse = requests.get(icon)
                 iconType = iconResponse.headers["Content-Type"].split("/")[1].lower()
-                print(iconType)
                 if iconType in docsToMarkdownLib.bitmapTypes:
                     iconImage = PIL.Image.open(io.BytesIO(iconResponse.content))
                     iconImage = iconImage.resize((256, 256))
                     iconImage.save(args["output"] + os.sep + URLHash + ".png", "PNG")
                     icon = URLHash + ".png"
-                elif iconType in docsToMarkdownLib.imageTypes:
+                elif iconType in ["svg+xml"]:
                     iconOut = open(args["output"] + os.sep + URLHash + "." + iconType, "wb")
                     iconOut.write(iconResponse.content)
                     iconOut.close()
