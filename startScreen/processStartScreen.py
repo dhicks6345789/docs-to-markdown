@@ -27,7 +27,9 @@ import docsToMarkdownLib
 # Returns either the element of the row given by the index, or an empty string if that item doesn't exist.
 def itemOrBlank(theRow, theIndex):
     if theRow.shape[0] > theIndex:
-        return theRow[theIndex]
+        item = theRow[theIndex]
+        if not str(item) == "nan":
+            return item
     return ""
 
 # Do a Javascript-style (>>>) unsigned right shift, treating the input number as if it is a 32-bit unsigned integer.
