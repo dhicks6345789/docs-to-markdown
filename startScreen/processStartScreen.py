@@ -89,6 +89,14 @@ for inputItem in os.listdir(inputFolder):
     elif inputItem.endswith(".csv"):
         dataTuples.append((frameTitle, pandas.read_csv(inputItemPath)))
 
+# Get a list of images from the output folder.
+outputImages = {}
+for outputImage in os.listdir(args["output"]):
+    imageSplit = outputImage.lower.rsplit(".", 1)
+    if len(imageSplit) > 1:
+        if imageSplit[1] in docsToMarkdownLib.bitmapTypes:
+            outputImages[imageSplit[0]] = imageSplit[1]
+
 resources = []
 validFiles = ["index.html"]
 for dataTuple in dataTuples:
@@ -104,18 +112,16 @@ for dataTuple in dataTuples:
             URLHash = str(cyrb53(URL)) + str(cyrb53(URL[::-1]))
         else:
             URLHash = str(cyrb53(URL)) + str(cyrb53(icon))
-        iconFilename = args["output"] + os.sep + URLHash + ".png"
         
         downloadIcon = True
         # To do: add date check (expire after one week?).
-        if os.path.exists(iconFilename):
+        if URLHash in outputImages.keys():
             icon = URLHash + ".png"
             downloadIcon = False
         
         if downloadIcon:
             if icon == "":
                 print("Item " + title + " - trying to retreive / refresh favicon...", flush=True)
-                icon = URLHash + ".png"
                 bestFavicon = None
                 # The "Extract Favicon" library is very useful, but seems to have a bug that sometimes results in a ValueError being thrown from somewhere inside its own dependancy
                 # of the Python PIL image library (seems to be an issue trying to retrive the sizes of some icon files). Therefore, we try a plain "get Favicon from site" operation,
@@ -133,19 +139,24 @@ for dataTuple in dataTuples:
                     #bestFavicon.image.thumbnail((256, 256))
                     #bestFaviconImage = bestFavicon.image.resize((256, 256), resample=PIL.Image.BOX)
                     bestFaviconImage = bestFavicon.image.resize((256, 256))
-                    bestFaviconImage.save(iconFilename, "PNG")
+                    bestFaviconImage.save(args["output"] + os.sep + URLHash + ".png", "PNG")
+                    icon = URLHash + ".png"
                 else:
                     print("No Favicon found for this URL.", flush=True)
-                    icon = ""
             else:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
-                iconRequest = requests.get(icon)
-                print("Content type:")
-                print(iconRequest.headers['Content-Type'], flush=True)
-                iconOut = open(iconFilename, 'wb')
-                iconOut.write(iconRequest.content)
-                iconOut.close()
-                icon = URLHash + ".png"
+                iconResponse = requests.get(icon)
+                iconType = iconResponse.headers["Content-Type"].split("/")[1].lower()
+                if iconType in docsToMarkdownLib.bitmapTypes:
+                    iconImage = PIL.Image.open(BytesIO(iconResponse.content))
+                    iconImage = bestFavicon.image.resize((256, 256))
+                    iconImage.save(args["output"] + os.sep + URLHash + ".png", "PNG")
+                    icon = URLHash + ".png"
+                elif iconType in docsToMarkdownLib.imageTypes:
+                    iconOut = open(args["output"] + os.sep + URLHash + "." + iconType, "wb")
+                    iconOut.write(iconResponse.content)
+                    iconOut.close()
+                    icon = URLHash + "." + iconType
         resourceTable.append([URL, title, description, icon])
         if not icon == "":
             validFiles.append(icon)
