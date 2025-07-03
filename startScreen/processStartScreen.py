@@ -114,7 +114,7 @@ for dataTuple in dataTuples:
         downloadIcon = True
         # To do: add date check (expire after one week?).
         if URLHash in outputImages.keys():
-            icon = URLHash + ".png"
+            icon = URLHash + "." + outputImages[URLHash]
             downloadIcon = False
         
         if downloadIcon:
