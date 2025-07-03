@@ -15,6 +15,9 @@ import PIL
 # The Pandas data-handling library.
 import pandas
 
+# The Requests library, for retriving web documents (images).
+import requests
+
 # A library to get favicons from websites. See:
 # https://github.com/AlexMili/extract_favicon/
 import extract_favicon
@@ -136,6 +139,10 @@ for dataTuple in dataTuples:
                     icon = ""
             else:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
+                iconRequest = requests.get(icon)
+                iconOut = open(iconFilename, 'wb')
+                iconOut.write(iconRequest.content)
+                iconOut.close()
                 icon = URLHash + ".png"
         resourceTable.append([URL, title, description, icon])
         if not icon == "":
@@ -155,3 +162,4 @@ docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML)
 for item in os.listdir(args["output"]):
     if not item in validFiles:
         print("Removing unwanted output file: " + item, flush=True)
+        os.remove(args["output"] + os.sep + item)
