@@ -43,7 +43,7 @@ def itemOrBlank(theRow, theIndex):
 # There's several possible options to resize images - plain resize (with basic anti-aliasing) seems about best. Could add AI upscaling, but that seems slightly like overkill here.
 def resizeAndSavePILImage(theImage, theURLHash):
     width, height = theImage.size
-    if height > width:
+    if height < width:
         aspectRatio = float(256) / float(width)
         newHeight = int(float(height) * aspectRatio)
         newWidth = 256
