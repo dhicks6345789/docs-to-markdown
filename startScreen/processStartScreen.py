@@ -151,7 +151,7 @@ for dataTuple in dataTuples:
                     iconImage.save(args["output"] + os.sep + URLHash + ".png", "PNG")
                     icon = URLHash + ".png"
                 elif iconType in ["svg+xml"]:
-                    iconOut = open(args["output"] + os.sep + URLHash + "." + iconType, "wb")
+                    iconOut = open(args["output"] + os.sep + URLHash + ".svg", "wb")
                     iconOut.write(iconResponse.content)
                     iconOut.close()
                     icon = URLHash + ".svg"
