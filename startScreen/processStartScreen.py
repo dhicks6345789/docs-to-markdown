@@ -147,6 +147,7 @@ for dataTuple in dataTuples:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
                 iconResponse = requests.get(icon)
                 iconType = iconResponse.headers["Content-Type"].split("/")[1].lower()
+                print(iconType)
                 if iconType in docsToMarkdownLib.bitmapTypes:
                     iconImage = PIL.Image.open(io.BytesIO(iconResponse.content))
                     iconImage = iconImage.resize((256, 256))
