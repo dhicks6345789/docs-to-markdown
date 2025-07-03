@@ -92,6 +92,8 @@ for dataTuple in dataTuples:
         title = itemOrBlank(row, 1)
         description = itemOrBlank(row, 2)
         icon = itemOrBlank(row, 3)
+        print("Icon:")
+        print(icon, flush=True)
         if icon == "":
             URLHash = str(cyrb53(URL)) + str(cyrb53(URL[::-1]))
         else:
