@@ -28,9 +28,11 @@ import docsToMarkdownLib
 
 
 # Returns either the element of the row given by the index, or an empty string if that item doesn't exist.
+# Also returns an empty string instead of a float value of "nan".
 def itemOrBlank(theRow, theIndex):
     if theRow.shape[0] > theIndex:
-        item = theRow[theIndex]
+        #item = theRow[theIndex]
+        item = theRow.iloc[theIndex]
         if not str(item) == "nan":
             return item
     return ""
