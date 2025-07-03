@@ -89,18 +89,23 @@ for dataTuple in dataTuples:
     resourceTable = [["URL", "Title", "Description", "Icon"]]
     for index, row in dataTuple[1].iterrows():
         URL = itemOrBlank(row, 0)
-        URLHash = str(cyrb53(URL)) + str(cyrb53(URL[::-1]))
-        iconFilename = "www" + os.sep + URLHash + ".png"
         title = itemOrBlank(row, 1)
         description = itemOrBlank(row, 2)
         icon = itemOrBlank(row, 3)
         if icon == "":
-            downloadIcon = True
-            icon = URLHash + ".png"
-            # To do: add date check (expire after one week?).
-            if os.path.exists(iconFilename):
-                downloadIcon = False
-            if downloadIcon:
+            URLHash = str(cyrb53(URL)) + str(cyrb53(URL[::-1]))
+        else:
+            URLHash = str(cyrb53(URL)) + str(cyrb53(icon))
+        iconFilename = "www" + os.sep + URLHash + ".png"
+        
+        downloadIcon = True
+        
+        # To do: add date check (expire after one week?).
+        if os.path.exists(iconFilename):
+            downloadIcon = False
+        
+        if downloadIcon:
+            if icon == "":
                 print("Item " + title + " - trying to retreive / refresh favicon...", flush=True)
                 bestFavicon = None
                 # The "Extract Favicon" library is very useful, but seems to have a bug that sometimes results in a ValueError being thrown from somewhere inside its own dependancy
@@ -120,9 +125,11 @@ for dataTuple in dataTuples:
                     #bestFaviconImage = bestFavicon.image.resize((256, 256), resample=PIL.Image.BOX)
                     bestFaviconImage = bestFavicon.image.resize((256, 256))
                     bestFaviconImage.save(iconFilename, "PNG")
+                    icon = URLHash + ".png"
                 else:
                     print("No Favicon found for this URL.", flush=True)
-                    icon = ""
+            else:
+                print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
         resourceTable.append([URL, title, description, icon])
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
