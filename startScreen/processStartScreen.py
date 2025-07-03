@@ -137,7 +137,7 @@ for dataTuple in dataTuples:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
                 icon = URLHash + ".png"
         resourceTable.append([URL, title, description, icon])
-        validFiles.append[icon]
+        validFiles.append(icon)
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
 
