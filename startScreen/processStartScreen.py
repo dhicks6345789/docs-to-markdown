@@ -46,11 +46,11 @@ def resizeAndSavePILImage(theImage, theURLHash):
     width, height = theImage.size
     if height > width:
         aspectRatio = float(256) / float(width)
-        newHeight = int((float(width) * aspectRatio))
+        newHeight = int((float(height) * aspectRatio))
         newWidth = 256
     else:
         aspectRatio = float(256) / float(height)
-        newWidth = int((float(height) * aspectRatio))
+        newWidth = int((float(width * aspectRatio))
         newHeight = 256
     print("newWidth:")
     print(newWidth)
