@@ -106,6 +106,7 @@ for dataTuple in dataTuples:
         downloadIcon = True
         # To do: add date check (expire after one week?).
         if os.path.exists(iconFilename):
+            icon = URLHash + ".png"
             downloadIcon = False
         
         if downloadIcon:
@@ -125,7 +126,7 @@ for dataTuple in dataTuples:
                     bestFavicon = extract_favicon.get_best_favicon(URL, strategy = ["duckduckgo", "google"])
                 # Now, we hopefully have a downloaded Favicon.
                 if bestFavicon:
-                    # Some possible options to resize images - plain resize seems about best. Could add AI upscaling, but that seems slightly like overkill here.
+                    # Some possible options to resize images - plain resize (with basic anti-aliasing) seems about best. Could add AI upscaling, but that seems slightly like overkill here.
                     #bestFavicon.image.thumbnail((256, 256))
                     #bestFaviconImage = bestFavicon.image.resize((256, 256), resample=PIL.Image.BOX)
                     bestFaviconImage = bestFavicon.image.resize((256, 256))
@@ -137,7 +138,8 @@ for dataTuple in dataTuples:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
                 icon = URLHash + ".png"
         resourceTable.append([URL, title, description, icon])
-        validFiles.append(icon)
+        if not icon == "":
+            validFiles.append(icon)
     resource = (dataTuple[0], resourceTable)
     resources.append(resource)
 
