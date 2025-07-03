@@ -149,7 +149,7 @@ for dataTuple in dataTuples:
                 iconType = iconResponse.headers["Content-Type"].split("/")[1].lower()
                 if iconType in docsToMarkdownLib.bitmapTypes:
                     iconImage = PIL.Image.open(io.BytesIO(iconResponse.content))
-                    iconImage = bestFavicon.image.resize((256, 256))
+                    iconImage = iconImage.image.resize((256, 256))
                     iconImage.save(args["output"] + os.sep + URLHash + ".png", "PNG")
                     icon = URLHash + ".png"
                 elif iconType in docsToMarkdownLib.imageTypes:
