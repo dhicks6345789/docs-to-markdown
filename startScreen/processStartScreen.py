@@ -94,7 +94,7 @@ outputImages = {}
 for outputImage in os.listdir(args["output"]):
     imageSplit = outputImage.lower().rsplit(".", 1)
     if len(imageSplit) > 1:
-        if imageSplit[1] in docsToMarkdownLib.bitmapTypes:
+        if imageSplit[1] in docsToMarkdownLib.imageTypes:
             outputImages[imageSplit[0]] = imageSplit[1]
 
 resources = []
