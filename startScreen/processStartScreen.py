@@ -140,6 +140,8 @@ for dataTuple in dataTuples:
             else:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
                 iconRequest = requests.get(icon)
+                print("Content type:")
+                print(iconRequest.headers['Content-Type'], flush=True)
                 iconOut = open(iconFilename, 'wb')
                 iconOut.write(iconRequest.content)
                 iconOut.close()
