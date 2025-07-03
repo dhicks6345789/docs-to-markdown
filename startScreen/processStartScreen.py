@@ -43,10 +43,13 @@ def itemOrBlank(theRow, theIndex):
 # Resizes a given PIL image to a standard (256 by 256) size and saves out to a filename given as a URL hash.
 # There's several possible options to resize images - plain resize (with basic anti-aliasing) seems about best. Could add AI upscaling, but that seems slightly like overkill here.
 def resizeAndSavePILImage(theImage, theURLHash):
-    #theImage.thumbnail((256, 256))
-    theImage = PIL.ImageOps.contain(theImage, (256, 256))
-    #bestFaviconImage = bestFavicon.image.resize((256, 256), resample=PIL.Image.BOX)
-    #theImage = theImage.resize((256, 256))
+    width, height = theImage.size
+    #im = im.resize((width//2, height//2))
+    aspectRatio = float(height) / float(256)
+    newWidth = int((float(width) / float(256)) * aspectRatio)
+    print("newWidth:")
+    print(newWidth)
+    theImage = theImage.resize((newWidth, 256))
     theImage.save(args["output"] + os.sep + theURLHash + ".png", "PNG")
     return theURLHash + ".png"
 
