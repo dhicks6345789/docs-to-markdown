@@ -165,7 +165,7 @@ for dataTuple in dataTuples:
                     iconType = iconResponse.headers["Content-Type"].split("/")[1].lower()
                     if iconType in docsToMarkdownLib.bitmapTypes:
                         iconImage = PIL.Image.open(io.BytesIO(iconResponse.content))
-                        icon = resizeAndSavePILImage(iconImage, URLHash):
+                        icon = resizeAndSavePILImage(iconImage, URLHash)
                     elif iconType in ["svg+xml"]:
                         iconOut = open(args["output"] + os.sep + URLHash + ".svg", "wb")
                         iconOut.write(iconResponse.content)
