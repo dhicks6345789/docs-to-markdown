@@ -154,7 +154,7 @@ for dataTuple in dataTuples:
                     iconOut = open(args["output"] + os.sep + URLHash + "." + iconType, "wb")
                     iconOut.write(iconResponse.content)
                     iconOut.close()
-                    icon = URLHash + "." + iconType
+                    icon = URLHash + ".svg"
         resourceTable.append([URL, title, description, icon])
         if not icon == "":
             validFiles.append(icon)
