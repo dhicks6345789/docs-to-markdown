@@ -51,6 +51,10 @@ def resizeAndSavePILImage(theImage, theURLHash):
     resizedY = 0
     if resizedHeight != 256:
         resizedY = int((originalHeight - resizedHeight) / 2)
+    print("resizedX:")
+    print(resizedX)
+    print("resizedY:")
+    print(resizedY)
     outputImage = PIL.Image.new('RGBA', (256, 256), (255, 0, 0, 0))
     outputImage.paste(resizedImage, (resizedX, resizedY))
     outputImage.save(args["output"] + os.sep + theURLHash + ".png", "PNG")
