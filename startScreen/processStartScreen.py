@@ -42,20 +42,17 @@ def itemOrBlank(theRow, theIndex):
 # Resizes a given PIL image to a standard (256 by 256) size and saves out to a filename given as a URL hash.
 # There's several possible options to resize images - plain resize (with basic anti-aliasing) seems about best. Could add AI upscaling, but that seems slightly like overkill here.
 def resizeAndSavePILImage(theImage, theURLHash):
+    IMAGESIZE = 1024
     originalWidth, originalHeight = theImage.size
-    resizedImage = PIL.ImageOps.contain(theImage, (256, 256))
+    resizedImage = PIL.ImageOps.contain(theImage, (IMAGESIZE, IMAGESIZE))
     resizedWidth, resizedHeight = resizedImage.size
     resizedX = 0
-    if resizedWidth != 256:
-        resizedX = int((256 - resizedWidth) / 2)
+    if resizedWidth != IMAGESIZE:
+        resizedX = int((IMAGESIZE - resizedWidth) / 2)
     resizedY = 0
-    if resizedHeight != 256:
-        resizedY = int((256 - resizedHeight) / 2)
-    print("resizedX:")
-    print(resizedX)
-    print("resizedY:")
-    print(resizedY)
-    outputImage = PIL.Image.new('RGBA', (256, 256), (255, 0, 0, 0))
+    if resizedHeight != IMAGESIZE:
+        resizedY = int((IMAGESIZE - resizedHeight) / 2)
+    outputImage = PIL.Image.new('RGBA', (IMAGESIZE, IMAGESIZE), (255, 0, 0, 0))
     outputImage.paste(resizedImage, (resizedX, resizedY))
     outputImage.save(args["output"] + os.sep + theURLHash + ".png", "PNG")
     return theURLHash + ".png"
