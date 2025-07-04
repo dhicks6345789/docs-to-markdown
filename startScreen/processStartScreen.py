@@ -42,27 +42,18 @@ def itemOrBlank(theRow, theIndex):
 # Resizes a given PIL image to a standard (256 by 256) size and saves out to a filename given as a URL hash.
 # There's several possible options to resize images - plain resize (with basic anti-aliasing) seems about best. Could add AI upscaling, but that seems slightly like overkill here.
 def resizeAndSavePILImage(theImage, theURLHash):
-    width, height = theImage.size
-    if height < width:
-        aspectRatio = float(256) / float(width)
-        newHeight = int(float(height) * aspectRatio)
-        newWidth = 256
-    else:
-        aspectRatio = float(256) / float(height)
-        newWidth = int(float(width) * aspectRatio)
-        newHeight = 256
-    print("newWidth:")
-    print(newWidth)
-    print("newHeight:")
-    print(newHeight)
-    #theImage = theImage.resize((newWidth, 256))
-    theImage = PIL.ImageOps.contain(theImage, (256, 256))
-    width, height = theImage.size
-    print("width:")
-    print(width)
-    print("height:")
-    print(height)
-    theImage.save(args["output"] + os.sep + theURLHash + ".png", "PNG")
+    originalWidth, originalHeight = theImage.size
+    resizedImage = PIL.ImageOps.contain(theImage, (256, 256))
+    resizedWidth, resizedHeight = resizedImage.size
+    resizedX = 0
+    if resizedWidth != 256:
+        resizedX = int((originalWidth - resizedWidth) / 2)
+    resizedY = 0
+    if resizedHeight != 256:
+        resizedY = int((originalHeight - resizedHeight) / 2)
+    outputImage = PIL.Image.new('RGBA', (256, 256), (255, 0, 0, 0))
+    outputImage.paste(resizedImage, (resizedX, resizedY))
+    outputImage.save(args["output"] + os.sep + theURLHash + ".png", "PNG")
     return theURLHash + ".png"
 
 # Do a Javascript-style (>>>) unsigned right shift, treating the input number as if it is a 32-bit unsigned integer.
