@@ -47,10 +47,10 @@ def resizeAndSavePILImage(theImage, theURLHash):
     resizedWidth, resizedHeight = resizedImage.size
     resizedX = 0
     if resizedWidth != 256:
-        resizedX = int((originalWidth - resizedWidth) / 2)
+        resizedX = int((256 - resizedWidth) / 2)
     resizedY = 0
     if resizedHeight != 256:
-        resizedY = int((originalHeight - resizedHeight) / 2)
+        resizedY = int((256 - resizedHeight) / 2)
     print("resizedX:")
     print(resizedX)
     print("resizedY:")
