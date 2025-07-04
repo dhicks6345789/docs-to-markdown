@@ -57,6 +57,11 @@ def resizeAndSavePILImage(theImage, theURLHash):
     print(newHeight)
     #theImage = theImage.resize((newWidth, 256))
     theImage = PIL.ImageOps.contain(theImage, (256, 256))
+    width, height = theImage.size
+    print("width:")
+    print(width)
+    print("height:")
+    print(height)
     theImage.save(args["output"] + os.sep + theURLHash + ".png", "PNG")
     return theURLHash + ".png"
 
