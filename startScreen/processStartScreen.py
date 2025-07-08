@@ -158,7 +158,7 @@ for dataTuple in dataTuples:
                         iconPath = inputImages[title.lower()][0]
                         iconType = inputImages[title.lower()][1]
                         if iconType in docsToMarkdownLib.bitmapTypes:
-                            iconImage = PIL.Image.open()
+                            iconImage = PIL.Image.open(iconPath)
                             icon = resizeAndSavePILImage(iconImage, URLHash)
                         elif iconType in ["svg+xml"]:
                             icon = theURLHash + ".svg"
