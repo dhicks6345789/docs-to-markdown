@@ -101,8 +101,13 @@ inputFolder = docsToMarkdownLib.normalisePath(args["input"])
 print("Input folder: " + inputFolder, flush=True)
 
 dataTuples = []
+inputImages = {}
 for inputItem in os.listdir(inputFolder):
-    frameTitle = inputItem.rsplit(".", 1)
+    inputSplit = inputItem.rsplit(".", 1)
+    inputTitle = inputSplit[0]
+    inputFileType = ""
+    if len(inputSplit) == 2:
+        inputFileType = inputSplit[1].lower()
     inputItemPath = inputFolder + os.sep + inputItem
     if inputItem.endswith(".xls") or inputItem.endswith(".xlsx"):
         dataFrameMap = pandas.read_excel(inputItemPath, sheet_name=None)
@@ -110,6 +115,8 @@ for inputItem in os.listdir(inputFolder):
             dataTuples.append((dataFrameName, dataFrameMap[dataFrameName]))
     elif inputItem.endswith(".csv"):
         dataTuples.append((frameTitle, pandas.read_csv(inputItemPath)))
+    elif inputFileType in docsToMarkdownLib.imageTypes:
+        inputImages[inputTitle.lower()] = [inputItemPath, inputFileType]
 
 # Get a list of images from the output folder.
 outputImages = {}
@@ -128,10 +135,12 @@ for dataTuple in dataTuples:
         title = itemOrBlank(row, 1)
         description = itemOrBlank(row, 2)
         icon = itemOrBlank(row, 3)
-        if icon == "":
-            URLHash = str(cyrb53(URL)) + str(cyrb53(URL[::-1]))
-        else:
+        if not icon == "":
             URLHash = str(cyrb53(URL)) + str(cyrb53(icon))
+        elif not title == "":
+            URLHash = str(cyrb53(URL)) + str(cyrb53(title))
+        else:
+            URLHash = str(cyrb53(URL)) + str(cyrb53(URL[::-1]))
         
         downloadIcon = True
         # To do: add date check (expire after one week?).
@@ -140,24 +149,38 @@ for dataTuple in dataTuples:
             downloadIcon = False
         
         if downloadIcon:
+            localIconFound = False
             if icon == "":
-                print("Item " + title + " - trying to retreive / refresh favicon...", flush=True)
-                bestFavicon = None
-                # The "Extract Favicon" library is very useful, but seems to have a bug that sometimes results in a ValueError being thrown from somewhere inside its own dependancy
-                # of the Python PIL image library (seems to be an issue trying to retrive the sizes of some icon files). Therefore, we try a plain "get Favicon from site" operation,
-                # and if that fails (including if it throws an exception) we move on to the "download from DuckDuckGo / Google cache" option.
-                try:
-                    bestFavicon = extract_favicon.get_best_favicon(URL,  strategy = ["content"])
-                except ValueError:
-                    print("Favicon - ValueError raised.", flush=True)
-                # If there was a problem getting the Favicon, try a couple of different caches.
-                if bestFavicon == None:
-                    bestFavicon = extract_favicon.get_best_favicon(URL, strategy = ["duckduckgo", "google"])
-                # Now, we hopefully have a downloaded Favicon.
-                if bestFavicon:
-                    icon = resizeAndSavePILImage(bestFavicon.image, URLHash)
-                else:
-                    print("No Favicon found for this URL.", flush=True)
+                if not title == "":
+                    if title.lower() in inputImages:
+                        localIconFound = True
+                        print("Item " + title + " - found local icon image.", flush=True)
+                        iconPath = inputImages[title.lower()][0]
+                        iconType = inputImages[title.lower()][1]
+                        if iconType in docsToMarkdownLib.bitmapTypes:
+                            iconImage = PIL.Image.open()
+                            icon = resizeAndSavePILImage(iconImage, URLHash)
+                        elif iconType in ["svg+xml"]:
+                            icon = theURLHash + ".svg"
+                            shutil.copyfile(iconPath, args["output"] + os.sep + icon)
+                if not localIconFound:
+                    print("Item " + title + " - trying to retreive / refresh favicon...", flush=True)
+                    bestFavicon = None
+                    # The "Extract Favicon" library is very useful, but seems to have a bug that sometimes results in a ValueError being thrown from somewhere inside its own dependancy
+                    # of the Python PIL image library (seems to be an issue trying to retrive the sizes of some icon files). Therefore, we try a plain "get Favicon from site" operation,
+                    # and if that fails (including if it throws an exception) we move on to the "download from DuckDuckGo / Google cache" option.
+                    try:
+                        bestFavicon = extract_favicon.get_best_favicon(URL,  strategy = ["content"])
+                    except ValueError:
+                        print("Favicon - ValueError raised.", flush=True)
+                    # If there was a problem getting the Favicon, try a couple of different caches.
+                    if bestFavicon == None:
+                        bestFavicon = extract_favicon.get_best_favicon(URL, strategy = ["duckduckgo", "google"])
+                    # Now, we hopefully have a downloaded Favicon.
+                    if bestFavicon:
+                        icon = resizeAndSavePILImage(bestFavicon.image, URLHash)
+                    else:
+                        print("No Favicon found for this URL.", flush=True)
             else:
                 print("Item " + title + " - trying to retreive / refresh icon " + icon + "...", flush=True)
                 URLType, docReference = rcloneLib.URLToTypeAndReference(icon)
