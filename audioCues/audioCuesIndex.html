@@ -110,6 +110,10 @@
                     clearInterval(awakeInterval);
                 }
             }
+			
+			document.body.onkeydown = function(theEvent) {
+				console.log(String.fromCharCode(theEvent.keyCode) + " --> " + theEvent.keyCode);
+			};
             
             // The page load function - execution starts here.
             function startApp() {
