@@ -181,7 +181,13 @@
 
 				// Set up an event handler to listen for keypresses, so we can trigger sound effects by keypress if wanted.
 				document.body.onkeydown = function(theEvent) {
-					console.log(String.fromCharCode(theEvent.keyCode) + " --> " + theEvent.keyCode);
+					chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+					keypressed = String.fromCharCode(theEvent.keyCode).toUpperCase();
+					for (pl = 0; pl < chars.length; pl = pl + 1) {
+						if (keypressed == chars[pl]) {
+							playPauseAudio(pl);
+						}
+					}
 				};
             }
         </script>
