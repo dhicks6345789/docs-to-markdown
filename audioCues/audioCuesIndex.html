@@ -185,7 +185,8 @@
 					keypressed = String.fromCharCode(theEvent.keyCode).toUpperCase();
 					for (pl = 0; pl < chars.length; pl = pl + 1) {
 						if (keypressed == chars[pl]) {
-							playPauseAudio(pl);
+							rewindAudio(pl+1);
+							playPauseAudio(pl+1);
 						}
 					}
 				};
