@@ -165,7 +165,7 @@ for pl in range(0, len(outputFiles)):
     cueRow = [file + ".mp3", fileTitle, "", 0, 0, ""]
     
     audioFileData = eyed3.load(inputFolder + os.sep + inputFile)
-    if not audioFileData == None:
+    if (not audioFileData == None) and (not audioFileData.tag == None):
         if not audioFileData.tag.title == None:
             cueRow[1] = html.escape(audioFileData.tag.title)
         if len(audioFileData.tag.comments) > 0:
