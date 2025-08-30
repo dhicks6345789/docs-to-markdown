@@ -110,10 +110,6 @@
                     clearInterval(awakeInterval);
                 }
             }
-			
-			document.body.onkeydown = function(theEvent) {
-				console.log(String.fromCharCode(theEvent.keyCode) + " --> " + theEvent.keyCode);
-			};
             
             // The page load function - execution starts here.
             function startApp() {
@@ -182,6 +178,11 @@
                         }
                     }
                 }
+
+				// Set up an event handler to listen for keypresses, so we can trigger sound effects by keypress if wanted.
+				document.body.onkeydown = function(theEvent) {
+					console.log(String.fromCharCode(theEvent.keyCode) + " --> " + theEvent.keyCode);
+				};
             }
         </script>
     </head>
