@@ -118,11 +118,16 @@ for file in files:
             outputFile = outputFolder + os.sep + file + ".mp3"
             if not os.path.exists(outputFile) or not os.path.getmtime(inputFile) == os.path.getmtime(outputFile):
                 print("Processing audio file: " + inputFile, flush=True)
-                # Process the input audio file with FFMPEG and write out to an MP3, so the output audio is in a consistant format. Filters used:
+                # Process the input audio file with FFMPEG and write out to an MP3, so the output audio is in a consistant format. If the input is an MP3 file, we use the following filters:
                 #     silenceremove - remove any silence at the start of the track.
                 #     compand - apply some Dynamic Range Compression to the audio to better level out any differences between low and high volume parts of the track.
                 #     dynaudnorm - set the loudest part of the track to max volume, try and have a reasonably consistant sound level.
-                systemPrint("ffmpeg -y -i \"" + inputFile + "\" -filter:a \"silenceremove=1:0:-45dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=1\" -vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                # Otherwise, the input file is left unprocessed (other than being re-written as an MP3 file).
+                ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" "
+                if inputFile.lower().endswith(".mp3"):
+                    ffmpegCommand = ffmpegCommand + "-filter:a \"silenceremove=1:0:-45dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=1\" "
+                ffmpegCommand = ffmpegCommand + "-vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                systemPrint(ffmpegCommand)
                 # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
                 systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
             if os.path.exists(outputFile):
