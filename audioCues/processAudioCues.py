@@ -126,7 +126,7 @@ for file in files:
                 ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" "
                 if inputFile.lower().endswith(".mp3"):
                     ffmpegCommand = ffmpegCommand + "-filter:a \"silenceremove=1:0:-45dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=1\" "
-                ffmpegCommand = ffmpegCommand + "-vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1")
+                ffmpegCommand = ffmpegCommand + "-vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
                 systemPrint(ffmpegCommand)
                 # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
                 systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
