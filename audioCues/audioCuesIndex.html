@@ -183,6 +183,7 @@
 				document.body.onkeydown = function(theEvent) {
 					chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 					keypressed = String.fromCharCode(theEvent.keyCode).toUpperCase();
+					console.log("Key code: " + theEvent.keyCode);
 					for (pl = 0; pl < chars.length; pl = pl + 1) {
 						if (keypressed == chars[pl]) {
 							rewindAudio(pl+1);
