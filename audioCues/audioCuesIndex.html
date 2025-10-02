@@ -184,10 +184,19 @@
 					chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 					keypressed = String.fromCharCode(theEvent.keyCode).toUpperCase();
 					console.log("Key code: " + theEvent.keyCode);
-					for (pl = 0; pl < chars.length; pl = pl + 1) {
-						if (keypressed == chars[pl]) {
-							rewindAudio(pl+1);
-							playPauseAudio(pl+1);
+					// Handle the Escape key - stop all audio.
+					if (keypressed == 27) {
+						 for (pl = 0; pl < audioObjects.length; pl = pl + 1) {
+							 rewindAudio(pl+1);
+						 }
+					} else if (keypressed == 122) {
+						// F11 pressed - do nothing.
+					} else {
+						for (pl = 0; pl < chars.length; pl = pl + 1) {
+							if (keypressed == chars[pl]) {
+								rewindAudio(pl+1);
+								playPauseAudio(pl+1);
+							}
 						}
 					}
 				};
