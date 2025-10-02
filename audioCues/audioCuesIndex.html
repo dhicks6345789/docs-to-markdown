@@ -183,7 +183,6 @@
 				document.body.onkeydown = function(theEvent) {
 					chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 					keypressed = String.fromCharCode(theEvent.keyCode).toUpperCase();
-					console.log("Key code: " + theEvent.keyCode);
 					// Handle the Escape key - stop all audio.
 					if (theEvent.keyCode == 27) {
 						 for (pl = 0; pl < audioObjects.length; pl = pl + 1) {
