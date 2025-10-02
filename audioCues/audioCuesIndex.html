@@ -44,11 +44,8 @@
                 audioObjects[theResource-1]["playerProgress"].style.width = Math.ceil((parseFloat(audioObjects[theResource-1]["audioObject"].currentTime) / parseFloat(audioObjects[theResource-1]["audioObject"].duration)) * 100) + "%";
             }
 
-            function playSilence() {
-                document.getElementById("silence").play();
-            }
-
-            function playPauseAudio(theResource) {
+            // Toggle an audio element - if it's currently paused then have it play, otherwise pause it.
+			function playPauseAudio(theResource) {
                 audioPlayer = audioObjects[theResource-1]["audioPlayer"];
                 playerButton = audioObjects[theResource-1]["playerButton"];
                 playerIcon = audioObjects[theResource-1]["playerIcon"];
@@ -70,7 +67,8 @@
                 }
             }
             
-            function rewindAudio(theResource) {
+            // Stop an audio element playing and rewind it back to the start.
+			function rewindAudio(theResource) {
                 audioPlayer = audioObjects[theResource-1]["audioPlayer"];
                 playerButton = audioObjects[theResource-1]["playerButton"];
                 playerIcon = audioObjects[theResource-1]["playerIcon"];
@@ -84,7 +82,8 @@
                 audioObject.currentTime = 0;
                 playerBar.style.display = "none";
             }
-            
+
+			// To do: handle the "further options" button on each audio element.
             function showOptions(theResource) {
                 console.log("Show: " + theResource);
             }
@@ -96,7 +95,7 @@
                 document.execCommand("copy");
             }
 
-            // 
+            // Periodically (every 50 seconds), play a short silent audio element. This, hopefully, keeps Bluetooth and similar speakers from disconnecting / shutting off due to inactivity.
             function keepSpeakerAwake() {
                 awakeButton = document.getElementById("speakerAwakeButton");
                 awakeIcon = awakeButton.childNodes[1];
@@ -109,6 +108,11 @@
                     awakeIcon.setAttribute("src", "/bootstrap-icons/1.8.1/play.svg");
                     clearInterval(awakeInterval);
                 }
+            }
+
+			// Plays the silent audio item. Used by "keepSpeakerAwake" as an interval function stop the speaker going to sleep.
+			function playSilence() {
+                document.getElementById("silence").play();
             }
             
             // The page load function - execution starts here.
@@ -189,7 +193,7 @@
 							 rewindAudio(pl+1);
 						 }
 					} else if (theEvent.keyCode == 122) {
-						// F11 pressed - do nothing.
+						// F11 pressed - do nothing. For some reason, triggers "Z" otherwise, whioch is odd.
 					} else {
 						for (pl = 0; pl < chars.length; pl = pl + 1) {
 							if (keypressed == chars[pl]) {
