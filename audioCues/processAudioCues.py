@@ -83,7 +83,7 @@ for file in files:
                 docsToMarkdownLib.processArgsFile(fullPath, defaultArgs=args)
 
 print("Config:", flush=True)
-print(config. flush=True)
+print(config, flush=True)
 
 itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
