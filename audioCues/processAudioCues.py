@@ -5,14 +5,12 @@ import os
 import io
 import re
 import sys
+import html
 import shutil
 import datetime
 
 # The Pillow image-handling library.
 import PIL
-
-# The JSON-handling library.
-import html
 
 # The eyeD3 library for getting information from MP3 files.
 import eyed3
@@ -83,6 +81,9 @@ for file in files:
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Config file found: " + fullPath, flush=True)
                 docsToMarkdownLib.processArgsFile(fullPath, defaultArgs=args)
+
+print("Config:", flush=True)
+print(config. flush=True)
 
 itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
