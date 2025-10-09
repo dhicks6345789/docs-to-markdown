@@ -124,7 +124,11 @@ inputFiles = []
 outputFiles = []
 outputMD5s = []
 outputFolder = docsToMarkdownLib.normalisePath(args["output"])
+
+# Set up the column headings for the data to be included in the front end.
 cueList = [["MD5", "Filename", "Title", "Description", "Icon", "Start", "End", "Volume"]]
+
+# Process any audio files found, in any supported format, into standardised MP3 files ready to be played from the browser.
 print("STATUS: processAudioCues - processing found audio files.", flush=True)
 for file in files:
     for fileType in files[file]:
@@ -157,6 +161,7 @@ for outputItem in os.listdir(args["output"]):
     if not outputItem.endswith(".mp3") or not outputItem[:-4] in outputFiles:
         systemPrint("rm \"" + args["output"] + os.sep + outputItem + "\"")
 
+# Step through each output file, assigning information about each one so the front end can see it.
 for pl in range(0, len(outputFiles)):
     file = outputFiles[pl]
     inputFile = inputFiles[pl]
@@ -183,18 +188,16 @@ for pl in range(0, len(outputFiles)):
     else:
         print("Processing image file as icon: " + iconInputFile, flush=True)
         systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + iconInputFile + "\" \"" + iconOutputFile + "\" >/dev/null 2>&1")
-        
-    # Defaults for the row of CSV / JSON data we'll write to tell the front end about this item. Fields:
-    # [["MD5", "Filename", "Title", "Description", "Icon", "Start", "End", "Volume"]]
-    # Input file MD5 Hash, Audio file name, Title, Description, Icon File name, Start, End, Volume
-    cueRow = [outputMD5s[pl], file + ".mp3", fileTitle, "", "", 0, 0, 0]
-    
+
+    fileDescription = ""
     audioFileData = eyed3.load(inputFolder + os.sep + inputFile)
     if (not audioFileData == None) and (not audioFileData.tag == None):
         if not audioFileData.tag.title == None:
-            cueRow[1] = html.escape(audioFileData.tag.title)
+            fileTitle = html.escape(audioFileData.tag.title)
         if len(audioFileData.tag.comments) > 0:
-            cueRow[2] = audioFileData.tag.comments[0].text
+            fileDescription = audioFileData.tag.comments[0].text
+    
+    fileIcon = ""
     if os.path.exists(iconOutputFile):
         # If we have an icon file, make sure it's a square, thumbnailed image...
         iconImage = PIL.Image.open(iconOutputFile)
@@ -213,9 +216,11 @@ for pl in range(0, len(outputFiles)):
         croppedIcon.thumbnail((1024,1024))
         croppedIcon.save(iconOutputFile)
         # ...and that we tell the front end we have it.
-        cueRow[5] = file + ".png"
+        fileIcon = file + ".png"
+    
+    # Fields: 0:Input file MD5 Hash, 1:Audio file name, 2:Title, 3:Description, 4:Icon File name, 5:Start, 6:End, 7:Volume
     # Append the row of CSV data for the front end.
-    cueList.append(cueRow)
+    cueList.append([outputMD5s[pl], file + ".mp3", fileTitle, fileDescription, fileIcon, 0, 0, 0])
 
 # Write the index.html file for the zip-ed version.
 indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
