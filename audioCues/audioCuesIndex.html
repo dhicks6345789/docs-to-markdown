@@ -114,6 +114,16 @@
 			function playSilence() {
                 document.getElementById("silence").play();
             }
+
+			function viewData() {
+				dataModal = document.getElementById("dataModal");
+				dataModal.style.display = "";
+			}
+
+			function hideData() {
+				dataModal = document.getElementById("dataModal");
+				dataModal.style.display = "none";
+			}
             
             // The page load function - execution starts here.
             function startApp() {
@@ -254,8 +264,27 @@
                 <div id="resource-06" class="col-sm-2" style="height:100%;"></div>
             </div>
         </div>
+		<div id="dataModal" style="display:none;">
+			<table>
+				<tr>
+					<th>MD5</th>
+					<th>Filename</th>
+					<th>Title</th>
+					<th>Description</th>
+					<th>Icon</th>
+					<th>Start</th>
+					<th>End</th>th>
+					<th>Volume</th>
+					<th>Key</th>
+				</tr>
+			</table>
+		</div>
         <div class="row" style="margin:0; padding:0; width:100%;">
             <div class="col text-start">
+				View data:
+                <button id="speakerAwakeButton" type="button" class="btn btn-success" aria-label="View data" onclick="viewData()">
+                    <img src="/bootstrap-icons/1.8.1/filetype-csv.svg" alt="View data" width="32" height="32">
+                </button>
             </div>
             <div class="col text-center">
                 Shortcut to save: <input type="text" id="shortcutURL" value="" readonly/>
