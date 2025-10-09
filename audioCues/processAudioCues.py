@@ -85,27 +85,30 @@ for file in files:
                 print("Config file found: " + fullPath, flush=True)
                 config = docsToMarkdownLib.processArgsFile(inputFolder + os.sep + fullPath)
 
-itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
+itemsFiles = []
 for file in files:
     if file.lower() == "items" or file.lower().endswith("/items"):
-        for fileType in files.pop(file):
-            fullPath = file + "." + fileType
-            if fileType.lower() in ["xls", "xlsx", "csv"]:
-                print("Items file found: " + fullPath, flush=True)
-                if fileType.lower() in ["xls", "xlsx"]:
-                    itemsSheet = pandas.read_excel(inputFolder + os.sep + fullPath)
-                else:
-                    itemsSheet = pandas.read_csv(inputFolder + os.sep + fullPath)
-                # Convert the Pandas dataframe to an array of dicts, lowercasing all the keys and replacing all "NaN" values with empty string.
-                for itemsIndex, itemsRow in itemsSheet.iterrows():
-                    newItem = {}
-                    for colName in itemsRow.keys():
-                        if pandas.isna(itemsRow[colName]):
-                            newItem[colName.lower()] = ""
-                        else:
-                            newItem[colName.lower()] = itemsRow[colName]
-                    itemsList.append(newItem)
+        itemsFiles.append(file)
+itemsList = []
+for file in itemsFiles:
+    for fileType in files.pop(file):
+        fullPath = file + "." + fileType
+        if fileType.lower() in ["xls", "xlsx", "csv"]:
+            print("Items file found: " + fullPath, flush=True)
+            if fileType.lower() in ["xls", "xlsx"]:
+                itemsSheet = pandas.read_excel(inputFolder + os.sep + fullPath)
+            else:
+                itemsSheet = pandas.read_csv(inputFolder + os.sep + fullPath)
+            # Convert the Pandas dataframe to an array of dicts, lowercasing all the keys and replacing all "NaN" values with empty string.
+            for itemsIndex, itemsRow in itemsSheet.iterrows():
+                newItem = {}
+                for colName in itemsRow.keys():
+                    if pandas.isna(itemsRow[colName]):
+                        newItem[colName.lower()] = ""
+                    else:
+                        newItem[colName.lower()] = itemsRow[colName]
+                itemsList.append(newItem)
 
 print("Items:", flush=True)
 print(itemsList, flush=True)
