@@ -7,6 +7,7 @@ import re
 import sys
 import html
 import shutil
+import hashlib
 import datetime
 
 # The Pillow image-handling library.
@@ -47,6 +48,12 @@ def systemPrint(theCommandLine):
     #print(theCommandLine, flush=True)
     os.system(theCommandLine)
 
+def getMD5(theFilename):
+    data = open(theFilename, "rb")
+    result = hashlib.md5(data).hexdigest()
+    data.close()
+    return(result)
+    
 # Check through items in the given input folder, recursing into sub-folders.
 # Produces an array (in the global "files" variable) containing tuples of file names and an array of extensions found.
 files = {}
@@ -115,8 +122,9 @@ print(itemsList, flush=True)
 
 inputFiles = []
 outputFiles = []
+outputMD5s = []
 outputFolder = docsToMarkdownLib.normalisePath(args["output"])
-cueList = [["Filename", "Title", "Description", "TrimLeft", "TrimRight", "Icon"]]
+cueList = [["MD5", "Filename", "Title", "Description", "Icon", "Start", "End", "Volume"]]
 print("STATUS: processAudioCues - processing found audio files.", flush=True)
 for file in files:
     for fileType in files[file]:
@@ -140,6 +148,7 @@ for file in files:
             if os.path.exists(outputFile):
                 inputFiles.append(file + "." + fileType)
                 outputFiles.append(file)
+                outputMD5s.append(getMD5(inputFile))
             else:
                 print("ERROR: Could not process audio input file: " + file + "." + fileType, flush=True)
 
@@ -154,17 +163,20 @@ for pl in range(0, len(outputFiles)):
     iconOutputFile = outputFolder + os.sep + file + ".png"
     
     iconInputFile = ""
+
+    # Figure out the files' title - this is the file's filename without any leading numerals.
     fileTitle = file.strip()
     if re.match("^[0-9]+ *- *.*", fileTitle) != None:
         fileTitle = fileTitle.split("-", 1)[1].strip()
     
+    # Figure out if the file has a matching image file to use as an icone...
     for fileType in docsToMarkdownLib.imageTypes:
         if os.path.exists(inputFolder + os.sep + file + "." + fileType):
             iconInputFile = file + "." + fileType
         elif os.path.exists(inputFolder + os.sep + fileTitle + "." + fileType):
             iconInputFile = fileTitle + "." + fileType
     
-    # If the audio file doesn't have a matching image file to use as an icon, see if there's an image included in the MP3 data we can use.
+    # ...if not, see if there's an image included in the MP3 data we can use.
     if iconInputFile == "":
         print("Extracting any album art as icon from: " + inputFile, flush=True)
         systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + inputFile + "\" -an -vcodec copy \"" + iconOutputFile + "\" >/dev/null 2>&1")
@@ -173,8 +185,9 @@ for pl in range(0, len(outputFiles)):
         systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + iconInputFile + "\" \"" + iconOutputFile + "\" >/dev/null 2>&1")
         
     # Defaults for the row of CSV / JSON data we'll write to tell the front end about this item. Fields:
-    # Audio file name, Title, Description, TrimLeft, TrimRight, Icon file name
-    cueRow = [file + ".mp3", fileTitle, "", 0, 0, ""]
+    # [["MD5", "Filename", "Title", "Description", "Icon", "Start", "End", "Volume"]]
+    # Input file MD5 Hash, Audio file name, Title, Description, Icon File name, Start, End, Volume
+    cueRow = [outputMD5s[pl], file + ".mp3", fileTitle, "", "", 0, 0, 0]
     
     audioFileData = eyed3.load(inputFolder + os.sep + inputFile)
     if (not audioFileData == None) and (not audioFileData.tag == None):
@@ -201,7 +214,7 @@ for pl in range(0, len(outputFiles)):
         croppedIcon.save(iconOutputFile)
         # ...and that we tell the front end we have it.
         cueRow[5] = file + ".png"
-    # Append the row of CSV / JSON data for the front end.
+    # Append the row of CSV data for the front end.
     cueList.append(cueRow)
 
 # Write the index.html file for the zip-ed version.
