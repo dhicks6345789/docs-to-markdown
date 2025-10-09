@@ -137,7 +137,7 @@
                     document.getElementById("errorMessage").innerHTML = "Error: Unable to find any resources to load.";
                 } else {
                     // Step through the resources, setting up an audio player on the page for each one.
-					// Fields: 0:Input file MD5 Hash, 1:Audio file name, 2:Title, 3:Description, 4:Icon File name, 5:Start, 6:End, 7:Volume
+					// Fields: 0:Input file MD5 Hash, 1:Audio file name, 2:Title, 3:Description, 4:Icon File name, 5:Start, 6:End, 7:Volume, 8:Key
                     itemCount = 0;
                     for (resource = 0; resource < resources.length; resource = resource + 1) {
                         if (resources[resource][1] != "Filename") {
