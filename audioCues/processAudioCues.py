@@ -83,13 +83,7 @@ for file in files:
             fullPath = file + "." + fileType
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Config file found: " + fullPath, flush=True)
-                if fileType in ["csv"[:
-                    configDataFrame = pandas.read_csv(theFilename, header=0).to_dict(index=False)
-                elif fileType in ["xls", "xlsx"]:
-                    configDataFrame = pandas.read_excel(theFilename, header=0).to_dict(index=False)
-
-print("Config:", flush=True)
-print(configDataFrame, flush=True)
+                config = docsToMarkdownLib.processArgsFile(fullPath)
 
 itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
@@ -112,6 +106,9 @@ for file in files:
                         else:
                             newItem[colName.lower()] = itemsRow[colName]
                     itemsList.append(newItem)
+
+print("Items:", flush=True)
+print(itemsList, flush=True)
 
 inputFiles = []
 outputFiles = []
