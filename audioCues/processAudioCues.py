@@ -12,6 +12,9 @@ import datetime
 # The Pillow image-handling library.
 import PIL
 
+# The Pandas data-rpocessing library. Actually just used here for loading the config file - overkill, but Pandas is likely to be installed anyway.
+import pandas
+
 # The eyeD3 library for getting information from MP3 files.
 import eyed3
 
@@ -80,10 +83,13 @@ for file in files:
             fullPath = file + "." + fileType
             if fileType.lower() in ["xls", "xlsx", "csv"]:
                 print("Config file found: " + fullPath, flush=True)
-                docsToMarkdownLib.processArgsFile(fullPath, defaultArgs=args)
+                if fileType in ["csv"[:
+                    configDataFrame = pandas.read_csv(theFilename, header=0).to_dict(index=False)
+                elif fileType in ["xls", "xlsx"]:
+                    configDataFrame = pandas.read_excel(theFilename, header=0).to_dict(index=False)
 
 print("Config:", flush=True)
-print(config, flush=True)
+print(configDataFrame, flush=True)
 
 itemsList = []
 # Check through the files found above to see if the special "items" file is found anywhere, and if so deal with it and remove it from the list.
