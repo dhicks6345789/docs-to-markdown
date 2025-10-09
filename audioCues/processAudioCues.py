@@ -126,7 +126,7 @@ outputMD5s = []
 outputFolder = docsToMarkdownLib.normalisePath(args["output"])
 
 # Set up the column headings for the data to be included in the front end.
-cueList = [["MD5", "Filename", "Title", "Description", "Icon", "Start", "End", "Volume"]]
+cueList = [["MD5", "Filename", "Title", "Description", "Icon", "Start", "End", "Volume", "Key"]]
 
 # Process any audio files found, in any supported format, into standardised MP3 files ready to be played from the browser.
 print("STATUS: processAudioCues - processing found audio files.", flush=True)
@@ -220,7 +220,7 @@ for pl in range(0, len(outputFiles)):
     
     # Fields: 0:Input file MD5 Hash, 1:Audio file name, 2:Title, 3:Description, 4:Icon File name, 5:Start, 6:End, 7:Volume
     # Append the row of CSV data for the front end.
-    cueList.append([outputMD5s[pl], file + ".mp3", fileTitle, fileDescription, fileIcon, 0, 0, 0])
+    cueList.append([outputMD5s[pl], file + ".mp3", fileTitle, fileDescription, fileIcon, 0, 0, 0, ""])
 
 # Write the index.html file for the zip-ed version.
 indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
