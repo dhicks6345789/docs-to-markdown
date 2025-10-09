@@ -137,9 +137,10 @@
                     document.getElementById("errorMessage").innerHTML = "Error: Unable to find any resources to load.";
                 } else {
                     // Step through the resources, setting up an audio player on the page for each one.
+					// Fields: 0:Input file MD5 Hash, 1:Audio file name, 2:Title, 3:Description, 4:Icon File name, 5:Start, 6:End, 7:Volume
                     itemCount = 0;
                     for (resource = 0; resource < resources.length; resource = resource + 1) {
-                        if (resources[resource][0] != "Filename") {
+                        if (resources[resource][1] != "Filename") {
                             itemCount = itemCount + 1;
                             if (itemCount == 1 || itemCount % 6 == 1) {
                                 newRow = document.getElementById("row-0").cloneNode(true);
@@ -155,11 +156,11 @@
                             }
                             newPlayer = document.getElementById("audioPlayer-0").cloneNode(true);
                             newPlayer.id = "audioPlayer-" + itemCount;
-                            newPlayer.innerHTML = newPlayer.innerHTML.replaceAll("{{TITLE}}", resources[resource][1]).replaceAll("(0)","(" + resource + ")");
+                            newPlayer.innerHTML = newPlayer.innerHTML.replaceAll("{{TITLE}}", resources[resource][2]).replaceAll("(0)","(" + resource + ")");
                             document.getElementById("resource-" + itemCount).appendChild(newPlayer);
                             newPlayer.style.display = "";
-                            if (resources[resource][5] != "") {
-                                newPlayer.style.backgroundImage = "url(\'" + resources[resource][5] + "\')";
+                            if (resources[resource][4] != "") {
+                                newPlayer.style.backgroundImage = "url(\'" + resources[resource][4] + "\')";
                             } else {
                                 newPlayer.style.backgroundImage = "url(\'/bootstrap-icons/1.8.1/soundwave.svg\')";
                             }
@@ -172,7 +173,7 @@
                             // Set the URL of the audio resource, but include a "fake" paramater to convince the browser to reload a non-cached version of the resource.
                             // Otherwise, changes to the audio files processed on the server side don't tend to turn up in the browser when the user is expecting them to.
                             // See: https://stackoverflow.com/questions/25821915/how-to-force-the-html5-audio-tag-to-reload-a-changing-file
-                            newAudioObject.src = resources[resource][0] + "?cb=" + new Date().getTime();
+                            newAudioObject.src = resources[resource][1] + "?cb=" + new Date().getTime();
                             newAudioObject.load();
                             newAudioObject.onended = Function("rewindAudio(" + resource + ")");
                             newPlayer.appendChild(newAudioObject);
