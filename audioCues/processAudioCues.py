@@ -218,7 +218,7 @@ for pl in range(0, len(outputFiles)):
         # ...and that we tell the front end we have it.
         fileIcon = file + ".png"
     
-    # Fields: 0:Input file MD5 Hash, 1:Audio file name, 2:Title, 3:Description, 4:Icon File name, 5:Start, 6:End, 7:Volume
+    # Fields: 0:Input file MD5 Hash, 1:Audio file name, 2:Title, 3:Description, 4:Icon File name, 5:Start, 6:End, 7:Volume, 8:Key
     # Append the row of CSV data for the front end.
     cueList.append([outputMD5s[pl], file + ".mp3", fileTitle, fileDescription, fileIcon, 0, 0, 0, ""])
 
