@@ -49,9 +49,9 @@ def systemPrint(theCommandLine):
     os.system(theCommandLine)
 
 def getMD5(theFilename):
-    data = open(theFilename, "rb")
-    result = hashlib.md5(data).hexdigest()
-    data.close()
+    infile = open(theFilename, "rb")
+    result = hashlib.md5(infile.read()).hexdigest()
+    infile.close()
     return(result)
     
 # Check through items in the given input folder, recursing into sub-folders.
