@@ -116,10 +116,10 @@
             }
 
 			function populateData() {
-				for (resourceRow = 0; resourceRow < len(resources); resourceRow = resourceRow + 1) {
+				for (resourceRow = 0; resourceRow < resources.length; resourceRow = resourceRow + 1) {
 					newDataRowStr = document.getElementById("dataRow-0").cloneNode(true);
 					newDataRowStr = "<tr>";
-					for (resourceCol = 0; resourceCol < len(resourceRow); resourceCol = resourceCol + 1) {
+					for (resourceCol = 0; resourceCol < resourceRow.length; resourceCol = resourceCol + 1) {
 						newDataRowStr = newDataRowStr + "\n<td>" + resourceRow[resourceCol] + "</td>";
 					}
 					newDataRowStr = newDataRowStr + "\n</tr>";
@@ -317,17 +317,17 @@
 								<th>Volume</th>
 								<th>Key</th>
 							</tr>
-							<tr id="dataRow-0" style="display:none;">
-								<td id="MD5-0"></td>td>
-								<td id="Filename-0"></td>td>
-								<td id="Title-0"></td>td>
-								<td id="Description-0"></td>td>
-								<td id="Icon-0"></td>td>
-								<td id="Start-0"></td>td>
-								<td id="End-0"></td>td>
-								<td id="Volume-0"></td>td>
-								<td id="Key-0"></td>td>
-							</tr>
+							<!-- <tr id="dataRow-0" style="display:none;">
+								<td id="MD5-0"></td>
+								<td id="Filename-0"></td>
+								<td id="Title-0"></td>
+								<td id="Description-0"></td>
+								<td id="Icon-0"></td>
+								<td id="Start-0"></td>
+								<td id="End-0"></td>
+								<td id="Volume-0"></td>
+								<td id="Key-0"></td>
+							</tr> -->
 						</table>
 					</div>
 					
