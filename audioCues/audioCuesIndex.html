@@ -115,15 +115,17 @@
                 document.getElementById("silence").play();
             }
 
-			/* function viewData() {
-				dataModal = document.getElementById("dataModal");
-				dataModal.style.display = "";
+			function populateData() {
+				for (resourceRow = 0; resourceRow < len(resources); resourceRow = resourceRow + 1) {
+					newDataRowStr = document.getElementById("dataRow-0").cloneNode(true);
+					newDataRowStr = "<tr>";
+					for (resourceCol = 0; resourceCol < len(resourceRow); resourceCol = resourceCol + 1) {
+						newDataRowStr = newDataRowStr + "\n<td>" + resourceRow[resourceCol] + "</td>";
+					}
+					newDataRowStr = newDataRowStr + "\n</tr>";
+					document.getElementById("dataTable").innerHTML = document.getElementById("dataTable").innerHTML + newDataRowStr;
+				}
 			}
-
-			function hideData() {
-				dataModal = document.getElementById("dataModal");
-				dataModal.style.display = "none";
-			} */
             
             // The page load function - execution starts here.
             function startApp() {
@@ -193,6 +195,7 @@
                         }
                     }
                 }
+				populateData();
 
 				// Set up an event handler to listen for keypresses, so we can trigger sound effects by keypress if wanted.
 				document.body.onkeydown = function(theEvent) {
@@ -204,7 +207,7 @@
 							 rewindAudio(pl+1);
 						 }
 					} else if (theEvent.keyCode == 122) {
-						// F11 pressed - do nothing. For some reason, triggers "Z" otherwise, whioch is odd.
+						// F11 pressed - do nothing. For some reason, triggers "Z" otherwise, which is odd.
 					} else {
 						for (pl = 0; pl < chars.length; pl = pl + 1) {
 							if (keypressed == chars[pl]) {
@@ -264,26 +267,11 @@
                 <div id="resource-06" class="col-sm-2" style="height:100%;"></div>
             </div>
         </div>
-		<!-- <div id="dataModal" style="display:none;">
-			<table>
-				<tr>
-					<th>MD5</th>
-					<th>Filename</th>
-					<th>Title</th>
-					<th>Description</th>
-					<th>Icon</th>
-					<th>Start</th>
-					<th>End</th>th>
-					<th>Volume</th>
-					<th>Key</th>
-				</tr>
-			</table>
-		</div> -->
         <div class="row" style="margin:0; padding:0; width:100%;">
             <div class="col text-start">
 				<!-- Button to Open the Modal -->
 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewDataModal">
-					ViewData
+					View Data
 				</button>
 				<!-- View data:
                 <button id="speakerAwakeButton" type="button" class="btn btn-success" aria-label="View data" onclick="viewData()">
@@ -317,7 +305,7 @@
 					
 					<!-- Modal body -->
 					<div class="modal-body">
-						<table>
+						<table id="dataTable">
 							<tr>
 								<th>MD5</th>
 								<th>Filename</th>
@@ -325,9 +313,20 @@
 								<th>Description</th>
 								<th>Icon</th>
 								<th>Start</th>
-								<th>End</th>th>
+								<th>End</th>
 								<th>Volume</th>
 								<th>Key</th>
+							</tr>
+							<tr id="dataRow-0" style="display:none;">
+								<td id="MD5-0"></td>td>
+								<td id="Filename-0"></td>td>
+								<td id="Title-0"></td>td>
+								<td id="Description-0"></td>td>
+								<td id="Icon-0"></td>td>
+								<td id="Start-0"></td>td>
+								<td id="End-0"></td>td>
+								<td id="Volume-0"></td>td>
+								<td id="Key-0"></td>td>
 							</tr>
 						</table>
 					</div>
