@@ -119,8 +119,8 @@
 				dataTableStr = "<tr><th>MD5</th><th>Filename</th><th>Title</th><th>Description</th><th>Icon</th><th>Start</th><th>End</th><th>Volume</th><th>Key</th></tr>"
 				for (resourceRow = 0; resourceRow < resources.length; resourceRow = resourceRow + 1) {
 					dataRowStr = "\n<tr>";
-					for (resourceCol = 0; resourceCol < resourceRow.length; resourceCol = resourceCol + 1) {
-						dataRowStr = dataRowStr + "<td>" + resourceRow[resourceCol] + "</td>";
+					for (resourceCol = 0; resourceCol < resources[resourceRow].length; resourceCol = resourceCol + 1) {
+						dataRowStr = dataRowStr + "<td>" + resources[resourceRow][resourceCol] + "</td>";
 					}
 					dataRowStr = dataRowStr + "</tr>";
 					dataTableStr = dataTableStr + dataRowStr;
