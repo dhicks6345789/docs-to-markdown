@@ -116,14 +116,17 @@
             }
 
 			function populateData() {
+				dataTableStr = "<tr><th>MD5</th><th>Filename</th><th>Title</th><th>Description</th><th>Icon</th><th>Start</th><th>End</th><th>Volume</th><th>Key</th></tr>"
 				for (resourceRow = 0; resourceRow < resources.length; resourceRow = resourceRow + 1) {
-					newDataRowStr = "<tr>";
+					dataRowStr = "\n<tr>";
 					for (resourceCol = 0; resourceCol < resourceRow.length; resourceCol = resourceCol + 1) {
-						newDataRowStr = newDataRowStr + "\n<td>" + resourceRow[resourceCol] + "</td>";
+						dataRowStr = dataRowStr + "<td>" + resourceRow[resourceCol] + "</td>";
 					}
-					newDataRowStr = newDataRowStr + "\n</tr>";
-					document.getElementById("dataTable").innerHTML = document.getElementById("dataTable").innerHTML + newDataRowStr;
+					dataRowStr = dataRowStr + "</tr>";
+					dataTableStr = dataTableStr + dataRowStr;
 				}
+				document.getElementById("dataTable").innerHTML = dataTableStr;
+				console.log(dataTableStr);
 			}
             
             // The page load function - execution starts here.
@@ -272,10 +275,6 @@
 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewDataModal">
 					View Data
 				</button>
-				<!-- View data:
-                <button id="speakerAwakeButton" type="button" class="btn btn-success" aria-label="View data" onclick="viewData()">
-                    <img src="/bootstrap-icons/1.8.1/filetype-csv.svg" alt="View data" width="32" height="32">
-                </button> -->
             </div>
             <div class="col text-center">
                 Shortcut to save: <input type="text" id="shortcutURL" value="" readonly/>
@@ -305,28 +304,6 @@
 					<!-- Modal body -->
 					<div class="modal-body">
 						<table id="dataTable">
-							<tr>
-								<th>MD5</th>
-								<th>Filename</th>
-								<th>Title</th>
-								<th>Description</th>
-								<th>Icon</th>
-								<th>Start</th>
-								<th>End</th>
-								<th>Volume</th>
-								<th>Key</th>
-							</tr>
-							<!-- <tr id="dataRow-0" style="display:none;">
-								<td id="MD5-0"></td>
-								<td id="Filename-0"></td>
-								<td id="Title-0"></td>
-								<td id="Description-0"></td>
-								<td id="Icon-0"></td>
-								<td id="Start-0"></td>
-								<td id="End-0"></td>
-								<td id="Volume-0"></td>
-								<td id="Key-0"></td>
-							</tr> -->
 						</table>
 					</div>
 					
