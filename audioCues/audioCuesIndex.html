@@ -117,7 +117,6 @@
 
 			function populateData() {
 				for (resourceRow = 0; resourceRow < resources.length; resourceRow = resourceRow + 1) {
-					newDataRowStr = document.getElementById("dataRow-0").cloneNode(true);
 					newDataRowStr = "<tr>";
 					for (resourceCol = 0; resourceCol < resourceRow.length; resourceCol = resourceCol + 1) {
 						newDataRowStr = newDataRowStr + "\n<td>" + resourceRow[resourceCol] + "</td>";
