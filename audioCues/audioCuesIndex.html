@@ -122,8 +122,11 @@
 					for (resourceCol = 0; resourceCol < resources[resourceRow].length; resourceCol = resourceCol + 1) {
 						heading = resources[0][resourceCol]
 						item = resources[resourceRow][resourceCol]
-						if (heading == "Start" || heading == "End" || heading == "Volume") {
-							item = "";
+						if ((heading == "Start" || heading == "End") && item == "") {
+							item = "0";
+						}
+						if (heading == "Volume" && item == "") {
+							item = "100";
 						}
 						dataRowStr = dataRowStr + "<td>" + item + "</td>";
 					}
