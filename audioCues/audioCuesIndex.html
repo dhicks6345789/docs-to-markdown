@@ -115,7 +115,7 @@
                 document.getElementById("silence").play();
             }
 
-			function viewData() {
+			<!-- function viewData() {
 				dataModal = document.getElementById("dataModal");
 				dataModal.style.display = "";
 			}
@@ -123,7 +123,7 @@
 			function hideData() {
 				dataModal = document.getElementById("dataModal");
 				dataModal.style.display = "none";
-			}
+			} -->
             
             // The page load function - execution starts here.
             function startApp() {
@@ -264,7 +264,7 @@
                 <div id="resource-06" class="col-sm-2" style="height:100%;"></div>
             </div>
         </div>
-		<div id="dataModal" style="display:none;">
+		<!-- <div id="dataModal" style="display:none;">
 			<table>
 				<tr>
 					<th>MD5</th>
@@ -278,13 +278,17 @@
 					<th>Key</th>
 				</tr>
 			</table>
-		</div>
+		</div> -->
         <div class="row" style="margin:0; padding:0; width:100%;">
             <div class="col text-start">
-				View data:
+				<!-- Button to Open the Modal -->
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewDataModal">
+					ViewData
+				</button>
+				<!-- View data:
                 <button id="speakerAwakeButton" type="button" class="btn btn-success" aria-label="View data" onclick="viewData()">
                     <img src="/bootstrap-icons/1.8.1/filetype-csv.svg" alt="View data" width="32" height="32">
-                </button>
+                </button> -->
             </div>
             <div class="col text-center">
                 Shortcut to save: <input type="text" id="shortcutURL" value="" readonly/>
@@ -300,5 +304,40 @@
             </div>
         </div>
         <div id="downloadMessage" class="text-center">You can <a href="audioCues.zip">download this page</a> to use offline.</div>
+		<!-- A modal (pop-up) window to show a copy-and-past-able table of data for the user. -->
+		<div class="modal" id="viewDataModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Data</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					
+					<!-- Modal body -->
+					<div class="modal-body">
+						<table>
+							<tr>
+								<th>MD5</th>
+								<th>Filename</th>
+								<th>Title</th>
+								<th>Description</th>
+								<th>Icon</th>
+								<th>Start</th>
+								<th>End</th>th>
+								<th>Volume</th>
+								<th>Key</th>
+							</tr>
+						</table>
+					</div>
+					
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div
+		</div>
     </body>
 </html>
