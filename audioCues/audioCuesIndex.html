@@ -117,10 +117,15 @@
 
 			function populateData() {
 				dataTableStr = "<tr><th>MD5</th><th>Filename</th><th>Title</th><th>Description</th><th>Icon</th><th>Start</th><th>End</th><th>Volume</th><th>Key</th></tr>"
-				for (resourceRow = 0; resourceRow < resources.length; resourceRow = resourceRow + 1) {
+				for (resourceRow = 1; resourceRow < resources.length; resourceRow = resourceRow + 1) {
 					dataRowStr = "\n<tr>";
 					for (resourceCol = 0; resourceCol < resources[resourceRow].length; resourceCol = resourceCol + 1) {
-						dataRowStr = dataRowStr + "<td>" + resources[resourceRow][resourceCol] + "</td>";
+						heading = resources[0][resourceCol]
+						item = resources[resourceRow][resourceCol]
+						if (heading == "Start" || heading == "End" || heading == "Volume") {
+							item = "";
+						}
+						dataRowStr = dataRowStr + "<td>" + item + "</td>";
 					}
 					dataRowStr = dataRowStr + "</tr>";
 					dataTableStr = dataTableStr + dataRowStr;
