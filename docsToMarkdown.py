@@ -181,19 +181,22 @@ def applyDefaults(rootPath, subPath, filesToProcess):
 # Removes each encountered file from the filesToProcess list as it goes.
 def copyFolder(srcFolder, destFolder):
     os.makedirs(destFolder, exist_ok=True)
-    for item in os.listdir(srcFolder):
-        if os.path.isdir(srcFolder + os.sep + item):
-            copyFolder(srcFolder + os.sep + item, destFolder + os.sep + item)
-        else:
-            # Skip copying if the file already exists and is up-to-date.
-            copyFile = True
-            if os.path.exists(destFolder + os.sep + item):
-                if os.stat(srcFolder + os.sep + item).st_mtime == os.stat(destFolder + os.sep + item).st_mtime:
-                    copyFile = False
-            if copyFile:
-                shutil.copyfile(srcFolder + os.sep + item, destFolder + os.sep + item)
-                shutil.copystat(srcFolder + os.sep + item, destFolder + os.sep + item)
-            removeFromFilesToProcess(srcFolder + os.sep + item)
+    if os.path.isdir(srcFolder):
+        for item in os.listdir(srcFolder):
+            if os.path.isdir(srcFolder + os.sep + item):
+                copyFolder(srcFolder + os.sep + item, destFolder + os.sep + item)
+            else:
+                # Skip copying if the file already exists and is up-to-date.
+                copyFile = True
+                if os.path.exists(destFolder + os.sep + item):
+                    if os.stat(srcFolder + os.sep + item).st_mtime == os.stat(destFolder + os.sep + item).st_mtime:
+                        copyFile = False
+                if copyFile:
+                    shutil.copyfile(srcFolder + os.sep + item, destFolder + os.sep + item)
+                    shutil.copystat(srcFolder + os.sep + item, destFolder + os.sep + item)
+                removeFromFilesToProcess(srcFolder + os.sep + item)
+    else:
+        print("copyFolder, source: " + srcFolder + ", destination: " + destFolder + " - source folder does not exist.")
             
 # Make sure any files or sub-folders not in srcFolder are removed from destFolder.
 def matchFolder(srcFolder, destFolder):
