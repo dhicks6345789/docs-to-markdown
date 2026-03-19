@@ -233,13 +233,15 @@ docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.repl
 
 # Create the zip file.
 print("STATUS: processAudioCues - creating zip file for local download...", flush=True)
-os.system("cp /etc/docs-to-markdown/audioCues/silence.mp3 www")
-os.system("cp -r ../../www/popper www")
-os.system("cp -r ../../www/bootstrap www")
-os.system("cp -r ../../www/bootstrap-icons www")
+shutil.copy("/etc/docs-to-markdown/audioCues/silence.mp3", "www")
+shutil.copytree("../../www/popper", "www")
+shutil.copytree("../../www/bootstrap", "www")
+shutil.copytree("../../www/bootstrap-icons", "www")
 os.system("cd " + args["output"] + "; zip -r .." + os.sep + "audioCues.zip * " + devnullString)
-os.system("mv audioCues.zip " + args["output"])
-os.system("cd " + args["output"] + "; rm -rf popper; rm -rf bootstrap; rm -rf bootstrap-icons")
+shutil.move("audioCues.zip", args["output"])
+shutil.rmtree(args["output"] + os.sep + "popper")
+shutil.rmtree(args["output"] + os.sep + "bootstrap")
+shutil.rmtree(args["output"] + os.sep + "bootstrap-icons")
 
 # Re-write index.html as the final version.
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML)
