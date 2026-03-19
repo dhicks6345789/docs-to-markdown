@@ -24,6 +24,10 @@ import docsToMarkdownLib
 
 
 
+devnullString = ">/dev/null 2>&1"
+if os.sep == "\\":
+    devnullString = " > NUL 2>&1"
+
 # Get a timestamp of when we started.
 dateTimeNow = datetime.datetime.now()
 timestamp = int(round(dateTimeNow.timestamp()))
@@ -145,10 +149,10 @@ for file in files:
                 ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" "
                 if inputFile.lower().endswith(".mp3"):
                     ffmpegCommand = ffmpegCommand + "-filter:a \"silenceremove=1:0:-45dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=1\" "
-                ffmpegCommand = ffmpegCommand + "-vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\" >/dev/null 2>&1"
+                ffmpegCommand = ffmpegCommand + "-vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\"" + devnullString
                 systemPrint(ffmpegCommand)
                 # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
-                systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\" >/dev/null 2>&1")
+                systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\"" + devnullString)
             if os.path.exists(outputFile):
                 inputFiles.append(file + "." + fileType)
                 outputFiles.append(file)
@@ -184,10 +188,10 @@ for pl in range(0, len(outputFiles)):
     # ...if not, see if there's an image included in the MP3 data we can use.
     if iconInputFile == "":
         print("Extracting any album art as icon from: " + inputFile, flush=True)
-        systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + inputFile + "\" -an -vcodec copy \"" + iconOutputFile + "\" >/dev/null 2>&1")
+        systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + inputFile + "\" -an -vcodec copy \"" + iconOutputFile + "\"" + devnullString)
     else:
         print("Processing image file as icon: " + iconInputFile, flush=True)
-        systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + iconInputFile + "\" \"" + iconOutputFile + "\" >/dev/null 2>&1")
+        systemPrint("ffmpeg -y -i \"" + inputFolder + os.sep + iconInputFile + "\" \"" + iconOutputFile + "\"" + devnullString)
 
     fileDescription = ""
     audioFileData = eyed3.load(inputFolder + os.sep + inputFile)
@@ -232,7 +236,7 @@ os.system("cp /etc/docs-to-markdown/audioCues/silence.mp3 www")
 os.system("cp -r ../../www/popper www")
 os.system("cp -r ../../www/bootstrap www")
 os.system("cp -r ../../www/bootstrap-icons www")
-os.system("cd " + args["output"] + "; zip -r .." + os.sep + "audioCues.zip * >/dev/null 2>&1")
+os.system("cd " + args["output"] + "; zip -r .." + os.sep + "audioCues.zip * " + devnullString)
 os.system("mv audioCues.zip " + args["output"])
 os.system("cd " + args["output"] + "; rm -rf popper; rm -rf bootstrap; rm -rf bootstrap-icons")
 
