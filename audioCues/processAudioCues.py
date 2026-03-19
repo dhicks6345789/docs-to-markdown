@@ -154,7 +154,6 @@ for file in files:
                 # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
                 inputFileStats = os.stat(inputFile)
                 os.utime(outputFile, (inputFileStats.st_atime, inputFileStats.st_mtime))
-                #systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\"" + devnullString)
             if os.path.exists(outputFile):
                 inputFiles.append(file + "." + fileType)
                 outputFiles.append(file)
@@ -165,7 +164,7 @@ for file in files:
 # Clear out any extranious files from the output folder (left over from previous runs / changes).
 for outputItem in os.listdir(args["output"]):
     if not outputItem.endswith(".mp3") or not outputItem[:-4] in outputFiles:
-        systemPrint("rm \"" + args["output"] + os.sep + outputItem + "\"")
+        os.remove(args["output"] + os.sep + outputItem)
 
 # Step through each output file, assigning information about each one so the front end can see it.
 for pl in range(0, len(outputFiles)):
