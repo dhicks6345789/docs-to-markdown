@@ -164,7 +164,10 @@ for file in files:
 # Clear out any extranious files from the output folder (left over from previous runs / changes).
 for outputItem in os.listdir(args["output"]):
     if not outputItem.endswith(".mp3") or not outputItem[:-4] in outputFiles:
-        os.remove(args["output"] + os.sep + outputItem)
+        if os.path.isdir(args["output"] + os.sep + outputItem):
+            shutil.rmtree(args["output"] + os.sep + outputItem)
+        else:
+            os.remove(args["output"] + os.sep + outputItem)
 
 # Step through each output file, assigning information about each one so the front end can see it.
 for pl in range(0, len(outputFiles)):
