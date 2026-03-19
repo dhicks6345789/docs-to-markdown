@@ -233,7 +233,7 @@ docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.repl
 
 # Create the zip file.
 print("STATUS: processAudioCues - creating zip file for local download...", flush=True)
-shutil.copy("/etc/docs-to-markdown/audioCues/silence.mp3", "www")
+shutil.copy("silence.mp3", "www")
 shutil.copytree("../../www/popper", "www")
 shutil.copytree("../../www/bootstrap", "www")
 shutil.copytree("../../www/bootstrap-icons", "www")
