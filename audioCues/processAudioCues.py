@@ -234,9 +234,9 @@ docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.repl
 # Create the zip file.
 print("STATUS: processAudioCues - creating zip file for local download...", flush=True)
 shutil.copy("silence.mp3", "www")
-shutil.copytree(".." + os.sep + ".." + os.sep + "assests" + os.sep + "popper", "www")
-shutil.copytree(".." + os.sep + ".." + os.sep + "assests" + os.sep + "bootstrap", "www")
-shutil.copytree(".." + os.sep + ".." + os.sep + "assests" + os.sep + "bootstrap-icons", "www")
+shutil.copytree(".." + os.sep + ".." + os.sep + "assets" + os.sep + "popper", "www")
+shutil.copytree(".." + os.sep + ".." + os.sep + "assets" + os.sep + "bootstrap", "www")
+shutil.copytree(".." + os.sep + ".." + os.sep + "assets" + os.sep + "bootstrap-icons", "www")
 os.system("cd " + args["output"] + "; zip -r .." + os.sep + "audioCues.zip * " + devnullString)
 shutil.move("audioCues.zip", args["output"])
 shutil.rmtree(args["output"] + os.sep + "popper")
