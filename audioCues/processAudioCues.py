@@ -147,8 +147,8 @@ for file in files:
                 #     dynaudnorm - set the loudest part of the track to max volume, try and have a reasonably consistant sound level.
                 # Otherwise, the input file is left unprocessed (other than being re-written as an MP3 file).
                 ffmpegCommand = "ffmpeg -y -i \"" + inputFile + "\" "
-                if inputFile.lower().endswith(".mp3"):
-                    ffmpegCommand = ffmpegCommand + "-filter:a \"silenceremove=1:0:-45dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=1\" "
+                #if inputFile.lower().endswith(".mp3"):
+                ffmpegCommand = ffmpegCommand + "-filter:a \"silenceremove=1:0:-45dB,compand=0|0:1|1:-90/-900|-70/-70|-30/-9|0/-3:6:0:0:0,dynaudnorm=peak=1\" "
                 ffmpegCommand = ffmpegCommand + "-vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\"" + devnullString
                 systemPrint(ffmpegCommand)
                 # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
