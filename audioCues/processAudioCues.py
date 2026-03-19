@@ -45,7 +45,7 @@ os.makedirs(args["output"], exist_ok=True)
 
 
 def systemPrint(theCommandLine):
-    #print(theCommandLine, flush=True)
+    print(theCommandLine, flush=True)
     os.system(theCommandLine)
 
 def getMD5(theFilename):
@@ -223,7 +223,7 @@ for pl in range(0, len(outputFiles)):
     cueList.append([outputMD5s[pl], file + ".mp3", fileTitle, fileDescription, fileIcon, 0, 0, 0, ""])
 
 # Write the index.html file for the zip-ed version.
-indexHTML = docsToMarkdownLib.getFile("/etc/docs-to-markdown/audioCues/audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
+indexHTML = docsToMarkdownLib.getFile("audioCuesIndex.html").replace("var resources = [];", str("var resources = " + str(cueList) + ";")).replace("<<TIMESTAMP>>",str(timestamp)).replace("<<DATETIMEFORMATTED>>",dateTimeFormatted).replace("\'", "\"")
 docsToMarkdownLib.putFile(args["output"] + os.sep + "index.html", indexHTML.replace("/bootstrap/","bootstrap/").replace("/bootstrap-icons/","bootstrap-icons/").replace("/popper/","popper/"))
 
 # Create the zip file.
