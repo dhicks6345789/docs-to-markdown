@@ -152,7 +152,9 @@ for file in files:
                 ffmpegCommand = ffmpegCommand + "-vn -ar 44100 -ac 2 -b:a 192k \"" + outputFile + "\"" + devnullString
                 systemPrint(ffmpegCommand)
                 # Set file modification time so we can skip the conversion next time if the input file hasn't changed.
-                systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\"" + devnullString)
+                inputFileStats = os.stat(inputFile)
+                os.utime(outputFile, (inputFileStats.st_atime, inputFileStats.st_mtime))
+                #systemPrint("touch -r \"" + inputFile + "\" \"" + outputFile + "\"" + devnullString)
             if os.path.exists(outputFile):
                 inputFiles.append(file + "." + fileType)
                 outputFiles.append(file)
