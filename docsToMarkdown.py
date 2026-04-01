@@ -202,7 +202,7 @@ def copyFolder(srcFolder, destFolder):
                         copyFile = False
                 
                 if copyFile:
-                    print("copyFolder: copying " + srcFolder + os.sep + srcItem + " to " + destFolder + os.sep + item)
+                    #print("copyFolder: copying " + srcFolder + os.sep + srcItem + " to " + destFolder + os.sep + item)
                     shutil.copyfile(srcFolder + os.sep + srcItem, destFolder + os.sep + item)
                     shutil.copystat(srcFolder + os.sep + srcItem, destFolder + os.sep + item)
                 removeFromFilesToProcess(srcFolder + os.sep + item)
