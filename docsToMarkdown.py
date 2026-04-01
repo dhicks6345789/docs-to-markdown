@@ -186,14 +186,18 @@ def copyFolder(srcFolder, destFolder):
             if os.path.isdir(srcFolder + os.sep + item):
                 copyFolder(srcFolder + os.sep + item, destFolder + os.sep + item)
             else:
-                # Skip copying if the file already exists and is up-to-date.
-                copyFile = True
-                if os.path.exists(destFolder + os.sep + item):
-                    if os.stat(srcFolder + os.sep + item).st_mtime == os.stat(destFolder + os.sep + item).st_mtime:
-                        copyFile = False
-                if copyFile:
-                    shutil.copyfile(srcFolder + os.sep + item, destFolder + os.sep + item)
-                    shutil.copystat(srcFolder + os.sep + item, destFolder + os.sep + item)
+                if not item.endswith("_REDACTED"):
+                    srcItem = item
+                    if os.path.isfile(srcFolder + os.sep + item + "_REDACTED")
+                        srcItem = item + "_REDACTED"
+                    # Skip copying if the file already exists and is up-to-date.
+                    copyFile = True
+                    if os.path.exists(destFolder + os.sep + item):
+                        if os.stat(srcFolder + os.sep + srcItem).st_mtime == os.stat(destFolder + os.sep + item).st_mtime:
+                            copyFile = False
+                    if copyFile:
+                        shutil.copyfile(srcFolder + os.sep + srcItem, destFolder + os.sep + item)
+                        shutil.copystat(srcFolder + os.sep + srcItem, destFolder + os.sep + item)
                 removeFromFilesToProcess(srcFolder + os.sep + item)
     else:
         print("copyFolder, source: " + srcFolder + ", destination: " + destFolder + " - source folder does not exist.")
