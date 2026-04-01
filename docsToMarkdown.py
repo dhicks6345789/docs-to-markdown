@@ -192,8 +192,9 @@ def copyFolder(srcFolder, destFolder):
                     copyFile = False
                 
                 srcItem = item
-                if os.path.isfile(srcFolder + os.sep + item[:-4] + "_REDACTED.pdf"):
-                    srcItem = item[:-4] + "_REDACTED.pdf"
+                if item.endswith(".pdf"):
+                    if os.path.isfile(srcFolder + os.sep + item[:-4] + "_REDACTED.pdf"):
+                        srcItem = item[:-4] + "_REDACTED.pdf"
                 
                 # Skip copying if the file already exists and is up-to-date.
                 if os.path.exists(destFolder + os.sep + item):
