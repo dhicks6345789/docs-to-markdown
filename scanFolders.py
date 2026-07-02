@@ -89,7 +89,7 @@ def scanFolder(theInput, theOutput):
                     commandLine = [docsToMarkdownLib.platformPath(matches[match][0]), docsToMarkdownLib.platformPath(args["scriptRoot"] + "/" + scriptPath), inputItem, outputItem]
                     if args["verbose"] == "true":
                         print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
-                subprocess.run(commandLine)
+                    subprocess.run(commandLine)
         if (matched == False) and (folderMatched == False) and (not item == ""):
             unmatchedItems.append(item)
     for item in unmatchedItems:
