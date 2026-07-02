@@ -121,7 +121,7 @@ def copyFolder(inputFolder, outputFolder):
             copyFolder(inputItem, outputItem)
 
 def deleteExtraFiles(theFolder, theFilenames):
-    for item in os.listdir(theFolder)
+    for item in os.listdir(theFolder):
         fileItem = theFolder + "/" + item
         if os.path.isfile(fileItem):
             if not fileItem in theFilenames:
