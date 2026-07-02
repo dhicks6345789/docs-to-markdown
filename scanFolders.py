@@ -1,18 +1,16 @@
+# Standard Python libraries.
 import os
 import re
 import sys
 import pathlib
 import subprocess
 
-# We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
-#import xlrd
-#import pandas
-
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
 
 
+# Parse and normalise the command-line arguments.
 args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":str(pathlib.Path.cwd()), "dataRoot":str(pathlib.Path.cwd()), "verbose":"false", "produceFolderIndexes":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
 args["dataRoot"] = docsToMarkdownLib.normalisePath(args["dataRoot"])
 args["verbose"] = args["verbose"].lower()
@@ -24,12 +22,14 @@ print("DocsToMarkdown - arguments:", flush=True)
 for arg in args:
     print(" - " + arg + ": " + str(args[arg]), flush=True)
     
+# Read the "matches.csv" file, which describes which transform script to run for each file type / sub folder in the input folder structure.
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
 scriptStrings = []
 for item in matches:
     if not matches[item][1] in scriptStrings:
         scriptStrings.append(matches[item][1])
 
+# Read the matchChanges cache file, and work out if any of the transform scripts have been updated since the last run.
 previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
 currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(args["scriptRoot"])
 changedMatchPaths = []
@@ -60,6 +60,9 @@ docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "inputChanges.csv", 
 
 
 
+# The start-point of the document-processing process. Looks through the contents of the input folder, applying a transform script to each file or folder found.
+# A cache of file paths with checksum details is maintained, this is used to avoid processing a file if it (and the associated processing script) hasn't been changed since the last run.
+# Folders are recursed into. Some matches might match whole sub-folders, in which case that sub-folder's processing will be handled by the transform script.
 def scanFolder(theInput, theOutput):
     inputFolder = docsToMarkdownLib.normalisePath(args["input"] + "/" + theInput)
     print("DocsToMarkdown - scanning folder: " + inputFolder, flush=True)
