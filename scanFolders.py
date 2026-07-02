@@ -104,4 +104,9 @@ def scanFolder(theInput, theOutput):
     for item in unmatchedItems:
         if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
+
+# Start the scanFolders process.
 scanFolder("", "")
+
+# If the user has specified a "copy in" folder, copy the contens of that folder over to the destination as well.
+if "copyIn" in args and not args["copyIn"] == "":
