@@ -26,8 +26,9 @@ for arg in args:
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
 scriptStrings = []
 for item in matches:
-    if not matches[item][1] in scriptStrings:
-        scriptStrings.append(matches[item][1])
+    scriptString = docsToMarkdownLib.normalisePath(args["scriptRoot"] + "/" + matches[item][2])
+    if not scriptString in scriptStrings:
+        scriptStrings.append(scriptString)
 
 # Read the matchChanges cache file, and work out if any of the transform scripts have been updated since the last run.
 previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
