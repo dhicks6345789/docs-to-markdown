@@ -78,7 +78,7 @@ def scanFolder(theInput, theOutput):
             inputItem = inputFolder + "/" + item
             if (matched == False) and (folderMatched == False) and (not re.match(match, inputItem) == None):
                 matched = True
-                scriptPath = matches[match][1]
+                scriptPath = docsToMarkdownLib.normalisePath(args["scriptRoot"] + "/" + matches[match][1])
                 inputItem = docsToMarkdownLib.platformPath(inputItem)
                 if item == "":
                     folderMatched = True
