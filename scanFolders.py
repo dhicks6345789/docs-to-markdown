@@ -73,15 +73,22 @@ def scanFolder(theInput, theOutput):
             inputItem = inputFolder + "/" + item
             if (matched == False) and (folderMatched == False) and (not re.match(match, inputItem) == None):
                 matched = True
+                scriptPath = matches[match][1]
+                inputItem = docsToMarkdownLib.platformPath(inputItem)
                 if item == "":
                     folderMatched = True
                 outputItem = docsToMarkdownLib.normalisePath(args["output"] + "/" + theOutput + "/" + item)
-                if os.path.isfile(docsToMarkdownLib.platformPath(inputItem)):
+                if os.path.isfile(inputItem):
                     outputItem = outputItem.rsplit("/", 1)[0]
-                commandLine = [docsToMarkdownLib.platformPath(matches[match][0]), docsToMarkdownLib.platformPath(args["scriptRoot"] + "/" + matches[match][1]), docsToMarkdownLib.platformPath(inputItem), docsToMarkdownLib.platformPath(outputItem)]
+                outputItem = docsToMarkdownLib.platformPath(outputItem)
+                
                 if args["verbose"] == "true":
                     print("DocsToMarkdown - matched: " + inputItem + " with " + match, flush=True)
-                    print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
+
+                if scriptPath in changedMatchPaths or inputItem in changedInputPaths:
+                    commandLine = [docsToMarkdownLib.platformPath(matches[match][0]), docsToMarkdownLib.platformPath(args["scriptRoot"] + "/" + scriptPath), inputItem, outputItem]
+                    if args["verbose"] == "true":
+                        print("DocsToMarkdown - running: " + " ".join(commandLine), flush=True)
                 subprocess.run(commandLine)
         if (matched == False) and (folderMatched == False) and (not item == ""):
             unmatchedItems.append(item)
