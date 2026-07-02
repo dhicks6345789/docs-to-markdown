@@ -8,4 +8,6 @@ else
   source .venv/bin/activate
 fi
 
+cp docsToMarkdownLib.py .venv/lib/python3.13/site-packages
+
 python3 scanFolders.py "$@"
