@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import pathlib
 import subprocess
 
 # We use the Pandas library, which in turn uses the XLRD library, to read Excel data.
@@ -12,7 +13,7 @@ import docsToMarkdownLib
 
 
 
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":sys.argv[0].rsplit(os.sep, 1)[0], "dataRoot":".", "verbose":"false", "produceFolderIndexes":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":pathlib.Path.cwd(), "dataRoot":pathlib.Path.cwd(), "verbose":"false", "produceFolderIndexes":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
 args["dataRoot"] = docsToMarkdownLib.normalisePath(args["dataRoot"])
 args["verbose"] = args["verbose"].lower()
 args["produceFolderIndexes"] = args["produceFolderIndexes"].lower()
