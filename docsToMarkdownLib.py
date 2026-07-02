@@ -391,3 +391,7 @@ def embedBitmapInSVG(theBitmap, theWidth, theHeight):
     result = result + "    <image width=\"" + str(width) + "\" height=\"" + str(height) + "\" preserveAspectRatio=\"none\" xlink:href=\"data:image/png;base64," + base64.b64encode(bitmapData.getvalue()).decode("utf-8") + "\"/>\n"
     result = result + "</svg>"
     return result
+
+def addToWriteLog(theFilename):
+    with open("writeLog.txt", "a", encoding="utf-8") as file:
+        file.write(theFilename + "\n")
