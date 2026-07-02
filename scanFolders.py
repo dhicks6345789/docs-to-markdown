@@ -13,7 +13,7 @@ import docsToMarkdownLib
 
 
 
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":pathlib.Path.cwd(), "dataRoot":pathlib.Path.cwd(), "verbose":"false", "produceFolderIndexes":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":str(pathlib.Path.cwd()), "dataRoot":str(pathlib.Path.cwd()), "verbose":"false", "produceFolderIndexes":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
 args["dataRoot"] = docsToMarkdownLib.normalisePath(args["dataRoot"])
 args["verbose"] = args["verbose"].lower()
 args["produceFolderIndexes"] = args["produceFolderIndexes"].lower()
