@@ -11,9 +11,10 @@ import docsToMarkdownLib
 
 
 # Parse and normalise the command-line arguments.
-args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":str(pathlib.Path.cwd()), "dataRoot":str(pathlib.Path.cwd()), "verbose":"false", "produceFolderIndexes":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
+args = docsToMarkdownLib.processCommandLineArgs(defaultArgs={"scriptRoot":str(pathlib.Path.cwd()), "dataRoot":str(pathlib.Path.cwd()), "verbose":"false", "produceFolderIndexes":"false", "deleteExtraFiles":"false", "validFrontMatterFields":""}, requiredArgs=["input","output"], optionalArgs=["scriptRoot", "verbose", "deleteExtraFiles", "copyIn", "data", "produceFolderIndexes", "baseURL", "validFrontMatterFields"])
 args["dataRoot"] = docsToMarkdownLib.normalisePath(args["dataRoot"])
 args["verbose"] = args["verbose"].lower()
+args["deleteExtraFiles"] = args["deleteExtraFiles"].lower()
 args["produceFolderIndexes"] = args["produceFolderIndexes"].lower()
 args["validFrontMatterFields"] = args["validFrontMatterFields"].split(",")
 
