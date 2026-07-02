@@ -107,6 +107,7 @@ def scanFolder(theInput, theOutput):
             scanFolder(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
 
 def copyFolder(inputFolder, outputFolder):
+    print("copyFolder: " + inputFolder + " -> " + outputFolder)
     for item in os.listdir(inputFolder):
         inputItem = inputFolder + "/" + item
         outputItem = outputFolder + "/" + item
