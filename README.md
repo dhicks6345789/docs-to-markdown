@@ -1,7 +1,7 @@
 # Docs To Markdown
-A collection of scripts to pre-process folders of content into a form ready for further processing with common static site generation tools ([Hugo](https://gohugo.io/), [Jekyll](https://jekyllrb.com/), [Eleventy](https://www.11ty.dev/), etc).
+A collection of scripts to pre-process folders of content, often in common Office formats (DOCX, XLSX, PPTX, etc) into a form ready for further processing with common static site generation tools ([Hugo](https://gohugo.io/), [Jekyll](https://jekyllrb.com/), [Eleventy](https://www.11ty.dev/), etc).
 
-The scanFolders Python script acts as an overall starting point, triggering other scripts to run conversions on a folder tree containing various content. Each script should also be able to be used as a stand-alone application should you want.
+The "scanFolders.py" Python script acts as an overall starting point, triggering other scripts to run conversions on a folder tree containing various content. Each script should also be able to be used as a stand-alone application should you want.
 
 ## Quickstart
 Download / clone the Git repository. These scripts are written in Python 3 and, as such, should be cross-platform. On Linux, there's a Bash script that will set up and activate a Python venv to run the script:
@@ -13,20 +13,15 @@ bash scanFolders.sh --input ~/Documents/websiteContent pyIn ~/Documents/Hugo/con
 ## Requirements
 There's a Python requirements.txt file that should be installed into a Python venv (handled by the helper Bash script above if you use that).
 
-The scripts used for each item might have further requirements, possibly including for supporting applications, see the relevant script's documentation for details.
+The scripts used for each item might have further individual requirements, possibly including supporting applications (such as ffmpeg to handle videos), see the relevant script's documentation for details.
 
-The scripts are intended to be run over a simple folder tree. They should work with pretty much anything that looks to the operating system like a local tree of folders, so if you have a utility that maps a cloud-based file system of some kind to a local path (say you're using one of the Windows Google Drive / OneDrive / Dropbox clients) you should be able to run the scripts on that path (either as input or output location) in the same way.
+The scripts are intended to be run over a simple folder tree. They should work with pretty much anything that looks to the operating system like a local tree of folders, so if you have a utility that maps a cloud-based file system of some kind to a local path (say you're using one of the Windows Google Drive / OneDrive / Dropbox clients) you should be able to run the scripts on that path (either as input or output location) in the same way. In this way, you can set up a content publishing pipeline that allows your users to edit content directly in their usual Office editor (desktop Microsoft Word, Office 365 Word, Google Docs, Libre Office, etc) and publish directly to a website.
 
 If you're on a Linux or MacOS system (or Windows), we can recommend [rclone](https://rclone.org/) as being an excellent way of mounting / cloning over 50 cloud provider's filesystems as a local filesystem.
 
 ## Usage
-To run scanFolders on a given folder tree, just give input and output folder options:
 
-```
-scanFolders.py --input inputFolder --output outputFolder -c config.json -t jekyllTemplates
-```
-
-That will process all recognised documents in "inputFolder", applying the default behaviour to each one, and place the resulting processed files (.md Markdown files and any other resources generated) in a matching set of folders in "outputFolder". Sub-folders will be recursed into, and the output folder will be created if it doesn't already exist.
+Command-line Options:
 
 ## The Scripts
 - [Documents](documents/processDocuments.md)
