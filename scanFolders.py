@@ -21,7 +21,7 @@ args["validFrontMatterFields"] = args["validFrontMatterFields"].split(",")
 print("DocsToMarkdown - arguments:", flush=True)
 for arg in args:
     print(" - " + arg + ": " + str(args[arg]), flush=True)
-    
+
 # Read the "matches.csv" file, which describes which transform script to run for each file type / sub folder in the input folder structure.
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
 scriptStrings = []
@@ -38,13 +38,12 @@ for item in currentMatchChanges:
     if item in scriptStrings:
         if item in previousMatchChanges:
             if not currentMatchChanges[item] == previousMatchChanges[item]:
-                if args["verbose"] == "true":
-                    print("Updated transform script: " + item + " - value: " + str(currentMatchChanges[item]) + " != " + str(previousMatchChanges[item]))
                 changedMatchPaths.append(item)
         else:
             changedMatchPaths.append(item)
-print("changedMatchPaths:")
-print(changedMatchPaths)
+if args["verbose"] == "true":
+    print("changedMatchPaths:")
+    print(changedMatchPaths)
 docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "matchChanges.csv", currentMatchChanges)
 
 previousInputChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "inputChanges.csv")
@@ -56,8 +55,9 @@ for item in currentInputChanges:
             changedInputPaths.append(item)
     else:
         changedInputPaths.append(item)
-print("changedInputPaths:")
-print(changedInputPaths)
+if args["verbose"] == "true":
+    print("changedInputPaths:")
+    print(changedInputPaths)
 docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "inputChanges.csv", currentInputChanges)
 
 
@@ -67,7 +67,8 @@ docsToMarkdownLib.writeDataFile(args["dataRoot"] + os.sep + "inputChanges.csv", 
 # Folders are recursed into. Some matches might match whole sub-folders, in which case that sub-folder's processing will be handled by the transform script.
 def scanFolder(theInput, theOutput):
     inputFolder = docsToMarkdownLib.normalisePath(args["input"] + "/" + theInput)
-    print("DocsToMarkdown - scanning folder: " + inputFolder, flush=True)
+    if args["verbose"] == "true":
+        print("DocsToMarkdown - scanning folder: " + inputFolder, flush=True)
     unmatchedItems = []
 
     items = os.listdir(inputFolder)
