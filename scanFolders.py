@@ -35,14 +35,13 @@ previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep 
 currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(args["scriptRoot"])
 changedMatchPaths = []
 for item in currentMatchChanges:
-    if item in previousMatchChanges:
-        if not currentMatchChanges[item] == previousMatchChanges[item]:
-            if args["verbose"] == "true":
-                print("Updated transform script: " + item + " - value: " + str(currentMatchChanges[item]) + " != " + str(previousMatchChanges[item]))
-            if item in scriptStrings:
+    if item in scriptStrings:
+        if item in previousMatchChanges:
+            if not currentMatchChanges[item] == previousMatchChanges[item]:
+                if args["verbose"] == "true":
+                    print("Updated transform script: " + item + " - value: " + str(currentMatchChanges[item]) + " != " + str(previousMatchChanges[item]))
                 changedMatchPaths.append(item)
-    else:
-        if item in scriptStrings:
+        else:
             changedMatchPaths.append(item)
 print("changedMatchPaths:")
 print(changedMatchPaths)
