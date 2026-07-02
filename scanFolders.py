@@ -37,6 +37,8 @@ changedMatchPaths = []
 for item in currentMatchChanges:
     if item in previousMatchChanges:
         if not currentMatchChanges[item] == previousMatchChanges[item]:
+            if args["verbose"] == "true":
+                print("Updated transform script: " + item + " - value: " + str(currentMatchChanges[item]) + " != " + str(previousMatchChanges[item]))
             if item in scriptStrings:
                 changedMatchPaths.append(item)
     else:
