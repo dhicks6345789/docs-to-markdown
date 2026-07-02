@@ -2,6 +2,7 @@
 import os
 import re
 import sys
+import shutil
 import pathlib
 import subprocess
 
@@ -105,8 +106,23 @@ def scanFolder(theInput, theOutput):
         if os.path.isdir(inputFolder + os.sep + item):
             scanFolder(docsToMarkdownLib.normalisePath(theInput + os.sep + item), docsToMarkdownLib.normalisePath(theOutput + os.sep + item))
 
+def copyFolder(inputFolder, outputFolder):
+    for item in os.listdir(inputFolder)
+        inputItem = inputFolder + "/" + item
+        outputItem = outputFolder + "/" + item
+        if os.path.isfile(inputItem):
+            if not docsToMarkdownLib.checkModDatesMatch(inputItem, outputItem):
+                print("Copying file: " + inputItem + " to " + outputItem, flush=True)
+                shutil.copyfile(inputItem, outputItem)
+                docsToMarkdownLib.makeModDatesMatch(inputItem, outputItem)
+        else:
+            os.mkdir(outputItem)
+            copyFolder(inputItem, outputItem)
+
 # Start the scanFolders process.
 scanFolder("", "")
 
 # If the user has specified a "copy in" folder, copy the contens of that folder over to the destination as well.
+# Thuis happens after "scan folders", so for any conflicting filenames, the copy process will take precedence.
 if "copyIn" in args and not args["copyIn"] == "":
+    copyFolder(docsToMarkdownLib.normalisePath(args["copyIn"]), docsToMarkdownLib.normalisePath(args["output"]))
