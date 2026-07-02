@@ -25,7 +25,9 @@ for arg in args:
 # Read the "matches.csv" file, which describes which transform script to run for each file type / sub folder in the input folder structure.
 matches = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matches.csv")
 scriptStrings = []
+print(matches)
 for item in matches:
+    print(matches[item])
     scriptString = docsToMarkdownLib.normalisePath(args["scriptRoot"] + "/" + matches[item][2])
     if not scriptString in scriptStrings:
         scriptStrings.append(scriptString)
