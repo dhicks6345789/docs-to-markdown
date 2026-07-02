@@ -23,6 +23,9 @@ if docType in ["DOCX", "DOC"]:
   outputFile = outputFile.rsplit(".", 1)[0] + ".md"
   outputPath = outputFolder + os.sep + outputFile
   
+  # Log the name of the file we are going to write to.
+  docsToMarkdownLib.addToWriteLog(outputPath)
+  
   # Check and see if we already have an output file that matches the modification times of the input, if so, skip - no
   # point processing the same file for the same output.
   if not docsToMarkdownLib.checkModDatesMatch(inputFile, outputPath):
