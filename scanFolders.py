@@ -115,14 +115,32 @@ def copyFolder(inputFolder, outputFolder):
                 print("Copying file: " + inputItem + " to " + outputItem, flush=True)
                 shutil.copyfile(inputItem, outputItem)
                 docsToMarkdownLib.makeModDatesMatch(inputItem, outputItem)
+                docsToMarkdownLib.addToWriteLog(inputItem)
         else:
             os.mkdir(outputItem)
             copyFolder(inputItem, outputItem)
+
+def deleteExtraFiles(theFolder, theFilenames):
+    for item in os.listdir(theFolder)
+        fileItem = theFolder + "/" + item
+        if os.path.isfile(fileItem):
+            if not fileItem in theFilenames:
+                print("Removing extra file: " + fileItem, flush=True)
+                os.remove(fileItem)
+        else:
+            deleteExtraFiles(fileItem, theFilenames)
 
 # Start the scanFolders process.
 scanFolder("", "")
 
 # If the user has specified a "copy in" folder, copy the contens of that folder over to the destination as well.
-# Thuis happens after "scan folders", so for any conflicting filenames, the copy process will take precedence.
+# This happens after "scan folders", so for any conflicting filenames, the copy process will take precedence.
 if "copyIn" in args and not args["copyIn"] == "":
     copyFolder(docsToMarkdownLib.normalisePath(args["copyIn"]), docsToMarkdownLib.normalisePath(args["output"]))
+
+if args["deleteExtraFiles"] == "true":
+    with open("/tmp/docsToMarkdownWriteLog.txt", "r", encoding="utf-8") as writeLogFile:
+        deleteExtraFiles(docsToMarkdownLib.normalisePath(args["output"]), file.readlines())
+
+# Clear out the write log file.
+os.remove("/tmp/docsToMarkdownWriteLog.txt")
