@@ -18,6 +18,9 @@ outputFile = inputFile
 if os.sep in outputFile:
   outputFile = outputFile.rsplit(os.sep, 1)[1]
 outputPath = outputFolder + os.sep + outputFile
+
+# Log the name of the file we are going to write to.
+docsToMarkdownLib.addToWriteLog(outputPath)
   
 # Check and see if we already have an output file that matches the modification
 # times of the input, if so, skip - no point copying the same file.
