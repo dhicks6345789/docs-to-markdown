@@ -392,6 +392,6 @@ def embedBitmapInSVG(theBitmap, theWidth, theHeight):
     result = result + "</svg>"
     return result
 
-def addToWriteLog(theFilename):
-    with open("writeLog.txt", "a", encoding="utf-8") as file:
+def addToWriteLog(theFilename, theLogLocation="/tmp/docsToMarkdownWriteLog.txt"):
+    with open(theLogLocation, "a", encoding="utf-8") as file:
         file.write(theFilename + "\n")
