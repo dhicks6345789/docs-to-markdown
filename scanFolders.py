@@ -138,9 +138,9 @@ scanFolder("", "")
 if "copyIn" in args and not args["copyIn"] == "":
     copyFolder(docsToMarkdownLib.normalisePath(args["copyIn"]), docsToMarkdownLib.normalisePath(args["output"]))
 
-if args["deleteExtraFiles"] == "true":
+if args["deleteExtraFiles"] == "true" and os.path.isfile("/tmp/docsToMarkdownWriteLog.txt"):
     with open("/tmp/docsToMarkdownWriteLog.txt", "r", encoding="utf-8") as writeLogFile:
         deleteExtraFiles(docsToMarkdownLib.normalisePath(args["output"]), file.readlines())
 
 # Clear out the write log file.
-os.remove("/tmp/docsToMarkdownWriteLog.txt")
+#os.remove("/tmp/docsToMarkdownWriteLog.txt")
