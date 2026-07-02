@@ -8,6 +8,7 @@ import sys
 # Our own Docs To Markdown library.
 import docsToMarkdownLib
 
+
 # Usage: processDOCFile.py inputFile outputFolder
 inputFile = sys.argv[1]
 outputFolder = sys.argv[2]
