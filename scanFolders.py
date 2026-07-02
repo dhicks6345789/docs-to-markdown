@@ -110,12 +110,12 @@ def copyFolder(inputFolder, outputFolder):
     for item in os.listdir(inputFolder):
         inputItem = inputFolder + "/" + item
         outputItem = outputFolder + "/" + item
+        docsToMarkdownLib.addToWriteLog(outputItem)
         if os.path.isfile(inputItem):
             if not docsToMarkdownLib.checkModDatesMatch(inputItem, outputItem):
                 print("Copying file: " + inputItem + " to " + outputItem, flush=True)
                 shutil.copyfile(inputItem, outputItem)
                 docsToMarkdownLib.makeModDatesMatch(inputItem, outputItem)
-                docsToMarkdownLib.addToWriteLog(inputItem)
         else:
             os.mkdir(outputItem)
             copyFolder(inputItem, outputItem)
