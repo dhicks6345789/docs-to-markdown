@@ -30,7 +30,7 @@ for item in matches:
         scriptStrings.append(matches[item][1])
 
 previousMatchChanges = docsToMarkdownLib.readDataFile(args["dataRoot"] + os.sep + "matchChanges.csv")
-currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(args["input"])
+currentMatchChanges = docsToMarkdownLib.getFolderChangeDetails(".")
 changedMatchPaths = []
 for item in currentMatchChanges:
     if item in previousMatchChanges:
